@@ -1,0 +1,41 @@
+# =============================================================================
+# .gitignore — Aplikasi Polinomial Kelas XI
+# Tujuan: repositori tetap ringan (~1,1 MB) dan aplikasi tetap berjalan sempurna.
+# Cukup jalankan `git add .` — berkas di bawah ini otomatis tidak ikut.
+# =============================================================================
+
+# --- Perkakas Claude Code (bukan bagian aplikasi) ---------------------------
+skills/
+.claude/
+
+# --- Sumber ikon Lucide -----------------------------------------------------
+# Ikon SUDAH tertanam sebagai inline SVG di js/icons.js, jadi berkas sumber ini
+# hanya dipakai saat MEMBANGKITKAN ulang icons.js — tidak dibutuhkan saat aplikasi
+# berjalan. LICENSE tetap disertakan (syarat lisensi ISC).
+lib/lucide/icons/
+lib/lucide/lucide-font/
+
+# --- Berkas KaTeX yang tidak dirujuk aplikasi -------------------------------
+# Yang dipakai hanya: katex.min.css, katex.min.js, contrib/auto-render.min.js,
+# dan fonts/*.woff2
+lib/katex/*.mjs
+lib/katex/contrib/*.mjs
+lib/katex/katex.js
+lib/katex/katex.css
+lib/katex/katex-swap.css
+lib/katex/katex-swap.min.css
+lib/katex/contrib/*.js
+!lib/katex/contrib/auto-render.min.js
+lib/katex/*.md
+
+# Format font lama. Semua browser sejak ~2016 mendukung woff2, dan woff2 selalu
+# dicoba lebih dulu oleh katex.min.css. Hapus baris ini bila perlu mendukung
+# peramban yang sangat tua.
+lib/katex/fonts/*.woff
+lib/katex/fonts/*.ttf
+
+# --- Berkas sementara sistem ------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp

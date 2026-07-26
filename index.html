@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#FFF8E7" />
+  <meta name="description" content="Polinomial Kelas XI — Modul interaktif persiapan TKA Matematika Lanjut" />
+  <title>Polinomial Kelas XI — TKA Matematika Lanjut</title>
+
+  <!-- Tema & layout (?b=N untuk cache-busting saat update) -->
+  <link rel="stylesheet" href="css/style.css?b=59" />
+
+  <!-- Ikon: Lucide inline SVG via js/icons.js (tidak perlu font ikon lagi) -->
+
+  <!-- KaTeX (LOKAL, offline) -->
+  <link rel="stylesheet" href="lib/katex/katex.min.css" />
+  <script defer src="lib/katex/katex.min.js"></script>
+  <script defer src="lib/katex/contrib/auto-render.min.js"></script>
+
+  <!-- Tema diterapkan sedini mungkin agar tidak ada "kedip" terang saat mode gelap -->
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("poli.v1.prefs") || "{}");
+        var t = p.theme || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "light"); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ===================== TOP BAR ===================== -->
+  <header class="topbar" role="banner">
+    <button id="btnMenu" class="icon-btn" aria-label="Buka daftar materi" aria-expanded="false" aria-controls="drawer">
+      <i data-icon="menu"></i>
+    </button>
+    <a class="brand" href="#/" aria-label="Beranda Polinomial">POLINOMIAL</a>
+
+    <!-- Status gamifikasi: level + bar XP (diisi app.js) -->
+    <button id="xpChip" class="xp-chip" aria-label="Lihat capaian belajar">
+      <span class="xp-lv" id="xpLevel">1</span>
+      <span class="xp-body">
+        <span class="xp-bar"><span class="xp-fill" id="xpFill" style="width:0%"></span></span>
+        <span class="xp-num" id="xpNum">0 XP</span>
+      </span>
+    </button>
+
+    <div class="topbar-actions">
+      <button id="btnTheme" class="icon-btn" aria-label="Ganti mode terang/gelap">
+        <i data-icon="moon"></i>
+      </button>
+      <button id="btnSound" class="icon-btn" aria-label="Nyalakan/matikan suara" aria-pressed="true">
+        <i data-icon="volume-2"></i>
+      </button>
+      <button id="btnFull" class="icon-btn" aria-label="Layar penuh">
+        <i data-icon="maximize"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== DRAWER (nav dari manifest) ===================== -->
+  <aside id="drawer" class="drawer" aria-hidden="true" aria-label="Daftar materi">
+    <div class="drawer-head">
+      <span class="drawer-title">Daftar Materi</span>
+      <button id="btnDrawerClose" class="icon-btn" aria-label="Tutup daftar materi">
+        <i data-icon="x"></i>
+      </button>
+    </div>
+    <nav id="drawerNav" class="drawer-nav"><!-- diisi app.js dari manifest --></nav>
+  </aside>
+  <div id="scrim" class="scrim" hidden></div>
+
+  <!-- ===================== MAIN (satu kontainer scroll) ===================== -->
+  <main id="app" class="app-main" role="main" tabindex="-1">
+    <div id="viewRoot" class="view-root" aria-live="polite"></div>
+  </main>
+
+  <!-- ===================== BOTTOM NAV ===================== -->
+  <nav class="bottomnav" id="bottomnav" aria-label="Navigasi antar bab">
+    <button id="btnPrev" class="btn btn-nav" aria-label="Sebelumnya">
+      <i data-icon="chevron-left"></i> <span>Sebelumnya</span>
+    </button>
+    <small class="copyright">© 2026 | Penta Putra Purnomo, S.Pd., Gr.</small>
+    <button id="btnNext" class="btn btn-nav btn-nav-accent" aria-label="Lanjut">
+      <span>Lanjut</span> <i data-icon="chevron-right"></i>
+    </button>
+  </nav>
+
+  <!-- ===================== SCRATCHPAD FAB + PANEL ===================== -->
+  <button id="fabScratch" class="fab-scratch" aria-label="Buka papan coretan">
+    <i data-icon="pencil"></i>
+  </button>
+
+  <!-- Panel coretan: langsung terbuka PENUH (tidak setengah) -->
+  <section id="scratchSheet" class="scratch-sheet" aria-hidden="true" aria-label="Papan coretan">
+    <div class="scratch-toolbar">
+      <div class="pen-colors" id="penColors">
+        <button class="pen is-active" data-color="#2b2b2b" style="--pc:#2b2b2b" aria-label="Pena hitam"></button>
+        <button class="pen" data-color="#E5484D" style="--pc:#E5484D" aria-label="Pena merah"></button>
+        <button class="pen" data-color="#2B6CB0" style="--pc:#2B6CB0" aria-label="Pena biru"></button>
+        <button class="pen" data-color="#2F855A" style="--pc:#2F855A" aria-label="Pena hijau"></button>
+      </div>
+
+      <div class="stroke-wrap" title="Ukuran goresan">
+        <!-- ikon ini berganti otomatis mengikuti alat aktif (pena/penghapus/geser) -->
+        <span id="strokeIcon" class="stroke-icon" aria-hidden="true"></span>
+        <input type="range" id="strokeRange" class="stroke-range" min="1" max="40" value="3" aria-label="Ukuran pena" />
+      </div>
+
+      <div class="scratch-tools">
+        <button id="btnUndo" class="tool-btn" aria-label="Batalkan" disabled><i data-icon="undo-2"></i></button>
+        <button id="btnRedo" class="tool-btn" aria-label="Ulangi" disabled><i data-icon="redo-2"></i></button>
+        <button id="btnEraser" class="tool-btn" aria-label="Penghapus (per goresan)"><i data-icon="eraser"></i></button>
+        <button id="btnPan" class="tool-btn" aria-label="Mode geser"><i data-icon="hand"></i></button>
+        <button id="btnClear" class="tool-btn" aria-label="Bersihkan semua"><i data-icon="trash-2"></i></button>
+      </div>
+
+      <div class="scratch-zoom">
+        <button id="btnZoomOut" class="tool-btn" aria-label="Perkecil"><i data-icon="zoom-out"></i></button>
+        <span id="zoomLabel" class="zoom-label">100%</span>
+        <button id="btnZoomIn" class="tool-btn" aria-label="Perbesar"><i data-icon="zoom-in"></i></button>
+        <button id="btnZoomReset" class="tool-btn" aria-label="Ukuran awal"><i data-icon="move"></i></button>
+        <button id="btnScratchClose" class="tool-btn tool-close" aria-label="Tutup papan coretan"><i data-icon="x"></i></button>
+      </div>
+    </div>
+    <canvas id="scratchCanvas" class="scratch-canvas"></canvas>
+  </section>
+
+  <!-- Toast global -->
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script src="js/icons.js?b=59" defer></script>
+  <script src="js/mathrender.js?b=59" defer></script>
+  <script src="js/markdown.js?b=59" defer></script>
+  <script src="js/store.js?b=59" defer></script>
+  <script src="js/gamify.js?b=59" defer></script>
+  <script src="js/content.js?b=59" defer></script>
+  <script src="js/ui.js?b=59" defer></script>
+  <script src="js/diagrams.js?b=59" defer></script>
+  <script src="js/keypad.js?b=59" defer></script>
+  <script src="js/quiz.js?b=59" defer></script>
+  <script src="js/activity.js?b=59" defer></script>
+  <script src="js/challenge.js?b=59" defer></script>
+  <script src="js/examples.js?b=59" defer></script>
+  <script src="js/enhance.js?b=59" defer></script>
+  <script src="js/scratchpad.js?b=59" defer></script>
+  <script src="js/app.js?b=59" defer></script>
+</body>
+</html>
