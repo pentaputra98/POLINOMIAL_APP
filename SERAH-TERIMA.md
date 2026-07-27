@@ -125,10 +125,14 @@ lib/lucide/     1756 SVG Lucide (sumber untuk membangkitkan icons.js)
 
 **Rute:** `#/` beranda · `#/daftar` daftar isi · `#/bab/:slug` · `#/ref/:id`
 
-**`js/icons.js` DIBANGKITKAN, jangan diedit tangan.** Skrip pembangkitnya membaca
-`lib/lucide/icons/*.svg`. Bila perlu ikon baru: tambahkan namanya ke daftar di skrip
-lalu bangkitkan ulang. Nama memakai konvensi Lucide terbaru
-(`triangle-alert`, `circle-check`, `circle-question-mark`).
+**`js/icons.js` awalnya DIBANGKITKAN dari `lib/lucide/icons/*.svg`.**
+⚠️ Diperiksa 27 Juli 2026: **skrip pembangkitnya tidak ada lagi di folder ini** —
+1756 SVG sumbernya masih ada (dan diabaikan `.gitignore`), tetapi pembangkitnya hilang.
+Jadi untuk sekarang ikon baru **ditambahkan manual**: buka `lib/lucide/icons/<nama>.svg`,
+salin isi di dalam `<svg>…</svg>` (hanya elemen `<path>`/`<circle>`/dst.), lalu tambahkan
+satu entri ke objek `PATHS` di `js/icons.js`. Nama memakai konvensi Lucide terbaru
+(`triangle-alert`, `circle-check`, `circle-question-mark`). Pakai dengan
+`<i data-icon="nama"></i>` atau `Icons.svg("nama")`, lalu naikkan `?b=` & `CACHE`.
 
 ---
 
