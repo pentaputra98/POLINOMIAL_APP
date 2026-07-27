@@ -1,6 +1,6 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **26 Juli 2026** · Versi aset **`?b=59`** · Cache SW **`polinomial-v41`**
+> Terakhir diperbarui: **27 Juli 2026** · Versi aset **`?b=59`** · Cache SW **`polinomial-v41`**
 
 ---
 
@@ -29,7 +29,12 @@ gaya santai). Vanilla HTML/CSS/JS, **tanpa framework, tanpa build step, tanpa ba
 100% offline setelah termuat.
 
 - **Direktori:** `F:\MATERI MATEMATIKA\MATEMATIKA TINGKAT LANJUT\KELAS 11\POLINOMIAL\POLINOMIAL_APP`
-- **Bukan repositori git.**
+- **Repositori git:** `https://github.com/pentaputra98/POLINOMIAL_APP` (branch `main`).
+  Rilis pertama: commit `3cb5ba5 rilis-pertama-polinomial`. 57 berkas terlacak;
+  `skills/`, `.claude/`, sumber SVG Lucide, dan berkas KaTeX tak terpakai diabaikan
+  lewat `.gitignore` agar repo tetap ringan.
+- **Dipublikasikan lewat GitHub Pages:** `https://pentaputra98.github.io/POLINOMIAL_APP/`
+  — wajib ada `.nojekyll` di akar repo (lihat jebakan #9).
 - Penulis/pemilik: **Penta Putra Purnomo, S.Pd., Gr.**
 
 ### ATURAN EMAS (jangan dilanggar)
@@ -98,6 +103,8 @@ css/style.css   seluruh gaya, token tema terang & gelap
 js/
   icons.js      87 ikon Lucide inline SVG + 48 pemetaan emoji→ikon  [DIBANGKITKAN]
   markdown.js   parser Markdown; pisahkan 3 jenis blok JSON; lindungi $…$
+  mathrender.js window.MR — render KaTeX bersama untuk konten yang disuntik dinamis
+                (span.m data-tex + renderMathInElement pada $…$; ada fallback)
   content.js    pemuat manifest & .md + cache + prefetch
   store.js      localStorage berversi poli.v1.*
   gamify.js     XP · level · badge · bintang · rekor · streak (ambang dari manifest)
@@ -109,6 +116,10 @@ js/
   diagrams.js   peta konsep/roadmap/flow/kolom/Horner interaktif
   enhance.js    auto-fit bagan & rumus + penampil bagan layar penuh
   scratchpad.js papan coret VEKTOR (hapus per-goresan, zoom/pan)
+  ui.js         [PENINGGALAN — tidak dipakai] NBSelect & DragDrop dari aplikasi lama.
+                Masih dimuat index.html + di-precache SW, tetapi TIDAK ada pemanggilnya
+                dan markupnya masih memakai kelas FontAwesome (`fa-solid`) yang
+                pustakanya sudah dihapus. Kandidat hapus — belum diizinkan (butir 8.1).
   app.js        router hash, render bab, chrome, sticky ToC
 content/        MATERI — sumber kebenaran
 lib/katex/      KaTeX lokal + 20 font woff2
@@ -147,6 +158,15 @@ lalu bangkitkan ulang. Nama memakai konvensi Lucide terbaru
 8. **Penyajian adaptif wajib** untuk `question`/`answer`/`explanation`/`options`:
    ada `$` → biarkan auto-render; tanpa kata (≥3 huruf) → KaTeX; selain itu teks biasa.
    Memaksa semua lewat KaTeX membuat soal tampil merah dengan `$` mentah.
+9. **GitHub Pages memakan berkas `.md` — `.nojekyll` WAJIB ADA di akar repo.**
+   Tanpa berkas itu, Pages menjalankan Jekyll, yang **mengubah setiap `.md` menjadi
+   `.html`** dan tidak lagi menyajikan `.md` mentah. Akibatnya `fetch("content/00-intro.md")`
+   membalas **HTTP 404** dan seluruh materi gagal dimuat, padahal di server lokal
+   (`python -m http.server`) semuanya normal. Diagnosis 27 Juli 2026:
+   `/content/00-intro.md` → 404 sedangkan `/content/00-intro.html` → 200.
+   `.nojekyll` boleh kosong; keberadaannya saja sudah mematikan Jekyll.
+   `content-manifest.json` tidak terdampak (Jekyll hanya memproses Markdown), jadi
+   gejalanya menyesatkan: manifest berhasil dimuat, isi bab tidak.
 
 ---
 
@@ -177,9 +197,15 @@ Horner & slider engine **cocok persis** dengan `expected_quotient`/`checkpoints`
 
 ## 8. YANG MASIH TERBUKA (menunggu keputusan saya)
 
-1. **Berkas peninggalan aplikasi lama** — sudah tidak dipakai, aman dihapus tetapi
-   **belum saya izinkan**: `HANDOFF.md`, `RPD.MD`, `sub_1_pengenalan.md`,
-   `sub_2_operasi.md`, `sub_3_nilai.md`, folder `_legacy/`, folder `lib/fontawesome/`.
+1. **Berkas peninggalan aplikasi lama** — ~~`HANDOFF.md`, `RPD.MD`, `sub_1_pengenalan.md`,
+   `sub_2_operasi.md`, `sub_3_nilai.md`, folder `_legacy/`, folder `lib/fontawesome/`~~
+   **SUDAH DIHAPUS** (diverifikasi 27 Juli 2026: tidak ada lagi di folder; `lib/` kini
+   hanya `katex/` dan `lucide/`).
+   **Yang masih tersisa:** `js/ui.js` (7,8 KB) — dimuat `index.html` baris 140 dan
+   di-precache `sw.js` baris 24, tetapi `NBSelect`/`DragDrop` tidak dipanggil dari mana
+   pun dan isinya masih memakai kelas FontAwesome. Aman dihapus (butuh: hapus berkas,
+   hapus baris di `index.html` + `sw.js`, naikkan `?b=` & nama `CACHE`) —
+   **belum saya izinkan**.
 2. **1 bagan masih ASCII** — diagram "ide pemersatu" Bab 04
    (`f(k)=0 ⟺ faktor ⟺ akar`). Tidak melanggar direktif karena marker terdekatnya
    bukan Concept Map. Bisa dibuatkan komponen khusus bila diinginkan.
