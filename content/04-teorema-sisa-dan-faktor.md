@@ -131,10 +131,10 @@ Tanpa membagi: $f(2) = 16 - 12 + 8 - 5 = 7$. **Sisa $=7$.** (Bandingkan dengan B
 { "type":"activity", "widget":"truefalse", "id":"04-act-sisa", "competency":"K4",
   "prompt":"Benar atau salah?",
   "statements":[
-    {"s":"Sisa pembagian f(x) oleh (x-3) sama dengan f(3).","a":true,"why":"Teorema Sisa."},
-    {"s":"Untuk menguji apakah (x+3) faktor, hitung f(3).","a":false,"why":"Pembagi (x+3) diuji dengan f(-3), bukan f(3)."},
-    {"s":"Jika f(k)=0 maka (x-k) merupakan faktor f(x).","a":true,"why":"Teorema Faktor."},
-    {"s":"Mencari sisa pembagian oleh (x-k) selalu memerlukan pembagian bersusun.","a":false,"why":"Cukup hitung f(k)."}
+    {"s":"Sisa pembagian $f(x)$ oleh $(x-3)$ sama dengan $f(3)$.","a":true,"why":"Teorema Sisa."},
+    {"s":"Untuk menguji apakah $(x+3)$ faktor, hitung $f(3)$.","a":false,"why":"Pembagi $(x+3)$ diuji dengan $f(-3)$, bukan $f(3)$."},
+    {"s":"Jika $f(k)=0$ maka $(x-k)$ merupakan faktor $f(x)$.","a":true,"why":"Teorema Faktor."},
+    {"s":"Mencari sisa pembagian oleh $(x-k)$ selalu memerlukan pembagian bersusun.","a":false,"why":"Cukup hitung $f(k)$."}
   ],
   "reward":{"xp":20} }
 ```
@@ -171,7 +171,7 @@ Pembagi $x^2+x+1$ tidak memiliki akar real, tetapi memiliki akar kompleks $\omeg
 ```json
 { "type":"activity", "widget":"cloze", "id":"04-act-rumus", "competency":"K4",
   "prompt":"Lengkapi rumus sisa pembagian",
-  "template":"Sisa pembagian f(x) oleh (x-k) adalah f({{0}}). Sisa pembagian oleh (ax-b) adalah f({{1}}). Untuk pembagi kuadrat, bentuk sisanya adalah {{2}}.",
+  "template":"Sisa pembagian $f(x)$ oleh $(x-k)$ adalah f({{0}}). Sisa pembagian oleh $(ax-b)$ adalah f({{1}}). Untuk pembagi kuadrat, bentuk sisanya adalah {{2}}.",
   "answers":["k","b/a","rx+s"],
   "reward":{"xp":20} }
 ```
@@ -204,10 +204,10 @@ $f(3) = 27 - 36 + 3 + 6 = 0$. Karena $f(3)=0$, menurut Teorema Faktor $(x-3)$ **
 { "type":"activity", "widget":"matching", "id":"04-act-faktor", "competency":"K4",
   "prompt":"Jodohkan pernyataan yang setara",
   "pairs":[
-    ["f(k) = 0","k adalah akar f(x)=0"],
-    ["(x-k) faktor f(x)","sisa f dibagi (x-k) sama dengan 0"],
-    ["Menguji faktor (x+3)","Hitung f(-3)"],
-    ["Menguji faktor (2x-1)","Hitung f(1/2)"]
+    ["f(k) = 0","k adalah akar $f(x)=0$"],
+    ["$(x-k)$ faktor $f(x)$","sisa f dibagi $(x-k)$ sama dengan 0"],
+    ["Menguji faktor $(x+3)$","Hitung $f(-3)$"],
+    ["Menguji faktor $(2x-1)$","Hitung $f(1/2)$"]
   ],
   "reward":{"xp":20} }
 ```
@@ -314,7 +314,7 @@ Jadi $a+b=-1$—**sama dengan hasil pembagian pada Bab 03**, namun tanpa pembagi
 ```json
 { "type":"activity", "widget":"ordering", "id":"04-act-langkah", "competency":"K4",
   "prompt":"Urutkan langkah memfaktorkan polinomial",
-  "options":["Tentukan kandidat akar rasional","Uji kandidat dengan Teorema Sisa hingga f(k)=0","Bagi f(x) oleh (x-k) menggunakan Horner","Ulangi pada hasil bagi hingga tersisa kuadrat, lalu faktorkan"],
+  "options":["Tentukan kandidat akar rasional","Uji kandidat dengan Teorema Sisa hingga $f(k)=0$","Bagi $f(x)$ oleh $(x-k)$ menggunakan Horner","Ulangi pada hasil bagi hingga tersisa kuadrat, lalu faktorkan"],
   "answer_order":[0,1,2,3],
   "reward":{"xp":20} }
 ```
@@ -347,13 +347,13 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
 { "type":"activity", "widget":"error-hunt", "id":"04-act-trap", "competency":"K4",
   "prompt":"Untuk $f(x)=x^3+3x^2-10x-24$, seorang siswa menentukan titik potong sumbu X. Manakah langkah yang salah?",
   "steps":[
-    "Titik potong sumbu X terjadi saat f(x)=0.",
-    "Faktorisasi: f(x)=(x+2)(x+4)(x-3), sehingga akarnya -2, -4, dan 3.",
-    "Dari opsi yang tersedia, tandai (-2,0) dan (3,0).",
-    "Karena -4 adalah akar, tandai juga (4,0)."
+    "Titik potong sumbu X terjadi saat $f(x)=0$.",
+    "Faktorisasi: $f(x)=(x+2)(x+4)(x-3)$, sehingga akarnya $-2, -4$, dan 3.",
+    "Dari opsi yang tersedia, tandai $(-2,0)$ dan $(3,0)$.",
+    "Karena $-4$ adalah akar, tandai juga $(4,0)$."
   ],
   "wrong_index":3,
-  "why":"Akar yang ditemukan adalah -4, sehingga titik potongnya (-4,0), bukan (4,0). Titik (4,0) bukan akar karena f(4)=48 tidak sama dengan 0.",
+  "why":"Akar yang ditemukan adalah $-4$, sehingga titik potongnya $(-4,0)$, bukan $(4,0)$. Titik $(4,0)$ bukan akar karena $f(4)=48$ tidak sama dengan 0.",
   "reward":{"xp":25} }
 ```
 
@@ -450,11 +450,11 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
     {"id":"A3","type":"mc","question":"$(x-2)$ faktor $x^2-4$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"f(2)=0."},
     {"id":"A4","type":"mc","question":"$(x+1)$ faktor $x^3+1$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"f(-1)=0."},
     {"id":"A5","type":"short","question":"Sisa $x^4 \\div (x+1)$","answer":"1","explanation":"f(-1)=1."},
-    {"id":"A6","type":"short","question":"Akar dari faktor (x-5)","answer":"5","explanation":"x-5=0 → x=5."},
-    {"id":"A7","type":"mc","question":"x=3 akar $x^2-9$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"9-9=0."},
+    {"id":"A6","type":"short","question":"Akar dari faktor $(x-5)$","answer":"5","explanation":"x-5=0 → x=5."},
+    {"id":"A7","type":"mc","question":"$x=3$ akar $x^2-9$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"9-9=0."},
     {"id":"A8","type":"short","question":"Sisa $2x-7 \\div (x-3)$","answer":"-1","explanation":"f(3)=-1."},
     {"id":"A9","type":"mc","question":"$(x-1)$ faktor $x^5-1$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"f(1)=0."},
-    {"id":"A10","type":"short","question":"Sisa $x^3+2x^2 \\div x$","answer":"0","explanation":"f(0)=0 (konstanta 0)."}
+    {"id":"A10","type":"short","question":"Sisa $x^3+2x^2 \\div x$","answer":"0","explanation":"$f(0)=0$ (konstanta 0)."}
   ]
 }
 ```
@@ -480,15 +480,15 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
   "set_id":"04-set-B-sedang","level":"sedang",
   "items":[
     {"id":"B1","type":"short","question":"Sisa $x^3-2x^2+3x-1 \\div (x-2)$","answer":"5","explanation":"f(2)=8-8+6-1=5."},
-    {"id":"B2","type":"short","question":"a agar (x-1) faktor $x^3+ax-3$","answer":"2","explanation":"f(1)=1+a-3=0 → a=2."},
-    {"id":"B3","type":"short","question":"Faktorkan $x^3-7x+6$","answer":"(x-1)(x-2)(x+3)","explanation":"Akar 1,2,-3."},
+    {"id":"B2","type":"short","question":"a agar $(x-1)$ faktor $x^3+ax-3$","answer":"2","explanation":"f(1)=1+a-3=0 → a=2."},
+    {"id":"B3","type":"short","question":"Faktorkan $x^3-7x+6$","answer":"(x-1)(x-2)(x+3)","explanation":"Akar $1,2,-3$."},
     {"id":"B4","type":"short","question":"Sisa $2x^3+x \\div (2x+1)$","answer":"-3/4","explanation":"f(-1/2)=2(-1/8)-1/2=-1/4-1/2=-3/4."},
-    {"id":"B5","type":"mc","question":"x=-3 akar $x^3+3x^2-10x-24$?","options":["Ya","Tidak"],"answer":"Tidak","explanation":"f(-3)=-27+27+30-24=6≠0."},
-    {"id":"B6","type":"short","question":"Sisa dibagi (x-2)(x-4); f(2)=1,f(4)=7","answer":"3x-5","explanation":"2r+s=1,4r+s=7→r=3,s=-5."},
-    {"id":"B7","type":"short","question":"c agar $x^3-4x^2+c$ habis dibagi (x-1)","answer":"3","explanation":"f(1)=1-4+c=0 → c=3."},
-    {"id":"B8","type":"short","question":"Faktorkan $x^3+2x^2-x-2$","answer":"(x-1)(x+1)(x+2)","explanation":"Akar 1,-1,-2."},
+    {"id":"B5","type":"mc","question":"$x=-3$ akar $x^3+3x^2-10x-24$?","options":["Ya","Tidak"],"answer":"Tidak","explanation":"f(-3)=-27+27+30-24=6≠0."},
+    {"id":"B6","type":"short","question":"Sisa dibagi $(x-2)(x-4)$; $f(2)=1,f(4)=7$","answer":"3x-5","explanation":"2r+s=1,4r+s=7→r=3,s=-5."},
+    {"id":"B7","type":"short","question":"c agar $x^3-4x^2+c$ habis dibagi $(x-1)$","answer":"3","explanation":"f(1)=1-4+c=0 → c=3."},
+    {"id":"B8","type":"short","question":"Faktorkan $x^3+2x^2-x-2$","answer":"(x-1)(x+1)(x+2)","explanation":"Akar $1,-1,-2$."},
     {"id":"B9","type":"short","question":"Sisa $x^{100}-2 \\div (x+1)$","answer":"-1","explanation":"f(-1)=1-2=-1."},
-    {"id":"B10","type":"mc","question":"x=-1 akar $x^3-3x-2$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"-1+3-2=0."}
+    {"id":"B10","type":"mc","question":"$x=-1$ akar $x^3-3x-2$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"-1+3-2=0."}
   ]
 }
 ```
@@ -523,15 +523,15 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
   "set_id":"04-set-C-sulit","level":"sulit",
   "items":[
     {"id":"C1","type":"short","question":"Faktorkan $x^4-5x^2+4$","answer":"(x-1)(x+1)(x-2)(x+2)","explanation":"(x^2-1)(x^2-4)."},
-    {"id":"C2","type":"short","question":"a,b agar $x^3+ax^2+bx-6$ habis (x-1)&(x+2)","answer":"a=4, b=1","explanation":"f(1)=0→a+b=5; f(-2)=0→2a-b=7; maka a=4,b=1."},
+    {"id":"C2","type":"short","question":"a,b agar $x^3+ax^2+bx-6$ habis $(x-1)$&$(x+2)$","answer":"a=4, b=1","explanation":"$f(1)=0→a+b=5$; $f(-2)=0→2a-b=7$; maka $a=4,b=1$."},
     {"id":"C3","type":"short","question":"Sisa $x^3-2x+1 \\div (x^2-1)$","answer":"-x+1","explanation":"f(1)=0=r+s, f(-1)=2=-r+s → r=-1,s=1."},
-    {"id":"C4","type":"short","question":"Faktorkan $2x^3-3x^2-3x+2$","answer":"(x-2)(2x-1)(x+1)","explanation":"Akar 2,1/2,-1."},
-    {"id":"C5","type":"short","question":"Sisa dibagi (x-1)(x-2)(x-3); f=2,3,6","answer":"x^2-2x+3","explanation":"$S=ax^2+bx+c$ lewat 3 titik."},
-    {"id":"C6","type":"short","question":"Faktorkan $x^3+3x^2-10x-24$","answer":"(x+2)(x+4)(x-3)","explanation":"Akar -2,-4,3."},
-    {"id":"C7","type":"short","question":"Akar $x^4-1$","answer":"x=1,-1 (real); ±i (kompleks)","explanation":"(x^2-1)(x^2+1)."},
-    {"id":"C8","type":"short","question":"(x-2),(x+2) faktor $x^4+ax^2+b$","answer":"16+4a+b=0 (dari f(2)=0)","explanation":"f(2)=f(-2)=16+4a+b=0."},
+    {"id":"C4","type":"short","question":"Faktorkan $2x^3-3x^2-3x+2$","answer":"(x-2)(2x-1)(x+1)","explanation":"Akar $2,1/2,-1$."},
+    {"id":"C5","type":"short","question":"Sisa dibagi $(x-1)(x-2)(x-3)$; $f=2,3,6$","answer":"x^2-2x+3","explanation":"$S=ax^2+bx+c$ lewat 3 titik."},
+    {"id":"C6","type":"short","question":"Faktorkan $x^3+3x^2-10x-24$","answer":"(x+2)(x+4)(x-3)","explanation":"Akar $-2,-4,3$."},
+    {"id":"C7","type":"short","question":"Akar $x^4-1$","answer":"$x=1,-1$ (real); $±i$ (kompleks)","explanation":"(x^2-1)(x^2+1)."},
+    {"id":"C8","type":"short","question":"$(x-2),(x+2)$ faktor $x^4+ax^2+b$","answer":"$16+4a+b=0$ (dari $f(2)=0$)","explanation":"f(2)=f(-2)=16+4a+b=0."},
     {"id":"C9","type":"short","question":"Sisa $x^{2026}+x+1 \\div (x^2-1)$","answer":"x+2","explanation":"x^{2026}≡1 → 1+x+1=x+2."},
-    {"id":"C10","type":"proof","question":"Buktikan (x-a) faktor $x^n-a^n$","answer":"f(a)=a^n-a^n=0","explanation":"Teorema Faktor."}
+    {"id":"C10","type":"proof","question":"Buktikan $(x-a)$ faktor $x^n-a^n$","answer":"f(a)=a^n-a^n=0","explanation":"Teorema Faktor."}
   ]
 }
 ```
@@ -561,10 +561,10 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
   "set_id":"04-set-D-hots","level":"hots",
   "items":[
     {"id":"D1","type":"short","question":"p,q,r jika akar 1,2,3","answer":"p=-6,q=11,r=-6","explanation":"(x-1)(x-2)(x-3)=x^3-6x^2+11x-6."},
-    {"id":"D2","type":"short","question":"f(1) & f(i) dari info sisa","answer":"f(1)=3, f(i)=2i-1","explanation":"Sisa oleh $(x^2+1)$ dievaluasi di $x=i$."},
-    {"id":"D3","type":"proof","question":"Buktikan f=a(x-1)(x-2)(x-3)","answer":"tiga faktor linear dari tiga akar","explanation":"Teorema Faktor + derajat 3."},
-    {"id":"D4","type":"short","question":"k agar (x-1) faktor $x^3-kx+2$; akar lain","answer":"k=3; akar x=1 (ganda) dan x=-2","explanation":"$f(1)=1-k+2=0$→$k=3$; Horner → $x^2+x-2=(x-1)(x+2)$."},
-    {"id":"D5","type":"short","question":"Monik akar -2,-4,3 (bentuk baku)","answer":"x^3+3x^2-10x-24","explanation":"Ini fungsi soal TKA #5."}
+    {"id":"D2","type":"short","question":"$f(1)$ & $f(i)$ dari info sisa","answer":"f(1)=3, f(i)=2i-1","explanation":"Sisa oleh $(x^2+1)$ dievaluasi di $x=i$."},
+    {"id":"D3","type":"proof","question":"Buktikan $f=a(x-1)(x-2)(x-3)$","answer":"tiga faktor linear dari tiga akar","explanation":"Teorema Faktor + derajat 3."},
+    {"id":"D4","type":"short","question":"k agar $(x-1)$ faktor $x^3-kx+2$; akar lain","answer":"$k=3$; akar $x=1$ (ganda) dan $x=-2$","explanation":"$f(1)=1-k+2=0$→$k=3$; Horner → $x^2+x-2=(x-1)(x+2)$."},
+    {"id":"D5","type":"short","question":"Monik akar $-2,-4,3$ (bentuk baku)","answer":"x^3+3x^2-10x-24","explanation":"Ini fungsi soal TKA #5."}
   ]
 }
 ```
@@ -588,11 +588,11 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
 {
   "set_id":"04-set-E-tka","level":"tka",
   "items":[
-    {"id":"E1","type":"multi","source":"TKA-2024-no5","question":"Titik potong sumbu X dari $x^3+3x^2-10x-24$","options":["(-2,0)","(-1,0)","(3,0)","(4,0)","(5,0)"],"answer":["(-2,0)","(3,0)"],"explanation":"Akar -2,-4,3; yang tersedia di opsi: -2 dan 3."},
-    {"id":"E2","type":"mc","source":"TKA-2024-no6","question":"a+b jika sisa 5x-1","options":["11","5","-1","-5","-7"],"answer":"-1","explanation":"a=2,b=-3."},
+    {"id":"E1","type":"multi","source":"TKA-2024-no5","question":"Titik potong sumbu X dari $x^3+3x^2-10x-24$","options":["(-2,0)","(-1,0)","(3,0)","(4,0)","(5,0)"],"answer":["(-2,0)","(3,0)"],"explanation":"Akar $-2,-4,3$; yang tersedia di opsi: $-2$ dan 3."},
+    {"id":"E2","type":"mc","source":"TKA-2024-no6","question":"$a+b$ jika sisa $5x-1$","options":["11","5","-1","-5","-7"],"answer":"-1","explanation":"a=2,b=-3."},
     {"id":"E3","type":"short","question":"Banyak titik potong X dari $x^3-6x^2+11x-6$","answer":"3","explanation":"Akar 1,2,3 semuanya real & berbeda."},
-    {"id":"E4","type":"short","question":"Akar positif $L(x)=x^3-4x^2+x+6$","answer":"x=2 dan x=3","explanation":"(x+1)(x-2)(x-3); akar positif 2 dan 3."},
-    {"id":"E5","type":"short","question":"a,b jika (x-1),(x+1) faktor & f(0)=-4","answer":"a=3, b=-4","explanation":"f(0)=b=-4; f(1)=1+a+b=0→a=3."}
+    {"id":"E4","type":"short","question":"Akar positif $L(x)=x^3-4x^2+x+6$","answer":"$x=2$ dan $x=3$","explanation":"$(x+1)(x-2)(x-3)$; akar positif 2 dan 3."},
+    {"id":"E5","type":"short","question":"a,b jika $(x-1),(x+1)$ faktor & $f(0)=-4$","answer":"a=3, b=-4","explanation":"f(0)=b=-4; f(1)=1+a+b=0→a=3."}
   ]
 }
 ```

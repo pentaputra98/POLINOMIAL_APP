@@ -109,9 +109,9 @@ Contoh: $x^3 - 6x^2 + 11x - 6 = 0$. **Menyelesaikan** persamaan berarti mencari 
   "prompt":"Benar atau salah?",
   "statements":[
     {"s":"Persamaan polinomial berderajat n memiliki paling banyak n akar.","a":true,"why":"Tiap akar menyumbang satu faktor linear."},
-    {"s":"Jika koefisien real dan a+bi adalah akar, maka a-bi juga akar.","a":true,"why":"Akar kompleks selalu berpasangan."},
+    {"s":"Jika koefisien real dan $a+bi$ adalah akar, maka $a-bi$ juga akar.","a":true,"why":"Akar kompleks selalu berpasangan."},
     {"s":"Setiap persamaan berderajat 3 pasti memiliki tiga akar real yang berbeda.","a":false,"why":"Sebagian akar dapat kembar atau kompleks."},
-    {"s":"Menyelesaikan f(x)=0 berarti mencari nilai x yang membuat f bernilai nol.","a":true,"why":"Itu definisi akar."}
+    {"s":"Menyelesaikan $f(x)=0$ berarti mencari nilai x yang membuat f bernilai nol.","a":true,"why":"Itu definisi akar."}
   ],
   "reward":{"xp":20} }
 ```
@@ -138,7 +138,7 @@ Jadi satu akar real ($x=1$) dan dua akar kompleks.
 ```json
 { "type":"activity", "widget":"cloze", "id":"05-act-faktor", "competency":"K5",
   "prompt":"Selesaikan $x^3-4x=0$",
-  "template":"Faktorkan: x(x-2)(x+2)=0. Urut dari terkecil, akar-akarnya adalah {{0}}, {{1}}, {{2}}.",
+  "template":"Faktorkan: $x(x-2)(x+2)=0$. Urut dari terkecil, akar-akarnya adalah {{0}}, {{1}}, {{2}}.",
   "answers":["-2","0","2"],
   "reward":{"xp":20} }
 ```
@@ -203,8 +203,8 @@ $$(x_1-x_2)^2 = (x_1+x_2)^2 - 4x_1x_2$$
 { "type":"activity", "widget":"matching", "id":"05-act-vieta", "competency":"K5",
   "prompt":"Untuk $x^3-4x^2+5x-2=0$, jodohkan besaran Vieta dengan nilainya",
   "pairs":[
-    ["Jumlah akar (p+q+r)","4"],
-    ["Jumlah hasil kali pasangan (pq+qr+rp)","5"],
+    ["Jumlah akar $(p+q+r)$","4"],
+    ["Jumlah hasil kali pasangan $(pq+qr+rp)$","5"],
     ["Hasil kali akar (pqr)","2"],
     ["Jumlah akar $2x^2-7x+3=0$","7/2"]
   ],
@@ -237,7 +237,7 @@ $(x-1)(x-2)=x^2-3x+2$; kali $(x+3)$: $x^3+3x^2-3x^2-9x+2x+6 = x^3 - 7x + 6$. Per
 
 ```json
 { "type":"activity", "widget":"cloze", "id":"05-act-menyusun", "competency":"K5",
-  "prompt":"Susun persamaan berakar 3 dan -5",
+  "prompt":"Susun persamaan berakar 3 dan $-5$",
   "template":"Jumlah akar = {{0}}, hasil kali akar = {{1}}. Maka persamaannya adalah $x^2+2x-15=0$.",
   "answers":["-2","-15"],
   "reward":{"xp":20} }
@@ -280,10 +280,10 @@ Cek: akar $\tfrac12,\tfrac13$ → jumlah $\tfrac56$, hasil kali $\tfrac16$; dari
 { "type":"activity", "widget":"matching", "id":"05-act-transform", "competency":"K5",
   "prompt":"Jodohkan transformasi akar dengan substitusinya",
   "pairs":[
-    ["Tiap akar bertambah k","ganti x menjadi x-k"],
-    ["Tiap akar dikali k","ganti x menjadi x/k"],
+    ["Tiap akar bertambah k","ganti x menjadi $x-k$"],
+    ["Tiap akar dikali k","ganti x menjadi $x/k$"],
     ["Kebalikan akar","balik urutan koefisien"],
-    ["Tiap akar dikali -1","ganti x menjadi -x"]
+    ["Tiap akar dikali $-1$","ganti x menjadi $-x$"]
   ],
   "reward":{"xp":20} }
 ```
@@ -321,13 +321,13 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
 { "type":"activity", "widget":"error-hunt", "id":"05-act-trap", "competency":"K5",
   "prompt":"Persamaan $x^2-5x+6=0$ berakar 2 dan 3. Susun persamaan yang akarnya 2 lebih besar (yaitu 4 dan 5). Manakah langkah yang salah?",
   "steps":[
-    "Akar baru = akar lama + 2, sehingga substitusinya x menjadi x-2.",
+    "Akar baru = akar lama + 2, sehingga substitusinya x menjadi $x-2$.",
     "Substitusikan: $(x-2)^2 - 5(x-2) + 6$.",
     "Jabarkan dan sederhanakan: $x^2 - 9x + 20 = 0$.",
-    "Karena akar bertambah 2, substitusi yang benar adalah x menjadi x+2."
+    "Karena akar bertambah 2, substitusi yang benar adalah x menjadi $x+2$."
   ],
   "wrong_index":3,
-  "why":"Untuk akar yang bertambah k, substitusinya adalah x menjadi x-k (bukan x+k). Langkah 4 bertentangan dengan langkah 1 yang sudah benar.",
+  "why":"Untuk akar yang bertambah k, substitusinya adalah x menjadi $x-k$ (bukan x+k). Langkah 4 bertentangan dengan langkah 1 yang sudah benar.",
   "reward":{"xp":25} }
 ```
 
@@ -453,12 +453,12 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
   "set_id":"05-set-B-sedang","level":"sedang",
   "items":[
     {"id":"B1","type":"short","question":"$p^2+q^2$ dari $x^2-6x+4$","answer":"28","explanation":"36-8=28."},
-    {"id":"B2","type":"short","question":"Persamaan berakar -1,7","answer":"x^2-6x-7=0","explanation":"jumlah 6, kali -7."},
+    {"id":"B2","type":"short","question":"Persamaan berakar $-1,7$","answer":"x^2-6x-7=0","explanation":"jumlah 6, kali $-7$."},
     {"id":"B3","type":"short","question":"$1/α+1/β$ dari $2x^2-5x+1$","answer":"5","explanation":"(α+β)/(αβ)=(5/2)/(1/2)=5."},
-    {"id":"B4","type":"short","question":"p+q+r & pqr dari $x^3-3x^2-x+3$","answer":"3 dan -3","explanation":"-b/a=3; -d/a=-3."},
-    {"id":"B5","type":"short","question":"Kubik monik berakar -1,2,3","answer":"x^3-4x^2+x+6=0","explanation":"(x+1)(x-2)(x-3)."},
+    {"id":"B4","type":"short","question":"$p+q+r$ & pqr dari $x^3-3x^2-x+3$","answer":"3 dan $-3$","explanation":"-b/a=3; -d/a=-3."},
+    {"id":"B5","type":"short","question":"Kubik monik berakar $-1,2,3$","answer":"x^3-4x^2+x+6=0","explanation":"(x+1)(x-2)(x-3)."},
     {"id":"B6","type":"short","question":"$x^2-4x+2$, akar +1","answer":"x^2-6x+7=0","explanation":"x→x-1."},
-    {"id":"B7","type":"short","question":"Hasil kali 2 akar jika akar ke-3=3 (dari $x^3-6x^2+11x-6$)","answer":"2","explanation":"pqr=6, r=3 → pq=2."},
+    {"id":"B7","type":"short","question":"Hasil kali 2 akar jika akar ke-3=3 (dari $x^3-6x^2+11x-6$)","answer":"2","explanation":"$pqr=6, r=3 → pq=2$."},
     {"id":"B8","type":"short","question":"k agar $x^2+kx+9$ akar kembar","answer":"k=±6","explanation":"diskriminan 0: $k^2=36$."},
     {"id":"B9","type":"short","question":"m jika jumlah akar $x^2-(m+1)x+6=5$","answer":"m=4","explanation":"m+1=5."},
     {"id":"B10","type":"short","question":"Persamaan berakar kebalikan dari $x^2-7x+3$","answer":"3x^2-7x+1=0","explanation":"Balik urutan koefisien."}
@@ -495,16 +495,16 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
 {
   "set_id":"05-set-C-sulit","level":"sulit",
   "items":[
-    {"id":"C1","type":"short","question":"$1/p+1/q+1/r$ dari $x^3-6x^2+11x-6$","answer":"11/6","explanation":"(pq+qr+rp)/(pqr)=11/6."},
+    {"id":"C1","type":"short","question":"$1/p+1/q+1/r$ dari $x^3-6x^2+11x-6$","answer":"11/6","explanation":"$(pq+qr+rp)/(pqr)=11/6$."},
     {"id":"C2","type":"short","question":"$α^3+β^3$ dari $x^2-3x+1$","answer":"18","explanation":"3^3-3·1·3=27-9=18."},
-    {"id":"C3","type":"short","question":"Persamaan berakar kuadrat dari akar $x^2-4x+1$","answer":"x^2-14x+1=0","explanation":"jumlah 16-2=14, kali 1."},
-    {"id":"C4","type":"short","question":"k & c jika akar 1,-2,k, jumlah=2","answer":"k=3, c=6","explanation":"1-2+k=2→k=3; c=-(1·-2·3)=6."},
+    {"id":"C3","type":"short","question":"Persamaan berakar kuadrat dari akar $x^2-4x+1$","answer":"x^2-14x+1=0","explanation":"jumlah $16-2=14$, kali 1."},
+    {"id":"C4","type":"short","question":"k & c jika akar $1,-2,k$, jumlah=2","answer":"k=3, c=6","explanation":"1-2+k=2→k=3; c=-(1·-2·3)=6."},
     {"id":"C5","type":"short","question":"$pq+qr+rp$ dari $2x^3-x^2-5x+3$","answer":"-5/2","explanation":"c/a=-5/2."},
-    {"id":"C6","type":"short","question":"Persamaan berakar 2× akar $x^2-3x+2$","answer":"x^2-6x+8=0","explanation":"x→x/2 lalu kalikan."},
-    {"id":"C7","type":"short","question":"α=2β, akar $x^2-px+q$","answer":"2p^2=9q","explanation":"α+β=3β=p, αβ=2β^2=q → β=p/3, q=2p^2/9."},
-    {"id":"C8","type":"short","question":"r,s jika 2r+s=5 & r+s=4","answer":"r=1, s=3","explanation":"kurangkan → r=1."},
-    {"id":"C9","type":"short","question":"Akar ketiga $x^3-70x^2-600x+72000$ jika 40,60","answer":"-30","explanation":"jumlah 70→ -30; hasil kali -72000 konsisten."},
-    {"id":"C10","type":"short","question":"α+β=αβ untuk $x^2+bx+c$","answer":"-b=c (yaitu b+c=0)","explanation":"α+β=-b, αβ=c → -b=c."}
+    {"id":"C6","type":"short","question":"Persamaan berakar 2× akar $x^2-3x+2$","answer":"x^2-6x+8=0","explanation":"$x→x/2$ lalu kalikan."},
+    {"id":"C7","type":"short","question":"$α=2β$, akar $x^2-px+q$","answer":"2p^2=9q","explanation":"α+β=3β=p, αβ=2β^2=q → β=p/3, q=2p^2/9."},
+    {"id":"C8","type":"short","question":"r,s jika $2r+s=5$ & $r+s=4$","answer":"r=1, s=3","explanation":"kurangkan → $r=1$."},
+    {"id":"C9","type":"short","question":"Akar ketiga $x^3-70x^2-600x+72000$ jika 40,60","answer":"-30","explanation":"jumlah $70→ -30$; hasil kali $-72000$ konsisten."},
+    {"id":"C10","type":"short","question":"$α+β=αβ$ untuk $x^2+bx+c$","answer":"$-b=c$ (yaitu b+c=0)","explanation":"α+β=-b, αβ=c → -b=c."}
   ]
 }
 ```
@@ -534,8 +534,8 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
   "set_id":"05-set-D-hots","level":"hots",
   "items":[
     {"id":"D1","type":"short","question":"$p^2+q^2+r^2$ dari $x^3-4x^2+5x-2$","answer":"6","explanation":"(4)^2-2(5)=16-10=6."},
-    {"id":"D2","type":"short","question":"Kubik berakar α+1,β+1,γ+1 dari $x^3-3x+1$","answer":"x^3-3x^2+3=0","explanation":"substitusi x→x-1."},
-    {"id":"D3","type":"short","question":"c jika α-β=4, $x^2-6x+c$","answer":"5","explanation":"(α-β)^2=36-4c=16→c=5."},
+    {"id":"D2","type":"short","question":"Kubik berakar $α+1,β+1,γ+1$ dari $x^3-3x+1$","answer":"x^3-3x^2+3=0","explanation":"substitusi $x→x-1$."},
+    {"id":"D3","type":"short","question":"c jika $α-β=4$, $x^2-6x+c$","answer":"5","explanation":"(α-β)^2=36-4c=16→c=5."},
     {"id":"D4","type":"short","question":"Akar tengah barisan aritmetika, jumlah 6","answer":"2","explanation":"3×tengah=6→tengah=2."},
     {"id":"D5","type":"short","question":"Jumlah & hasil kali 4 akar $x^4-5x^2+4$","answer":"jumlah 0, hasil kali 4","explanation":"-b/a=0; e/a=4."}
   ]
@@ -561,11 +561,11 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
 {
   "set_id":"05-set-E-tka","level":"tka",
   "items":[
-    {"id":"E1","type":"short","source":"TKA-2024-no8","question":"Unit mungkin dijual (modal 2000 juta)","answer":"40 dan 60 (30 tidak)","explanation":"Akar f(x)=2000 adalah 40,60,-30; -30 ditolak."},
-    {"id":"E2","type":"short","question":"x agar $V=x^3-6x^2+11x-6=0$","answer":"x=1,2,3","explanation":"(x-1)(x-2)(x-3); volume nol saat dimensi menghilang."},
-    {"id":"E3","type":"short","question":"$α^2+β^2$ & $1/α+1/β$ dari $x^2-2x-1$","answer":"6 dan -2","explanation":"α+β=2,αβ=-1; 4+2=6; 2/(-1)=-2."},
+    {"id":"E1","type":"short","source":"TKA-2024-no8","question":"Unit mungkin dijual (modal 2000 juta)","answer":"40 dan 60 (30 tidak)","explanation":"Akar $f(x)=2000$ adalah $40,60,-30$; $-30$ ditolak."},
+    {"id":"E2","type":"short","question":"x agar $V=x^3-6x^2+11x-6=0$","answer":"x=1,2,3","explanation":"$(x-1)(x-2)(x-3)$; volume nol saat dimensi menghilang."},
+    {"id":"E3","type":"short","question":"$α^2+β^2$ & $1/α+1/β$ dari $x^2-2x-1$","answer":"6 dan $-2$","explanation":"α+β=2,αβ=-1; 4+2=6; 2/(-1)=-2."},
     {"id":"E4","type":"short","question":"Persamaan akar 3 lebih dari $x^2-2x-8$","answer":"x^2-8x+7=0","explanation":"x→x-3."},
-    {"id":"E5","type":"short","source":"TKA-2024-no8","question":"Verifikasi Vieta akar 40,60,-30","answer":"jumlah 70, Σpasangan -600, hasil kali -72000","explanation":"Cocok dengan koefisien."}
+    {"id":"E5","type":"short","source":"TKA-2024-no8","question":"Verifikasi Vieta akar $40,60,-30$","answer":"jumlah 70, Σpasangan $-600$, hasil kali $-72000$","explanation":"Cocok dengan koefisien."}
   ]
 }
 ```

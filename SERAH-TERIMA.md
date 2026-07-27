@@ -159,6 +159,9 @@ satu entri ke objek `PATHS` di `js/icons.js`. Nama memakai konvensi Lucide terba
 8. **Penyajian adaptif wajib** untuk `question`/`answer`/`explanation`/`options`:
    ada `$` → biarkan auto-render; tanpa kata (≥3 huruf) → KaTeX; selain itu teks biasa.
    Memaksa semua lewat KaTeX membuat soal tampil merah dengan `$` mentah.
+10. **`<` haram di string yang memuat `$`** — `smart()` melewati `esc()` untuk string
+   ber-`$`, sehingga `<` dibaca sebagai awal tag HTML dan menelan sisa kalimat.
+   Rincian, kasus nyata, dan hitungannya di §7c.
 9. **GitHub Pages memakan berkas `.md` — `.nojekyll` WAJIB ADA di akar repo.**
    Tanpa berkas itu, Pages menjalankan Jekyll, yang **mengubah setiap `.md` menjadi
    `.html`** dan tidak lagi menyajikan `.md` mentah. Akibatnya `fetch("content/00-intro.md")`
@@ -217,14 +220,19 @@ Horner & slider engine **cocok persis** dengan `expected_quotient`/`checkpoints`
 5. **Math mentah di dalam blok JSON** (audit 27 Juli 2026, 1384 string diperiksa).
    `smart()` mengirim string yang memuat kata (≥3 huruf) ke jalur teks biasa, sehingga
    penggalan rumus di dalamnya tampil apa adanya — mis. `Suku pangkat tertinggi -6x^5.`
-   - ~~**76 string** memuat `^` di luar `$…$`~~ → **SUDAH DIPERBAIKI** 27 Juli 2026
-     (01: 20 · 06: 13 · 05: 11 · 02: 10 · 03: 9 · 04: 6 · 07: 6 · 00: 1). Lihat §7b.
-   - **179 string** memuat math tanpa `^` (`2x`, `1/2`, `f(0)=0`, `≠`, `→`) — **MASIH
-     TERBUKA**. Sebagian wajar sebagai prosa (`Derajat 1 = linear.`, `2 suku = binomial.`),
-     sebagian jelas perlu (`Sukunya -3x, jadi koefisien -3.`, `koef 1/2, konstanta 5/2`).
-     Perlu penilaian per kasus, belum saya izinkan.
+   - ~~**76 string** memuat `^` di luar `$…$`~~ → **SUDAH DIPERBAIKI** 27 Juli 2026. Lihat §7b.
+   - ~~**179 string** memuat math tanpa `^`~~ → **SUDAH DIPERBAIKI** 27 Juli 2026
+     (jumlah sebenarnya **204** setelah perbaikan pertama; 230 penggantian). Lihat §7c.
    - **114 string** tanpa kata sudah benar (dirender penuh sebagai LaTeX) — jangan disentuh.
    - Tidak ada `$` ganjil/tak berpasangan.
+   **Butir 5 SELESAI.**
+6. **Perbaikan sistemik `smart()`** — saat ini `smart()` mengembalikan string mentah
+   tanpa `esc()` bila memuat `$` ([quiz.js:38](js/quiz.js:38), sama di `activity.js`
+   dan `challenge.js`). Itulah sebab jebakan #10. Perbaikannya: tetap meng-`esc()`
+   `<`, `>`, `&` lalu biarkan `MR.render` menangani `$…$` — aman karena
+   `renderMathInElement` bekerja pada simpul teks setelah HTML diurai.
+   Manfaatnya: penulis konten tidak perlu lagi mengingat larangan `<`.
+   **Belum dikerjakan — menyentuh 3 berkas engine, menunggu izin Anda.**
 
 ---
 
@@ -264,6 +272,67 @@ Catatan: `content/` memakai strategi **network-first** di Service Worker, jadi p
 siswa mendapat konten baru tanpa perlu menaikkan `?b=`.
 
 Skrip + snapshot sebelum-ubah disimpan di direktori scratchpad sesi tersebut.
+
+---
+
+## 7c. PEMBUNGKUSAN MENYELURUH + BUG CLOZE (27 Juli 2026, gelombang kedua)
+
+### Aturan pemilik
+> Bungkus `$…$` bila penggalan memuat **variabel aljabar** ($x$, $y$, $T$, …) atau
+> **bilangan negatif** ($-3$, $-6$). Frasa teks dengan bilangan positif sederhana
+> ("Derajat 1 = linear", "2 suku") tetap teks biasa.
+
+**Satu perluasan yang saya ambil dan perlu Anda ketahui:** struktur math yang jelas
+(memuat `=`, pecahan `/`, atau kurung berisi operator/koma) ikut dibungkus meski seluruh
+bilangannya positif. Tanpa itu satu kalimat bisa memuat `$(-2,0)$ dan (3,0)` — persis
+ketidakkonsistenan yang hendak dihilangkan. Perluasan ini hanya pernah **menambah**
+pembungkusan pada math sungguhan, tidak pernah pada prosa.
+
+**Hasil:** 231 pasangan (229 otomatis + 2 manual) → **230 penggantian** di 8 berkas
+(04: 50 · 06: 40 · 05: 37 · 07: 34 · 03: 33 · 01: 18 · 02: 15 · 00: 4).
+
+### Dua perbaikan manual
+1. **Sigma bab 07** — `(Σ)^2-2Σpasang=…` → `$(\Sigma)^2 - 2\Sigma_{\text{pasang}} = 0 - 2(-5) = 10$`.
+   Subskrip **mode teks** agar "pasang" terbaca sebagai kata, bukan perkalian
+   p·a·s·a·n·g. Field `explanation`, tidak dinilai.
+2. **BUG CLOZE** — [02-operasi-dan-nilai-polinomial.md:317](content/02-operasi-dan-nilai-polinomial.md:317)
+   menulis `sedangkan $f(-1)={{1}}$.` `buildCloze` ([activity.js:243](js/activity.js:243))
+   memanggil `smart(template)` **lalu** menukar `{{i}}` dengan `<input>` — sehingga input
+   tersuntik di TENGAH wilayah `$…$`. KaTeX menuntut pembatas berada dalam satu simpul
+   teks, jadi render gagal dan tanda `$` bocor ke layar siswa.
+   Diperbaiki menjadi `sedangkan $f(-1)=$ {{1}}.` — math ditutup **sebelum** kotak input.
+   Audit menyeluruh: 8 string memuat penanda input, yang rusak **1 → 0**.
+
+### ⚠️ JEBAKAN #10 — `<` haram di string yang memuat `$`
+`smart()` mengembalikan string **tanpa `esc()`** bila string itu memuat `$`
+([quiz.js:38](js/quiz.js:38)). Akibatnya sebuah `<` pada string ber-`$` dibaca peramban
+sebagai awal tag HTML dan **menelan sisa kalimat**.
+
+Gelombang ini sempat memicunya: `x=0 dan x=5; hanya 0<x<5 bermakna` dibungkus menjadi
+`…hanya $0<x<5$ bermakna`, lalu `<x<5$ bermakna` diparse sebagai tag dan menyisakan
+`$0` telanjang di layar. Field itu `answer`, sehingga mengganti `<` dengan `\lt`
+**bukan pilihan** — `normalize()` membuang `\lt` dan penilaian jadi rusak.
+**String itu dikembalikan utuh ke teks biasa.** Hitungan: string ber-`<` ada 5,
+yang juga ber-`$` **0 sebelum** dan **0 sesudah**.
+
+Aturannya sekarang: **jangan pernah menaruh `$` pada string yang memuat `<`.**
+Perbaikan sistemik yang lebih baik — membuat `smart()` tetap meng-`esc()` `<`, `>`, `&`
+sambil membiarkan `$` untuk MR — **belum dikerjakan, menunggu keputusan Anda** (butir 8.6).
+
+### Bukti verifikasi
+| Cek | Hasil |
+|---|---|
+| Diff | **193 tambah / 193 hapus** — simetris |
+| Blok JSON terurai | 1384 string, semua valid |
+| Sisa cabang 1 & 3 | **0** (tersisa 114 cabang-2 yang memang benar) |
+| Render 8 bab | **4098 rumus, 0 error KaTeX** (dari 3338) |
+| **Tanda `$` bocor di layar** | **0** (dihitung dari seluruh simpul teks, termasuk yang tersembunyi) |
+| Tanda `^` mentah di layar | **0** |
+| Pembatas math membelah penanda input | **1 → 0** |
+| Konsol | **0 pesan** |
+| **Regresi penilaian: SELURUH soal isian** | **217 dinilai benar, 0 gagal** (38 dilewati: isian ganda & mc) |
+| Kunci mc/multi cocok dengan opsi | **40/40**, sama persis dengan sebelum perubahan |
+| Field dinilai tersentuh | 23, `normalize()` identik semua |
 
 ---
 

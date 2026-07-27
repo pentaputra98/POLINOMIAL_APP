@@ -128,8 +128,8 @@ $$\underbrace{f(x)}_{\text{yang dibagi}} = \underbrace{P(x)}_{\text{pembagi}}\cd
   "prompt":"Benar atau salah?",
   "statements":[
     {"s":"Sisa pembagian selalu berderajat lebih kecil daripada pembagi.","a":true,"why":"Ini definisi algoritma pembagian."},
-    {"s":"Membagi dengan pembagi berderajat 2 dapat menghasilkan sisa berbentuk rx+s.","a":true,"why":"Derajat sisa < 2, jadi paling tinggi berderajat 1."},
-    {"s":"Membagi dengan (x-k) selalu menghasilkan sisa berupa konstanta.","a":true,"why":"Derajat sisa < 1 berarti berderajat 0 (konstanta)."},
+    {"s":"Membagi dengan pembagi berderajat 2 dapat menghasilkan sisa berbentuk $rx+s$.","a":true,"why":"Derajat sisa < 2, jadi paling tinggi berderajat 1."},
+    {"s":"Membagi dengan $(x-k)$ selalu menghasilkan sisa berupa konstanta.","a":true,"why":"Derajat sisa < 1 berarti berderajat 0 (konstanta)."},
     {"s":"Sisa boleh berderajat sama dengan pembagi.","a":false,"why":"Sisa harus berderajat lebih kecil daripada pembagi."}
   ],
   "reward":{"xp":20} }
@@ -278,13 +278,13 @@ Cek: $(2x-1)(x^2+2x-1) = 2x^3+4x^2-2x - x^2-2x+1 = 2x^3+3x^2-4x+1$ ✔.
 { "type":"activity", "widget":"error-hunt", "id":"03-act-axb", "competency":"K3",
   "prompt":"Membagi $6x^3-5x^2+4x-1$ oleh $(2x-1)$ dengan Horner ($k=1/2$). Manakah langkah yang salah?",
   "steps":[
-    "Horner dengan k=1/2 memberi baris hasil 6, -2, 3 dan sisa 1/2.",
+    "Horner dengan $k=1/2$ memberi baris hasil $6, -2, 3$ dan sisa $1/2$.",
     "Hasil bagi mentah: $6x^2-2x+3$.",
     "Bagi hasil bagi dengan $a=2$: menjadi $3x^2-x+3/2$.",
-    "Bagi sisa dengan a=2: sisa menjadi 1/4."
+    "Bagi sisa dengan $a=2$: sisa menjadi $1/4$."
   ],
   "wrong_index":3,
-  "why":"Hanya hasil bagi yang dibagi dengan a. Sisa dari Horner sudah benar (1/2) dan tidak boleh diubah.",
+  "why":"Hanya hasil bagi yang dibagi dengan a. Sisa dari Horner sudah benar $(1/2)$ dan tidak boleh diubah.",
   "reward":{"xp":25} }
 ```
 
@@ -359,7 +359,7 @@ $$a + b = 2 + (-3) = \boxed{-1} \quad\text{(pilihan C).}$$
 ```json
 { "type":"activity", "widget":"cloze", "id":"03-act-kino", "competency":"K3",
   "prompt":"Lengkapi penyelesaian soal TKA #6",
-  "template":"$f(x)=x^4+ax^3+bx^2+x-6$ dibagi $x^2+x+1$ memberi sisa $(2-b)x+(a-b-6)$. Agar sisa = $5x-1$: b = {{0}}, a = {{1}}, sehingga a+b = {{2}}.",
+  "template":"$f(x)=x^4+ax^3+bx^2+x-6$ dibagi $x^2+x+1$ memberi sisa $(2-b)x+(a-b-6)$. Agar sisa = $5x-1$: b = {{0}}, a = {{1}}, sehingga $a+b$ = {{2}}.",
   "answers":["-3","2","-1"],
   "reward":{"xp":20} }
 ```
@@ -398,8 +398,8 @@ $$a + b = 2 + (-3) = \boxed{-1} \quad\text{(pilihan C).}$$
 { "type":"activity", "widget":"matching", "id":"03-act-metode", "competency":"K3",
   "prompt":"Jodohkan bentuk pembagi dengan metode tercepatnya",
   "pairs":[
-    ["Pembagi (x-k)","Horner"],
-    ["Pembagi (ax-b)","Horner dengan k=b/a"],
+    ["Pembagi $(x-k)$","Horner"],
+    ["Pembagi $(ax-b)$","Horner dengan $k=b/a$"],
     ["Kuadrat terfaktorkan","Horner bertingkat"],
     ["Kuadrat tak terfaktorkan","Horner-Kino atau bersusun"]
   ],
@@ -521,16 +521,16 @@ Kurangkan: $p=0$, lalu $q=-7$. Jadi $p=0,\ q=-7$.
 {
   "set_id":"03-set-A-mudah","level":"mudah",
   "items":[
-    {"id":"A1","type":"short","question":"$x^2+3x+2 \\div (x+1)$","answer":"H=x+2, S=0","explanation":"k=-1 Horner: 1,2 | 0."},
+    {"id":"A1","type":"short","question":"$x^2+3x+2 \\div (x+1)$","answer":"H=x+2, S=0","explanation":"$k=-1$ Horner: 1,2 | 0."},
     {"id":"A2","type":"short","question":"$x^2-5x+6 \\div (x-2)$","answer":"H=x-3, S=0","explanation":"k=2: 1,-3 | 0."},
     {"id":"A3","type":"short","question":"Sisa $x^2+1 \\div (x-1)$","answer":"2","explanation":"f(1)=2."},
-    {"id":"A4","type":"short","question":"$x^3-1 \\div (x-1)$","answer":"H=x^2+x+1, S=0","explanation":"Koef 1,0,0,-1."},
+    {"id":"A4","type":"short","question":"$x^3-1 \\div (x-1)$","answer":"H=x^2+x+1, S=0","explanation":"Koef $1,0,0,-1$."},
     {"id":"A5","type":"short","question":"Sisa $x^3 \\div (x-2)$","answer":"8","explanation":"f(2)=8."},
     {"id":"A6","type":"short","question":"$2x^2+7x+3 \\div (x+3)$","answer":"H=2x+1, S=0","explanation":"k=-3: 2,1 | 0."},
     {"id":"A7","type":"short","question":"$x^2-9 \\div (x+3)$","answer":"H=x-3, S=0","explanation":"Selisih kuadrat."},
     {"id":"A8","type":"short","question":"Sisa $x^4-16 \\div (x-2)$","answer":"0","explanation":"f(2)=16-16=0."},
     {"id":"A9","type":"short","question":"$x^3+x^2-x-1 \\div (x+1)$","answer":"H=x^2-1, S=0","explanation":"k=-1: 1,0,-1 | 0."},
-    {"id":"A10","type":"short","question":"k pada Horner pembagi (x-5)","answer":"5","explanation":"(x-k) → k=5."}
+    {"id":"A10","type":"short","question":"k pada Horner pembagi $(x-5)$","answer":"5","explanation":"(x-k) → k=5."}
   ]
 }
 ```
@@ -555,16 +555,16 @@ Kurangkan: $p=0$, lalu $q=-7$. Jadi $p=0,\ q=-7$.
 {
   "set_id":"03-set-B-sedang","level":"sedang",
   "items":[
-    {"id":"B1","type":"short","question":"$2x^3-3x^2+4x-5 \\div (x-2)$","answer":"H=2x^2+x+6, S=7","explanation":"Horner k=2."},
+    {"id":"B1","type":"short","question":"$2x^3-3x^2+4x-5 \\div (x-2)$","answer":"H=2x^2+x+6, S=7","explanation":"Horner $k=2$."},
     {"id":"B2","type":"short","question":"$x^3+4x^2-x+6 \\div (x+1)$","answer":"H=x^2+3x-4, S=10","explanation":"k=-1: 1,3,-4 | 10."},
     {"id":"B3","type":"short","question":"$3x^3+2x^2-x+1 \\div (3x-1)$","answer":"H=x^2+x+0, S=1","explanation":"$k=1/3$, hasil mentah 3,3,0|1; bagi 3 → $x^2+x$, $S=1$."},
     {"id":"B4","type":"short","question":"Sisa $2x^4-x^2+3 \\div (x-1)$","answer":"4","explanation":"f(1)=2-1+3=4."},
     {"id":"B5","type":"short","question":"$x^4-2x^3+x-1 \\div (x-2)$","answer":"H=x^3+0x^2+0x+1, S=1","explanation":"k=2: 1,0,0,1 | 1."},
-    {"id":"B6","type":"short","question":"$6x^2-x-2 \\div (2x+1)$","answer":"H=3x-2, S=0","explanation":"k=-1/2 mentah 6,-4|0; bagi 2 →3x-2."},
+    {"id":"B6","type":"short","question":"$6x^2-x-2 \\div (2x+1)$","answer":"H=3x-2, S=0","explanation":"$k=-1/2$ mentah $6,-4|0$; bagi $2 →3x-2$."},
     {"id":"B7","type":"short","question":"$x^3-6x^2+11x-6 \\div (x-1)$","answer":"H=x^2-5x+6, S=0","explanation":"k=1: 1,-5,6 | 0."},
     {"id":"B8","type":"short","question":"Sisa $x^5+1 \\div (x+1)$","answer":"0","explanation":"f(-1)=-1+1=0."},
     {"id":"B9","type":"short","question":"$x^4-1 \\div (x^2-1)$","answer":"H=x^2+1, S=0","explanation":"(x^2-1)(x^2+1)=x^4-1."},
-    {"id":"B10","type":"short","question":"$2x^3+5x^2-3 \\div (x+3)$","answer":"H=2x^2-x+3, S=-12","explanation":"koef 2,5,0,-3, k=-3."}
+    {"id":"B10","type":"short","question":"$2x^3+5x^2-3 \\div (x+3)$","answer":"H=2x^2-x+3, S=-12","explanation":"koef $2,5,0,-3, k=-3$."}
   ]
 }
 ```
@@ -598,15 +598,15 @@ Kurangkan: $p=0$, lalu $q=-7$. Jadi $p=0,\ q=-7$.
 {
   "set_id":"03-set-C-sulit","level":"sulit",
   "items":[
-    {"id":"C1","type":"short","question":"$x^4+2x^3-3x^2+x+5 \\div (x^2+x+1)$","answer":"H=x^2+x-5, S=5x+10","explanation":"Horner-Kino b=1,c=1."},
-    {"id":"C2","type":"short","question":"$2x^4-3x^3+x-4 \\div (x-1)(x+2)$","answer":"H=2x^2-5x+9, S=-18x+14","explanation":"Horner bertingkat: bagi (x-1) sisa -4, hasilnya bagi (x+2) sisa -18; rekonstruksi S=-18(x-1)-4."},
+    {"id":"C1","type":"short","question":"$x^4+2x^3-3x^2+x+5 \\div (x^2+x+1)$","answer":"H=x^2+x-5, S=5x+10","explanation":"Horner-Kino $b=1,c=1$."},
+    {"id":"C2","type":"short","question":"$2x^4-3x^3+x-4 \\div (x-1)(x+2)$","answer":"H=2x^2-5x+9, S=-18x+14","explanation":"Horner bertingkat: bagi $(x-1)$ sisa $-4$, hasilnya bagi $(x+2)$ sisa $-18$; rekonstruksi $S=-18(x-1)-4$."},
     {"id":"C3","type":"short","question":"$x^4-1 \\div (x^2+1)$","answer":"H=x^2-1, S=0","explanation":"(x^2+1)(x^2-1)=x^4-1."},
-    {"id":"C4","type":"short","question":"$x^5-2x^3+x-1$ dibagi (x-1) dua kali","answer":"sisa pertama -1; hasil bagi lalu dibagi (x-1) sisa 2","explanation":"f(1)=-1; lihat pembahasan."},
-    {"id":"C5","type":"short","question":"$x^3+2x^2-x+4 \\div (x^2-1)$","answer":"H=x+2, S=6","explanation":"Sisa: 0x+6."},
+    {"id":"C4","type":"short","question":"$x^5-2x^3+x-1$ dibagi $(x-1)$ dua kali","answer":"sisa pertama $-1$; hasil bagi lalu dibagi $(x-1)$ sisa 2","explanation":"$f(1)=-1$; lihat pembahasan."},
+    {"id":"C5","type":"short","question":"$x^3+2x^2-x+4 \\div (x^2-1)$","answer":"H=x+2, S=6","explanation":"Sisa: $0x+6$."},
     {"id":"C6","type":"short","question":"Sisa $x^{10} \\div (x^2-1)$","answer":"1","explanation":"$x^{10}=(x^2)^5$; pakai $x^2≡1$ → sisa 1."},
-    {"id":"C7","type":"short","question":"$6x^3-5x^2+4x-1 \\div (2x-1)$","answer":"H=3x^2-x+3/2, S=1/2","explanation":"k=1/2 mentah 6,-2,3,1/2; hasil bagi dibagi 2."},
+    {"id":"C7","type":"short","question":"$6x^3-5x^2+4x-1 \\div (2x-1)$","answer":"H=3x^2-x+3/2, S=1/2","explanation":"$k=1/2$ mentah $6,-2,3,1/2$; hasil bagi dibagi 2."},
     {"id":"C8","type":"short","question":"$x^4 \\div (x^2+1)$","answer":"H=x^2-1, S=1","explanation":"x^4=(x^2+1)(x^2-1)+1."},
-    {"id":"C9","type":"short","question":"$x^3-2x^2+ax+b \\div (x^2+1)$ sisa 3x-2","answer":"a=4, b=-4","explanation":"Bagi bersusun → sisa (a-1)x+(b+2); samakan 3x-2 → a=4, b=-4."},
+    {"id":"C9","type":"short","question":"$x^3-2x^2+ax+b \\div (x^2+1)$ sisa $3x-2$","answer":"a=4, b=-4","explanation":"Bagi bersusun → sisa $(a-1)x+(b+2)$; samakan $3x-2 → a=4, b=-4$."},
     {"id":"C10","type":"short","question":"Sisa $x^4+x^3+x^2+x+1 \\div (x^2+1)$","answer":"1","explanation":"Ganti $x^2≡-1$: $1 + (-x) + (-1) + x + 1 = 1$."}
   ]
 }
@@ -636,10 +636,10 @@ Kurangkan: $p=0$, lalu $q=-7$. Jadi $p=0,\ q=-7$.
 {
   "set_id":"03-set-D-hots","level":"hots",
   "items":[
-    {"id":"D1","type":"short","question":"a agar $x^3-2x^2+ax-6$ habis dibagi (x-3)","answer":"a=-1","explanation":"f(3)=27-18+3a-6=3+3a=0 → a=-1."},
-    {"id":"D2","type":"short","question":"Sisa f dibagi (x-2)(x-3), tahu f(2)=3,f(3)=5","answer":"2x-1","explanation":"S=px+q; 2p+q=3, 3p+q=5 → p=2,q=-1."},
-    {"id":"D3","type":"proof","question":"Buktikan sisa oleh (x-k) konstanta","answer":"derajat sisa < 1 → derajat 0","explanation":"Pembagi derajat 1 → sisa derajat <1 = konstanta."},
-    {"id":"D4","type":"short","question":"$x^3+bx^2+cx+d \\div (x^2+1)$ sisa x+1, f(0)=2","answer":"b=1, c=2, d=2","explanation":"f(0)=d=2; sisa bersusun (c-1)x+(d-b)=x+1 → c=2, b=d-1=1."},
+    {"id":"D1","type":"short","question":"a agar $x^3-2x^2+ax-6$ habis dibagi $(x-3)$","answer":"a=-1","explanation":"f(3)=27-18+3a-6=3+3a=0 → a=-1."},
+    {"id":"D2","type":"short","question":"Sisa f dibagi $(x-2)(x-3)$, tahu $f(2)=3,f(3)=5$","answer":"2x-1","explanation":"S=px+q; 2p+q=3, 3p+q=5 → p=2,q=-1."},
+    {"id":"D3","type":"proof","question":"Buktikan sisa oleh $(x-k)$ konstanta","answer":"derajat sisa < 1 → derajat 0","explanation":"Pembagi derajat 1 → sisa derajat <1 = konstanta."},
+    {"id":"D4","type":"short","question":"$x^3+bx^2+cx+d \\div (x^2+1)$ sisa $x+1, f(0)=2$","answer":"b=1, c=2, d=2","explanation":"$f(0)=d=2$; sisa bersusun $(c-1)x+(d-b)=x+1 → c=2, b=d-1=1$."},
     {"id":"D5","type":"short","question":"Sisa $x^{2026} \\div (x^2-1)$","answer":"1","explanation":"x^{2026}=(x^2)^{1013}≡1."}
   ]
 }
@@ -664,11 +664,11 @@ Kurangkan: $p=0$, lalu $q=-7$. Jadi $p=0,\ q=-7$.
 {
   "set_id":"03-set-E-tka","level":"tka",
   "items":[
-    {"id":"E1","type":"mc","source":"TKA-2024-no6","question":"a+b jika sisa 5x-1","options":["11","5","-1","-5","-7"],"answer":"-1","explanation":"b=-3,a=2 → a+b=-1."},
+    {"id":"E1","type":"mc","source":"TKA-2024-no6","question":"$a+b$ jika sisa $5x-1$","options":["11","5","-1","-5","-7"],"answer":"-1","explanation":"b=-3,a=2 → a+b=-1."},
     {"id":"E2","type":"short","question":"$x^7-1 \\div (x-1)$ metode & sisa","answer":"Horner; sisa 0","explanation":"f(1)=0."},
-    {"id":"E3","type":"short","question":"k agar $2x^3-kx^2+3x-1$ habis dibagi (2x-1)","answer":"k=3","explanation":"f(1/2)=1/4 - k/4 + 3/2 - 1 = 3/4 - k/4 = 0 → k=3."},
-    {"id":"E4","type":"short","question":"Sisa $f \\div (x^2-1)$; f(-1)=2,f(1)=6","answer":"2x+4","explanation":"S=px+q; -p+q=2, p+q=6 → p=2,q=4."},
-    {"id":"E5","type":"short","question":"$x^4-5x^2+4 \\div (x^2-1)$","answer":"$H=x^2-4$, S=0; faktor $(x^2-1)(x^2-4)$","explanation":"x^4-5x^2+4=(x^2-1)(x^2-4)."}
+    {"id":"E3","type":"short","question":"k agar $2x^3-kx^2+3x-1$ habis dibagi $(2x-1)$","answer":"k=3","explanation":"f(1/2)=1/4 - k/4 + 3/2 - 1 = 3/4 - k/4 = 0 → k=3."},
+    {"id":"E4","type":"short","question":"Sisa $f \\div (x^2-1)$; $f(-1)=2,f(1)=6$","answer":"2x+4","explanation":"S=px+q; -p+q=2, p+q=6 → p=2,q=4."},
+    {"id":"E5","type":"short","question":"$x^4-5x^2+4 \\div (x^2-1)$","answer":"$H=x^2-4$, $S=0$; faktor $(x^2-1)(x^2-4)$","explanation":"x^4-5x^2+4=(x^2-1)(x^2-4)."}
   ]
 }
 ```

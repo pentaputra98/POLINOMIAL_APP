@@ -141,8 +141,8 @@ Bab penutup ini membantu peserta didik untuk:
 { "type":"activity", "widget":"matching", "id":"07-act-rumus", "competency":"K1-K6",
   "prompt":"Jodohkan konsep dengan rumus/pernyataannya",
   "pairs":[
-    ["Teorema Sisa","sisa f dibagi (x-k) sama dengan f(k)"],
-    ["Teorema Faktor","(x-k) faktor jika dan hanya jika f(k)=0"],
+    ["Teorema Sisa","sisa f dibagi $(x-k)$ sama dengan $f(k)$"],
+    ["Teorema Faktor","$(x-k)$ faktor jika dan hanya jika $f(k)=0$"],
     ["Vieta: jumlah akar kuadrat","-b/a"],
     ["Vieta: hasil kali akar kuadrat","c/a"]
   ],
@@ -165,7 +165,7 @@ $$p+q+r=-\tfrac{b}{a},\quad pq+qr+rp=\tfrac{c}{a},\quad pqr=-\tfrac{d}{a}$$
 ```json
 { "type":"activity", "widget":"cloze", "id":"07-act-cek", "competency":"K1-K6",
   "prompt":"Lengkapi pemeriksaan instan",
-  "template":"f(0) sama dengan {{0}}; f(1) sama dengan {{1}} seluruh koefisien; sisa f dibagi (x-k) sama dengan f({{2}}).",
+  "template":"$f(0)$ sama dengan {{0}}; $f(1)$ sama dengan {{1}} seluruh koefisien; sisa f dibagi $(x-k)$ sama dengan f({{2}}).",
   "answers":["konstanta","jumlah","k"],
   "reward":{"xp":20} }
 ```
@@ -219,9 +219,9 @@ A: Gunakan pemeriksaan instan: $f(0)$, $f(1)$, dan verifikasi Vieta. Hanya perlu
 { "type":"activity", "widget":"truefalse", "id":"07-act-faq", "competency":"K1-K6",
   "prompt":"Benar atau salah?",
   "statements":[
-    {"s":"Apabila hanya diminta sisa pembagian oleh (x-k), cukup hitung f(k).","a":true,"why":"Teorema Sisa."},
+    {"s":"Apabila hanya diminta sisa pembagian oleh $(x-k)$, cukup hitung $f(k)$.","a":true,"why":"Teorema Sisa."},
     {"s":"Polinomial berderajat n selalu memiliki tepat n akar real.","a":false,"why":"Paling banyak n; sebagian dapat kompleks atau kembar."},
-    {"s":"Sisa pembagian oleh polinomial kuadrat berbentuk rx+s.","a":true,"why":"Derajat sisa lebih kecil dari 2."},
+    {"s":"Sisa pembagian oleh polinomial kuadrat berbentuk $rx+s$.","a":true,"why":"Derajat sisa lebih kecil dari 2."},
     {"s":"Bentuk dengan variabel di penyebut termasuk polinomial.","a":false,"why":"Melanggar aturan pangkat bilangan bulat tak negatif."}
   ],
   "reward":{"xp":20} }
@@ -253,9 +253,9 @@ A: Gunakan pemeriksaan instan: $f(0)$, $f(1)$, dan verifikasi Vieta. Hanya perlu
     {"id":"A4","type":"mc","question":"$3/x+2$ polinomial?","options":["Ya","Tidak"],"answer":"Tidak","explanation":"3/x=3x^{-1}."},
     {"id":"A5","type":"short","question":"$10(0{,}05T^3+0{,}4T^2+20T)$","answer":"0,5T^3+4T^2+200T","explanation":"kali 10 tiap koef."},
     {"id":"A6","type":"short","question":"Hasil kali akar $x^2-5x+6$","answer":"6","explanation":"c/a=6."},
-    {"id":"A7","type":"short","question":"f(0) dari $x^3-x+4$","answer":"4","explanation":"konstanta."},
+    {"id":"A7","type":"short","question":"$f(0)$ dari $x^3-x+4$","answer":"4","explanation":"konstanta."},
     {"id":"A8","type":"short","question":"Titik potong X $x^2-1$","answer":"(1,0),(-1,0)","explanation":"akar ±1."},
-    {"id":"A9","type":"mc","question":"(x-1) faktor $x^3-1$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"f(1)=0."},
+    {"id":"A9","type":"mc","question":"$(x-1)$ faktor $x^3-1$?","options":["Ya","Tidak"],"answer":"Ya","explanation":"f(1)=0."},
     {"id":"A10","type":"short","question":"Persamaan berakar 0,3","answer":"x^2-3x=0","explanation":"jumlah 3, kali 0."}
   ]
 }
@@ -282,11 +282,11 @@ A: Gunakan pemeriksaan instan: $f(0)$, $f(1)$, dan verifikasi Vieta. Hanya perlu
   "set_id":"07-bank-B-sedang","level":"sedang",
   "items":[
     {"id":"B1","type":"short","question":"Sisa $2x^3-x+1 \\div (x+1)$","answer":"0","explanation":"f(-1)=-2+1+1=0."},
-    {"id":"B2","type":"short","question":"Faktorkan $x^3-4x^2+x+6$","answer":"(x+1)(x-2)(x-3)","explanation":"akar -1,2,3."},
+    {"id":"B2","type":"short","question":"Faktorkan $x^3-4x^2+x+6$","answer":"(x+1)(x-2)(x-3)","explanation":"akar $-1,2,3$."},
     {"id":"B3","type":"short","question":"$α^2+β^2$ dari $x^2-4x+2$","answer":"12","explanation":"16-4=12."},
-    {"id":"B4","type":"short","question":"a agar (x-2) faktor $x^3-3x^2+ax-2$","answer":"3","explanation":"f(2)=8-12+2a-2=0→a=3."},
-    {"id":"B5","type":"short","question":"$x^3+2x^2-5x+1 \\div (x-2)$","answer":"H=x^2+4x+3, S=7","explanation":"Horner k=2."},
-    {"id":"B6","type":"short","question":"Persamaan berakar -2,5","answer":"x^2-3x-10=0","explanation":"jumlah 3, kali -10."},
+    {"id":"B4","type":"short","question":"a agar $(x-2)$ faktor $x^3-3x^2+ax-2$","answer":"3","explanation":"f(2)=8-12+2a-2=0→a=3."},
+    {"id":"B5","type":"short","question":"$x^3+2x^2-5x+1 \\div (x-2)$","answer":"H=x^2+4x+3, S=7","explanation":"Horner $k=2$."},
+    {"id":"B6","type":"short","question":"Persamaan berakar $-2,5$","answer":"x^2-3x-10=0","explanation":"jumlah 3, kali $-10$."},
     {"id":"B7","type":"short","question":"Sisa $x^{2026} \\div (x-1)$","answer":"1","explanation":"f(1)=1."},
     {"id":"B8","type":"short","question":"Jumlah akar $3x^2-12x+7$","answer":"4","explanation":"12/3=4."},
     {"id":"B9","type":"short","question":"Sisa $x^4-3x^2+2 \\div (x^2-1)$","answer":"0","explanation":"(x^2-1)(x^2-2)."},
@@ -324,16 +324,16 @@ A: Gunakan pemeriksaan instan: $f(0)$, $f(1)$, dan verifikasi Vieta. Hanya perlu
 {
   "set_id":"07-bank-C-sulit","level":"sulit",
   "items":[
-    {"id":"C1","type":"short","question":"$Σ1/akar$ dari $x^3-6x^2+11x-6$","answer":"11/6","explanation":"(pq+qr+rp)/(pqr)=11/6."},
-    {"id":"C2","type":"short","question":"Sisa dibagi (x-1)(x-2)(x-3); f=2,5,10","answer":"x^2+1","explanation":"melewati (1,2),(2,5),(3,10)."},
-    {"id":"C3","type":"short","question":"Faktorkan $2x^3+x^2-13x+6$","answer":"(x-2)(2x-1)(x+3)","explanation":"akar 2,1/2,-3."},
-    {"id":"C4","type":"short","question":"Persamaan berakar α^2,β^2 dari $x^2-6x+4$","answer":"x^2-28x+16=0","explanation":"jumlah 36-8=28, kali 16."},
-    {"id":"C5","type":"short","question":"m agar $x^3-70x^2-600x+m=0$ berakar 40","answer":"72000","explanation":"substitusi x=40."},
-    {"id":"C6","type":"short","question":"Jumlah kuadrat akar $x^4-5x^2+4$","answer":"10","explanation":"$(Σ)^2$-2Σpasang$=0-2(-5)=10$."},
+    {"id":"C1","type":"short","question":"$Σ1/akar$ dari $x^3-6x^2+11x-6$","answer":"11/6","explanation":"$(pq+qr+rp)/(pqr)=11/6$."},
+    {"id":"C2","type":"short","question":"Sisa dibagi $(x-1)(x-2)(x-3)$; $f=2,5,10$","answer":"x^2+1","explanation":"melewati $(1,2),(2,5),(3,10)$."},
+    {"id":"C3","type":"short","question":"Faktorkan $2x^3+x^2-13x+6$","answer":"(x-2)(2x-1)(x+3)","explanation":"akar $2,1/2,-3$."},
+    {"id":"C4","type":"short","question":"Persamaan berakar $α^2,β^2$ dari $x^2-6x+4$","answer":"x^2-28x+16=0","explanation":"jumlah $36-8=28$, kali 16."},
+    {"id":"C5","type":"short","question":"m agar $x^3-70x^2-600x+m=0$ berakar 40","answer":"72000","explanation":"substitusi $x=40$."},
+    {"id":"C6","type":"short","question":"Jumlah kuadrat akar $x^4-5x^2+4$","answer":"10","explanation":"$(\\Sigma)^2 - 2\\Sigma_{\\text{pasang}} = 0 - 2(-5) = 10$."},
     {"id":"C7","type":"short","question":"Persamaan berakar +2 dari $x^3-3x^2+2x$","answer":"x^3-9x^2+26x-24=0","explanation":"x→x-2."},
-    {"id":"C8","type":"short","question":"a·b jika sisa 5x-1","answer":"-6","explanation":"a=2,b=-3 → ab=-6."},
+    {"id":"C8","type":"short","question":"$a·b$ jika sisa $5x-1$","answer":"-6","explanation":"a=2,b=-3 → ab=-6."},
     {"id":"C9","type":"short","question":"Sisa $x^{100}+x+1 \\div (x^2-1)$","answer":"x+2","explanation":"x^{100}≡1 → 1+x+1."},
-    {"id":"C10","type":"short","question":"Kubik geometri, tengah 3, hasil kali 27","answer":"contoh: $x^3-13x^2+39x-27=0$ (akar 1,3,9)","explanation":"tengah=∛27=3; ambil rasio 3 → akar 1,3,9."}
+    {"id":"C10","type":"short","question":"Kubik geometri, tengah 3, hasil kali 27","answer":"contoh: $x^3-13x^2+39x-27=0$ (akar 1,3,9)","explanation":"tengah=∛$27=3$; ambil rasio 3 → akar 1,3,9."}
   ]
 }
 ```
@@ -362,10 +362,10 @@ A: Gunakan pemeriksaan instan: $f(0)$, $f(1)$, dan verifikasi Vieta. Hanya perlu
 {
   "set_id":"07-bank-D-hots","level":"hots",
   "items":[
-    {"id":"D1","type":"short","question":"$Σakar^3$ dari akar {-1,1,2}","answer":"8","explanation":"-1+1+8=8."},
-    {"id":"D2","type":"short","question":"f derajat 3, f(1)=f(2)=f(3)=0, f(0)=6","answer":"-(x-1)(x-2)(x-3)","explanation":"a·(-1)(-2)(-3)=6→a=-1."},
-    {"id":"D3","type":"proof","question":"Buktikan Σα^2=-2p untuk $x^3+px+q$","answer":"(Σα)^2-2Σαβ=0-2p","explanation":"Σα=0, Σαβ=p."},
-    {"id":"D4","type":"short","question":"$1/40+1/60+1/(-30)$ via Vieta","answer":"1/120","explanation":"Σpasang/hasilkali=-600/-72000=1/120."},
+    {"id":"D1","type":"short","question":"$Σakar^3$ dari akar {$-1,1,2$}","answer":"8","explanation":"-1+1+8=8."},
+    {"id":"D2","type":"short","question":"f derajat $3, f(1)=f(2)=f(3)=0, f(0)=6$","answer":"-(x-1)(x-2)(x-3)","explanation":"a·(-1)(-2)(-3)=6→a=-1."},
+    {"id":"D3","type":"proof","question":"Buktikan $Σα^2=-2p$ untuk $x^3+px+q$","answer":"(Σα)^2-2Σαβ=0-2p","explanation":"Σα=0, Σαβ=p."},
+    {"id":"D4","type":"short","question":"$1/40+1/60+1/(-30)$ via Vieta","answer":"1/120","explanation":"Σpasang/hasilkali=$-600/-72000=1/120$."},
     {"id":"D5","type":"short","question":"Kubik berakar $α+β,β+γ,γ+α$ dari $x^3-6x^2+11x-6$","answer":"x^3-12x^2+47x-60=0","explanation":"akar 5,4,3 (yaitu 6-akar)."}
   ]
 }
@@ -389,11 +389,11 @@ A: Gunakan pemeriksaan instan: $f(0)$, $f(1)$, dan verifikasi Vieta. Hanya perlu
   "prompt":"Kelompokkan tiap tugas ke alat yang tepat",
   "categories":["Teorema Sisa/Faktor","Teorema Vieta"],
   "items":[
-    ["Menentukan sisa f(x) dibagi (x-3)","Teorema Sisa/Faktor"],
+    ["Menentukan sisa $f(x)$ dibagi $(x-3)$","Teorema Sisa/Faktor"],
     ["Menentukan jumlah akar persamaan","Teorema Vieta"],
-    ["Memeriksa apakah (x-2) faktor","Teorema Sisa/Faktor"],
+    ["Memeriksa apakah $(x-2)$ faktor","Teorema Sisa/Faktor"],
     ["Menghitung hasil kali akar","Teorema Vieta"],
-    ["Memeriksa apakah f(k)=0","Teorema Sisa/Faktor"],
+    ["Memeriksa apakah $f(k)=0$","Teorema Sisa/Faktor"],
     ["Menghitung $x1^2+x2^2$ dari akar","Teorema Vieta"]
   ],
   "reward":{"xp":25} }
@@ -439,19 +439,19 @@ A: Gunakan pemeriksaan instan: $f(0)$, $f(1)$, dan verifikasi Vieta. Hanya perlu
   "items":[
     {"id":"Q1","type":"mc","competency":"K1","question":"Derajat & koef utama $V(T)=0{,}05T^3+0{,}4T^2+20T$","options":["3 dan 0,05","3 dan 0,4","2 dan 0,4","3 dan 20"],"answer":"3 dan 0,05","explanation":"pangkat tertinggi 3, koef 0,05."},
     {"id":"Q2","type":"mc","competency":"K2","source":"TKA-no7","question":"Total 10 drum","options":["50T^3+40T^2+200T","5T^3+4T^2+200T","0,5T^3+4T^2+200T","0,5T^3+0,4T^2+200T"],"answer":"0,5T^3+4T^2+200T","explanation":"10×tiap koefisien."},
-    {"id":"Q3","type":"mc","competency":"K3","source":"TKA-no6","question":"a+b jika sisa 5x-1","options":["11","5","-1","-5","-7"],"answer":"-1","explanation":"a=2,b=-3."},
+    {"id":"Q3","type":"mc","competency":"K3","source":"TKA-no6","question":"$a+b$ jika sisa $5x-1$","options":["11","5","-1","-5","-7"],"answer":"-1","explanation":"a=2,b=-3."},
     {"id":"Q4","type":"mc","competency":"K4","question":"Sisa $x^3-2x^2+4x-1 \\div (x-2)$","options":["7","5","3","-1"],"answer":"7","explanation":"f(2)=8-8+8-1=7."},
     {"id":"Q5","type":"mc","competency":"K5","question":"Jumlah akar $2x^2-8x+6$","options":["4","3","8","-4"],"answer":"4","explanation":"-(-8)/2=4."},
     {"id":"Q6","type":"mc","competency":"K4","question":"Salah satu faktor $x^3-6x^2+11x-6$","options":["(x-1)","(x+1)","(x-4)","(x+2)"],"answer":"(x-1)","explanation":"f(1)=0."},
-    {"id":"Q7","type":"mc","competency":"K4","question":"Banyak titik potong X $x^3-3x^2+2x$","options":["1","2","3","0"],"answer":"3","explanation":"x(x-1)(x-2): akar 0,1,2."},
-    {"id":"Q8","type":"multi","competency":"K4","source":"TKA-no5","question":"Titik potong X $x^3+3x^2-10x-24$","options":["(-2,0)","(-1,0)","(3,0)","(4,0)","(5,0)"],"answer":["(-2,0)","(3,0)"],"explanation":"akar -2,-4,3."},
+    {"id":"Q7","type":"mc","competency":"K4","question":"Banyak titik potong X $x^3-3x^2+2x$","options":["1","2","3","0"],"answer":"3","explanation":"$x(x-1)(x-2)$: akar 0,1,2."},
+    {"id":"Q8","type":"multi","competency":"K4","source":"TKA-no5","question":"Titik potong X $x^3+3x^2-10x-24$","options":["(-2,0)","(-1,0)","(3,0)","(4,0)","(5,0)"],"answer":["(-2,0)","(3,0)"],"explanation":"akar $-2,-4,3$."},
     {"id":"Q9","type":"multi","competency":"K6","source":"TKA-no8","question":"Penjualan mungkin (modal 2000 juta)","options":["30 unit","40 unit","60 unit"],"answer":["40 unit","60 unit"],"explanation":"f(40)=f(60)=2000."},
     {"id":"Q10","type":"short","competency":"K5","question":"Hasil kali akar $x^3-2x^2-5x+6$","answer":"-6","explanation":"-d/a=-6."},
     {"id":"Q11","type":"short","competency":"K4","question":"Sisa $x^{50}-1 \\div (x+1)$","answer":"0","explanation":"f(-1)=1-1=0."},
-    {"id":"Q12","type":"short","competency":"K4","question":"k agar (x-1) faktor $x^3-kx+2$","answer":"3","explanation":"f(1)=1-k+2=0→k=3."},
+    {"id":"Q12","type":"short","competency":"K4","question":"k agar $(x-1)$ faktor $x^3-kx+2$","answer":"3","explanation":"f(1)=1-k+2=0→k=3."},
     {"id":"Q13","type":"short","competency":"K5","question":"$α^2+β^2$ dari $x^2-5x+3$","answer":"19","explanation":"25-6=19."},
     {"id":"Q14","type":"short","competency":"K5","question":"Persamaan berakar +1 dari $x^2-4x+3$","answer":"x^2-6x+8=0","explanation":"x→x-1."},
-    {"id":"Q15","type":"short","competency":"K4","question":"Sisa dibagi (x-1)(x+1); f(1)=4,f(-1)=0","answer":"2x+2","explanation":"r+s=4,-r+s=0→r=2,s=2."}
+    {"id":"Q15","type":"short","competency":"K4","question":"Sisa dibagi $(x-1)(x+1)$; $f(1)=4,f(-1)=0$","answer":"2x+2","explanation":"r+s=4,-r+s=0→r=2,s=2."}
   ]
 }
 ```

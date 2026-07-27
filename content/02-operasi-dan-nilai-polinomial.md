@@ -228,7 +228,7 @@ $$f(2) = 2(2)^3 - 5(2)^2 + 3(2) - 4 = 2(8) - 5(4) + 6 - 4 = 16 - 20 + 6 - 4 = -2
   "prompt":"Amati perubahan nilai $f(x)=2x^3-5x^2+3x-4$ saat $x$ digeser",
   "poly":[2,-5,3,-4], "x_min":-3, "x_max":4, "step":0.5, "show_graph":true,
   "checkpoints":[
-    {"x":0,"fx":-4,"note":"f(0) sama dengan konstanta."},
+    {"x":0,"fx":-4,"note":"$f(0)$ sama dengan konstanta."},
     {"x":2,"fx":-2,"note":"Sesuai perhitungan contoh."}
   ],
   "reward":{"xp":15} }
@@ -314,7 +314,7 @@ Jadi $p=3$ dan $q=6$.
 ```json
 { "type":"activity", "widget":"cloze", "id":"02-act-cloze", "competency":"K2",
   "prompt":"Lengkapi kalimat kunci tentang nilai polinomial",
-  "template":"Untuk $f(x)=x^3-2x^2+5$: nilai $f(0)$ sama dengan konstanta, yaitu {{0}}; sedangkan $f(-1)={{1}}$.",
+  "template":"Untuk $f(x)=x^3-2x^2+5$: nilai $f(0)$ sama dengan konstanta, yaitu {{0}}; sedangkan $f(-1)=$ {{1}}.",
   "answers":["5","2"],
   "reward":{"xp":20} }
 ```
@@ -424,7 +424,7 @@ Jadi $g(x) = x^2 - 1$.
   "statements":[
     {"s":"Derajat hasil kali dua polinomial sama dengan jumlah derajat keduanya.","a":true,"why":"Suku pemimpin saling dikalikan sehingga pangkatnya bertambah."},
     {"s":"$(-2)^2 = -4$.","a":false,"why":"$(-2)^2=4$; tanda negatif ikut dikuadratkan."},
-    {"s":"$f(0)$ selalu sama dengan konstanta polinomial.","a":true,"why":"Substitusi x=0 menghilangkan seluruh suku bervariabel."},
+    {"s":"$f(0)$ selalu sama dengan konstanta polinomial.","a":true,"why":"Substitusi $x=0$ menghilangkan seluruh suku bervariabel."},
     {"s":"Pada pengurangan, hanya suku pertama pengurang yang berubah tanda.","a":false,"why":"Seluruh suku pengurang berubah tanda."}
   ],
   "reward":{"xp":20} }
@@ -473,11 +473,11 @@ Jadi $g(x) = x^2 - 1$.
   "set_id": "02-set-A-mudah", "level": "mudah",
   "items": [
     {"id":"A1","type":"short","question":"$(x^2+2x)+(3x^2-x)$","answer":"4x^2 + x","explanation":"Gabung suku sejenis."},
-    {"id":"A2","type":"short","question":"$(5x-4)-(2x+1)$","answer":"3x - 5","explanation":"Balik tanda pengurang: 5x-4-2x-1."},
+    {"id":"A2","type":"short","question":"$(5x-4)-(2x+1)$","answer":"3x - 5","explanation":"Balik tanda pengurang: $5x-4-2x-1$."},
     {"id":"A3","type":"short","question":"$3(x^2-2x+4)$","answer":"3x^2 - 6x + 12","explanation":"Distribusi ke tiap suku."},
     {"id":"A4","type":"short","question":"$f(x)=x^2+1,\\ f(3)$","answer":"10","explanation":"9+1=10."},
     {"id":"A5","type":"short","question":"$(x+2)(x+5)$","answer":"x^2 + 7x + 10","explanation":"Distributif."},
-    {"id":"A6","type":"short","question":"$f(x)=2x-7,\\ f(0)$","answer":"-7","explanation":"f(0)=konstanta."},
+    {"id":"A6","type":"short","question":"$f(x)=2x-7,\\ f(0)$","answer":"-7","explanation":"$f(0)$=konstanta."},
     {"id":"A7","type":"short","question":"$(x-1)(x+1)$","answer":"x^2 - 1","explanation":"Selisih kuadrat."},
     {"id":"A8","type":"short","question":"$(4x^3-x)+(x^3+x)$","answer":"5x^3","explanation":"x saling hapus."},
     {"id":"A9","type":"short","question":"$f(x)=x^3,\\ f(-1)$","answer":"-1","explanation":"(-1)^3=-1."},
@@ -542,13 +542,13 @@ Jadi $g(x) = x^2 - 1$.
   "items":[
     {"id":"C1","type":"short","question":"$(x+2)^3-(x-2)^3$","answer":"12x^2 + 16","explanation":"2(3x^2·2 + 2^3)=... = 12x^2+16."},
     {"id":"C2","type":"short","question":"$f(x)=2x^3-x^2+4x-3,\\ f(1/2)$","answer":"-1","explanation":"2(1/8)-1/4+2-3 = 1/4-1/4+2-3 = -1."},
-    {"id":"C3","type":"short","question":"$x^3+ax+b=(x-1)(x^2+x+b)$","answer":"a=b-1, b bebas; jabaran: $x^3+(b-1)x-b$, jadi a=b-1 dan b=-b→b=0,a=-1","explanation":"Samakan: $(x-1)(x^2+x+b)=x^3+(b-1)x-b$. Konstanta: $b=-b$→$b=0$; $a=b-1=-1$."},
+    {"id":"C3","type":"short","question":"$x^3+ax+b=(x-1)(x^2+x+b)$","answer":"$a=b-1, b$ bebas; jabaran: $x^3+(b-1)x-b$, jadi $a=b-1$ dan $b=-b→b=0,a=-1$","explanation":"Samakan: $(x-1)(x^2+x+b)=x^3+(b-1)x-b$. Konstanta: $b=-b$→$b=0$; $a=b-1=-1$."},
     {"id":"C4","type":"short","question":"$(x^2+px+2)(x+3)=x^3+4x^2+5x+6$, p=","answer":"1","explanation":"Koef $x^2$: $p+3=4$ → $p=1$."},
     {"id":"C5","type":"short","question":"$f(x)=x^2+bx+c,\\ f(2)=f(5)=0$","answer":"b=-7, c=10","explanation":"Akar 2 dan 5 → $x^2-7x+10$."},
     {"id":"C6","type":"short","question":"$\\frac{x^3-8}{x-2}$","answer":"x^2 + 2x + 4","explanation":"a^3-b^3=(a-b)(a^2+ab+b^2)."},
     {"id":"C7","type":"short","question":"$\\frac{5}{(x-1)(x+4)}=\\frac{A}{x-1}+\\frac{B}{x+4}$","answer":"A=1, B=-1","explanation":"x=1: 5=5A→A=1; x=-4: 5=-5B→B=-1."},
-    {"id":"C8","type":"short","question":"$f(50)$ vs 2000","answer":"f(50)=-6000, ≠2000 (lebih kecil)","explanation":"125000-175000-30000+74000=-6000."},
-    {"id":"C9","type":"proof","question":"Buktikan $(a+b+c)^2=a^2+b^2+c^2+2(ab+bc+ca)$","answer":"jabarkan (a+b+c)(a+b+c)","explanation":"Distribusi penuh menghasilkan 3 kuadrat + 2× tiap hasil kali silang."},
+    {"id":"C8","type":"short","question":"$f(50)$ vs 2000","answer":"$f(50)=-6000, ≠2000$ (lebih kecil)","explanation":"125000-175000-30000+74000=-6000."},
+    {"id":"C9","type":"proof","question":"Buktikan $(a+b+c)^2=a^2+b^2+c^2+2(ab+bc+ca)$","answer":"jabarkan $(a+b+c)(a+b+c)$","explanation":"Distribusi penuh menghasilkan 3 kuadrat + 2× tiap hasil kali silang."},
     {"id":"C10","type":"short","question":"$x^3+kx^2+2x+8=0$ saat $x=-2$, k=","answer":"1","explanation":"-8+4k-4+8=0 → 4k-4=0 → k=1."}
   ]
 }
@@ -578,7 +578,7 @@ Jadi $g(x) = x^2 - 1$.
 {
   "set_id":"02-set-D-hots","level":"hots",
   "items":[
-    {"id":"D1","type":"short","question":"Mengapa f(40)=f(60)?","answer":"karena f(x)-2000 berakar 40,60,-30","explanation":"f(40)=2000 dan 60 juga akar f(x)-2000 → f(60)=2000."},
+    {"id":"D1","type":"short","question":"Mengapa $f(40)=f(60)$?","answer":"karena $f(x)-2000$ berakar $40,60,-30$","explanation":"$f(40)=2000$ dan 60 juga akar $f(x)-2000 → f(60)=2000$."},
     {"id":"D2","type":"short","question":"f+g=3x^2-x+4, f-g=x^2+3x-2","answer":"f=2x^2+x+1, g=x^2-2x+3","explanation":"Jumlah/2 dan selisih/2."},
     {"id":"D3","type":"short","question":"f(x+1)-f(x)=2x+3, f(0)=1","answer":"x^2 + 2x + 1","explanation":"$f(x)=x^2+2x+1$ memenuhi selisih & $f(0)=1$."},
     {"id":"D4","type":"short","question":"pecahan parsial $x^2+1$ / $x(x-1)(x+1)$","answer":"A=-1, B=1, C=1","explanation":"x=0→A=-1; x=1→B=1; x=-1→C=1."},
@@ -606,11 +606,11 @@ Jadi $g(x) = x^2 - 1$.
 {
   "set_id":"02-set-E-tka","level":"tka",
   "items":[
-    {"id":"E1","type":"short","source":"TKA-drum","question":"Total 8 drum V(T)","answer":"0,4T^3 + 3,2T^2 + 160T","explanation":"Kalikan tiap koefisien dengan 8."},
-    {"id":"E2","type":"short","source":"TKA-saham","question":"f(20) vs 2000","answer":"f(20)=42000, jauh lebih besar dari 2000","explanation":"8000-28000-12000+74000=42000."},
+    {"id":"E1","type":"short","source":"TKA-drum","question":"Total 8 drum $V(T)$","answer":"0,4T^3 + 3,2T^2 + 160T","explanation":"Kalikan tiap koefisien dengan 8."},
+    {"id":"E2","type":"short","source":"TKA-saham","question":"f(20) vs 2000","answer":"$f(20)=42000$, jauh lebih besar dari 2000","explanation":"8000-28000-12000+74000=42000."},
     {"id":"E3","type":"short","question":"C(x)=x^2+10x+25, C(15)","answer":"400","explanation":"(x+5)^2 → (20)^2=400."},
-    {"id":"E4","type":"short","question":"x^3-6x^2+11x-6=(x-1)(x-2)(x-r)","answer":"r=3","explanation":"Konstanta: (-1)(-2)(-r)=-6 → r=3."},
-    {"id":"E5","type":"short","question":"$f(1)=f(-1)$ untuk $2x^3+ax^2+bx+6$ (cari b; a bebas)","answer":"b=-2","explanation":"f(1)-f(-1)=4+2b=0 → b=-2; nilai a bebas karena suku genap otomatis sama."}
+    {"id":"E4","type":"short","question":"x^3-6x^2+11x-6=(x-1)(x-2)(x-r)","answer":"r=3","explanation":"Konstanta: $(-1)(-2)(-r)=-6 → r=3$."},
+    {"id":"E5","type":"short","question":"$f(1)=f(-1)$ untuk $2x^3+ax^2+bx+6$ (cari b; a bebas)","answer":"b=-2","explanation":"$f(1)-f(-1)=4+2b=0 → b=-2$; nilai a bebas karena suku genap otomatis sama."}
   ]
 }
 ```
