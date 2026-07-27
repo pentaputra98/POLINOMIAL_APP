@@ -8,12 +8,13 @@
        diperbarui penulis.
    Naikkan CACHE saat aset shell berubah.
    ========================================================================= */
-const CACHE = "polinomial-v41";
-const V = "?b=59";
+const CACHE = "polinomial-v42";
+const V = "?b=60";
 
 const SHELL = [
   "./",
   "./index.html",
+  "./favicon.svg" + V,
   "./css/style.css" + V,
   "./js/icons.js" + V,
   "./js/mathrender.js" + V,
@@ -21,7 +22,6 @@ const SHELL = [
   "./js/store.js" + V,
   "./js/gamify.js" + V,
   "./js/content.js" + V,
-  "./js/ui.js" + V,
   "./js/diagrams.js" + V,
   "./js/keypad.js" + V,
   "./js/quiz.js" + V,

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Favicon aplikasi Polinomial — palet neo-brutalism yang sama dengan css/style.css
+       (--butter #FFD97A, --line #2B2B2B). Ganti path kurva atau warna di sini bila
+       ingin ikon lain; tidak ada berkas lain yang perlu disunting. -->
+  <rect x="4" y="4" width="56" height="56" rx="14"
+        fill="#FFD97A" stroke="#2B2B2B" stroke-width="5"/>
+  <path d="M13 44 C 22 12, 33 58, 42 26 S 49 18, 52 22"
+        fill="none" stroke="#2B2B2B" stroke-width="6"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

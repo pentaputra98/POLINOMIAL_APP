@@ -1,6 +1,6 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **27 Juli 2026** · Versi aset **`?b=59`** · Cache SW **`polinomial-v41`**
+> Terakhir diperbarui: **27 Juli 2026** · Versi aset **`?b=60`** · Cache SW **`polinomial-v42`**
 
 ---
 
@@ -116,11 +116,8 @@ js/
   diagrams.js   peta konsep/roadmap/flow/kolom/Horner interaktif
   enhance.js    auto-fit bagan & rumus + penampil bagan layar penuh
   scratchpad.js papan coret VEKTOR (hapus per-goresan, zoom/pan)
-  ui.js         [PENINGGALAN — tidak dipakai] NBSelect & DragDrop dari aplikasi lama.
-                Masih dimuat index.html + di-precache SW, tetapi TIDAK ada pemanggilnya
-                dan markupnya masih memakai kelas FontAwesome (`fa-solid`) yang
-                pustakanya sudah dihapus. Kandidat hapus — belum diizinkan (butir 8.1).
   app.js        router hash, render bab, chrome, sticky ToC
+favicon.svg     ikon tab peramban (dirujuk <link rel="icon"> di index.html)
 content/        MATERI — sumber kebenaran
 lib/katex/      KaTeX lokal + 20 font woff2
 lib/lucide/     1756 SVG Lucide (sumber untuk membangkitkan icons.js)
@@ -201,11 +198,11 @@ Horner & slider engine **cocok persis** dengan `expected_quotient`/`checkpoints`
    `sub_2_operasi.md`, `sub_3_nilai.md`, folder `_legacy/`, folder `lib/fontawesome/`~~
    **SUDAH DIHAPUS** (diverifikasi 27 Juli 2026: tidak ada lagi di folder; `lib/` kini
    hanya `katex/` dan `lucide/`).
-   **Yang masih tersisa:** `js/ui.js` (7,8 KB) — dimuat `index.html` baris 140 dan
-   di-precache `sw.js` baris 24, tetapi `NBSelect`/`DragDrop` tidak dipanggil dari mana
-   pun dan isinya masih memakai kelas FontAwesome. Aman dihapus (butuh: hapus berkas,
-   hapus baris di `index.html` + `sw.js`, naikkan `?b=` & nama `CACHE`) —
-   **belum saya izinkan**.
+   ~~`js/ui.js`~~ **SUDAH DIHAPUS** 27 Juli 2026 atas izin pemilik, berikut barisnya di
+   `index.html` dan `sw.js`; `?b=` naik ke 60 dan `CACHE` ke `polinomial-v42`.
+   Diverifikasi setelah hapus: `window.NBSelect`/`DragDrop` **undefined**, 15 skrip
+   dimuat (dari 16), 8 bab tetap **3284 rumus / 0 error KaTeX**, konsol **0 pesan**.
+   **Tidak ada lagi berkas peninggalan yang tersisa.**
 2. **1 bagan masih ASCII** — diagram "ide pemersatu" Bab 04
    (`f(k)=0 ⟺ faktor ⟺ akar`). Tidak melanggar direktif karena marker terdekatnya
    bukan Concept Map. Bisa dibuatkan komponen khusus bila diinginkan.
@@ -213,6 +210,17 @@ Horner & slider engine **cocok persis** dengan `expected_quotient`/`checkpoints`
    "Bagan / Peta Konsep". Judul spesifik butuh penanda baru di `.md`.
 4. **30 soal isian** memakai petunjuk "pisahkan dengan koma" (bukan kotak berlabel)
    karena struktur kuncinya terlalu bervariasi untuk dipecah otomatis dengan aman.
+5. **Math mentah di dalam blok JSON** (audit 27 Juli 2026, 1384 string diperiksa).
+   `smart()` mengirim string yang memuat kata (≥3 huruf) ke jalur teks biasa, sehingga
+   penggalan rumus di dalamnya tampil apa adanya — mis. `Suku pangkat tertinggi -6x^5.`
+   - **76 string** memuat tanda `^` di luar `$…$` → **pasti salah tampil**, tersebar di
+     8 berkas (01: 20 · 06: 13 · 05: 11 · 02: 10 · 03: 9 · 04: 6 · 07: 6 · 00: 1).
+   - **179 string** memuat math tanpa `^` (`2x`, `1/2`, `f(0)=0`, `≠`, `→`) — sebagian
+     wajar sebagai prosa (`Derajat 1 = linear.`), perlu penilaian per kasus.
+   - **114 string** tanpa kata sudah benar (dirender penuh sebagai LaTeX) — jangan disentuh.
+   - Tidak ada `$` ganjil/tak berpasangan.
+   Perbaikan = membungkus penggalan dengan `$…$` di `.md` (dan koma desimal jadi `{,}`).
+   **Menunggu izin**; harus penggantian literal per item, bukan regex massal (jebakan #4).
 
 ---
 
