@@ -499,12 +499,12 @@ Kerjakan dulu di kertas, baru buka pembahasan. Blok JSON di tiap set adalah data
     {"id": "A2", "type": "short", "question": "Banyak suku pada $x^4 - x^3 + x^2 - x + 1$", "answer": "5", "explanation": "Ada 5 bagian dipisah tanda +/-."},
     {"id": "A3", "type": "short", "question": "Konstanta dari $2x^2 - 9$", "answer": "-9", "explanation": "Suku tanpa variabel adalah -9 (tanda ikut)."},
     {"id": "A4", "type": "short", "question": "Koefisien $x$ pada $7x^2 - 3x + 4$", "answer": "-3", "explanation": "Sukunya -3x, jadi koefisien -3."},
-    {"id": "A5", "type": "short", "question": "Koefisien utama dari $-6x^5 + x^2$", "answer": "-6", "explanation": "Suku pangkat tertinggi -6x^5."},
+    {"id": "A5", "type": "short", "question": "Koefisien utama dari $-6x^5 + x^2$", "answer": "-6", "explanation": "Suku pangkat tertinggi $-6x^5$."},
     {"id": "A6", "type": "mc", "question": "Polinomial derajat 1 disebut", "options": ["Konstan", "Linear", "Kuadrat", "Kubik"], "answer": "Linear", "explanation": "Derajat 1 = linear."},
     {"id": "A7", "type": "mc", "question": "$x^2 - 16$ berdasarkan banyak suku adalah", "options": ["Monomial", "Binomial", "Trinomial", "Kuadrat"], "answer": "Binomial", "explanation": "2 suku = binomial."},
     {"id": "A8", "type": "short", "question": "Bentuk baku dari $3 - x^2 + 2x$", "answer": "-x^2 + 2x + 3", "explanation": "Urutkan pangkat tertinggi ke terendah."},
-    {"id": "A9", "type": "short", "question": "Derajat konstanta $12$", "answer": "0", "explanation": "12 = 12x^0, derajat 0."},
-    {"id": "A10", "type": "short", "question": "Koefisien $x^2$ pada $x^3 + x^2 - x$", "answer": "1", "explanation": "x^2 = 1·x^2, koefisien 1."}
+    {"id": "A9", "type": "short", "question": "Derajat konstanta $12$", "answer": "0", "explanation": "$12 = 12x^0$, derajat 0."},
+    {"id": "A10", "type": "short", "question": "Koefisien $x^2$ pada $x^3 + x^2 - x$", "answer": "1", "explanation": "$x^2 = 1·x^2$, koefisien 1."}
   ]
 }
 ```
@@ -532,15 +532,15 @@ Kerjakan dulu di kertas, baru buka pembahasan. Blok JSON di tiap set adalah data
   "set_id": "01-set-B-sedang",
   "level": "sedang",
   "items": [
-    {"id": "B1", "type": "short", "question": "Derajat & koef. utama $2x^2 - x^5 + 7$", "answer": "derajat 5, koefisien -1", "explanation": "Suku pemimpin -x^5."},
-    {"id": "B2", "type": "short", "question": "Koefisien $x^3$ pada $4x^4 - x^2 + 6$", "answer": "0", "explanation": "Tidak ada suku x^3 → koefisien 0."},
-    {"id": "B3", "type": "mc", "question": "Manakah polinomial?", "options": ["$\\frac{3}{x}+x$", "$x^3 - \\sqrt{5}$", "Keduanya", "Tidak ada"], "answer": "$x^3 - \\sqrt{5}$", "explanation": "3/x = 3x^{-1} bukan polinomial; √5 hanya konstanta."},
+    {"id": "B1", "type": "short", "question": "Derajat & koef. utama $2x^2 - x^5 + 7$", "answer": "derajat 5, koefisien -1", "explanation": "Suku pemimpin $-x^5$."},
+    {"id": "B2", "type": "short", "question": "Koefisien $x^3$ pada $4x^4 - x^2 + 6$", "answer": "0", "explanation": "Tidak ada suku $x^3$ → koefisien 0."},
+    {"id": "B3", "type": "mc", "question": "Manakah polinomial?", "options": ["$\\frac{3}{x}+x$", "$x^3 - \\sqrt{5}$", "Keduanya", "Tidak ada"], "answer": "$x^3 - \\sqrt{5}$", "explanation": "$3/x = 3x^{-1}$ bukan polinomial; √5 hanya konstanta."},
     {"id": "B4", "type": "short", "question": "Klasifikasi $x^3 - 8$ (banyak suku & derajat)", "answer": "binomial, kubik (derajat 3)", "explanation": "2 suku, pangkat tertinggi 3."},
     {"id": "B5", "type": "short", "question": "$x^4 - 1$ dengan semua koefisien", "answer": "x^4 + 0x^3 + 0x^2 + 0x - 1", "explanation": "Sisipkan suku hilang berkoefisien 0."},
     {"id": "B6", "type": "short", "question": "$x^n - 3$ berderajat 4, maka n =", "answer": "4", "explanation": "Pangkat tertinggi = 4."},
     {"id": "B7", "type": "short", "question": "Koef. $x^2$ & konstanta pada $\\frac{1}{2}x^2 - 3x + \\frac{5}{2}$", "answer": "koef 1/2, konstanta 5/2", "explanation": "Pecahan sebagai koefisien diperbolehkan."},
-    {"id": "B8", "type": "mc", "question": "Apakah $2^x + x^2$ polinomial?", "options": ["Ya", "Tidak"], "answer": "Tidak", "explanation": "2^x = variabel sebagai pangkat (eksponensial), bukan polinomial."},
-    {"id": "B9", "type": "short", "question": "Binomial derajat 3, koef utama -1, konstanta 8", "answer": "-x^3 + 8", "explanation": "Dua suku: -x^3 dan +8."},
+    {"id": "B8", "type": "mc", "question": "Apakah $2^x + x^2$ polinomial?", "options": ["Ya", "Tidak"], "answer": "Tidak", "explanation": "$2^x$ = variabel sebagai pangkat (eksponensial), bukan polinomial."},
+    {"id": "B9", "type": "short", "question": "Binomial derajat 3, koef utama -1, konstanta 8", "answer": "-x^3 + 8", "explanation": "Dua suku: $-x^3$ dan $+8$."},
     {"id": "B10", "type": "short", "question": "Urut derajat kecil→besar: $x^2, 5, x^4-x, 2x-1$", "answer": "5 (0), 2x-1 (1), x^2 (2), x^4-x (4)", "explanation": "Bandingkan pangkat tertinggi tiap bentuk."}
   ]
 }
@@ -578,11 +578,11 @@ Kerjakan dulu di kertas, baru buka pembahasan. Blok JSON di tiap set adalah data
   "set_id": "01-set-C-sulit",
   "level": "sulit",
   "items": [
-    {"id": "C1", "type": "short", "question": "$(2k-6)x^4 + 3x^2 - 1$ berderajat 2, maka k =", "answer": "3", "explanation": "Suku x^4 harus hilang: 2k-6=0 → k=3."},
-    {"id": "C2", "type": "mc", "question": "$x^{a+2}+x^3-4$ derajat 3 DAN koef x^5 =1. Mungkin?", "options": ["Mungkin", "Tidak mungkin"], "answer": "Tidak mungkin", "explanation": "Koef x^5=1 butuh a+2=5→a=3, tapi lalu derajat jadi 5, bukan 3. Kontradiksi."},
-    {"id": "C3", "type": "short", "question": "Trinomial derajat 4, konstanta 3, tanpa x^3 & x", "answer": "ax^4 + bx^2 + 3, a≠0, b≠0", "explanation": "Tiga suku tersisa: x^4, x^2, konstanta."},
+    {"id": "C1", "type": "short", "question": "$(2k-6)x^4 + 3x^2 - 1$ berderajat 2, maka k =", "answer": "3", "explanation": "Suku $x^4$ harus hilang: $2k-6=0$ → $k=3$."},
+    {"id": "C2", "type": "mc", "question": "$x^{a+2}+x^3-4$ derajat 3 DAN koef $x^5$ =1. Mungkin?", "options": ["Mungkin", "Tidak mungkin"], "answer": "Tidak mungkin", "explanation": "Koef $x^5=1$ butuh $a+2=5$→$a=3$, tapi lalu derajat jadi 5, bukan 3. Kontradiksi."},
+    {"id": "C3", "type": "short", "question": "Trinomial derajat 4, konstanta 3, tanpa $x^3$ & $x$", "answer": "ax^4 + bx^2 + 3, a≠0, b≠0", "explanation": "Tiga suku tersisa: $x^4$, $x^2$, konstanta."},
     {"id": "C4", "type": "mc", "question": "$\\frac{x^2-1}{x-1}$ polinomial?", "options": ["Ya (=x+1)", "Tidak"], "answer": "Ya (=x+1)", "explanation": "Faktorkan: (x-1)(x+1)/(x-1)=x+1 untuk x≠1."},
-    {"id": "C5", "type": "short", "question": "Derajat maks & min dari A(deg5)+B(deg3)", "answer": "maks 5, min 5", "explanation": "Suku x^5 hanya dari A, tak bisa hilang → derajat tetap 5."},
+    {"id": "C5", "type": "short", "question": "Derajat maks & min dari A(deg5)+B(deg3)", "answer": "maks 5, min 5", "explanation": "Suku $x^5$ hanya dari A, tak bisa hilang → derajat tetap 5."},
     {"id": "C6", "type": "short", "question": "Semua n≥0 agar $x^{n-2}$ suku sah", "answer": "n ≥ 2", "explanation": "Pangkat n-2 harus ≥0 → n≥2."},
     {"id": "C7", "type": "short", "question": "$px^3+qx^2+5$ binomial. Syarat p,q?", "answer": "tepat satu dari p,q nol (bukan keduanya)", "explanation": "Binomial = 2 suku; konstanta 5 sudah satu."},
     {"id": "C8", "type": "short", "question": "Derajat $(x^2+1)(x^3-x)$", "answer": "5", "explanation": "Jumlahkan derajat: 2+3=5."},
@@ -620,8 +620,8 @@ Kerjakan dulu di kertas, baru buka pembahasan. Blok JSON di tiap set adalah data
   "level": "hots",
   "items": [
     {"id": "D1", "type": "short", "question": "Contoh hasil kali dua binomial berupa binomial", "answer": "(x-1)(x+1)=x^2-1", "explanation": "Selisih kuadrat menghasilkan 2 suku."},
-    {"id": "D2", "type": "short", "question": "$(m^2-4)x^3+(m-2)x^2+1$ berderajat tepat 2, m=", "answer": "m=-2", "explanation": "Butuh m^2-4=0 (m=±2) TAPI m-2≠0. Maka m=-2."},
-    {"id": "D3", "type": "short", "question": "Syarat a,b agar $\\frac{ax^3+bx^2}{x^2}$ polinomial", "answer": "berlaku untuk semua a,b (hasil = ax + b)", "explanation": "Tiap suku habis dibagi x^2 → ax+b, selalu polinomial."},
+    {"id": "D2", "type": "short", "question": "$(m^2-4)x^3+(m-2)x^2+1$ berderajat tepat 2, m=", "answer": "m=-2", "explanation": "Butuh $m^2-4=0$ ($m=±2$) TAPI $m-2≠0$. Maka $m=-2$."},
+    {"id": "D3", "type": "short", "question": "Syarat a,b agar $\\frac{ax^3+bx^2}{x^2}$ polinomial", "answer": "berlaku untuk semua a,b (hasil = ax + b)", "explanation": "Tiap suku habis dibagi $x^2$ → $ax+b$, selalu polinomial."},
     {"id": "D4", "type": "short", "question": "Koefisien x (lihat soal)", "answer": "-4", "explanation": "2 + k + 2 = 0 → k = -4."},
     {"id": "D5", "type": "short", "question": "P(x)=x^3+cx+d, P(0)=5, c=2d", "answer": "d=5, c=10", "explanation": "P(0)=d=5; c=2d=10."}
   ]
@@ -653,9 +653,9 @@ Kerjakan dulu di kertas, baru buka pembahasan. Blok JSON di tiap set adalah data
   "level": "tka",
   "items": [
     {"id": "E1", "type": "short", "source": "TKA-drum", "question": "Derajat & koef utama $V(T)=0{,}05T^3+0{,}4T^2+20T$", "answer": "derajat 3, koef utama 0,05; konstanta 0 artinya pada T=0 tak ada penambahan volume", "explanation": "Pada suhu 0°C (acuan) belum ada pemuaian → V(0)=0."},
-    {"id": "E2", "type": "short", "source": "TKA-saham", "question": "Derajat, koef x^2, konstanta dari $x^3-70x^2-600x+74{.}000$", "answer": "derajat 3, koef x^2 = -70, konstanta 74000", "explanation": "Konstanta = nilai saat x=0."},
-    {"id": "E3", "type": "mc", "question": "Berapa yang merupakan polinomial dari 6 bentuk", "options": ["1", "2", "3", "4"], "answer": "2", "explanation": "Hanya 3x^2-√7 dan 9. Sisanya punya pangkat negatif/pecahan atau eksponensial."},
-    {"id": "E4", "type": "mc", "question": "Tentang derajat A(deg4)-B(deg4)", "options": ["selalu 4", "paling banyak 4", "selalu 0", "paling sedikit 4"], "answer": "paling banyak 4", "explanation": "Suku x^4 bisa saling hapus → derajat bisa turun; maksimum tetap 4."},
+    {"id": "E2", "type": "short", "source": "TKA-saham", "question": "Derajat, koef $x^2$, konstanta dari $x^3-70x^2-600x+74{.}000$", "answer": "derajat 3, koef $x^2$ = -70, konstanta 74000", "explanation": "Konstanta = nilai saat x=0."},
+    {"id": "E3", "type": "mc", "question": "Berapa yang merupakan polinomial dari 6 bentuk", "options": ["1", "2", "3", "4"], "answer": "2", "explanation": "Hanya $3x^2$-√7 dan 9. Sisanya punya pangkat negatif/pecahan atau eksponensial."},
+    {"id": "E4", "type": "mc", "question": "Tentang derajat A(deg4)-B(deg4)", "options": ["selalu 4", "paling banyak 4", "selalu 0", "paling sedikit 4"], "answer": "paling banyak 4", "explanation": "Suku $x^4$ bisa saling hapus → derajat bisa turun; maksimum tetap 4."},
     {"id": "E5", "type": "short", "question": "$(2p-1)x^5+3x^3-x+p$ berderajat 3, cari p & konstanta", "answer": "p=1/2, konstanta = 1/2", "explanation": "2p-1=0 → p=1/2; konstanta = p = 1/2."}
   ]
 }

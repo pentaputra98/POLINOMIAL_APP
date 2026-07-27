@@ -238,7 +238,7 @@ Setiap kandidat diuji dengan Teorema Sisa (hitung $f$ pada tiap kandidat) hingga
 
 ```json
 { "type":"activity", "widget":"categorize", "id":"04-act-rasional", "competency":"K4",
-  "prompt":"Kandidat akar rasional f(x)=2x^3-3x^2-3x+2 adalah ±(faktor 2)/(faktor 2)",
+  "prompt":"Kandidat akar rasional $f(x)=2x^3-3x^2-3x+2$ adalah ±(faktor 2)/(faktor 2)",
   "categories":["Kandidat akar rasional","Bukan kandidat"],
   "items":[
     ["1","Kandidat akar rasional"],
@@ -345,7 +345,7 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
 
 ```json
 { "type":"activity", "widget":"error-hunt", "id":"04-act-trap", "competency":"K4",
-  "prompt":"Untuk f(x)=x^3+3x^2-10x-24, seorang siswa menentukan titik potong sumbu X. Manakah langkah yang salah?",
+  "prompt":"Untuk $f(x)=x^3+3x^2-10x-24$, seorang siswa menentukan titik potong sumbu X. Manakah langkah yang salah?",
   "steps":[
     "Titik potong sumbu X terjadi saat f(x)=0.",
     "Faktorisasi: f(x)=(x+2)(x+4)(x-3), sehingga akarnya -2, -4, dan 3.",
@@ -526,7 +526,7 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
     {"id":"C2","type":"short","question":"a,b agar $x^3+ax^2+bx-6$ habis (x-1)&(x+2)","answer":"a=4, b=1","explanation":"f(1)=0→a+b=5; f(-2)=0→2a-b=7; maka a=4,b=1."},
     {"id":"C3","type":"short","question":"Sisa $x^3-2x+1 \\div (x^2-1)$","answer":"-x+1","explanation":"f(1)=0=r+s, f(-1)=2=-r+s → r=-1,s=1."},
     {"id":"C4","type":"short","question":"Faktorkan $2x^3-3x^2-3x+2$","answer":"(x-2)(2x-1)(x+1)","explanation":"Akar 2,1/2,-1."},
-    {"id":"C5","type":"short","question":"Sisa dibagi (x-1)(x-2)(x-3); f=2,3,6","answer":"x^2-2x+3","explanation":"S=ax^2+bx+c lewat 3 titik."},
+    {"id":"C5","type":"short","question":"Sisa dibagi (x-1)(x-2)(x-3); f=2,3,6","answer":"x^2-2x+3","explanation":"$S=ax^2+bx+c$ lewat 3 titik."},
     {"id":"C6","type":"short","question":"Faktorkan $x^3+3x^2-10x-24$","answer":"(x+2)(x+4)(x-3)","explanation":"Akar -2,-4,3."},
     {"id":"C7","type":"short","question":"Akar $x^4-1$","answer":"x=1,-1 (real); ±i (kompleks)","explanation":"(x^2-1)(x^2+1)."},
     {"id":"C8","type":"short","question":"(x-2),(x+2) faktor $x^4+ax^2+b$","answer":"16+4a+b=0 (dari f(2)=0)","explanation":"f(2)=f(-2)=16+4a+b=0."},
@@ -561,9 +561,9 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
   "set_id":"04-set-D-hots","level":"hots",
   "items":[
     {"id":"D1","type":"short","question":"p,q,r jika akar 1,2,3","answer":"p=-6,q=11,r=-6","explanation":"(x-1)(x-2)(x-3)=x^3-6x^2+11x-6."},
-    {"id":"D2","type":"short","question":"f(1) & f(i) dari info sisa","answer":"f(1)=3, f(i)=2i-1","explanation":"Sisa oleh (x^2+1) dievaluasi di x=i."},
+    {"id":"D2","type":"short","question":"f(1) & f(i) dari info sisa","answer":"f(1)=3, f(i)=2i-1","explanation":"Sisa oleh $(x^2+1)$ dievaluasi di $x=i$."},
     {"id":"D3","type":"proof","question":"Buktikan f=a(x-1)(x-2)(x-3)","answer":"tiga faktor linear dari tiga akar","explanation":"Teorema Faktor + derajat 3."},
-    {"id":"D4","type":"short","question":"k agar (x-1) faktor $x^3-kx+2$; akar lain","answer":"k=3; akar x=1 (ganda) dan x=-2","explanation":"f(1)=1-k+2=0→k=3; Horner → x^2+x-2=(x-1)(x+2)."},
+    {"id":"D4","type":"short","question":"k agar (x-1) faktor $x^3-kx+2$; akar lain","answer":"k=3; akar x=1 (ganda) dan x=-2","explanation":"$f(1)=1-k+2=0$→$k=3$; Horner → $x^2+x-2=(x-1)(x+2)$."},
     {"id":"D5","type":"short","question":"Monik akar -2,-4,3 (bentuk baku)","answer":"x^3+3x^2-10x-24","explanation":"Ini fungsi soal TKA #5."}
   ]
 }
@@ -588,7 +588,7 @@ $$f(x) = (x-r_1)(x-r_2)\cdots(x-r_n)$$
 {
   "set_id":"04-set-E-tka","level":"tka",
   "items":[
-    {"id":"E1","type":"multi","source":"TKA-2024-no5","question":"Titik potong sumbu X dari x^3+3x^2-10x-24","options":["(-2,0)","(-1,0)","(3,0)","(4,0)","(5,0)"],"answer":["(-2,0)","(3,0)"],"explanation":"Akar -2,-4,3; yang tersedia di opsi: -2 dan 3."},
+    {"id":"E1","type":"multi","source":"TKA-2024-no5","question":"Titik potong sumbu X dari $x^3+3x^2-10x-24$","options":["(-2,0)","(-1,0)","(3,0)","(4,0)","(5,0)"],"answer":["(-2,0)","(3,0)"],"explanation":"Akar -2,-4,3; yang tersedia di opsi: -2 dan 3."},
     {"id":"E2","type":"mc","source":"TKA-2024-no6","question":"a+b jika sisa 5x-1","options":["11","5","-1","-5","-7"],"answer":"-1","explanation":"a=2,b=-3."},
     {"id":"E3","type":"short","question":"Banyak titik potong X dari $x^3-6x^2+11x-6$","answer":"3","explanation":"Akar 1,2,3 semuanya real & berbeda."},
     {"id":"E4","type":"short","question":"Akar positif $L(x)=x^3-4x^2+x+6$","answer":"x=2 dan x=3","explanation":"(x+1)(x-2)(x-3); akar positif 2 dan 3."},

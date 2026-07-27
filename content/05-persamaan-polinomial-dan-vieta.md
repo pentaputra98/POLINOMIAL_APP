@@ -137,7 +137,7 @@ Jadi satu akar real ($x=1$) dan dua akar kompleks.
 
 ```json
 { "type":"activity", "widget":"cloze", "id":"05-act-faktor", "competency":"K5",
-  "prompt":"Selesaikan x^3-4x=0",
+  "prompt":"Selesaikan $x^3-4x=0$",
   "template":"Faktorkan: x(x-2)(x+2)=0. Urut dari terkecil, akar-akarnya adalah {{0}}, {{1}}, {{2}}.",
   "answers":["-2","0","2"],
   "reward":{"xp":20} }
@@ -201,12 +201,12 @@ $$(x_1-x_2)^2 = (x_1+x_2)^2 - 4x_1x_2$$
 
 ```json
 { "type":"activity", "widget":"matching", "id":"05-act-vieta", "competency":"K5",
-  "prompt":"Untuk x^3-4x^2+5x-2=0, jodohkan besaran Vieta dengan nilainya",
+  "prompt":"Untuk $x^3-4x^2+5x-2=0$, jodohkan besaran Vieta dengan nilainya",
   "pairs":[
     ["Jumlah akar (p+q+r)","4"],
     ["Jumlah hasil kali pasangan (pq+qr+rp)","5"],
     ["Hasil kali akar (pqr)","2"],
-    ["Jumlah akar 2x^2-7x+3=0","7/2"]
+    ["Jumlah akar $2x^2-7x+3=0$","7/2"]
   ],
   "reward":{"xp":20} }
 ```
@@ -238,7 +238,7 @@ $(x-1)(x-2)=x^2-3x+2$; kali $(x+3)$: $x^3+3x^2-3x^2-9x+2x+6 = x^3 - 7x + 6$. Per
 ```json
 { "type":"activity", "widget":"cloze", "id":"05-act-menyusun", "competency":"K5",
   "prompt":"Susun persamaan berakar 3 dan -5",
-  "template":"Jumlah akar = {{0}}, hasil kali akar = {{1}}. Maka persamaannya adalah x^2+2x-15=0.",
+  "template":"Jumlah akar = {{0}}, hasil kali akar = {{1}}. Maka persamaannya adalah $x^2+2x-15=0$.",
   "answers":["-2","-15"],
   "reward":{"xp":20} }
 ```
@@ -319,11 +319,11 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
 
 ```json
 { "type":"activity", "widget":"error-hunt", "id":"05-act-trap", "competency":"K5",
-  "prompt":"Persamaan x^2-5x+6=0 berakar 2 dan 3. Susun persamaan yang akarnya 2 lebih besar (yaitu 4 dan 5). Manakah langkah yang salah?",
+  "prompt":"Persamaan $x^2-5x+6=0$ berakar 2 dan 3. Susun persamaan yang akarnya 2 lebih besar (yaitu 4 dan 5). Manakah langkah yang salah?",
   "steps":[
     "Akar baru = akar lama + 2, sehingga substitusinya x menjadi x-2.",
-    "Substitusikan: (x-2)^2 - 5(x-2) + 6.",
-    "Jabarkan dan sederhanakan: x^2 - 9x + 20 = 0.",
+    "Substitusikan: $(x-2)^2 - 5(x-2) + 6$.",
+    "Jabarkan dan sederhanakan: $x^2 - 9x + 20 = 0$.",
     "Karena akar bertambah 2, substitusi yang benar adalah x menjadi x+2."
   ],
   "wrong_index":3,
@@ -423,7 +423,7 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
     {"id":"A3","type":"short","question":"Persamaan berakar 2,6","answer":"x^2-8x+12=0","explanation":"jumlah 8, kali 12."},
     {"id":"A4","type":"short","question":"Jumlah akar $2x^2-4x+1$","answer":"2","explanation":"-(-4)/2=2."},
     {"id":"A5","type":"short","question":"Hasil kali akar $3x^2+6x-9$","answer":"-3","explanation":"c/a=-9/3=-3."},
-    {"id":"A6","type":"short","question":"Jumlah akar kubik monik, koef x^2=-5","answer":"5","explanation":"-b/a=5."},
+    {"id":"A6","type":"short","question":"Jumlah akar kubik monik, koef $x^2=-5$","answer":"5","explanation":"-b/a=5."},
     {"id":"A7","type":"short","question":"Selesaikan $x^2-9=0$","answer":"x=3, x=-3","explanation":"(x-3)(x+3)."},
     {"id":"A8","type":"short","question":"Persamaan berakar 0,4","answer":"x^2-4x=0","explanation":"jumlah 4, kali 0."},
     {"id":"A9","type":"short","question":"Hasil kali akar $x^3-2x^2+x-8$","answer":"8","explanation":"-d/a=-(-8)=8."},
@@ -458,8 +458,8 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
     {"id":"B4","type":"short","question":"p+q+r & pqr dari $x^3-3x^2-x+3$","answer":"3 dan -3","explanation":"-b/a=3; -d/a=-3."},
     {"id":"B5","type":"short","question":"Kubik monik berakar -1,2,3","answer":"x^3-4x^2+x+6=0","explanation":"(x+1)(x-2)(x-3)."},
     {"id":"B6","type":"short","question":"$x^2-4x+2$, akar +1","answer":"x^2-6x+7=0","explanation":"x→x-1."},
-    {"id":"B7","type":"short","question":"Hasil kali 2 akar jika akar ke-3=3 (dari x^3-6x^2+11x-6)","answer":"2","explanation":"pqr=6, r=3 → pq=2."},
-    {"id":"B8","type":"short","question":"k agar $x^2+kx+9$ akar kembar","answer":"k=±6","explanation":"diskriminan 0: k^2=36."},
+    {"id":"B7","type":"short","question":"Hasil kali 2 akar jika akar ke-3=3 (dari $x^3-6x^2+11x-6$)","answer":"2","explanation":"pqr=6, r=3 → pq=2."},
+    {"id":"B8","type":"short","question":"k agar $x^2+kx+9$ akar kembar","answer":"k=±6","explanation":"diskriminan 0: $k^2=36$."},
     {"id":"B9","type":"short","question":"m jika jumlah akar $x^2-(m+1)x+6=5$","answer":"m=4","explanation":"m+1=5."},
     {"id":"B10","type":"short","question":"Persamaan berakar kebalikan dari $x^2-7x+3$","answer":"3x^2-7x+1=0","explanation":"Balik urutan koefisien."}
   ]
@@ -562,7 +562,7 @@ Karena banyak unit **tidak boleh negatif**, $x=-30$ ditolak. Maka nilai $x$ yang
   "set_id":"05-set-E-tka","level":"tka",
   "items":[
     {"id":"E1","type":"short","source":"TKA-2024-no8","question":"Unit mungkin dijual (modal 2000 juta)","answer":"40 dan 60 (30 tidak)","explanation":"Akar f(x)=2000 adalah 40,60,-30; -30 ditolak."},
-    {"id":"E2","type":"short","question":"x agar V=x^3-6x^2+11x-6=0","answer":"x=1,2,3","explanation":"(x-1)(x-2)(x-3); volume nol saat dimensi menghilang."},
+    {"id":"E2","type":"short","question":"x agar $V=x^3-6x^2+11x-6=0$","answer":"x=1,2,3","explanation":"(x-1)(x-2)(x-3); volume nol saat dimensi menghilang."},
     {"id":"E3","type":"short","question":"$α^2+β^2$ & $1/α+1/β$ dari $x^2-2x-1$","answer":"6 dan -2","explanation":"α+β=2,αβ=-1; 4+2=6; 2/(-1)=-2."},
     {"id":"E4","type":"short","question":"Persamaan akar 3 lebih dari $x^2-2x-8$","answer":"x^2-8x+7=0","explanation":"x→x-3."},
     {"id":"E5","type":"short","source":"TKA-2024-no8","question":"Verifikasi Vieta akar 40,60,-30","answer":"jumlah 70, Σpasangan -600, hasil kali -72000","explanation":"Cocok dengan koefisien."}

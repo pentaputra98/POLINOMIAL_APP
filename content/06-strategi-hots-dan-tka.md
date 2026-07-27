@@ -182,7 +182,7 @@ Soal TKA sering tampil dalam bentuk yang tidak langsung. Kenali **kata kunci pem
     ["Mencari sisa f(x) dibagi (x-2)","Gunakan f(k) / Teorema Sisa"],
     ["Mencari jumlah akar persamaan","Gunakan Teorema Vieta"],
     ["Memeriksa apakah (x-1) faktor","Gunakan f(k) / Teorema Sisa"],
-    ["Menghitung x1^2+x2^2 dari akar","Gunakan Teorema Vieta"],
+    ["Menghitung $x1^2+x2^2$ dari akar","Gunakan Teorema Vieta"],
     ["Menghitung f(3)","Gunakan f(k) / Teorema Sisa"],
     ["Mencari hasil kali akar","Gunakan Teorema Vieta"]
   ],
@@ -217,7 +217,7 @@ Selisih berurutan: $3a+b=1$ dan $5a+b=3$ → $a=1,\ b=-2,\ c=3$. **Sisa $=x^2-2x
 ```json
 { "type":"activity", "widget":"ordering", "id":"06-act-kombinasi", "competency":"K6",
   "prompt":"Urutkan langkah penyelesaian soal barisan geometri",
-  "options":["Misalkan akar-akarnya a/r, a, dan ar","Gunakan Vieta: hasil kali ketiga akar sama dengan a^3","Tentukan akar tengah a dari akar pangkat tiga hasil kali","Bagi dengan (x-a) memakai Horner, lalu faktorkan sisanya"],
+  "options":["Misalkan akar-akarnya a/r, a, dan ar","Gunakan Vieta: hasil kali ketiga akar sama dengan $a^3$","Tentukan akar tengah a dari akar pangkat tiga hasil kali","Bagi dengan (x-a) memakai Horner, lalu faktorkan sisanya"],
   "answer_order":[0,1,2,3],
   "reward":{"xp":20} }
 ```
@@ -344,11 +344,11 @@ Kuasai daftar berikut; masing-masing menghemat waktu pengerjaan:
 
 ```json
 { "type":"activity", "widget":"error-hunt", "id":"06-act-trap", "competency":"K6",
-  "prompt":"Seorang siswa mencari sisa pembagian f(x)=x^3+2x^2-x+5 oleh (x+2). Manakah langkah yang salah?",
+  "prompt":"Seorang siswa mencari sisa pembagian $f(x)=x^3+2x^2-x+5$ oleh $(x+2)$. Manakah langkah yang salah?",
   "steps":[
     "Pembagi (x+2) berarti k = -2.",
     "Gunakan Teorema Sisa: sisa sama dengan f(-2).",
-    "Hitung f(-2) = (-2)^3 + 2(-2)^2 - (-2) + 5.",
+    "Hitung $f(-2) = (-2)^3 + 2(-2)^2 - (-2) + 5$.",
     "Karena pembagi (x+2), gunakan k = 2 sehingga sisa = f(2)."
   ],
   "wrong_index":3,
@@ -520,10 +520,10 @@ Kuasai daftar berikut; masing-masing menghemat waktu pengerjaan:
   "set_id":"06-set-C-sulit","level":"sulit",
   "items":[
     {"id":"C1","type":"short","question":"3 akar aritmetika $x^3-9x^2+23x-15$","answer":"1,3,5","explanation":"tengah=9/3=3; Horner → 1,5."},
-    {"id":"C2","type":"short","question":"Sisa dibagi (x-1)(x-2)(x-3); f=1,4,9","answer":"x^2","explanation":"S(x)=x^2 melewati (1,1),(2,4),(3,9)."},
+    {"id":"C2","type":"short","question":"Sisa dibagi (x-1)(x-2)(x-3); f=1,4,9","answer":"x^2","explanation":"$S(x)=x^2$ melewati (1,1),(2,4),(3,9)."},
     {"id":"C3","type":"short","question":"Persamaan berakar $α^2,β^2$ dari $x^2-5x+3$","answer":"x^2-19x+9=0","explanation":"jumlah 25-6=19, kali 9."},
     {"id":"C4","type":"short","question":"a+b+c jika akar -1,2,3","answer":"3","explanation":"f(x)=(x+1)(x-2)(x-3)=x^3-4x^2+x+6 → a=-4,b=1,c=6 → a+b+c=3."},
-    {"id":"C5","type":"short","question":"Persamaan berakar kebalikan $2x^3-3x^2+4x-1$","answer":"x^3-4x^2+3x-2=0","explanation":"balik urutan koefisien: -1,4,-3,2 → x^3-4x^2+3x-2."},
+    {"id":"C5","type":"short","question":"Persamaan berakar kebalikan $2x^3-3x^2+4x-1$","answer":"x^3-4x^2+3x-2=0","explanation":"balik urutan koefisien: -1,4,-3,2 → $x^3-4x^2+3x-2$."},
     {"id":"C6","type":"short","question":"Jumlah kuadrat akar $x^3-6x^2+11x-6$","answer":"14","explanation":"36-2·11=14."},
     {"id":"C7","type":"short","question":"f(40) & f(60) dari saham","answer":"keduanya 2000","explanation":"lihat Bab 02."},
     {"id":"C8","type":"short","question":"m agar $x^3-3x^2+mx-1$ punya sepasang akar berkebalikan","answer":"m=3","explanation":"hasil kali semua akar=1; sepasang berkebalikan → akar ketiga=1; f(1)=0→m=3."},
@@ -557,11 +557,11 @@ Kuasai daftar berikut; masing-masing menghemat waktu pengerjaan:
 {
   "set_id":"06-set-D-hots","level":"hots",
   "items":[
-    {"id":"D1","type":"short","question":"Dua akar lain jika satu = -1 (x^3-6x^2+3x+10)","answer":"2 dan 5","explanation":"jumlah 6→ q+r=7; hasil kali -10→ qr=10; t^2-7t+10=(t-2)(t-5)."},
-    {"id":"D2","type":"short","question":"f(1)+f(-1) jika sisa 2x+1 dibagi (x^2-1)","answer":"2","explanation":"f(1)=3, f(-1)=-1 → jumlah 2."},
-    {"id":"D3","type":"short","question":"Kuartik monik akar ±1,±2 & jumlah","answer":"x^4-5x^2+4=0; jumlah 0","explanation":"(x^2-1)(x^2-4)."},
-    {"id":"D4","type":"short","question":"Kubik berakar α^2,β^2,γ^2 dari x^3-2x^2+3x-4","answer":"x^3+2x^2-7x-16=0","explanation":"Σα^2=-2, Σα^2β^2=-7, (αβγ)^2=16."},
-    {"id":"D5","type":"short","question":"x>0 agar L=x^3-4x^2+x+6=0","answer":"x=2 dan x=3","explanation":"(x+1)(x-2)(x-3)."}
+    {"id":"D1","type":"short","question":"Dua akar lain jika satu = -1 ($x^3-6x^2+3x+10$)","answer":"2 dan 5","explanation":"jumlah 6→ $q+r=7$; hasil kali -10→ $qr=10$; $t^2-7t+10=(t-2)(t-5)$."},
+    {"id":"D2","type":"short","question":"$f(1)+f(-1)$ jika sisa $2x+1$ dibagi $(x^2-1)$","answer":"2","explanation":"f(1)=3, f(-1)=-1 → jumlah 2."},
+    {"id":"D3","type":"short","question":"Kuartik monik akar ±1,±2 & jumlah","answer":"$x^4-5x^2+4=0$; jumlah 0","explanation":"(x^2-1)(x^2-4)."},
+    {"id":"D4","type":"short","question":"Kubik berakar $α^2,β^2,γ^2$ dari $x^3-2x^2+3x-4$","answer":"x^3+2x^2-7x-16=0","explanation":"Σα^2=-2, Σα^2β^2=-7, (αβγ)^2=16."},
+    {"id":"D5","type":"short","question":"$x>0$ agar $L=x^3-4x^2+x+6=0$","answer":"x=2 dan x=3","explanation":"(x+1)(x-2)(x-3)."}
   ]
 }
 ```
@@ -589,7 +589,7 @@ Kuasai daftar berikut; masing-masing menghemat waktu pengerjaan:
 {
   "set_id":"06-set-E-tka","level":"tka",
   "items":[
-    {"id":"E1","type":"multi","source":"TKA-2024-no5","question":"Titik potong sumbu X x^3+3x^2-10x-24","options":["(-2,0)","(-1,0)","(3,0)","(4,0)","(5,0)"],"answer":["(-2,0)","(3,0)"],"explanation":"akar -2,-4,3."},
+    {"id":"E1","type":"multi","source":"TKA-2024-no5","question":"Titik potong sumbu X $x^3+3x^2-10x-24$","options":["(-2,0)","(-1,0)","(3,0)","(4,0)","(5,0)"],"answer":["(-2,0)","(3,0)"],"explanation":"akar -2,-4,3."},
     {"id":"E2","type":"mc","source":"TKA-2024-no6","question":"a+b (sisa 5x-1)","options":["11","5","-1","-5","-7"],"answer":"-1","explanation":"a=2,b=-3."},
     {"id":"E3","type":"mc","source":"TKA-2024-no7","question":"Total 10 drum V(T)","options":["50T^3+40T^2+200T","50T^3+4T^2+200T","5T^3+4T^2+200T","0,5T^3+4T^2+200T","0,5T^3+0,4T^2+200T"],"answer":"0,5T^3+4T^2+200T","explanation":"10×tiap koefisien."},
     {"id":"E4","type":"multi","source":"TKA-2024-no8","question":"Unit mungkin dijual (Benar)","options":["30 unit","40 unit","60 unit"],"answer":["40 unit","60 unit"],"explanation":"f(40)=f(60)=2000; f(30)=20000."},

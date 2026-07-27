@@ -232,7 +232,7 @@ Kerjakan 5 soal berikut **sebelum** memasuki Bab 01. Tujuannya bukan untuk menil
   "items":[
     {"id":"D1","type":"short","question":"Pada $-4x^5$, tentukan koefisien dan pangkatnya","answer":"koefisien -4, pangkat 5","explanation":"Koefisien membawa tandanya sendiri; pangkat = 5."},
     {"id":"D2","type":"short","question":"Jabarkan $(x+2)(x+3)$","answer":"x^2 + 5x + 6","explanation":"Distributif lalu gabungkan 3x+2x."},
-    {"id":"D3","type":"short","question":"Jabarkan $(x-1)(x^2+x+1)$","answer":"x^3 - 1","explanation":"Pola selisih pangkat tiga a^3-b^3."},
+    {"id":"D3","type":"short","question":"Jabarkan $(x-1)(x^2+x+1)$","answer":"x^3 - 1","explanation":"Pola selisih pangkat tiga $a^3-b^3$."},
     {"id":"D4","type":"short","question":"Faktorkan $x^2-5x+6$ dan tentukan akar-akarnya","answer":"(x-2)(x-3); x=2 atau x=3","explanation":"Dua bilangan berkali 6 berjumlah -5, yaitu -2 dan -3."},
     {"id":"D5","type":"short","question":"Jika $f(x)=x^2-3x+1$, hitung $f(2)$","answer":"-1","explanation":"4-6+1=-1."}
   ]

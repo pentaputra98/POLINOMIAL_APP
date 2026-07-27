@@ -217,14 +217,53 @@ Horner & slider engine **cocok persis** dengan `expected_quotient`/`checkpoints`
 5. **Math mentah di dalam blok JSON** (audit 27 Juli 2026, 1384 string diperiksa).
    `smart()` mengirim string yang memuat kata (≥3 huruf) ke jalur teks biasa, sehingga
    penggalan rumus di dalamnya tampil apa adanya — mis. `Suku pangkat tertinggi -6x^5.`
-   - **76 string** memuat tanda `^` di luar `$…$` → **pasti salah tampil**, tersebar di
-     8 berkas (01: 20 · 06: 13 · 05: 11 · 02: 10 · 03: 9 · 04: 6 · 07: 6 · 00: 1).
-   - **179 string** memuat math tanpa `^` (`2x`, `1/2`, `f(0)=0`, `≠`, `→`) — sebagian
-     wajar sebagai prosa (`Derajat 1 = linear.`), perlu penilaian per kasus.
+   - ~~**76 string** memuat `^` di luar `$…$`~~ → **SUDAH DIPERBAIKI** 27 Juli 2026
+     (01: 20 · 06: 13 · 05: 11 · 02: 10 · 03: 9 · 04: 6 · 07: 6 · 00: 1). Lihat §7b.
+   - **179 string** memuat math tanpa `^` (`2x`, `1/2`, `f(0)=0`, `≠`, `→`) — **MASIH
+     TERBUKA**. Sebagian wajar sebagai prosa (`Derajat 1 = linear.`, `2 suku = binomial.`),
+     sebagian jelas perlu (`Sukunya -3x, jadi koefisien -3.`, `koef 1/2, konstanta 5/2`).
+     Perlu penilaian per kasus, belum saya izinkan.
    - **114 string** tanpa kata sudah benar (dirender penuh sebagai LaTeX) — jangan disentuh.
    - Tidak ada `$` ganjil/tak berpasangan.
-   Perbaikan = membungkus penggalan dengan `$…$` di `.md` (dan koma desimal jadi `{,}`).
-   **Menunggu izin**; harus penggantian literal per item, bukan regex massal (jebakan #4).
+
+---
+
+## 7b. PERBAIKAN 76 STRING BER-`^` — CARA & BUKTI (27 Juli 2026)
+
+Dikerjakan sebagai **76 penggantian literal** pada bentuk JSON-nya (`json.dumps`),
+bukan regex massal (jebakan #4). Aturan yang dipegang:
+
+> **Hanya menyisipkan karakter `$`. Tidak satu pun karakter lain diubah.**
+
+Empat pemeriksaan otomatis dijalankan **sebelum** berkas disentuh; bila satu saja gagal,
+skrip berhenti tanpa menulis apa pun:
+
+| Pemeriksaan | Hasil |
+|---|---|
+| Teks setelah semua `$` dibuang identik dengan aslinya | **75/76** |
+| `normalize()` (port dari [quiz.js:54](js/quiz.js:54)) tidak berubah → penilaian kuis pasti sama | **76/76** |
+| String lama muncul tepat **satu** kali di berkasnya | **76/76** |
+| Tidak ada `√` di dalam `$…$` (memicu peringatan konsol KaTeX) | **0 pelanggaran** |
+
+**Satu pengecualian** yang disengaja (karena itu 75/76, bukan 76/76):
+`07-ringkasan-dan-bank-soal.md` — `V(T)=0,05T^3+0,4T^2+20T` → `0{,}05` dan `0{,}4`
+mengikuti konvensi desimal konten. Field-nya `question`, tidak dinilai.
+
+**Verifikasi sesudah:** diff **71 tambah / 71 hapus** (tidak ada baris tersisip);
+audit ulang → cabang 1 & 3 **0 temuan** (dari 76), tersisa 114 cabang-2 yang memang benar;
+render 8 bab **3338 rumus / 0 error KaTeX** (naik dari 3284); **0** tanda `^` mentah di
+teks terlihat; konsol **0 pesan**.
+
+**Uji regresi penilaian** — kelima kunci `answer` yang tersentuh diketik ulang dengan
+gaya LAMA (tanpa `$`) lewat UI sungguhan, semuanya `is-ok`:
+`01` derajat/koef/konstanta · `02` jabaran · `03` H & faktor · `06` D3 kuartik monik ·
+`07` contoh kubik. Dua widget cloze (`03` 3 lubang, `05` 2 lubang) tetap utuh:
+`{{n}}` tidak tersentuh, `$` mentah **0**.
+
+Catatan: `content/` memakai strategi **network-first** di Service Worker, jadi perangkat
+siswa mendapat konten baru tanpa perlu menaikkan `?b=`.
+
+Skrip + snapshot sebelum-ubah disimpan di direktori scratchpad sesi tersebut.
 
 ---
 

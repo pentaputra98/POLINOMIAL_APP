@@ -507,11 +507,11 @@ Jadi $g(x) = x^2 - 1$.
   "set_id":"02-set-B-sedang","level":"sedang",
   "items":[
     {"id":"B1","type":"short","question":"$(2x^2-3x+1)-(x^2-x-4)$","answer":"x^2 - 2x + 5","explanation":"Balik tanda pengurang lalu gabung."},
-    {"id":"B2","type":"short","question":"$(x-2)(x^2+2x+4)$","answer":"x^3 - 8","explanation":"Pola a^3-b^3 dengan a=x,b=2."},
+    {"id":"B2","type":"short","question":"$(x-2)(x^2+2x+4)$","answer":"x^3 - 8","explanation":"Pola $a^3-b^3$ dengan $a=x,b=2$."},
     {"id":"B3","type":"short","question":"$f(x)=x^3-2x^2+5,\\ f(-1)$","answer":"2","explanation":"-1-2+5=2."},
     {"id":"B4","type":"short","question":"$(2x+1)^2$","answer":"4x^2 + 4x + 1","explanation":"(a+b)^2."},
     {"id":"B5","type":"short","question":"$(x+a)(x+3)=x^2+7x+12$, a=","answer":"4","explanation":"a+3=7 → a=4."},
-    {"id":"B6","type":"short","question":"$(x^2+1)(x^2-1)$","answer":"x^4 - 1","explanation":"Selisih kuadrat dgn a=x^2."},
+    {"id":"B6","type":"short","question":"$(x^2+1)(x^2-1)$","answer":"x^4 - 1","explanation":"Selisih kuadrat dgn $a=x^2$."},
     {"id":"B7","type":"short","question":"$f(x)=x^4-3x^2+2,\\ f(2)$","answer":"6","explanation":"16-12+2=6."},
     {"id":"B8","type":"short","question":"$(3x-2)(3x+2)$","answer":"9x^2 - 4","explanation":"Selisih kuadrat."},
     {"id":"B9","type":"short","question":"$(x+1)^3$","answer":"x^3 + 3x^2 + 3x + 1","explanation":"(a+b)^3."},
@@ -542,9 +542,9 @@ Jadi $g(x) = x^2 - 1$.
   "items":[
     {"id":"C1","type":"short","question":"$(x+2)^3-(x-2)^3$","answer":"12x^2 + 16","explanation":"2(3x^2·2 + 2^3)=... = 12x^2+16."},
     {"id":"C2","type":"short","question":"$f(x)=2x^3-x^2+4x-3,\\ f(1/2)$","answer":"-1","explanation":"2(1/8)-1/4+2-3 = 1/4-1/4+2-3 = -1."},
-    {"id":"C3","type":"short","question":"$x^3+ax+b=(x-1)(x^2+x+b)$","answer":"a=b-1, b bebas; jabaran: x^3+(b-1)x-b, jadi a=b-1 dan b=-b→b=0,a=-1","explanation":"Samakan: (x-1)(x^2+x+b)=x^3+(b-1)x-b. Konstanta: b=-b→b=0; a=b-1=-1."},
-    {"id":"C4","type":"short","question":"$(x^2+px+2)(x+3)=x^3+4x^2+5x+6$, p=","answer":"1","explanation":"Koef x^2: p+3=4 → p=1."},
-    {"id":"C5","type":"short","question":"$f(x)=x^2+bx+c,\\ f(2)=f(5)=0$","answer":"b=-7, c=10","explanation":"Akar 2 dan 5 → x^2-7x+10."},
+    {"id":"C3","type":"short","question":"$x^3+ax+b=(x-1)(x^2+x+b)$","answer":"a=b-1, b bebas; jabaran: $x^3+(b-1)x-b$, jadi a=b-1 dan b=-b→b=0,a=-1","explanation":"Samakan: $(x-1)(x^2+x+b)=x^3+(b-1)x-b$. Konstanta: $b=-b$→$b=0$; $a=b-1=-1$."},
+    {"id":"C4","type":"short","question":"$(x^2+px+2)(x+3)=x^3+4x^2+5x+6$, p=","answer":"1","explanation":"Koef $x^2$: $p+3=4$ → $p=1$."},
+    {"id":"C5","type":"short","question":"$f(x)=x^2+bx+c,\\ f(2)=f(5)=0$","answer":"b=-7, c=10","explanation":"Akar 2 dan 5 → $x^2-7x+10$."},
     {"id":"C6","type":"short","question":"$\\frac{x^3-8}{x-2}$","answer":"x^2 + 2x + 4","explanation":"a^3-b^3=(a-b)(a^2+ab+b^2)."},
     {"id":"C7","type":"short","question":"$\\frac{5}{(x-1)(x+4)}=\\frac{A}{x-1}+\\frac{B}{x+4}$","answer":"A=1, B=-1","explanation":"x=1: 5=5A→A=1; x=-4: 5=-5B→B=-1."},
     {"id":"C8","type":"short","question":"$f(50)$ vs 2000","answer":"f(50)=-6000, ≠2000 (lebih kecil)","explanation":"125000-175000-30000+74000=-6000."},
@@ -580,9 +580,9 @@ Jadi $g(x) = x^2 - 1$.
   "items":[
     {"id":"D1","type":"short","question":"Mengapa f(40)=f(60)?","answer":"karena f(x)-2000 berakar 40,60,-30","explanation":"f(40)=2000 dan 60 juga akar f(x)-2000 → f(60)=2000."},
     {"id":"D2","type":"short","question":"f+g=3x^2-x+4, f-g=x^2+3x-2","answer":"f=2x^2+x+1, g=x^2-2x+3","explanation":"Jumlah/2 dan selisih/2."},
-    {"id":"D3","type":"short","question":"f(x+1)-f(x)=2x+3, f(0)=1","answer":"x^2 + 2x + 1","explanation":"f(x)=x^2+2x+1 memenuhi selisih & f(0)=1."},
-    {"id":"D4","type":"short","question":"pecahan parsial x^2+1 / x(x-1)(x+1)","answer":"A=-1, B=1, C=1","explanation":"x=0→A=-1; x=1→B=1; x=-1→C=1."},
-    {"id":"D5","type":"short","question":"(x^2+ax+1)(x+2)=x^3+bx+c","answer":"a=-2, b=-3, c=2","explanation":"Koef x^2 harus 0: a+2=0→a=-2; jabarkan sisanya."}
+    {"id":"D3","type":"short","question":"f(x+1)-f(x)=2x+3, f(0)=1","answer":"x^2 + 2x + 1","explanation":"$f(x)=x^2+2x+1$ memenuhi selisih & $f(0)=1$."},
+    {"id":"D4","type":"short","question":"pecahan parsial $x^2+1$ / $x(x-1)(x+1)$","answer":"A=-1, B=1, C=1","explanation":"x=0→A=-1; x=1→B=1; x=-1→C=1."},
+    {"id":"D5","type":"short","question":"(x^2+ax+1)(x+2)=x^3+bx+c","answer":"a=-2, b=-3, c=2","explanation":"Koef $x^2$ harus 0: $a+2=0$→$a=-2$; jabarkan sisanya."}
   ]
 }
 ```
@@ -610,7 +610,7 @@ Jadi $g(x) = x^2 - 1$.
     {"id":"E2","type":"short","source":"TKA-saham","question":"f(20) vs 2000","answer":"f(20)=42000, jauh lebih besar dari 2000","explanation":"8000-28000-12000+74000=42000."},
     {"id":"E3","type":"short","question":"C(x)=x^2+10x+25, C(15)","answer":"400","explanation":"(x+5)^2 → (20)^2=400."},
     {"id":"E4","type":"short","question":"x^3-6x^2+11x-6=(x-1)(x-2)(x-r)","answer":"r=3","explanation":"Konstanta: (-1)(-2)(-r)=-6 → r=3."},
-    {"id":"E5","type":"short","question":"f(1)=f(-1) untuk 2x^3+ax^2+bx+6 (cari b; a bebas)","answer":"b=-2","explanation":"f(1)-f(-1)=4+2b=0 → b=-2; nilai a bebas karena suku genap otomatis sama."}
+    {"id":"E5","type":"short","question":"$f(1)=f(-1)$ untuk $2x^3+ax^2+bx+6$ (cari b; a bebas)","answer":"b=-2","explanation":"f(1)-f(-1)=4+2b=0 → b=-2; nilai a bebas karena suku genap otomatis sama."}
   ]
 }
 ```
