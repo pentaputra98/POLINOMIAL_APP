@@ -35,7 +35,13 @@
   function smart(s) {
     var t = String(s == null ? "" : s);
     if (!t.trim()) return "";
-    if (t.indexOf("$") >= 0) return t;              // MR.render menangani $…$
+    /* WAJIB tetap di-esc(). Dulu string ber-$ dikembalikan MENTAH, sehingga
+       sebuah "<" di dalamnya (mis. opsi "$0<x<5$" pada Bab 06) dibaca peramban
+       sebagai awal tag HTML dan menelan sisa kalimat — di layar hanya tersisa
+       "$0". Meng-esc() TIDAK mengganggu KaTeX: entitas &lt; kembali menjadi
+       karakter "<" di dalam simpul teks, dan MR.render membaca simpul teks
+       itulah, bukan sumber HTML-nya. Tanda "$" sendiri tidak disentuh esc(). */
+    if (t.indexOf("$") >= 0) return esc(t);         // MR.render menangani $…$
     if (!/[A-Za-z]{3,}/.test(t)) return M(t);       // murni rumus
     return esc(t);                                   // kalimat → teks biasa
   }

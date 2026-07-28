@@ -31,6 +31,39 @@
   var NS = "http://www.w3.org/2000/svg";
   var BUILDERS = {};
 
+  /* Panah digambar dari HASIL PENGUKURAN tata letak, sehingga harus digambar
+     ulang setiap kali tata letak berubah: layar diubah ukurannya, pop-up
+     dibuka/ditutup (js/overlay.js mengirim "poli:relayout"), atau bilah
+     sub-materi muncul. Tanpa ini panah akan meleset dari jangkarnya. */
+  var PAINTERS = [];
+  function repaint() {
+    for (var i = 0; i < PAINTERS.length; i++) {
+      try { PAINTERS[i](); } catch (e) { /* figure sudah dilepas dari DOM */ }
+    }
+  }
+  var _bound = false;
+  function bindRepaint() {
+    if (_bound) return;
+    _bound = true;
+    var t = 0;
+    function later() {
+      clearTimeout(t);
+      t = setTimeout(repaint, 60);
+    }
+    window.addEventListener("resize", later);
+    window.addEventListener("poli:relayout", later);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
+  }
+  /** Daftarkan penggambar; otomatis dilupakan bila elemennya lepas dari DOM. */
+  function watch(node, fn) {
+    bindRepaint();
+    PAINTERS.push(function () {
+      if (!node.isConnected) return;
+      fn();
+    });
+    if (window.ResizeObserver) new ResizeObserver(fn).observe(node);
+  }
+
   function el(tag, cls, html) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -158,6 +191,14 @@
     opts = opts || {};
     var old = stage.querySelector(".v-overlay");
     if (old) old.remove();
+
+    /* Sediakan ruang bagi panah SEBELUM mengukur. Bila padding baru ditetapkan
+       sesudah pengukuran, penambahan padding dapat mengubah tata letak (mis.
+       memunculkan/menghilangkan scrollbar) sehingga koordinat yang baru saja
+       diukur menjadi kedaluwarsa dan panah meleset dari jangkarnya. */
+    var need = (opts.lift || 18) + Math.max(0, pairs.length - 1) * 9 + 22;
+    stage.style.paddingBottom = need + "px";
+
     var box = stage.getBoundingClientRect();
     var svg = svgEl("svg", { "class": "v-overlay" });
     var defs = svgEl("defs", {});
@@ -196,10 +237,6 @@
       }
     });
     stage.appendChild(svg);
-    // beri ruang di bawah rumus agar panah tidak terpotong
-    var need = 0;
-    pairs.forEach(function (_, i) { need = Math.max(need, (opts.lift || 18) + i * 9 + 22); });
-    stage.style.paddingBottom = need + "px";
     return svg;
   }
 
@@ -359,9 +396,7 @@
       });
     }
     var st = stepper(f.body, 2, paint);
-    var ro = window.ResizeObserver ? new ResizeObserver(function () { paint(st.step); }) : null;
-    if (ro) ro.observe(f.stage);
-    window.addEventListener("resize", function () { paint(st.step); });
+    watch(f.stage, function () { paint(st.step); });
     return f.fig;
   };
 
@@ -403,6 +438,7 @@
    * 7) MOUNT
    * ===================================================================== */
   function mount(root) {
+    PAINTERS.length = 0;      // halaman berganti -> lupakan penggambar lama
     (root || document).querySelectorAll(".visual-slot").forEach(function (slot) {
       if (slot.dataset.visualDone) return;
       slot.dataset.visualDone = "1";
@@ -426,6 +462,8 @@
 
   window.Visuals = {
     mount: mount,
+    repaint: repaint,
+    watch: watch,
     register: function (k, fn) { BUILDERS[k] = fn; },
     has: function (k) { return !!BUILDERS[k]; },
     keys: function () { return Object.keys(BUILDERS); },

@@ -24,7 +24,8 @@
   function smart(s) {
     var t = String(s == null ? "" : s);
     if (!t.trim()) return "";
-    if (t.indexOf("$") >= 0) return t;
+    // esc() tetap dijalankan meski ada "$" — lihat catatan pada js/quiz.js
+    if (t.indexOf("$") >= 0) return esc(t);
     if (!/[A-Za-z]{3,}/.test(t)) return window.MR ? MR.M(t, false) : esc(t);
     return esc(t);
   }

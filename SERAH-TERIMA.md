@@ -1,10 +1,15 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=61`** · Cache SW **`polinomial-v43`**
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=65`** · Cache SW **`polinomial-v47`**
+>
+> 🚫 **JANGAN PUSH.** Aplikasi versi lama sedang dipakai siswa secara live.
+> Seluruh commit disimpan LOKAL sampai Fase 1–5 selesai dan pemilik memberi
+> lampu hijau final.
 >
 > ⚠️ **Sedang berlangsung: pembangunan ulang ke arsitektur halaman berstruktur.**
 > Konten sudah ditulis ulang seluruhnya (commit `4f0deb0`); aplikasi menyusul
-> secara bertahap. **Fase 1 (Fondasi) SELESAI** — lihat §11. Fase 2–5 belum.
+> secara bertahap. **Fase 1 (Fondasi) & Fase 2 (Kerangka Halaman) SELESAI** —
+> lihat §11 dan §12. Fase 3–5 belum.
 > Bagian §3 dan §7 di bawah masih menggambarkan keadaan SEBELUM penulisan ulang
 > dan akan diperbarui saat tiap fase selesai.
 
@@ -408,6 +413,80 @@ lalu **menghitung sendiri** pembagiannya.
    dipakai `slider` di `02-…md:312`.
 3. `cloze` masih terdokumentasi di manifest tetapi **0 dipakai**.
 4. `hl-term` terdaftar, 0 dipakai — gayanya sudah disiapkan.
+
+---
+
+## 12. PEMBANGUNAN ULANG — FASE 2: KERANGKA HALAMAN (29 Juli 2026)
+
+### Yang dikerjakan
+| Berkas | Perubahan |
+|---|---|
+| **`js/overlay.js`** (baru) | Pop-up/modal aksesibel yang dipakai bersama Fase 2–4. `role="dialog"`, `aria-modal`, kurungan fokus Tab, Esc, klik latar, fokus pulih ke pemicu, `aria-hidden` pada `#app`, kunci gulir latar. **Isi DIPINDAHKAN sebagai simpul DOM, tidak pernah disalin** — rumus KaTeX & pendengar peristiwa tetap utuh; saat ditutup, simpul dikembalikan tepat ke posisi asalnya |
+| **`js/pagekit.js`** (baru) | Info Cards → grid kartu berwarna + pop-up; bilah sub-materi sticky yang berganti otomatis, pintasan angka 1–5, tombol daftar isi |
+| `css/style.css` | 7 nada warna kartu, `.infocards`, `.sm-bar`, `.ov-*`; `.vstage{overflow-y:hidden}` |
+| `js/visuals.js` | `PAINTERS` + `repaint()` + `watch()`; mendengar `poli:relayout` sehingga panah digambar ulang setelah pop-up/bilah mengubah tata letak. `drawArrows` menetapkan padding **sebelum** mengukur |
+| `js/quiz.js`, `js/activity.js`, `js/challenge.js` | `smart()` kini tetap meng-`esc()` string ber-`$` — memperbaiki jebakan #10 |
+| `js/app.js` | memanggil `PageKit.apply` sebelum penggantian emoji |
+
+### Keputusan desain: hanya SATU bilah menempel
+Daftar isi lama (`details.toc`) juga sticky. Dua bilah bertumpuk memakan ruang,
+terutama di 360 px. Karena itu ToC disembunyikan dan **daftar tautannya dipakai
+sebagai isi pop-up** lewat tombol daftar isi pada bilah sub-materi. Simpul `<ol>`
+dipindahkan ke pop-up lalu dikembalikan — 11 tautan terverifikasi kembali utuh.
+
+### ⚠️ Dua bug yang ditemukan lewat pengukuran
+
+**(1) Bilah sub-materi tertinggal satu.** Ambang aktivasi `bar.bottom + 4`
+membuat heading yang berhenti beberapa piksel di bawah bilah belum terhitung
+sudah dimasuki. Diperbaiki menjadi `bar.bottom + 16`, dan penanda "menempel"
+dihitung langsung dari posisi (bukan `IntersectionObserver`) agar tidak
+tertinggal satu bingkai. Heading yang terpasang kini diberi `data-sm-index` /
+`data-sm-no` supaya pemetaan frontmatter→`<h2>` dapat diaudit dari luar.
+
+**(2) Panah meleset tepat 7,5 px — akar masalah tak terduga.**
+`.vstage` memakai `overflow-x:auto`. CSS **memaksa sumbu vertikalnya menjadi
+`auto` juga**, sehingga panah yang menjorok ke bawah menambah tinggi gulir dan
+memunculkan scrollbar vertikal. Scrollbar itu menyusutkan lebar isi ±15 px, dan
+karena `.katex-display` memusatkan rumusnya, **seluruh jangkar bergeser ~7,5 px**.
+Saat digambar ulang, overlay dilepas dulu sehingga scrollbar sempat hilang lalu
+kembali — offsetnya terus terulang. Dua perbaikan: `overflow-y:hidden` pada
+`.vstage`, dan `drawArrows` menetapkan `padding-bottom` **sebelum** mengukur.
+Terukur: scrollbar dalam stage **15,41 px → 0,4 px**; panah tepat di ketiga
+tahap (awal, setelah `repaint()`, setelah buka-tutup pop-up).
+
+### ⚠️ PELAJARAN PROSES — verifikasi bisa palsu
+Saya sempat menyunting `js/pagekit.js` **setelah** menetapkan `?b=62`, sehingga
+peramban masih memakai skrip lama dan pengujian saya mengukur kode yang belum
+termuat. Gejalanya menipu: tampak seperti bug logika. **Aturan mutlak: setiap
+sunting pada `js/` atau `css/` harus langsung diikuti kenaikan `?b=` dan nama
+`CACHE`** — bukan hanya sebelum commit. Bukti bahwa berkas benar termuat:
+periksa `document.scripts` menampilkan versi yang diharapkan.
+
+### Bukti terverifikasi
+| Cek | Hasil |
+|---|---|
+| Info Cards | **46 kartu** di 8 bab (00: 5 · 01–06: 6 · 07: 5); `details[data-card]` mentah **0** |
+| Nada warna | 6 nada berbeda per bab; kepala pop-up mewarisi `--tone` (diperiksa: `tone-peach` → `#FFE0D6`) |
+| Bilah sticky | **7 bilah** (Bab 01–07; `00-intro` berlayout `gerbang`, benar tanpa bilah), **35 chip** |
+| Pelacakan sub-materi | **5/5 tepat** — badge, judul, chip, dan status menempel cocok di tiap sub-materi |
+| Pintasan angka | klik chip 3 → mendarat di sub-materi 3 |
+| Daftar isi pop-up | 11 tautan; kembali utuh ke `details.toc` setelah ditutup |
+| Aksesibilitas pop-up | `role=dialog`/`aria-modal=true`, fokus masuk panel, Esc menutup, fokus pulih ke kartu pemicu, `#app` ber-`aria-hidden` lalu bersih |
+| KaTeX di dalam pop-up | 6 rumus terender, 0 error, anotasi TeX asli utuh — membuktikan pemindahan simpul tidak merusak render |
+| Panah Fase 1 | tepat di ketiga tahap; tidak bergeser melintasi buka/tutup pop-up |
+| 8 bab | **2255 rumus · 0 error · 0 gagal muat · 51 `hl-*` · 0 emoji mentah · 0 `$` bocor** |
+| `$` bocor | **2 → 0**. Opsi `$0<x<5$` dan `$0<x<10$` (Bab 06) kini terender sebagai KaTeX |
+| 360 px | scroll horizontal **0 px** di 3 bab; kartu 2 per baris; chip disembunyikan ≤400 px; pop-up 338 px, di dalam viewport, tanpa scroll mendatar |
+| Konsol | **0 pesan** |
+
+### Catatan jujur
+- **Tinggi halaman belum turun** (Bab 01: 14.404 → 14.483 px). Info Cards tidak
+  memendekkan halaman karena `<details>` memang sudah tertutup; nilainya ada
+  pada pop-up, warna, dan sifat dapat-dilewati. Pemendekan besar baru terjadi di
+  **Fase 3**, saat 25 soal per bab berpindah ke kartu+pop-up.
+- Kartu "Peta Konsep" masih memuat 1 fence ASCII + 1 slot komponen di dalam
+  pop-up (Fase 5).
+- Bilah setinggi 63 px karena tombol ikonnya mempertahankan target sentuh 44 px.
 
 ---
 

@@ -348,6 +348,10 @@
 
     if (kind === "bab") renderDocFoot(meta);
 
+    // Kerangka halaman: Info Cards -> kartu + pop-up, dan bilah sub-materi
+    // sticky. Dijalankan SEBELUM penggantian emoji supaya <summary> masih asli
+    // (label kartu diambil dari sana, ikonnya dari atribut data-icon).
+    if (window.PageKit && kind === "bab") PageKit.apply(viewRoot, doc.front);
     // Emoji pemimpin pada judul/callout diganti ikon Lucide (berkas .md tetap utuh)
     if (window.Icons) { Icons.applyEmoji(viewRoot); Icons.hydrate(viewRoot); }
     // Direktif <!-- VISUAL: ... --> diwujudkan. WAJIB sesudah MR.render:

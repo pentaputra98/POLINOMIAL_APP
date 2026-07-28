@@ -202,7 +202,13 @@ blockquote>p:first-child .lead-icon{color:var(--ink);}
 .vfig-body{position:relative;}
 /* area yang diukur oleh lapisan jangkar; overflow-x agar tak pernah
    memaksa halaman menggulir mendatar pada 360px */
-.vstage{position:relative;overflow-x:auto;padding:.35rem .1rem .5rem;}
+/* overflow-y WAJIB hidden, bukan dibiarkan baku.
+   CSS memaksa sumbu lain menjadi 'auto' begitu satu sumbu diberi 'auto',
+   sehingga panah yang menjorok ke bawah menambah tinggi gulir dan memunculkan
+   scrollbar vertikal. Scrollbar itu menyusutkan lebar isi ±15px, dan karena
+   .katex-display memusatkan rumusnya, seluruh jangkar bergeser ~7,5px —
+   panah pun meleset. Ruang bagi panah sudah disediakan lewat padding-bottom. */
+.vstage{position:relative;overflow-x:auto;overflow-y:hidden;padding:.35rem .1rem .5rem;}
 .vstage .katex-display{margin:.35rem 0;}
 /* SVG panah menumpang di atas rumus; tidak menangkap sentuhan */
 .v-overlay{position:absolute;inset:0;pointer-events:none;overflow:visible;}
@@ -1411,6 +1417,139 @@ body.dgview-open{overflow:hidden;}
   .hero{padding-top:.6rem;gap:.6rem;}
   .doc h2{margin-top:1.4rem;}
 }
+
+/* =====================================================================
+   FASE 2 — KERANGKA HALAMAN: INFO CARDS, BILAH SUB-MATERI, POP-UP
+   ===================================================================== */
+
+/* ---------- Nada warna kartu (dipakai kartu & panel pop-up) ---------- */
+.tone-mint{--tone:var(--mint);}
+.tone-lavender{--tone:var(--lavender);}
+.tone-peach{--tone:var(--peach);}
+.tone-sky{--tone:var(--sky);}
+.tone-butter{--tone:var(--butter);}
+.tone-coral{--tone:var(--coral);}
+.tone-sage{--tone:var(--sage);}
+
+/* ---------- INFO CARDS ---------- */
+.infocards{
+  display:grid;gap:.55rem;margin:.9rem 0 .35rem;
+  grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
+}
+.infocard{
+  display:flex;align-items:center;gap:.5rem;
+  text-align:left;width:100%;
+  padding:.6rem .65rem;
+  background:var(--tone,var(--surface-2));
+  color:var(--ink);
+  border:var(--bd) solid var(--line);
+  border-radius:var(--radius-sm);
+  box-shadow:var(--shadow-sm);
+  font-family:var(--font-display);font-weight:700;font-size:.9rem;
+  cursor:pointer;
+  transition:transform var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease);
+}
+.infocard:hover,.infocard:focus-visible{transform:translate(-2px,-2px);box-shadow:var(--shadow);}
+.infocard:active{transform:translate(1px,1px);box-shadow:none;}
+.infocard-ico{display:grid;place-items:center;flex:0 0 auto;}
+.infocard-ico .lu{width:1.25em;height:1.25em;}
+.infocard-label{flex:1 1 auto;line-height:1.15;}
+.infocard-more{flex:0 0 auto;opacity:.65;}
+.infocard-more .lu{width:1em;height:1em;}
+.infocards-hint{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.82rem;color:var(--ink-soft);margin:0 0 1rem;
+}
+.infocards-hint .lu{width:.95em;height:.95em;flex:0 0 auto;}
+.infocard-store{display:none;}
+
+/* ---------- BILAH SUB-MATERI STICKY ---------- */
+.sm-sentinel{height:1px;margin:0;}
+.sm-bar{
+  position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;gap:.5rem;
+  margin:.2rem 0 1rem;padding:.4rem .55rem;
+  background:var(--surface);
+  border:var(--bd) solid var(--line);
+  border-radius:var(--radius-sm);
+  box-shadow:none;
+  transition:box-shadow var(--t) var(--ease),background var(--t) var(--ease);
+}
+.sm-bar.is-stuck{box-shadow:var(--shadow);background:var(--surface-2);}
+.sm-now{display:flex;align-items:center;gap:.45rem;min-width:0;flex:1 1 auto;}
+.sm-badge{
+  display:grid;place-items:center;flex:0 0 auto;
+  width:1.6rem;height:1.6rem;
+  background:var(--butter);color:var(--ink);
+  border:var(--bd-thin) solid var(--line);border-radius:8px;
+  font-family:var(--font-display);font-weight:700;font-size:.85rem;
+}
+.sm-title{
+  font-family:var(--font-display);font-weight:700;font-size:.92rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sm-chips{display:flex;gap:.25rem;flex:0 0 auto;}
+.sm-chip{
+  width:1.7rem;height:1.7rem;
+  display:grid;place-items:center;
+  background:var(--surface);color:var(--ink-soft);
+  border:var(--bd-thin) solid var(--line);border-radius:8px;
+  font-family:var(--font-display);font-weight:700;font-size:.8rem;
+  cursor:pointer;
+}
+.sm-chip:hover{color:var(--ink);}
+.sm-chip.is-on{background:var(--sky);color:var(--ink);box-shadow:var(--shadow-sm);}
+.sm-toc{flex:0 0 auto;}
+/* pada layar sempit, pintasan angka disembunyikan agar judul tetap terbaca */
+@media (max-width:400px){
+  .sm-chips{display:none;}
+}
+
+/* ---------- POP-UP / MODAL ---------- */
+.ov-lock,.ov-lock body{overflow:hidden;}
+.ov-scrim{
+  position:fixed;inset:0;z-index:120;
+  display:grid;place-items:center;
+  padding:clamp(.5rem,3vw,1.5rem);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(2px);
+}
+.ov-panel{
+  display:flex;flex-direction:column;
+  width:100%;max-height:min(88vh,100%);
+  background:var(--surface);color:var(--ink);
+  border:var(--bd) solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+}
+.ov-sm{max-width:26rem;}
+.ov-md{max-width:36rem;}
+.ov-lg{max-width:52rem;}
+.ov-full{max-width:min(64rem,100%);height:min(88vh,100%);}
+.ov-head{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.6rem .7rem;
+  background:var(--tone,var(--surface-2));
+  border-bottom:var(--bd) solid var(--line);
+}
+.ov-icon{display:grid;place-items:center;flex:0 0 auto;}
+.ov-icon .lu{width:1.2em;height:1.2em;}
+.ov-title{
+  flex:1 1 auto;min-width:0;
+  font-family:var(--font-display);font-size:1rem;line-height:1.2;
+}
+.ov-close{flex:0 0 auto;}
+.ov-body{
+  padding:.85rem .8rem 1.1rem;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+}
+.ov-body > :first-child{margin-top:0;}
+.ov-body ol{margin:0;padding-left:1.1rem;}
+.ov-body table{width:100%;}
+/* isi pop-up tidak boleh memaksa scroll mendatar pada layar sempit */
+.ov-body .pre-wrap,.ov-body .katex-display{overflow-x:auto;}
 
 /* ---------- AKSESIBILITAS ---------- */
 :focus-visible{outline:3px solid var(--coral);outline-offset:2px;border-radius:4px;}
