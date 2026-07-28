@@ -3,7 +3,7 @@ id: "02-operasi-dan-nilai-polinomial"
 slug: "operasi-dan-nilai-polinomial"
 title: "Operasi dan Nilai Polinomial"
 order: 2
-duration_min: 100
+duration_min: 80
 level: "Kelas XI - Kurikulum Merdeka"
 track: "TKA Matematika Lanjut"
 prerequisites:
@@ -11,640 +11,586 @@ prerequisites:
 competencies:
   - "K2: Melakukan operasi & menghitung nilai polinomial"
 learning_objectives:
-  - "Menjumlah & mengurangkan polinomial dengan menggabungkan suku sejenis"
-  - "Mengalikan polinomial menggunakan sifat distributif"
+  - "Menjumlah & mengurangkan polinomial melalui suku sejenis"
+  - "Mengalikan polinomial dengan sifat distributif"
   - "Menghitung nilai polinomial melalui substitusi"
-  - "Menyelesaikan kesamaan polinomial & mencari koefisien tak diketahui"
-  - "Membedakan persamaan biasa dari identitas polinomial"
+  - "Menyelesaikan kesamaan polinomial & identitas"
 tags: ["operasi", "penjumlahan", "perkalian", "nilai", "substitusi", "kesamaan", "identitas"]
+layout: "sub-materi"
+sub_materi:
+  - { id: "1", title: "Penjumlahan & Pengurangan" }
+  - { id: "2", title: "Perkalian Polinomial" }
+  - { id: "3", title: "Nilai Polinomial & Substitusi" }
+  - { id: "4", title: "Kesamaan Polinomial" }
+  - { id: "5", title: "Identitas Polinomial" }
 components:
-  - "Concept Map Mini"
-  - "Live Calculation"
-  - "Step by Step Animation"
-  - "Interactive Example"
-  - "Quiz"
-  - "Reflection"
+  - "Info Cards"
+  - "Sub Materi"
+  - "Activity Guided"
   - "Activity ErrorHunt"
   - "Activity Matching"
   - "Activity Slider"
-  - "Activity Cloze"
   - "Activity Categorize"
-  - "Activity TrueFalse"
+  - "Quiz Cards"
   - "Tantangan Akhir Bab"
+  - "Reflection"
 activities:
-  - "02-act-kurang"
-  - "02-act-identitas"
-  - "02-act-slider"
-  - "02-act-cloze"
-  - "02-act-identitas-kategori"
-  - "02-act-tf"
+  - "02-g1"
+  - "02-m1"
+  - "02-g2"
+  - "02-m2"
+  - "02-g3"
+  - "02-m3"
+  - "02-g4"
+  - "02-m4"
+  - "02-g5"
+  - "02-m5"
 challenge: "02-tantangan"
-xp_available: 205
+xp_available: 235
 katex: true
 ---
 
 # Bab 02 — Operasi dan Nilai Polinomial
 
-<!-- COMPONENT: Concept Map Mini
-     DEVELOPER: WAJIB dirender sebagai kartu/diagram interaktif bergaya Soft Neo Brutalism,
-     BUKAN menyalin blok teks ASCII apa adanya ke aplikasi.
-     Buat 5 simpul bertahap: Penjumlahan & Pengurangan → Perkalian → Nilai & Substitusi
-     → Kesamaan → Identitas. Tiap simpul berupa kartu yang dapat diklik menuju sub-bagian
-     terkait; sorot simpul aktif saat halaman digulir. Blok di bawah HANYA rujukan struktur. -->
+<!-- COMPONENT: Info Cards
+     DEVELOPER: enam bagian di bawah ini dirender sebagai KARTU ringkas berwarna berbeda
+     (grid responsif). Klik kartu -> POP-UP berisi isinya. Siswa boleh melewatinya.
+     Ikon Lucide: target, puzzle, package, clock, map, flame. -->
 
-## 🎯 Tujuan Pembelajaran
+<details data-card="tujuan" data-icon="target">
+<summary>🎯 Tujuan Pembelajaran</summary>
 
 Setelah mempelajari bab ini, peserta didik diharapkan mampu:
 
-1. **Menjumlahkan** dan **mengurangkan** polinomial dengan tepat (kunci: suku sejenis).
-2. **Mengalikan** polinomial menggunakan sifat distributif secara sistematis.
-3. **Menghitung nilai** polinomial $f(k)$ melalui **substitusi** serta memahami maknanya.
-4. Menyelesaikan **kesamaan polinomial** untuk menentukan **koefisien yang belum diketahui**.
-5. Membedakan **persamaan** biasa dari **identitas** polinomial.
+1. Menjumlahkan dan mengurangkan polinomial dengan tepat.
+2. Mengalikan polinomial menggunakan sifat distributif.
+3. Menghitung nilai polinomial $f(k)$ melalui substitusi.
+4. Menyelesaikan kesamaan polinomial untuk menentukan koefisien yang belum diketahui.
+5. Membedakan persamaan biasa dari identitas polinomial.
 
-## 🧩 Kompetensi yang Dipelajari
-- **K2 — Melakukan operasi dan menghitung nilai polinomial.**
+</details>
 
-## 📦 Prasyarat
-- Bab 01 (unsur, derajat, suku sejenis).
-- Sifat distributif $a(b+c)=ab+ac$.
+<details data-card="kompetensi" data-icon="puzzle">
+<summary>🧩 Kompetensi</summary>
 
-## ⏱️ Estimasi Waktu Belajar
-**±100 menit.**
+**K2 — Melakukan operasi dan menghitung nilai polinomial.**
 
-## 🗺️ Peta Konsep Kecil
+</details>
 
-<!-- COMPONENT: Concept Map Mini (lanjutan)
-     DEVELOPER: tampilkan sebagai alur kartu interaktif, bukan teks ASCII mentah. -->
+<details data-card="prasyarat" data-icon="package">
+<summary>📦 Prasyarat</summary>
+
+- Bab 01: unsur, derajat, dan suku sejenis.
+- Sifat distributif $a(b+c) = ab + ac$.
+
+</details>
+
+<details data-card="waktu" data-icon="clock">
+<summary>⏱️ Estimasi Waktu</summary>
+
+**±80 menit.** Dapat dibagi menjadi beberapa sesi; progres tersimpan otomatis.
+
+</details>
+
+<details data-card="peta" data-icon="map">
+<summary>🗺️ Peta Konsep</summary>
+
+<!-- COMPONENT: Concept Map Mini
+     DEVELOPER: render sebagai kartu/diagram interaktif yang dapat diklik menuju sub-materi. -->
 
 ```
-OPERASI & NILAI
-├─ 1. Penjumlahan & Pengurangan ─► gabungkan suku sejenis
-├─ 2. Perkalian                 ─► distributif; derajat hasil = jumlah derajat
-├─ 3. Nilai & Substitusi        ─► ganti x dengan bilangan  (★ soal saham & drum)
-├─ 4. Kesamaan Polinomial       ─► koefisien sepadan → cari yang belum diketahui
-└─ 5. Identitas                 ─► benar untuk SEMUA x
+Penjumlahan & Pengurangan → Perkalian → Nilai & Substitusi
+                                      → Kesamaan
+                                      → Identitas
 ```
 
-## 🔥 Motivasi
+</details>
 
-Pada Bab 01, kita telah mengenali polinomial beserta unsur-unsurnya. Pada bab ini, kita mempelajari cara **menggunakannya**. Operasi polinomial merupakan keterampilan dasar yang perlu dikuasai dengan lancar—sebagaimana perkalian bersusun pada bilangan—karena seluruh bab berikutnya dibangun di atasnya.
+<details data-card="motivasi" data-icon="flame">
+<summary>🔥 Motivasi</summary>
 
-Konsep terpenting pada bab ini adalah **nilai polinomial**. Dengan kemampuan menghitung $f(40)$, kita dapat menjawab persoalan nyata, misalnya *"berapa juta rupiah nilai saham jika terjual 40 unit?"* Pada bab ini pula, kita akan menyelesaikan **dua soal TKA**.
+Operasi polinomial adalah keterampilan dasar yang harus lancar, karena seluruh bab berikutnya dibangun di atasnya. Konsep terpenting pada bab ini adalah **nilai polinomial**: dengan kemampuan menghitung $f(40)$, kita dapat menjawab persoalan nyata seperti "berapa nilai saham jika terjual 40 unit?" Dua soal TKA akan diselesaikan di sini.
+
+</details>
 
 ---
 
-## 1️⃣ Penjumlahan & Pengurangan Polinomial
+<!-- COMPONENT: Sub Materi
+     DEVELOPER: judul sub-materi WAJIB sticky di bawah judul bab saat digulir, berdesain khusus,
+     dan berganti otomatis saat memasuki sub-materi berikutnya. -->
 
-Prinsipnya hanya satu: **gabungkan suku-suku sejenis**. Suku sejenis adalah suku dengan variabel dan pangkat yang **sama** (misalnya $3x^2$ dan $-5x^2$ sejenis; $3x^2$ dan $3x$ tidak sejenis).
+## 1️⃣ Penjumlahan & Pengurangan
 
-### Penjumlahan
+Prinsipnya satu: **gabungkan suku-suku sejenis**, yaitu suku dengan variabel dan pangkat yang sama.
 
-Jumlahkan koefisien dari suku-suku sejenis; suku yang tidak memiliki pasangan dituliskan apa adanya.
+<!-- VISUAL: Penjumlahan bersusun
+     DEVELOPER: tampilkan kedua polinomial tersusun ke bawah dengan KOLOM per pangkat sejajar.
+     Beri warna kolom berbeda (x^3, x^2, x, konstanta) sesuai kelas hl-1..hl-3 dan hl-const,
+     lalu animasikan penjumlahan tiap kolom satu per satu. -->
 
-**Contoh.** $(2x^3 + 3x^2 - x + 5) + (x^3 - 3x^2 + 4x - 2)$
+$$\htmlClass{hl-1}{2x^3} + \htmlClass{hl-2}{3x^2} - \htmlClass{hl-3}{x} + \htmlClass{hl-const}{5}$$
+$$\htmlClass{hl-1}{x^3} - \htmlClass{hl-2}{3x^2} + \htmlClass{hl-3}{4x} - \htmlClass{hl-const}{2}$$
 
-<!-- COMPONENT: Step by Step Animation -->
-<!-- Animasikan pengelompokan suku sejenis dengan warna: x^3 biru, x^2 hijau, x kuning, konstanta abu. -->
+Jumlahkan per kolom: $3x^3 + 0x^2 + 3x + 3 = 3x^3 + 3x + 3$.
 
-Kelompokkan berdasarkan pangkat:
-$$
-\begin{aligned}
-x^3 &: \; 2x^3 + x^3 = 3x^3\\
-x^2 &: \; 3x^2 + (-3x^2) = 0\\
-x   &: \; -x + 4x = 3x\\
-\text{konstanta} &: \; 5 + (-2) = 3
-\end{aligned}
-$$
-Hasil: $\;3x^3 + 3x + 3$.
+**Pengurangan** memiliki satu langkah tambahan yang wajib: **ubah tanda seluruh suku** polinomial pengurang, baru dijumlahkan.
 
-> ⚡ **Tips penataan:** susunlah **bersusun ke bawah** dengan pangkat sejajar (seperti penjumlahan bilangan) sehingga suku $x^2$ tepat berada di atas $x^2$. Cara ini mencegah kesalahan penggabungan.
+$$(4x^2+2x-1) - (x^2 \htmlClass{hl-1}{-3x} \htmlClass{hl-2}{+6}) = 4x^2+2x-1-x^2 \htmlClass{hl-1}{+3x} \htmlClass{hl-2}{-6}$$
 
-### Pengurangan
+> ⚠️ Kesalahan paling sering: hanya membalik tanda suku **pertama** pengurang. Tanda negatif harus dibagikan ke **semua** suku.
 
-Kunci pengerjaan: **ubah tanda seluruh suku** polinomial pengurang, kemudian jumlahkan. Langkah ini merupakan sumber kesalahan yang paling sering terjadi.
+### 📘 Contoh
 
-**Contoh.** $(4x^2 + 2x - 1) - (x^2 - 3x + 6)$
+Hitung $(4x^2 + 2x - 1) - (x^2 - 3x + 6)$.
 
-Distribusikan tanda negatif ke **setiap** suku pengurang:
-$$= 4x^2 + 2x - 1 - x^2 + 3x - 6$$
-Perhatikan bahwa $-(-3x) = +3x$ dan $-(+6) = -6$. Selanjutnya gabungkan:
-$$= (4-1)x^2 + (2+3)x + (-1-6) = 3x^2 + 5x - 7$$
+Ubah tanda pengurang: $4x^2 + 2x - 1 - x^2 + 3x - 6$. Gabungkan suku sejenis:
+$$(4-1)x^2 + (2+3)x + (-1-6) = 3x^2 + 5x - 7$$
 
-> ⚠️ **Kesalahan umum:** hanya mengubah tanda suku **pertama** pengurang. Tanda negatif harus didistribusikan ke **seluruh** suku pengurang.
+### 🎓 Latihan Terbimbing
 
-<!-- COMPONENT: Activity ErrorHunt -->
-> **Latihan Interaktif — Menemukan Kesalahan.** Cermati pengerjaan berikut, lalu tandai langkah yang keliru.
+<!-- COMPONENT: Activity Guided -->
 
 ```json
-{ "type":"activity", "widget":"error-hunt", "id":"02-act-kurang", "competency":"K2",
-  "prompt":"Seorang siswa menghitung $(4x^2+2x-1)-(x^2-3x+6)$. Langkah manakah yang salah?",
+{ "type":"activity", "widget":"guided", "id":"02-g1", "competency":"K2",
+  "title":"Mengurangkan polinomial tanpa salah tanda",
+  "prompt":"Hitung $(2x^2 - 3x + 1) - (x^2 - x - 4)$.",
   "steps":[
-    "Ubah tanda pengurang: $4x^2+2x-1-x^2+3x-6$.",
-    "Gabungkan suku $x^2$: $4x^2-x^2=3x^2$.",
-    "Gabungkan suku $x$: $2x+3x=5x$.",
-    "Gabungkan konstanta: $-1+6=5$."
+    {"ask":"Langkah 1. Setelah tanda dibagikan, bentuk pengurang $(x^2 - x - 4)$ menjadi ….","type":"mc","options":["$-x^2 + x + 4$","$-x^2 - x - 4$","$-x^2 + x - 4$"],"answer":"$-x^2 + x + 4$","feedback":"Tepat. Ketiga suku berubah tanda, termasuk konstanta $-4$ menjadi $+4$."},
+    {"ask":"Langkah 2. Gabungkan suku $x^2$: $2x^2 - x^2 = \\;?$","type":"mc","options":["$x^2$","$3x^2$","$2x^2$"],"answer":"$x^2$","feedback":"Benar, koefisiennya $2-1=1$."},
+    {"ask":"Langkah 3. Gabungkan suku $x$ dan konstanta, lalu tuliskan hasil akhirnya.","type":"mc","options":["$x^2 - 2x + 5$","$x^2 - 4x - 3$","$x^2 - 2x - 3$"],"answer":"$x^2 - 2x + 5$","feedback":"Tepat: $-3x + x = -2x$ dan $1 + 4 = 5$."}
+  ],
+  "conclusion":"Urutan aman pada pengurangan: bagikan tanda negatif ke semua suku terlebih dahulu, baru gabungkan suku sejenis.",
+  "reward":{"xp":15} }
+```
+
+### ✍️ Latihan Mandiri
+
+<!-- COMPONENT: Activity ErrorHunt -->
+
+```json
+{ "type":"activity", "widget":"error-hunt", "id":"02-m1", "competency":"K2",
+  "prompt":"Cermati pengerjaan $(4x^2+2x-1)-(x^2-3x+6)$ berikut. Terdapat satu langkah yang keliru.",
+  "steps":[
+    "Langkah 1. Ubah tanda pengurang: $4x^2 + 2x - 1 - x^2 + 3x - 6$.",
+    "Langkah 2. Gabungkan suku $x^2$: $4x^2 - x^2 = 3x^2$.",
+    "Langkah 3. Gabungkan suku $x$: $2x + 3x = 5x$.",
+    "Langkah 4. Gabungkan konstanta: $-1 + 6 = 5$."
   ],
   "wrong_index":3,
-  "why":"Konstanta pengurang $+6$ berubah tanda menjadi $-6$, sehingga $-1-6=-7$, bukan $+5$.",
-  "reward":{"xp":25} }
+  "why":"Konstanta pengurang $+6$ sudah berubah menjadi $-6$ pada langkah 1, sehingga seharusnya $-1 - 6 = -7$, bukan $+5$.",
+  "reward":{"xp":15} }
 ```
 
 ---
 
 ## 2️⃣ Perkalian Polinomial
 
-Gunakan sifat **distributif**: kalikan **setiap** suku polinomial pertama dengan **setiap** suku polinomial kedua, kemudian gabungkan suku-suku sejenis.
+Gunakan sifat **distributif**: kalikan setiap suku polinomial pertama dengan setiap suku polinomial kedua, lalu gabungkan suku sejenis.
 
-### Perkalian dengan konstanta (bentuk paling sederhana)
+<!-- VISUAL: Panah distribusi
+     DEVELOPER: WAJIB berupa animasi panah, bukan teks. Pada 3(x-2), tarik panah dari angka 3
+     ke x, lalu panah kedua dari 3 ke -2, masing-masing memunculkan hasil 3x dan -6.
+     Terapkan pola sama untuk (x+4)(x-2): empat panah berurutan (x·x, x·(-2), 4·x, 4·(-2)). -->
 
-$$3(2x^2 - 4x + 5) = 6x^2 - 12x + 15$$
-Setiap suku dikalikan $3$. Operasi ini persis digunakan pada **soal drum** (mengalikan $V(T)$ dengan 10).
+$$\htmlClass{hl-coef}{3}(\htmlClass{hl-1}{x} \htmlClass{hl-2}{- 2}) = \htmlClass{hl-1}{3x} \htmlClass{hl-2}{- 6}$$
 
-### Perkalian dua binomial
+Untuk dua binomial, setiap suku bertemu setiap suku:
 
-$$(x+4)(x-2) = x\cdot x + x\cdot(-2) + 4\cdot x + 4\cdot(-2) = x^2 - 2x + 4x - 8 = x^2 + 2x - 8$$
+$$(x+4)(x-2) = x^2 - 2x + 4x - 8 = x^2 + 2x - 8$$
 
-### Perkalian binomial dengan trinomial
+> 💡 **Pemeriksaan cepat:** derajat hasil kali = **jumlah** derajat kedua faktor. Bila tidak cocok, pasti ada langkah yang terlewat.
 
-**Contoh.** $(x - 3)(x^2 + 2x + 5)$
-$$
-\begin{aligned}
-&= x(x^2 + 2x + 5) - 3(x^2 + 2x + 5)\\
-&= (x^3 + 2x^2 + 5x) - (3x^2 + 6x + 15)\\
-&= x^3 + 2x^2 + 5x - 3x^2 - 6x - 15\\
-&= x^3 - x^2 - x - 15
-\end{aligned}
-$$
+**Identitas yang perlu dikuasai:**
 
-> 💡 **Pemeriksaan cepat derajat:** derajat hasil kali sama dengan **jumlah** derajat kedua faktor. Pada contoh ini $1+2=3$, dan hasilnya memang berderajat 3. Jika derajat hasil tidak sesuai, tentu terdapat kekeliruan.
+$$(a\pm b)^2 = a^2 \pm 2ab + b^2 \qquad (a+b)(a-b) = a^2 - b^2$$
+$$a^3 - b^3 = (a-b)(a^2+ab+b^2) \qquad a^3 + b^3 = (a+b)(a^2-ab+b^2)$$
 
-### Identitas perkalian yang perlu dikuasai
+### 📘 Contoh
 
-Penguasaan pola berikut mempercepat pengerjaan secara signifikan:
+Hitung $(x-3)(x^2+2x+5)$.
 
-$$(a+b)^2 = a^2 + 2ab + b^2$$
-$$(a-b)^2 = a^2 - 2ab + b^2$$
-$$(a+b)(a-b) = a^2 - b^2$$
-$$(a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3$$
-$$(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$$
-$$a^3 - b^3 = (a-b)(a^2+ab+b^2)$$
-$$a^3 + b^3 = (a+b)(a^2-ab+b^2)$$
+$$x(x^2+2x+5) - 3(x^2+2x+5) = (x^3+2x^2+5x) - (3x^2+6x+15) = x^3 - x^2 - x - 15$$
 
-<!-- COMPONENT: Activity Matching -->
-> **Latihan Interaktif — Menjodohkan.** Pasangkan setiap bentuk dengan hasil penjabarannya.
+Periksa derajat: $1 + 2 = 3$, dan hasilnya memang berderajat 3.
+
+### 🎓 Latihan Terbimbing
+
+<!-- COMPONENT: Activity Guided -->
 
 ```json
-{ "type":"activity", "widget":"matching", "id":"02-act-identitas", "competency":"K2",
-  "prompt":"Jodohkan identitas aljabar dengan hasilnya",
+{ "type":"activity", "widget":"guided", "id":"02-g2", "competency":"K2",
+  "title":"Mengalikan binomial dengan trinomial",
+  "prompt":"Hitung $(x-2)(x^2+2x+4)$.",
+  "steps":[
+    {"ask":"Langkah 1. Kalikan $x$ dengan seluruh trinomial. Hasilnya ….","type":"mc","options":["$x^3 + 2x^2 + 4x$","$x^3 + 2x + 4$","$x^2 + 2x + 4$"],"answer":"$x^3 + 2x^2 + 4x$","feedback":"Tepat. Setiap suku dikalikan x sehingga pangkatnya naik satu."},
+    {"ask":"Langkah 2. Kalikan $-2$ dengan seluruh trinomial. Hasilnya ….","type":"mc","options":["$-2x^2 - 4x - 8$","$-2x^2 + 4x + 8$","$2x^2 + 4x + 8$"],"answer":"$-2x^2 - 4x - 8$","feedback":"Benar. Tanda negatif dikalikan ke ketiga suku."},
+    {"ask":"Langkah 3. Gabungkan keduanya. Hasil akhirnya adalah ….","type":"mc","options":["$x^3 - 8$","$x^3 + 4x^2 - 8$","$x^3 - 4x - 8$"],"answer":"$x^3 - 8$","feedback":"Tepat. Suku $x^2$ dan suku $x$ saling menghilangkan — ini pola $a^3-b^3$."}
+  ],
+  "conclusion":"Hasilnya adalah pola istimewa selisih pangkat tiga: $a^3-b^3=(a-b)(a^2+ab+b^2)$.",
+  "reward":{"xp":15} }
+```
+
+### ✍️ Latihan Mandiri
+
+<!-- COMPONENT: Activity Matching -->
+
+```json
+{ "type":"activity", "widget":"matching", "id":"02-m2", "competency":"K2",
+  "prompt":"Pasangkan setiap bentuk dengan hasil penjabarannya.",
   "pairs":[
     ["$(a+b)^2$","$a^2+2ab+b^2$"],
     ["$(a-b)^2$","$a^2-2ab+b^2$"],
     ["$(a+b)(a-b)$","$a^2-b^2$"],
     ["$a^3-b^3$","$(a-b)(a^2+ab+b^2)$"]
   ],
-  "reward":{"xp":20} }
+  "reward":{"xp":15} }
 ```
 
 ---
 
-## 3️⃣ Nilai Polinomial & Substitusi ★
+## 3️⃣ Nilai Polinomial & Substitusi
 
-Konsep ini merupakan yang paling banyak digunakan pada bab ini.
+> **Nilai polinomial** $f(x)$ untuk $x=k$, ditulis $f(k)$, diperoleh dengan mengganti setiap $x$ dengan $k$. Proses ini disebut **substitusi**.
 
-> **Nilai polinomial** $f(x)$ untuk $x = k$, ditulis $f(k)$, diperoleh dengan **mengganti setiap $x$ dengan $k$** lalu menghitungnya. Proses ini disebut **substitusi**.
+Contoh: untuk $f(x) = 2x^3 - 5x^2 + 3x - 4$,
+$$f(2) = 2(2)^3 - 5(2)^2 + 3(2) - 4 = 16 - 20 + 6 - 4 = -2$$
 
-**Contoh.** Jika $f(x) = 2x^3 - 5x^2 + 3x - 4$, hitung $f(2)$.
-$$f(2) = 2(2)^3 - 5(2)^2 + 3(2) - 4 = 2(8) - 5(4) + 6 - 4 = 16 - 20 + 6 - 4 = -2$$
+> 💡 **$f(0)$ selalu sama dengan konstanta**, karena semua suku bervariabel menjadi nol.
 
-<!-- COMPONENT: Live Calculation -->
-<!-- Slider nilai x; tampilkan f(x) dihitung real-time + grafik titik pada kurva, agar siswa mengamati perubahan nilai polinomial. -->
+> ⚠️ Gunakan tanda kurung pada bilangan negatif: $(-2)^2 = 4$ tetapi $(-2)^3 = -8$.
 
-<!-- COMPONENT: Activity Slider -->
-> **Latihan Interaktif — Geser Nilai.** Geser nilai $x$ dan amati perubahan nilai $f(x)$ serta titiknya pada grafik. Perhatikan khususnya nilai pada $x=0$.
+### 🏭 Penerapan 1 — Soal TKA Drum
+
+> Penambahan volume sebuah drum saat dipanaskan: $V(T)=0{,}05\,T^3+0{,}4\,T^2+20\,T$ liter. Jika terdapat **10 drum identik** pada suhu sama, total penambahan volumenya adalah ….
+
+Sepuluh drum identik berarti total $=10 \times V(T)$, yaitu perkalian dengan konstanta:
+
+$$10\big(0{,}05\,T^3 + 0{,}4\,T^2 + 20\,T\big) = 0{,}5\,T^3 + 4\,T^2 + 200\,T$$
+
+**Jawaban: $0{,}5T^3 + 4T^2 + 200T$.** Perhatikan $10 \times 0{,}05 = 0{,}5$ — bukan $50$ atau $5$ seperti pada pilihan pengecoh.
+
+### 📈 Penerapan 2 — Soal TKA Saham
+
+> Banyak saham dimodelkan $f(x)=x^3-70x^2-600x+74{.}000$ (dalam jutaan rupiah), $x$ = banyak unit. Jika modal $=2$ miliar $=2.000$ juta, mungkinkah terjual 30, 40, atau 60 unit?
+
+Penjualan $x$ unit sesuai modal apabila $f(x)=2000$:
+
+| $x$ | $f(x)$ | Kesimpulan |
+|:---:|:------:|------------|
+| 30 | $27000-63000-18000+74000 = 20000$ | Tidak mungkin |
+| 40 | $64000-112000-24000+74000 = 2000$ | Mungkin |
+| 60 | $216000-252000-36000+74000 = 2000$ | Mungkin |
+
+> 💡 Pada Bab 05, persoalan ini dapat diselesaikan sekaligus melalui Teorema Vieta: akar dari $f(x)=2000$ adalah $40$, $60$, dan $-30$ (yang terakhir ditolak karena unit tidak boleh negatif).
+
+### 🎓 Latihan Terbimbing
+
+<!-- COMPONENT: Activity Guided -->
 
 ```json
-{ "type":"activity", "widget":"slider", "id":"02-act-slider", "competency":"K2",
-  "prompt":"Amati perubahan nilai $f(x)=2x^3-5x^2+3x-4$ saat $x$ digeser",
+{ "type":"activity", "widget":"guided", "id":"02-g3", "competency":"K2",
+  "title":"Substitusi bilangan negatif dengan aman",
+  "prompt":"Diketahui $f(x)=x^3 - 2x + 5$. Hitung $f(-2)$.",
+  "steps":[
+    {"ask":"Langkah 1. Hitung $(-2)^3$.","type":"mc","options":["$-8$","$8$","$-6$"],"answer":"$-8$","feedback":"Benar. Pangkat ganjil mempertahankan tanda negatif."},
+    {"ask":"Langkah 2. Hitung $-2 \\times (-2)$ pada suku $-2x$.","type":"mc","options":["$+4$","$-4$","$0$"],"answer":"$+4$","feedback":"Tepat. Negatif dikali negatif menghasilkan positif."},
+    {"ask":"Langkah 3. Jumlahkan seluruhnya: $-8 + 4 + 5 = \\;?$","type":"mc","options":["$1$","$-1$","$9$"],"answer":"$1$","feedback":"Benar, sehingga $f(-2)=1$."}
+  ],
+  "conclusion":"Selalu bungkus bilangan negatif dengan tanda kurung sebelum dipangkatkan agar tandanya tidak keliru.",
+  "reward":{"xp":15} }
+```
+
+### ✍️ Latihan Mandiri
+
+<!-- COMPONENT: Activity Slider
+     DEVELOPER: sediakan penggeser nilai x; tampilkan perhitungan f(x) secara langsung beserta
+     titiknya pada grafik. Sorot checkpoint bila nilai x yang diminta tercapai. -->
+
+```json
+{ "type":"activity", "widget":"slider", "id":"02-m3", "competency":"K2",
+  "prompt":"Geser nilai $x$ pada $f(x)=2x^3-5x^2+3x-4$, lalu amati perubahan nilainya. Perhatikan khususnya nilai saat $x=0$.",
   "poly":[2,-5,3,-4], "x_min":-3, "x_max":4, "step":0.5, "show_graph":true,
   "checkpoints":[
-    {"x":0,"fx":-4,"note":"$f(0)$ sama dengan konstanta."},
-    {"x":2,"fx":-2,"note":"Sesuai perhitungan contoh."}
+    {"x":0,"fx":-4,"note":"Saat x=0, nilai f(x) sama dengan konstanta, yaitu -4."},
+    {"x":2,"fx":-2,"note":"Sesuai perhitungan pada contoh."}
   ],
   "reward":{"xp":15} }
 ```
 
-> 💡 **Makna $f(0)$:** substitusi $x=0$ menghilangkan seluruh suku bervariabel sehingga menyisakan **konstanta**. Dengan demikian $f(0) = $ konstanta (sesuai yang telah disinggung pada Bab 01).
-
-> ⚠️ **Kehati-hatian tanda saat $k$ negatif.** Perhatikan bahwa $(-2)^2 = 4$ (positif), sedangkan $(-2)^3 = -8$ (negatif). Selalu gunakan tanda kurung: tulis $(-2)$, bukan $-2^2$.
-
-### 🏭 Penyelesaian Soal TKA #7 — Drum Bahan Bakar
-
-> **Soal.** Penambahan volume sebuah drum saat dipanaskan dinyatakan oleh $V(T) = 0{,}05\,T^3 + 0{,}4\,T^2 + 20\,T$ (liter), dengan $T$ suhu dalam derajat Celsius. Jika terdapat **10 drum identik** pada suhu yang sama, total penambahan volume dapat dinyatakan dengan ....
-
-**Gagasan utama:** "10 drum identik pada suhu sama" berarti setiap drum menambah $V(T)$ liter, sehingga total $= 10 \times V(T)$. Ini merupakan **perkalian polinomial dengan konstanta**.
-
-$$
-\begin{aligned}
-\text{Total} &= 10 \cdot V(T) = 10\big(0{,}05\,T^3 + 0{,}4\,T^2 + 20\,T\big)\\
-&= (10)(0{,}05)T^3 + (10)(0{,}4)T^2 + (10)(20)T\\
-&= 0{,}5\,T^3 + 4\,T^2 + 200\,T
-\end{aligned}
-$$
-
-**Jawaban: $0{,}5\,T^3 + 4\,T^2 + 200\,T$ (pilihan D).**
-
-> ⚠️ **Jebakan soal:** pilihan A, B, dan C dirancang menyerupai jawaban benar dengan menaikkan koefisien utama menjadi $50$ atau $5$. Kuncinya: $10 \times 0{,}05 = 0{,}5$, bukan $50$ atau $5$. Kalikan setiap koefisien dengan teliti.
-
-### 📈 Penyelesaian Soal TKA #8 — Modal Saham
-
-> **Soal.** Banyak saham dimodelkan oleh $f(x) = x^3 - 70x^2 - 600x + 74{.}000$, dengan $f(x)$ dalam **jutaan rupiah** dan $x$ menyatakan banyak unit saham. Jika modal saham $= 2$ miliar $= 2.000$ juta, tentukan **mungkin atau tidak mungkin** perusahaan menjual: **30 unit**, **40 unit**, dan **60 unit**.
-
-**Gagasan utama:** penjualan $x$ unit sesuai dengan modal $2.000$ juta apabila $f(x) = 2000$. Oleh karena itu, kita **substitusikan** tiap nilai lalu bandingkan dengan $2000$.
-
-**Pemeriksaan 30 unit:**
-$$f(30) = 30^3 - 70(30)^2 - 600(30) + 74{.}000 = 27000 - 63000 - 18000 + 74{.}000 = 20000$$
-Karena $20000 \neq 2000$, maka **tidak mungkin**.
-
-**Pemeriksaan 40 unit:**
-$$f(40) = 40^3 - 70(40)^2 - 600(40) + 74{.}000 = 64000 - 112000 - 24000 + 74{.}000 = 2000$$
-Karena $2000 = 2000$, maka **mungkin**.
-
-**Pemeriksaan 60 unit:**
-$$f(60) = 60^3 - 70(60)^2 - 600(60) + 74{.}000 = 216000 - 252000 - 36000 + 74{.}000 = 2000$$
-Karena $2000 = 2000$, maka **mungkin**.
-
-**Kesimpulan:**
-
-| Pernyataan | Mungkin? |
-|-----------|:--------:|
-| 30 unit | Tidak (Salah) |
-| 40 unit | Ya (Benar) |
-| 60 unit | Ya (Benar) |
-
-> 💡 **Wawasan tambahan (bekal Bab 05):** menyelesaikan $f(x)=2000$ setara dengan mencari akar $x^3 - 70x^2 - 600x + 72000 = 0$, yaitu $40$, $60$, dan $-30$. Karena $-30$ tidak bermakna dalam konteks (banyak unit tidak boleh negatif), hanya $40$ dan $60$ yang berlaku—sesuai hasil substitusi. Pada Bab 05, persoalan semacam ini dapat diselesaikan tanpa mencoba-coba, yaitu melalui Teorema Vieta.
-
 ---
 
-## 4️⃣ Kesamaan Polinomial & Koefisien Tak Diketahui
+## 4️⃣ Kesamaan Polinomial
 
-> **Dua polinomial dikatakan sama** apabila **koefisien suku-suku yang sepadan** (berderajat sama) **bernilai sama**.
+> Dua polinomial dikatakan **sama** apabila koefisien suku-suku yang **sepadan** (berderajat sama) bernilai sama.
 
-Dengan demikian, apabila
-$$a x^2 + b x + c = 3x^2 - 5x + 7 \quad \text{untuk semua } x,$$
-maka **haruslah** $a=3$, $b=-5$, dan $c=7$. Proses ini disebut **menyamakan koefisien**, dilakukan pangkat demi pangkat.
+<!-- VISUAL: Penyamaan koefisien
+     DEVELOPER: tampilkan kedua ruas bertumpuk dengan suku sepadan SEJAJAR dan BERWARNA SAMA
+     (x^2 = hl-1, x = hl-2, konstanta = hl-3). Tarik garis penghubung antar pasangan sewarna,
+     lalu munculkan persamaan yang terbentuk dari tiap pasangan. -->
 
-**Contoh.** Tentukan $p$ dan $q$ apabila
-$$(x+p)(x+2) = x^2 + 5x + q \quad \text{(untuk semua } x).$$
+$$\htmlClass{hl-1}{a}x^2 + \htmlClass{hl-2}{b}x + \htmlClass{hl-3}{c} \;=\; \htmlClass{hl-1}{3}x^2 \htmlClass{hl-2}{-5}x + \htmlClass{hl-3}{7}$$
 
-Jabarkan ruas kiri:
-$$(x+p)(x+2) = x^2 + 2x + px + 2p = x^2 + (2+p)x + 2p$$
-Samakan koefisien dengan ruas kanan $x^2 + 5x + q$:
-- Koefisien $x$: $\;2 + p = 5 \Rightarrow p = 3$.
-- Konstanta: $\;2p = q \Rightarrow q = 2(3) = 6$.
+Dari pasangan sewarna diperoleh $a=3$, $b=-5$, dan $c=7$.
 
-Jadi $p=3$ dan $q=6$.
+### 📘 Contoh
 
-<!-- COMPONENT: Interactive Example -->
-<!-- Sediakan slider p,q; overlay kurva ruas kiri & kanan; siswa mengamati kedua kurva berimpit hanya saat p=3, q=6. -->
+Tentukan $p$ dan $q$ apabila $(x+p)(x+2) = x^2 + 5x + q$ untuk semua $x$.
 
-<!-- COMPONENT: Activity Cloze -->
-> **Latihan Interaktif — Melengkapi.** Lengkapi pernyataan berikut dengan nilai yang tepat.
+Jabarkan ruas kiri: $x^2 + (2+p)x + 2p$. Samakan koefisien dengan ruas kanan:
+- Koefisien $x$: $2+p = 5 \Rightarrow p = 3$
+- Konstanta: $2p = q \Rightarrow q = 6$
+
+### 🎓 Latihan Terbimbing
+
+<!-- COMPONENT: Activity Guided -->
 
 ```json
-{ "type":"activity", "widget":"cloze", "id":"02-act-cloze", "competency":"K2",
-  "prompt":"Lengkapi kalimat kunci tentang nilai polinomial",
-  "template":"Untuk $f(x)=x^3-2x^2+5$: nilai $f(0)$ sama dengan konstanta, yaitu {{0}}; sedangkan $f(-1)=$ {{1}}.",
-  "answers":["5","2"],
-  "reward":{"xp":20} }
+{ "type":"activity", "widget":"guided", "id":"02-g4", "competency":"K2",
+  "title":"Menentukan koefisien melalui kesamaan",
+  "prompt":"Tentukan nilai $a$ apabila $(2x+a)(x-1) = 2x^2 - 5x + 3$ berlaku untuk semua $x$.",
+  "steps":[
+    {"ask":"Langkah 1. Jabarkan ruas kiri. Hasilnya ….","type":"mc","options":["$2x^2 + (a-2)x - a$","$2x^2 + (a+2)x + a$","$2x^2 - ax - a$"],"answer":"$2x^2 + (a-2)x - a$","feedback":"Tepat: $2x\\cdot x=2x^2$, $2x\\cdot(-1)=-2x$, $a\\cdot x=ax$, dan $a\\cdot(-1)=-a$."},
+    {"ask":"Langkah 2. Samakan konstantanya: $-a = 3$, sehingga $a = \\;?$","type":"mc","options":["$-3$","$3$","$-1$"],"answer":"$-3$","feedback":"Benar."},
+    {"ask":"Langkah 3. Periksa melalui koefisien $x$: apakah $a-2 = -5$ terpenuhi?","type":"mc","options":["Ya, karena $-3-2=-5$","Tidak terpenuhi"],"answer":"Ya, karena $-3-2=-5$","feedback":"Tepat. Kedua pasangan koefisien konsisten, sehingga jawabannya benar."}
+  ],
+  "conclusion":"Setelah memperoleh nilai dari satu pasangan koefisien, periksa dengan pasangan lain untuk memastikan jawabannya konsisten.",
+  "reward":{"xp":15} }
+```
+
+### ✍️ Latihan Mandiri
+
+<!-- COMPONENT: Activity Matching -->
+
+```json
+{ "type":"activity", "widget":"matching", "id":"02-m4", "competency":"K2",
+  "prompt":"Diketahui $ax^3 + bx^2 + cx + d = 2x^3 - x^2 + 5$ berlaku untuk semua $x$. Pasangkan setiap huruf dengan nilainya.",
+  "pairs":[
+    ["$a$","$2$"],
+    ["$b$","$-1$"],
+    ["$c$","$0$"],
+    ["$d$","$5$"]
+  ],
+  "reward":{"xp":15} }
 ```
 
 ---
 
 ## 5️⃣ Identitas Polinomial
 
-Terdapat perbedaan yang halus namun penting:
+Perbedaannya halus namun penting:
 
-- **Persamaan (biasa):** benar hanya untuk **sebagian** nilai $x$. Contoh: $x^2 = 4$ hanya benar saat $x = \pm 2$.
-- **Identitas:** benar untuk **semua** nilai $x$. Contoh: $(x+1)^2 = x^2 + 2x + 1$ benar untuk sembarang $x$.
+- **Persamaan biasa** benar hanya untuk **sebagian** nilai $x$. Contoh: $x^2=4$ hanya benar saat $x=\pm2$.
+- **Identitas** benar untuk **semua** nilai $x$. Contoh: $(x+1)^2 = x^2+2x+1$.
 
-Apabila soal menyatakan "berlaku untuk semua $x$" atau menggunakan tanda $\equiv$, maka soal tersebut merupakan **identitas** dan diselesaikan dengan **menyamakan koefisien**.
+Apabila soal menyatakan "berlaku untuk semua $x$" atau memakai tanda $\equiv$, selesaikan dengan **menyamakan koefisien**.
 
-**Contoh.** Tentukan $A$ dan $B$ apabila
-$$\frac{3x + 1}{(x)(x+1)} = \frac{A}{x} + \frac{B}{x+1} \quad \text{untuk semua } x.$$
+> ⚡ **Strategi cepat:** karena identitas benar untuk semua $x$, pilih nilai $x$ yang memudahkan perhitungan.
 
-Kalikan kedua ruas dengan $x(x+1)$:
-$$3x + 1 = A(x+1) + Bx = (A+B)x + A$$
-Samakan koefisien:
-- Koefisien $x$: $A + B = 3$.
-- Konstanta: $A = 1$.
+### 📘 Contoh
 
-Maka $A = 1$ dan $B = 2$. (Teknik ini disebut **pecahan parsial**, yang banyak digunakan pada kalkulus.)
+Tentukan $A$ dan $B$ pada $\dfrac{3x+1}{x(x+1)} = \dfrac{A}{x} + \dfrac{B}{x+1}$ untuk semua $x$.
 
-> 💡 **Strategi substitusi nilai untuk identitas:** karena identitas benar untuk **semua** $x$, kita dapat memilih nilai $x$ yang memudahkan perhitungan. Dari $3x+1 = A(x+1)+Bx$: pilih $x=0 \Rightarrow 1 = A$; pilih $x=-1 \Rightarrow -2 = -B \Rightarrow B=2$. Cara ini lebih efisien.
+Kalikan kedua ruas dengan $x(x+1)$: $\;3x+1 = A(x+1) + Bx$.
 
-<!-- COMPONENT: Activity Categorize -->
-> **Latihan Interaktif — Kategorisasi.** Tentukan apakah setiap pernyataan merupakan **identitas** (benar untuk semua $x$) atau **persamaan biasa** (benar untuk nilai $x$ tertentu).
+Pilih nilai yang memudahkan: $x=0$ memberi $1 = A$; lalu $x=-1$ memberi $-2 = -B$ sehingga $B=2$.
+
+Teknik ini disebut **pecahan parsial** dan banyak dipakai pada kalkulus.
+
+### 🎓 Latihan Terbimbing
+
+<!-- COMPONENT: Activity Guided -->
 
 ```json
-{ "type":"activity", "widget":"categorize", "id":"02-act-identitas-kategori", "competency":"K2",
-  "prompt":"Kelompokkan tiap pernyataan",
-  "categories":["Identitas","Persamaan biasa"],
-  "items":[
-    ["$(x+1)^2=x^2+2x+1$","Identitas"],
-    ["$x^2=9$","Persamaan biasa"],
-    ["$(x-2)(x+2)=x^2-4$","Identitas"],
-    ["$2x+1=7$","Persamaan biasa"],
-    ["$x^3-1=(x-1)(x^2+x+1)$","Identitas"]
+{ "type":"activity", "widget":"guided", "id":"02-g5", "competency":"K2",
+  "title":"Memanfaatkan substitusi nilai pada identitas",
+  "prompt":"Tentukan $A$ dan $B$ pada $\\frac{5}{(x-1)(x+4)} = \\frac{A}{x-1} + \\frac{B}{x+4}$ untuk semua $x$.",
+  "steps":[
+    {"ask":"Langkah 1. Setelah dikalikan $(x-1)(x+4)$, persamaannya menjadi ….","type":"mc","options":["$5 = A(x+4) + B(x-1)$","$5 = A(x-1) + B(x+4)$","$5 = (A+B)(x-1)(x+4)$"],"answer":"$5 = A(x+4) + B(x-1)$","feedback":"Tepat. Penyebut pada suku A tercoret, menyisakan faktor pasangannya."},
+    {"ask":"Langkah 2. Pilih $x=1$ agar suku B lenyap. Diperoleh $5 = 5A$, sehingga $A = \\;?$","type":"mc","options":["$1$","$5$","$-1$"],"answer":"$1$","feedback":"Benar. Memilih akar penyebut membuat salah satu suku menjadi nol."},
+    {"ask":"Langkah 3. Pilih $x=-4$. Diperoleh $5 = -5B$, sehingga $B = \\;?$","type":"mc","options":["$-1$","$1$","$-5$"],"answer":"$-1$","feedback":"Tepat, sehingga $A=1$ dan $B=-1$."}
   ],
-  "reward":{"xp":25} }
+  "conclusion":"Pada identitas, memilih x sama dengan akar penyebut adalah cara tercepat karena langsung melenyapkan salah satu suku.",
+  "reward":{"xp":15} }
 ```
 
----
+### ✍️ Latihan Mandiri
 
-## 📘 Contoh Bertingkat
-
-### 🟢 Sederhana
-
-**S1.** Hitung $(3x^2 - x + 2) + (x^2 + 4x - 5)$.
-*Pembahasan.* $= (3+1)x^2 + (-1+4)x + (2-5) = 4x^2 + 3x - 3$.
-
-**S2.** Jika $f(x) = x^2 - 4x + 1$, hitung $f(3)$.
-*Pembahasan.* $f(3) = 9 - 12 + 1 = -2$.
-
-**S3.** Kalikan $2x(x^2 - 3x + 4)$.
-*Pembahasan.* $= 2x^3 - 6x^2 + 8x$.
-
-### 🟡 Sedang
-
-**M1.** Diketahui $f(x) = x^3 - 2x + 5$. Hitung $f(-2)$.
-*Pembahasan.* $f(-2) = (-2)^3 - 2(-2) + 5 = -8 + 4 + 5 = 1$. (Perhatikan $(-2)^3=-8$.)
-
-**M2.** Hitung $(x - 3)^2 - (x+1)(x-1)$.
-*Pembahasan.*
-$(x-3)^2 = x^2 - 6x + 9$; $(x+1)(x-1) = x^2 - 1$.
-Selisih: $(x^2 - 6x + 9) - (x^2 - 1) = -6x + 10$.
-
-**M3.** Tentukan $a$ apabila $(2x + a)(x - 1) = 2x^2 - 5x + 3$ untuk semua $x$.
-*Pembahasan.* Ruas kiri $= 2x^2 - 2x + ax - a = 2x^2 + (a-2)x - a$.
-Samakan: konstanta $-a = 3 \Rightarrow a = -3$. Periksa koefisien $x$: $a-2 = -5$ ✔. Jadi $a=-3$.
-
-### 🧠 HOTS
-
-**H1.** Jika $f(x) = x^3 - 70x^2 - 600x + 74{.}000$, tunjukkan bahwa $f(40) = f(60)$ tanpa menghitung keduanya secara terpisah. Apa makna geometrisnya?
-*Pembahasan.* Hitung sekali $f(40) = 2000$. Karena $f(x) - 2000$ memiliki akar $40, 60, -30$ (jumlah akar $=70$, sesuai $-\frac{-70}{1}$), maka $f(60)$ juga bernilai $2000$. Secara geometris, garis mendatar $y = 2000$ memotong kurva di $x = 40$ dan $x = 60$ (serta $x=-30$)—ketiganya memberikan nilai $f$ yang sama. *(Pratinjau Vieta, Bab 05.)*
-
-**H2.** Diketahui $g(x) = x^2 + bx + c$ memenuhi $g(1) = 0$ dan $g(2) = 3$. Tentukan $b$ dan $c$.
-*Pembahasan.*
-$g(1) = 1 + b + c = 0 \Rightarrow b + c = -1$.
-$g(2) = 4 + 2b + c = 3 \Rightarrow 2b + c = -1$.
-Kurangkan: $(2b+c) - (b+c) = -1 - (-1) \Rightarrow b = 0$. Maka $c = -1$.
-Jadi $g(x) = x^2 - 1$.
-
-**H3.** Buktikan identitas $(x+1)(x+2)(x+3) = x^3 + 6x^2 + 11x + 6$ dengan menyamakan nilai di beberapa titik, lalu jelaskan mengapa pemeriksaan beberapa titik sudah memadai.
-*Pembahasan.* Kedua ruas merupakan polinomial berderajat 3. **Fakta penting:** dua polinomial berderajat $\leq 3$ yang bernilai sama di **4 titik berbeda** pasti identik. Periksa $x=0$: kiri $=1\cdot2\cdot3=6$, kanan $=6$ ✔. $x=1$: kiri $=2\cdot3\cdot4=24$, kanan $=1+6+11+6=24$ ✔. $x=-1$: kiri $=0$, kanan $=-1+6-11+6=0$ ✔. $x=-2$: kiri $=0$, kanan $=-8+24-22+6=0$ ✔. Keempat titik cocok sehingga kedua ruas identik. (Menjabarkan secara langsung juga dapat dilakukan; cara ini merupakan alternatif yang efisien.)
-
----
-
-## ⚠️ Kesalahan yang Sering Dilakukan Siswa
-
-1. **Pengurangan:** hanya membalik tanda suku pertama pengurang, bukan seluruhnya.
-2. **Menggabungkan suku tak sejenis:** menuliskan $3x^2 + 2x = 5x^3$ (salah). Suku berbeda pangkat tidak dapat digabungkan.
-3. **Kesalahan tanda pada substitusi negatif:** menuliskan $-2^2 = -4$ padahal yang dimaksud $(-2)^2 = 4$.
-4. **Perkalian tidak lengkap:** terlewat mengalikan salah satu suku (khususnya konstanta).
-5. **Menyamakan kesamaan dengan persamaan biasa:** untuk identitas, yang disamakan adalah **koefisien**, bukan mencari satu nilai $x$.
-6. **Tidak memeriksa derajat hasil kali** ($=$ jumlah derajat) sebagai kontrol kesalahan.
-
-<!-- COMPONENT: Activity TrueFalse -->
-> **Latihan Interaktif — Benar/Salah.** Tentukan nilai kebenaran tiap pernyataan berikut.
+<!-- COMPONENT: Activity Categorize -->
 
 ```json
-{ "type":"activity", "widget":"truefalse", "id":"02-act-tf", "competency":"K2",
-  "prompt":"Benar atau salah?",
-  "statements":[
-    {"s":"Derajat hasil kali dua polinomial sama dengan jumlah derajat keduanya.","a":true,"why":"Suku pemimpin saling dikalikan sehingga pangkatnya bertambah."},
-    {"s":"$(-2)^2 = -4$.","a":false,"why":"$(-2)^2=4$; tanda negatif ikut dikuadratkan."},
-    {"s":"$f(0)$ selalu sama dengan konstanta polinomial.","a":true,"why":"Substitusi $x=0$ menghilangkan seluruh suku bervariabel."},
-    {"s":"Pada pengurangan, hanya suku pertama pengurang yang berubah tanda.","a":false,"why":"Seluruh suku pengurang berubah tanda."}
+{ "type":"activity", "widget":"categorize", "id":"02-m5", "competency":"K2",
+  "prompt":"Tentukan apakah setiap pernyataan merupakan identitas (benar untuk semua x) atau persamaan biasa (benar untuk nilai x tertentu saja).",
+  "categories":["Identitas","Persamaan biasa"],
+  "items":[
+    ["$(x+1)^2 = x^2+2x+1$","Identitas"],
+    ["$x^2 = 9$","Persamaan biasa"],
+    ["$(x-2)(x+2) = x^2-4$","Identitas"],
+    ["$2x+1 = 7$","Persamaan biasa"],
+    ["$x^3-1 = (x-1)(x^2+x+1)$","Identitas"]
   ],
   "reward":{"xp":20} }
 ```
 
 ---
 
-## ⚡ Tips Cepat
-
-- Susun **bersusun** dengan pangkat sejajar saat menjumlahkan atau mengurangkan.
-- Untuk pengurangan, **ubah tanda terlebih dahulu**, kemudian jumlahkan.
-- Untuk identitas, gunakan **substitusi nilai yang memudahkan** ($x=0$, akar-akar penyebut) agar lebih cepat.
-- $f(0) = $ konstanta; ini merupakan pemeriksaan instan.
-- Selalu gunakan **tanda kurung** pada bilangan negatif saat substitusi.
-
----
-
-## ✅ Ringkasan Sub Materi
-
-- **Penjumlahan/pengurangan:** gabungkan suku sejenis; pengurangan dilakukan dengan mengubah tanda pengurang lalu menjumlahkan.
-- **Perkalian:** gunakan sifat distributif; derajat hasil $=$ jumlah derajat. Kuasai identitas $(a\pm b)^2$, $a^2-b^2$, dan $a^3\pm b^3$.
-- **Nilai $f(k)$:** diperoleh melalui substitusi. $f(0)=$ konstanta. Gunakan tanda kurung pada bilangan negatif.
-- **Kesamaan:** samakan koefisien pangkat demi pangkat untuk menentukan nilai yang belum diketahui.
-- **Identitas:** benar untuk semua $x$; pemilihan nilai $x$ yang memudahkan mempercepat penyelesaian.
-
----
-
 ## 📝 Latihan Bertingkat
 
-<!-- COMPONENT: Quiz -->
+<!-- COMPONENT: Quiz Cards
+     DEVELOPER: render 5 paket sebagai KARTU (A-E) berjajar. Klik kartu -> POP-UP berisi soal.
+     Paket D dan E OPSIONAL dengan XP bonus. -->
 
-### 🟢 Set A — 10 Soal Mudah
-1. $(x^2 + 2x) + (3x^2 - x)$
-2. $(5x - 4) - (2x + 1)$
-3. $3(x^2 - 2x + 4)$
-4. $f(x)=x^2+1$, hitung $f(3)$.
-5. $(x+2)(x+5)$
-6. $f(x)=2x-7$, hitung $f(0)$.
-7. $(x-1)(x+1)$
-8. $(4x^3 - x) + (x^3 + x)$
-9. $f(x)=x^3$, hitung $f(-1)$.
-10. $-2(3x^2 - x + 5)$
+### 🟢 Paket A — Dasar (5 soal)
 
 ```json
 {
-  "set_id": "02-set-A-mudah", "level": "mudah",
+  "set_id": "02-set-A-mudah", "level": "mudah", "optional": false,
   "items": [
-    {"id":"A1","type":"short","question":"$(x^2+2x)+(3x^2-x)$","answer":"4x^2 + x","explanation":"Gabung suku sejenis."},
-    {"id":"A2","type":"short","question":"$(5x-4)-(2x+1)$","answer":"3x - 5","explanation":"Balik tanda pengurang: $5x-4-2x-1$."},
-    {"id":"A3","type":"short","question":"$3(x^2-2x+4)$","answer":"3x^2 - 6x + 12","explanation":"Distribusi ke tiap suku."},
-    {"id":"A4","type":"short","question":"$f(x)=x^2+1,\\ f(3)$","answer":"10","explanation":"9+1=10."},
-    {"id":"A5","type":"short","question":"$(x+2)(x+5)$","answer":"x^2 + 7x + 10","explanation":"Distributif."},
-    {"id":"A6","type":"short","question":"$f(x)=2x-7,\\ f(0)$","answer":"-7","explanation":"$f(0)$=konstanta."},
-    {"id":"A7","type":"short","question":"$(x-1)(x+1)$","answer":"x^2 - 1","explanation":"Selisih kuadrat."},
-    {"id":"A8","type":"short","question":"$(4x^3-x)+(x^3+x)$","answer":"5x^3","explanation":"x saling hapus."},
-    {"id":"A9","type":"short","question":"$f(x)=x^3,\\ f(-1)$","answer":"-1","explanation":"(-1)^3=-1."},
-    {"id":"A10","type":"short","question":"$-2(3x^2-x+5)$","answer":"-6x^2 + 2x - 10","explanation":"Distribusi tanda negatif."}
+    {"id":"A1","type":"mc","question":"Hitung $(x^2 + 2x) + (3x^2 - x)$.","options":["$4x^2 + x$","$4x^2 + 3x$","$3x^2 + x$","$4x^2 - x$"],"answer":"$4x^2 + x$","explanation":"Gabungkan suku sejenis: (1+3)x^2 dan (2-1)x."},
+    {"id":"A2","type":"mc","question":"Hitung $(5x - 4) - (2x + 1)$.","options":["$3x - 5$","$3x - 3$","$7x - 3$","$3x + 5$"],"answer":"$3x - 5$","explanation":"Ubah tanda pengurang: 5x-4-2x-1."},
+    {"id":"A3","type":"mc","question":"Hitung $3(x^2 - 2x + 4)$.","options":["$3x^2 - 6x + 12$","$3x^2 - 2x + 4$","$3x^2 - 6x + 4$","$x^2 - 6x + 12$"],"answer":"$3x^2 - 6x + 12$","explanation":"Distribusikan 3 ke setiap suku."},
+    {"id":"A4","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Diketahui $f(x) = x^2 + 1$. Hitung $f(3)$.","answer":"10","explanation":"9+1=10."},
+    {"id":"A5","type":"mc","question":"Hitung $(x + 2)(x + 5)$.","options":["$x^2 + 7x + 10$","$x^2 + 10x + 7$","$x^2 + 7x + 7$","$x^2 + 3x + 10$"],"answer":"$x^2 + 7x + 10$","explanation":"Distributif: x^2+5x+2x+10."}
   ]
 }
 ```
-<details><summary><strong>Pembahasan Set A</strong></summary>
+<details><summary><strong>Pembahasan Paket A</strong></summary>
 
-1. $4x^2 + x$. 2. $3x-5$. 3. $3x^2-6x+12$. 4. $10$. 5. $x^2+7x+10$. 6. $-7$. 7. $x^2-1$. 8. $5x^3$. 9. $-1$. 10. $-6x^2+2x-10$.
+1. $4x^2+x$. 2. $3x-5$. 3. $3x^2-6x+12$. 4. $f(3)=10$. 5. $x^2+7x+10$.
 </details>
 
-### 🟡 Set B — 10 Soal Sedang
-1. $(2x^2 - 3x + 1) - (x^2 - x - 4)$
-2. $(x - 2)(x^2 + 2x + 4)$
-3. $f(x)=x^3 - 2x^2 + 5$, hitung $f(-1)$.
-4. $(2x+1)^2$
-5. Tentukan $a$ jika $(x+a)(x+3)=x^2+7x+12$.
-6. $(x^2+1)(x^2-1)$
-7. $f(x)=x^4 - 3x^2 + 2$, hitung $f(2)$.
-8. $(3x - 2)(3x + 2)$
-9. $(x+1)^3$
-10. $g(x)=ax+b$, $g(1)=5$, $g(2)=8$. Tentukan $a,b$.
+### 🟡 Paket B — Menengah (5 soal)
 
 ```json
 {
-  "set_id":"02-set-B-sedang","level":"sedang",
+  "set_id":"02-set-B-sedang","level":"sedang","optional": false,
   "items":[
-    {"id":"B1","type":"short","question":"$(2x^2-3x+1)-(x^2-x-4)$","answer":"x^2 - 2x + 5","explanation":"Balik tanda pengurang lalu gabung."},
-    {"id":"B2","type":"short","question":"$(x-2)(x^2+2x+4)$","answer":"x^3 - 8","explanation":"Pola $a^3-b^3$ dengan $a=x,b=2$."},
-    {"id":"B3","type":"short","question":"$f(x)=x^3-2x^2+5,\\ f(-1)$","answer":"2","explanation":"-1-2+5=2."},
-    {"id":"B4","type":"short","question":"$(2x+1)^2$","answer":"4x^2 + 4x + 1","explanation":"(a+b)^2."},
-    {"id":"B5","type":"short","question":"$(x+a)(x+3)=x^2+7x+12$, a=","answer":"4","explanation":"a+3=7 → a=4."},
-    {"id":"B6","type":"short","question":"$(x^2+1)(x^2-1)$","answer":"x^4 - 1","explanation":"Selisih kuadrat dgn $a=x^2$."},
-    {"id":"B7","type":"short","question":"$f(x)=x^4-3x^2+2,\\ f(2)$","answer":"6","explanation":"16-12+2=6."},
-    {"id":"B8","type":"short","question":"$(3x-2)(3x+2)$","answer":"9x^2 - 4","explanation":"Selisih kuadrat."},
-    {"id":"B9","type":"short","question":"$(x+1)^3$","answer":"x^3 + 3x^2 + 3x + 1","explanation":"(a+b)^3."},
-    {"id":"B10","type":"short","question":"$g(x)=ax+b,\\ g(1)=5,\\ g(2)=8$","answer":"a=3, b=2","explanation":"a+b=5, 2a+b=8 → a=3,b=2."}
+    {"id":"B1","type":"mc","question":"Hitung $(2x^2 - 3x + 1) - (x^2 - x - 4)$.","options":["$x^2 - 2x + 5$","$x^2 - 4x - 3$","$x^2 - 2x - 3$","$3x^2 - 4x + 5$"],"answer":"$x^2 - 2x + 5$","explanation":"Ubah tanda pengurang lalu gabungkan."},
+    {"id":"B2","type":"mc","question":"Hitung $(x - 2)(x^2 + 2x + 4)$.","options":["$x^3 - 8$","$x^3 + 8$","$x^3 - 4x - 8$","$x^3 + 4x^2 - 8$"],"answer":"$x^3 - 8$","explanation":"Pola selisih pangkat tiga dengan a=x dan b=2."},
+    {"id":"B3","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Diketahui $f(x) = x^3 - 2x^2 + 5$. Hitung $f(-1)$.","answer":"2","explanation":"-1-2+5=2."},
+    {"id":"B4","type":"mc","question":"Jabarkan $(2x + 1)^2$.","options":["$4x^2 + 4x + 1$","$4x^2 + 2x + 1$","$2x^2 + 4x + 1$","$4x^2 + 1$"],"answer":"$4x^2 + 4x + 1$","explanation":"Gunakan pola (a+b)^2 dengan a=2x dan b=1."},
+    {"id":"B5","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Diketahui $(x + a)(x + 3) = x^2 + 7x + 12$ berlaku untuk semua $x$. Tentukan nilai $a$.","answer":"4","explanation":"Koefisien x: a+3=7 sehingga a=4."}
   ]
 }
 ```
-<details><summary><strong>Pembahasan Set B</strong></summary>
+<details><summary><strong>Pembahasan Paket B</strong></summary>
 
-1. $x^2 - 2x + 5$. 2. $x^3 - 8$ (pola $a^3-b^3$). 3. $-1-2+5=2$. 4. $4x^2+4x+1$. 5. $a=4$. 6. $x^4-1$. 7. $16-12+2=6$. 8. $9x^2-4$. 9. $x^3+3x^2+3x+1$. 10. Dari $a+b=5$ & $2a+b=8$: $a=3, b=2$.
+1. $x^2-2x+5$. 2. $x^3-8$. 3. $f(-1)=2$. 4. $4x^2+4x+1$. 5. $a=4$.
 </details>
 
-### 🔴 Set C — 10 Soal Sulit
-1. Sederhanakan $(x+2)^3 - (x-2)^3$.
-2. $f(x)=2x^3 - x^2 + 4x - 3$, hitung $f\!\left(\tfrac12\right)$.
-3. Tentukan $a,b$ jika $x^3 + ax + b = (x-1)(x^2 + x + b)$ untuk semua $x$.
-4. Jika $(x^2 + px + 2)(x + 3) = x^3 + 4x^2 + 5x + 6$, tentukan $p$.
-5. Diketahui $f(x)=x^2+bx+c$, $f(2)=0$, $f(5)=0$. Tentukan $b,c$.
-6. Sederhanakan $\dfrac{x^3 - 8}{x - 2}$ (asumsikan $x\neq2$).
-7. Tentukan $A,B$: $\dfrac{5}{(x-1)(x+4)} = \dfrac{A}{x-1} + \dfrac{B}{x+4}$.
-8. Jika $f(x)=x^3 - 70x^2 - 600x + 74{.}000$, hitung $f(50)$ dan bandingkan dengan $2000$.
-9. Buktikan $(a+b+c)^2 = a^2+b^2+c^2 + 2(ab+bc+ca)$.
-10. Tentukan konstanta $k$ agar $x^3 + kx^2 + 2x + 8$ bernilai $0$ saat $x = -2$.
+### 🔴 Paket C — Lanjut (5 soal)
 
 ```json
 {
-  "set_id":"02-set-C-sulit","level":"sulit",
+  "set_id":"02-set-C-sulit","level":"sulit","optional": false,
   "items":[
-    {"id":"C1","type":"short","question":"$(x+2)^3-(x-2)^3$","answer":"12x^2 + 16","explanation":"2(3x^2·2 + 2^3)=... = 12x^2+16."},
-    {"id":"C2","type":"short","question":"$f(x)=2x^3-x^2+4x-3,\\ f(1/2)$","answer":"-1","explanation":"2(1/8)-1/4+2-3 = 1/4-1/4+2-3 = -1."},
-    {"id":"C3","type":"short","question":"$x^3+ax+b=(x-1)(x^2+x+b)$","answer":"$a=b-1, b$ bebas; jabaran: $x^3+(b-1)x-b$, jadi $a=b-1$ dan $b=-b→b=0,a=-1$","explanation":"Samakan: $(x-1)(x^2+x+b)=x^3+(b-1)x-b$. Konstanta: $b=-b$→$b=0$; $a=b-1=-1$."},
-    {"id":"C4","type":"short","question":"$(x^2+px+2)(x+3)=x^3+4x^2+5x+6$, p=","answer":"1","explanation":"Koef $x^2$: $p+3=4$ → $p=1$."},
-    {"id":"C5","type":"short","question":"$f(x)=x^2+bx+c,\\ f(2)=f(5)=0$","answer":"b=-7, c=10","explanation":"Akar 2 dan 5 → $x^2-7x+10$."},
-    {"id":"C6","type":"short","question":"$\\frac{x^3-8}{x-2}$","answer":"x^2 + 2x + 4","explanation":"a^3-b^3=(a-b)(a^2+ab+b^2)."},
-    {"id":"C7","type":"short","question":"$\\frac{5}{(x-1)(x+4)}=\\frac{A}{x-1}+\\frac{B}{x+4}$","answer":"A=1, B=-1","explanation":"x=1: 5=5A→A=1; x=-4: 5=-5B→B=-1."},
-    {"id":"C8","type":"short","question":"$f(50)$ vs 2000","answer":"$f(50)=-6000, ≠2000$ (lebih kecil)","explanation":"125000-175000-30000+74000=-6000."},
-    {"id":"C9","type":"proof","question":"Buktikan $(a+b+c)^2=a^2+b^2+c^2+2(ab+bc+ca)$","answer":"jabarkan $(a+b+c)(a+b+c)$","explanation":"Distribusi penuh menghasilkan 3 kuadrat + 2× tiap hasil kali silang."},
-    {"id":"C10","type":"short","question":"$x^3+kx^2+2x+8=0$ saat $x=-2$, k=","answer":"1","explanation":"-8+4k-4+8=0 → 4k-4=0 → k=1."}
+    {"id":"C1","type":"mc","question":"Sederhanakan $(x + 2)^3 - (x - 2)^3$.","options":["$12x^2 + 16$","$12x^2 - 16$","$2x^3 + 16$","$4x^2 + 16$"],"answer":"$12x^2 + 16$","explanation":"Gunakan (a+b)^3-(a-b)^3 = 2(3a^2 b + b^3) dengan a=x, b=2."},
+    {"id":"C2","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Diketahui $f(x) = 2x^3 - x^2 + 4x - 3$. Hitung $f\\left(\\tfrac{1}{2}\\right)$.","answer":"-1","explanation":"1/4 - 1/4 + 2 - 3 = -1."},
+    {"id":"C3","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Diketahui $(x^2 + px + 2)(x + 3) = x^3 + 4x^2 + 5x + 6$ berlaku untuk semua $x$. Tentukan nilai $p$.","answer":"1","explanation":"Koefisien x^2 ruas kiri adalah p+3; samakan dengan 4."},
+    {"id":"C4","type":"mc","question":"Sederhanakan $\\frac{x^3 - 8}{x - 2}$ dengan $x \\neq 2$.","options":["$x^2 + 2x + 4$","$x^2 - 2x + 4$","$x^2 + 4$","$x^2 - 4$"],"answer":"$x^2 + 2x + 4$","explanation":"Pola a^3-b^3=(a-b)(a^2+ab+b^2)."},
+    {"id":"C5","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Tentukan konstanta $k$ agar $x^3 + kx^2 + 2x + 8$ bernilai $0$ saat $x = -2$.","answer":"1","explanation":"-8+4k-4+8=0 sehingga 4k=4."}
   ]
 }
 ```
-<details><summary><strong>Pembahasan Set C</strong></summary>
+<details><summary><strong>Pembahasan Paket C</strong></summary>
 
-1. $(x+2)^3-(x-2)^3$. Gunakan $ (a+b)^3-(a-b)^3 = 2(3a^2b + b^3)$ dengan $a=x,b=2$: $2(3x^2\cdot2 + 8)=2(6x^2+8)=12x^2+16$.
-2. $f(\tfrac12)$: $2(\tfrac18)=\tfrac14$; $-(\tfrac12)^2=-\tfrac14$; $4(\tfrac12)=2$; lalu $-3$. Total $\tfrac14-\tfrac14+2-3=\mathbf{-1}$.
-3. $(x-1)(x^2+x+b)=x^3+x^2+bx-x^2-x-b = x^3+(b-1)x - b$. Samakan dengan $x^3+ax+b$: konstanta $-b=b\Rightarrow b=0$; lalu $a=b-1=-1$. Jadi $a=-1,\,b=0$.
-4. Koef $x^2$ ruas kiri $= p+3$; samakan $=4 \Rightarrow p=1$.
-5. Akar $2$ dan $5$ → $x^2-(2+5)x+2\cdot5 = x^2-7x+10$, jadi $b=-7,\,c=10$.
-6. $\frac{x^3-8}{x-2}=\frac{(x-2)(x^2+2x+4)}{x-2}=x^2+2x+4$.
-7. $x=1$: $5=A(5)\Rightarrow A=1$. $x=-4$: $5=B(-5)\Rightarrow B=-1$.
-8. $f(50)=125000-175000-30000+74{.}000=-6000$. $-6000\neq2000$ → nilainya jauh lebih kecil dari modal.
-9. $(a+b+c)(a+b+c)$ dijabarkan: tiap suku kiri dikali tiap suku kanan → $a^2+ab+ac+ab+b^2+bc+ac+bc+c^2 = a^2+b^2+c^2+2(ab+bc+ca)$. ∎
-10. Substitusi $x=-2$: $-8+4k-4+8=0 \Rightarrow 4k-4=0 \Rightarrow k=1$.
+1. $12x^2+16$. 2. $f(\tfrac12)=-1$. 3. $p=1$. 4. $x^2+2x+4$. 5. $k=1$.
 </details>
 
-### 🧠 Set D — 5 Soal HOTS
-1. Diketahui $f(x)=x^3 - 70x^2 - 600x + 74{.}000$. Tanpa menghitung ulang penuh, jelaskan mengapa $f(40)=f(60)$.
-2. Jika $f(x)+g(x)=3x^2 - x + 4$ dan $f(x)-g(x)=x^2+3x-2$, tentukan $f(x)$ dan $g(x)$.
-3. Polinomial $f$ memenuhi $f(x+1)-f(x)=2x+3$ untuk semua $x$, dan $f(0)=1$. Tentukan $f(x)$ (petunjuk: coba $f$ kuadrat).
-4. Tentukan $A,B,C$: $\dfrac{x^2+1}{x(x-1)(x+1)} = \dfrac{A}{x}+\dfrac{B}{x-1}+\dfrac{C}{x+1}$.
-5. Jika $(x^2+ax+1)$ adalah faktor dari $x^3 + bx + c$ dan hasil bagi lainnya $(x+2)$, tentukan $a,b,c$.
+### 🧠 Paket D — HOTS (5 soal, opsional)
+
+> Paket ini **opsional**. Mengerjakannya memberi XP bonus.
 
 ```json
 {
-  "set_id":"02-set-D-hots","level":"hots",
+  "set_id":"02-set-D-hots","level":"hots","optional": true, "bonus_xp": 20,
   "items":[
-    {"id":"D1","type":"short","question":"Mengapa $f(40)=f(60)$?","answer":"karena $f(x)-2000$ berakar $40,60,-30$","explanation":"$f(40)=2000$ dan 60 juga akar $f(x)-2000 → f(60)=2000$."},
-    {"id":"D2","type":"short","question":"f+g=3x^2-x+4, f-g=x^2+3x-2","answer":"f=2x^2+x+1, g=x^2-2x+3","explanation":"Jumlah/2 dan selisih/2."},
-    {"id":"D3","type":"short","question":"f(x+1)-f(x)=2x+3, f(0)=1","answer":"x^2 + 2x + 1","explanation":"$f(x)=x^2+2x+1$ memenuhi selisih & $f(0)=1$."},
-    {"id":"D4","type":"short","question":"pecahan parsial $x^2+1$ / $x(x-1)(x+1)$","answer":"A=-1, B=1, C=1","explanation":"x=0→A=-1; x=1→B=1; x=-1→C=1."},
-    {"id":"D5","type":"short","question":"(x^2+ax+1)(x+2)=x^3+bx+c","answer":"a=-2, b=-3, c=2","explanation":"Koef $x^2$ harus 0: $a+2=0$→$a=-2$; jabarkan sisanya."}
+    {"id":"D1","type":"mc","question":"Diketahui $f(x)+g(x) = 3x^2 - x + 4$ dan $f(x)-g(x) = x^2 + 3x - 2$. Tentukan $f(x)$.","options":["$2x^2 + x + 1$","$x^2 - 2x + 3$","$2x^2 - x + 1$","$4x^2 + 2x + 2$"],"answer":"$2x^2 + x + 1$","explanation":"Jumlahkan kedua persamaan lalu bagi dua."},
+    {"id":"D2","type":"mc","question":"Tentukan $A$, $B$, dan $C$ pada $\\frac{x^2+1}{x(x-1)(x+1)} = \\frac{A}{x} + \\frac{B}{x-1} + \\frac{C}{x+1}$.","options":["$A=-1,\\ B=1,\\ C=1$","$A=1,\\ B=1,\\ C=-1$","$A=-1,\\ B=-1,\\ C=1$","$A=1,\\ B=-1,\\ C=1$"],"answer":"$A=-1,\\ B=1,\\ C=1$","explanation":"Substitusi x=0, x=1, dan x=-1."},
+    {"id":"D3","type":"mc","question":"Diketahui $(x^2+ax+1)(x+2) = x^3 + bx + c$ berlaku untuk semua $x$. Tentukan $a$, $b$, dan $c$.","options":["$a=-2,\\ b=-3,\\ c=2$","$a=2,\\ b=3,\\ c=2$","$a=-2,\\ b=3,\\ c=-2$","$a=0,\\ b=-3,\\ c=2$"],"answer":"$a=-2,\\ b=-3,\\ c=2$","explanation":"Koefisien x^2 harus nol: a+2=0."},
+    {"id":"D4","type":"mc","question":"Polinomial $f$ memenuhi $f(x+1)-f(x) = 2x+3$ untuk semua $x$, dan $f(0)=1$. Tentukan $f(x)$.","options":["$x^2 + 2x + 1$","$x^2 + 3x + 1$","$2x^2 + x + 1$","$x^2 + x + 1$"],"answer":"$x^2 + 2x + 1$","explanation":"Periksa: selisihnya menghasilkan 2x+3 dan f(0)=1."},
+    {"id":"D5","type":"mc","question":"Diketahui $f(x)=x^3-70x^2-600x+74{.}000$. Mengapa $f(40)=f(60)$?","options":["Karena $f(x)-2000$ memiliki akar $40$, $60$, dan $-30$","Karena keduanya kelipatan 20","Karena $f$ merupakan fungsi genap","Karena $40+60=100$"],"answer":"Karena $f(x)-2000$ memiliki akar $40$, $60$, dan $-30$","explanation":"Kedua nilai memberikan f(x)=2000 sehingga nilainya sama."}
   ]
 }
 ```
-<details><summary><strong>Pembahasan Set D</strong></summary>
+<details><summary><strong>Pembahasan Paket D</strong></summary>
 
-1. Hitung $f(40)=2000$. Karena $f(x)-2000$ berderajat 3 dengan jumlah akar $=70$, dan $40$ salah satu akarnya, dua akar lain berjumlah $30$; ternyata $60$ dan $-30$. Maka $60$ juga akar → $f(60)-2000=0 \Rightarrow f(60)=2000=f(40)$.
-2. Jumlahkan kedua persamaan: $2f = 4x^2+2x+2 \Rightarrow f=2x^2+x+1$. Kurangkan: $2g = 2x^2-4x+6 \Rightarrow g=x^2-2x+3$.
-3. Misalkan $f(x)=x^2+2x+1$. Periksa: $f(x+1)-f(x) = [(x+1)^2+2(x+1)+1]-[x^2+2x+1] = (x^2+4x+4)-(x^2+2x+1)=2x+3$ ✔, dan $f(0)=1$ ✔.
-4. Kalikan penyebut: $x^2+1 = A(x-1)(x+1)+Bx(x+1)+Cx(x-1)$. $x=0$: $1=A(-1)(1)\Rightarrow A=-1$. $x=1$: $2=B(1)(2)\Rightarrow B=1$. $x=-1$: $2=C(-1)(-2)\Rightarrow C=1$.
-5. $(x^2+ax+1)(x+2)=x^3+2x^2+ax^2+2ax+x+2 = x^3+(a+2)x^2+(2a+1)x+2$. Karena hasilnya $x^3+bx+c$ (tanpa suku $x^2$): $a+2=0\Rightarrow a=-2$. Lalu $b=2a+1=-3$, $c=2$.
+1. $f=2x^2+x+1$. 2. $A=-1,B=1,C=1$. 3. $a=-2,b=-3,c=2$. 4. $f(x)=x^2+2x+1$. 5. Keduanya memenuhi $f(x)=2000$.
 </details>
 
-### 🏆 Set E — 5 Soal Model TKA
-1. **(Drum, no.7)** Jika terdapat **8 drum** (bukan 10) dengan $V(T)=0{,}05T^3+0{,}4T^2+20T$, nyatakan total penambahan volume.
-2. **(Saham, no.8)** Untuk $f(x)=x^3-70x^2-600x+74{.}000$ (juta rupiah), apakah menjual **20 unit** menghasilkan modal yang **lebih besar** dari $2000$ juta? Hitung $f(20)$.
-3. **(Pemodelan)** Biaya produksi $C(x)=x^2+10x+25$ (ribu). Jika diproduksi $x=15$, berapa biayanya? Kenali bentuk $C(x)$.
-4. **(Kesamaan)** Diketahui $x^3 - 6x^2 + 11x - 6 = (x-1)(x-2)(x-r)$ untuk semua $x$. Tentukan $r$.
-5. **(Penalaran)** Jika $f(x)=2x^3 + ax^2 + bx + 6$ dan $f(1)=f(-1)$, tentukan nilai $b$ (petunjuk: suku ganjil vs genap).
+### 🏆 Paket E — Model TKA (5 soal, opsional)
+
+> Paket ini **opsional** dan bergaya soal TKA. Mengerjakannya memberi XP bonus.
 
 ```json
 {
-  "set_id":"02-set-E-tka","level":"tka",
+  "set_id":"02-set-E-tka","level":"tka","optional": true, "bonus_xp": 20,
   "items":[
-    {"id":"E1","type":"short","source":"TKA-drum","question":"Total 8 drum $V(T)$","answer":"0,4T^3 + 3,2T^2 + 160T","explanation":"Kalikan tiap koefisien dengan 8."},
-    {"id":"E2","type":"short","source":"TKA-saham","question":"f(20) vs 2000","answer":"$f(20)=42000$, jauh lebih besar dari 2000","explanation":"8000-28000-12000+74000=42000."},
-    {"id":"E3","type":"short","question":"C(x)=x^2+10x+25, C(15)","answer":"400","explanation":"(x+5)^2 → (20)^2=400."},
-    {"id":"E4","type":"short","question":"x^3-6x^2+11x-6=(x-1)(x-2)(x-r)","answer":"r=3","explanation":"Konstanta: $(-1)(-2)(-r)=-6 → r=3$."},
-    {"id":"E5","type":"short","question":"$f(1)=f(-1)$ untuk $2x^3+ax^2+bx+6$ (cari b; a bebas)","answer":"b=-2","explanation":"$f(1)-f(-1)=4+2b=0 → b=-2$; nilai a bebas karena suku genap otomatis sama."}
+    {"id":"E1","type":"mc","source":"TKA-drum","question":"Diketahui $V(T)=0{,}05T^3+0{,}4T^2+20T$. Jika terdapat 8 drum identik pada suhu sama, total penambahan volumenya adalah ….","options":["$0{,}4T^3 + 3{,}2T^2 + 160T$","$0{,}4T^3 + 0{,}4T^2 + 160T$","$4T^3 + 3{,}2T^2 + 160T$","$0{,}05T^3 + 3{,}2T^2 + 160T$"],"answer":"$0{,}4T^3 + 3{,}2T^2 + 160T$","explanation":"Kalikan setiap koefisien dengan 8."},
+    {"id":"E2","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Diketahui $f(x)=x^3-70x^2-600x+74{.}000$ dalam jutaan rupiah. Hitung $f(20)$.","answer":"42000","explanation":"8000-28000-12000+74000=42000."},
+    {"id":"E3","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Biaya produksi dinyatakan $C(x)=x^2+10x+25$ (ribu rupiah). Hitung biaya untuk $x=15$.","answer":"400","explanation":"C(x)=(x+5)^2 sehingga C(15)=20^2=400."},
+    {"id":"E4","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Diketahui $x^3-6x^2+11x-6=(x-1)(x-2)(x-r)$ berlaku untuk semua $x$. Tentukan nilai $r$.","answer":"3","explanation":"Samakan konstanta: (-1)(-2)(-r)=-6."},
+    {"id":"E5","type":"mc","question":"Diketahui $f(x)=2x^3+ax^2+bx+6$ memenuhi $f(1)=f(-1)$. Tentukan nilai $b$.","options":["$b=-2$","$b=0$","$b=2$","$b=-6$"],"answer":"$b=-2$","explanation":"f(1)-f(-1)=4+2b=0 sehingga b=-2; nilai a bebas."}
   ]
 }
 ```
-<details><summary><strong>Pembahasan Set E</strong></summary>
+<details><summary><strong>Pembahasan Paket E</strong></summary>
 
-**E1.** $8\cdot V(T) = 0{,}4\,T^3 + 3{,}2\,T^2 + 160\,T$. (Kalikan tiap koefisien dengan 8: $8\cdot0{,}05=0{,}4$; $8\cdot0{,}4=3{,}2$; $8\cdot20=160$.)
-
-**E2.** $f(20)=8000 - 70(400) - 600(20) + 74{.}000 = 8000 - 28000 - 12000 + 74{.}000 = 42000$. Jauh **lebih besar** dari $2000$.
-
-**E3.** $C(x)=(x+5)^2$. $C(15)=(20)^2=400$ (ribu rupiah).
-
-**E4.** Konstanta ruas kanan $=(-1)(-2)(-r) = -2r$; samakan dengan $-6 \Rightarrow -2r=-6 \Rightarrow r=3$. (Sesuai: akar-akarnya $1,2,3$.)
-
-**E5.** $f(1)=2+a+b+6$; $f(-1)=-2+a-b+6$. Selisih $f(1)-f(-1)=4+2b=0 \Rightarrow b=-2$. Jadi syaratnya $b=-2$ (suku pangkat-ganjil seimbang). *(Nilai $a$ bebas karena suku genap otomatis sama di $x=\pm1$.)*
+**E1.** $8\times$ tiap koefisien $= 0{,}4T^3+3{,}2T^2+160T$. **E2.** $f(20)=42.000$. **E3.** $C(15)=400$. **E4.** $r=3$. **E5.** $b=-2$.
 </details>
 
 ---
 
-## 🏆 Tantangan Akhir Bab 2 — Uji Kompetensi
+## ⚠️ Kesalahan Umum & ⚡ Tips Cepat
+
+| Kesalahan | Perbaikan |
+|-----------|-----------|
+| Membalik tanda hanya suku pertama pengurang | Bagikan tanda negatif ke **semua** suku |
+| Menggabungkan suku tak sejenis ($3x^2+2x=5x^3$) | Hanya suku berpangkat sama yang boleh digabung |
+| Menulis $-2^2 = -4$ padahal maksudnya $(-2)^2$ | Selalu gunakan tanda kurung |
+| Ada suku yang terlewat saat mengalikan | Periksa derajat hasil = jumlah derajat |
+| Mencari satu nilai $x$ pada soal identitas | Identitas diselesaikan dengan menyamakan koefisien |
+
+**Tips cepat:** susun bersusun dengan pangkat sejajar → pada pengurangan ubah tanda dahulu → gunakan $f(0)=$ konstanta sebagai pemeriksaan instan → pada identitas pilih nilai $x$ yang memudahkan.
+
+---
+
+## ✅ Ringkasan
+
+- **Penjumlahan/pengurangan:** gabungkan suku sejenis; pengurangan diawali mengubah tanda seluruh pengurang.
+- **Perkalian:** sifat distributif; derajat hasil $=$ jumlah derajat. Kuasai $(a\pm b)^2$, $a^2-b^2$, $a^3\pm b^3$.
+- **Nilai $f(k)$:** substitusi; $f(0)=$ konstanta; gunakan kurung untuk bilangan negatif.
+- **Kesamaan:** samakan koefisien suku sepadan.
+- **Identitas:** benar untuk semua $x$; pilih nilai $x$ yang memudahkan.
+
+---
+
+## 🏆 Tantangan Akhir Bab
 
 <!-- COMPONENT: Tantangan Akhir Bab
-     DEVELOPER: render sebagai sesi soal berwaktu dengan rekap capaian (bintang, poin, waktu terbaik).
-     Framing tetap sebagai asesmen/umpan balik belajar, bukan permainan peran. -->
-> Kerjakan rangkaian soal berikut dalam mode berwaktu untuk menguji penguasaan Anda atas operasi dan nilai polinomial. Perolehan bintang dan poin merupakan umpan balik atas ketepatan serta kecepatan; sistem menyimpan capaian terbaik Anda sebagai catatan kemajuan belajar.
+     DEVELOPER: render sebagai KARTU; klik -> POP-UP layar penuh (modal) berisi sesi berwaktu.
+     Seluruh butir mandiri - JANGAN menarik atau memecah aktivitas dari bagian materi. -->
+> Sesi berwaktu berisi 10 soal (5 menit). Seluruh soal berbentuk pilihan sehingga dapat dikerjakan tanpa mengetik.
 
 ```json
 { "type":"challenge", "id":"02-tantangan", "competency":"K2",
   "title":"Tantangan Akhir Bab 2: Operasi dan Nilai Polinomial",
-  "mode":"timed", "time_limit_sec":180, "shuffle":true,
-  "pool":["02-act-kurang","02-act-identitas","02-act-cloze","02-act-identitas-kategori","02-act-tf","02-set-A-mudah"],
+  "mode":"timed", "time_limit_sec":300, "display":"modal", "shuffle":true,
   "scoring":{"per_correct":10,"time_bonus":true},
   "stars":{"3":90,"2":70,"1":50},
   "reward":{"xp":80,"badge":"operator-polinomial"},
-  "record":{"track_best_time":true,"track_best_score":true} }
+  "record":{"track_best_time":true,"track_best_score":true},
+  "items":[
+    {"id":"T1","type":"mc","question":"Hitung $(3x^2 - x + 2) + (x^2 + 4x - 5)$.","options":["$4x^2 + 3x - 3$","$4x^2 + 3x + 3$","$4x^2 + 5x - 3$","$2x^2 + 3x - 3$"],"answer":"$4x^2 + 3x - 3$","explanation":"Gabungkan suku sejenis."},
+    {"id":"T2","type":"mc","question":"Hitung $(4x^2 + 2x - 1) - (x^2 - 3x + 6)$.","options":["$3x^2 + 5x - 7$","$3x^2 - x + 5$","$3x^2 + 5x + 5$","$5x^2 - x - 7$"],"answer":"$3x^2 + 5x - 7$","explanation":"Ubah tanda seluruh pengurang lalu gabungkan."},
+    {"id":"T3","type":"mc","question":"Hitung $2x(x^2 - 3x + 4)$.","options":["$2x^3 - 6x^2 + 8x$","$2x^3 - 3x^2 + 4x$","$2x^3 - 6x^2 + 4x$","$x^3 - 6x^2 + 8x$"],"answer":"$2x^3 - 6x^2 + 8x$","explanation":"Distribusikan 2x ke setiap suku."},
+    {"id":"T4","type":"mc","question":"Diketahui $f(x) = x^2 - 4x + 1$. Hitung $f(3)$.","options":["$-2$","$2$","$-4$","$4$"],"answer":"$-2$","explanation":"9-12+1=-2."},
+    {"id":"T5","type":"mc","question":"Benar atau salah: $f(0)$ selalu sama dengan konstanta polinomial.","options":["Benar","Salah"],"answer":"Benar","explanation":"Substitusi x=0 menghilangkan seluruh suku bervariabel."},
+    {"id":"T6","type":"mc","question":"Berapakah derajat hasil kali polinomial berderajat 2 dengan polinomial berderajat 3?","options":["$5$","$6$","$3$","$2$"],"answer":"$5$","explanation":"Derajat hasil kali sama dengan jumlah derajat."},
+    {"id":"T7","type":"mc","question":"Jabarkan $(x - 3)^2$.","options":["$x^2 - 6x + 9$","$x^2 + 6x + 9$","$x^2 - 9$","$x^2 - 3x + 9$"],"answer":"$x^2 - 6x + 9$","explanation":"Pola (a-b)^2 = a^2-2ab+b^2."},
+    {"id":"T8","type":"mc","question":"Diketahui $V(T)=0{,}05T^3+0{,}4T^2+20T$. Total penambahan volume untuk 10 drum identik adalah ….","options":["$0{,}5T^3 + 4T^2 + 200T$","$50T^3 + 4T^2 + 200T$","$5T^3 + 4T^2 + 200T$","$0{,}5T^3 + 0{,}4T^2 + 200T$"],"answer":"$0{,}5T^3 + 4T^2 + 200T$","explanation":"Kalikan setiap koefisien dengan 10; perhatikan 10 x 0,05 = 0,5."},
+    {"id":"T9","type":"mc","question":"Seorang siswa menghitung $(5x-4)-(2x+1)$ dengan langkah berikut. Langkah 1: ubah tanda menjadi $5x - 4 - 2x - 1$. Langkah 2: gabungkan suku $x$ menjadi $3x$. Langkah 3: gabungkan konstanta menjadi $-3$. Manakah langkah yang SALAH?","options":["Langkah 3, karena $-4-1=-5$","Langkah 1, karena tandanya keliru","Langkah 2, karena seharusnya $7x$","Tidak ada langkah yang salah"],"answer":"Langkah 3, karena $-4-1=-5$","explanation":"Hasil akhirnya adalah 3x-5."},
+    {"id":"T10","type":"mc","question":"Diketahui $(x+p)(x+2) = x^2 + 5x + q$ berlaku untuk semua $x$. Tentukan pasangan $(p,q)$.","options":["$(3,\\,6)$","$(6,\\,3)$","$(3,\\,5)$","$(2,\\,6)$"],"answer":"$(3,\\,6)$","explanation":"Koefisien x: 2+p=5 sehingga p=3; konstanta: q=2p=6."}
+  ] }
 ```
 
 ---
@@ -653,20 +599,18 @@ Jadi $g(x) = x^2 - 1$.
 
 <!-- COMPONENT: Reflection -->
 1. Saat mengurangkan polinomial, langkah apa yang paling sering terlewat?
-2. Jelaskan dengan bahasa Anda sendiri: apa perbedaan antara **persamaan** dan **identitas**?
-3. Setelah menyelesaikan soal saham dan drum, dapatkah Anda mengenali kapan sebuah persoalan nyata pada dasarnya merupakan proses substitusi?
+2. Jelaskan dengan bahasa Anda sendiri perbedaan antara persamaan dan identitas.
+3. Setelah mengerjakan soal saham dan drum, dapatkah Anda mengenali kapan sebuah persoalan nyata pada dasarnya hanya proses substitusi?
 
 ---
 
-## ➡️ Persiapan Menuju Sub Materi Berikutnya
+## ➡️ Persiapan Menuju Bab Berikutnya
 
-Pada bab ini, kita telah mempelajari operasi dan penghitungan nilai polinomial, termasuk menyelesaikan dua soal TKA.
+Pada bab ini kita telah mempelajari operasi dan penghitungan nilai polinomial, termasuk menyelesaikan dua soal TKA.
 
-Pada **Bab 03 — Pembagian Polinomial**, kita akan menemukan sebuah hubungan penting antara penghitungan nilai $f(k)$ (yang baru saja dipelajari) dan **pembagian** $f(x)$ oleh $(x-k)$. Kita akan mempelajari **pembagian bersusun** dan **skema Horner** yang efisien.
+Pada **Bab 03 — Pembagian Polinomial**, kita akan menemukan hubungan penting antara nilai $f(k)$ yang baru dipelajari dan pembagian $f(x)$ oleh $(x-k)$, serta mempelajari **pembagian bersusun** dan **skema Horner**.
 
-Bekal penting dari bab ini:
-- Perkalian polinomial (untuk memeriksa hasil bagi × pembagi + sisa).
-- Substitusi $f(k)$—yang akan muncul kembali sebagai **sisa pembagian**.
+Bekal yang perlu dibawa: perkalian polinomial (untuk memeriksa hasil) dan substitusi $f(k)$.
 
 > Lanjutkan ke **Bab 03**.
 

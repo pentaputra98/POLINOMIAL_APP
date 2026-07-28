@@ -3,7 +3,7 @@ id: "01-konsep-dasar-polinomial"
 slug: "konsep-dasar-polinomial"
 title: "Konsep Dasar Polinomial"
 order: 1
-duration_min: 90
+duration_min: 75
 level: "Kelas XI - Kurikulum Merdeka"
 track: "TKA Matematika Lanjut"
 prerequisites:
@@ -12,256 +12,332 @@ prerequisites:
 competencies:
   - "K1: Mengidentifikasi unsur & jenis polinomial"
 learning_objectives:
-  - "Mendefinisikan polinomial secara formal & mengenali bentuk umumnya"
+  - "Mendefinisikan polinomial & mengenali bentuk umumnya"
   - "Menentukan variabel, koefisien, konstanta, suku, dan derajat"
   - "Mengklasifikasikan jenis polinomial"
   - "Membedakan polinomial dan bukan polinomial"
 tags: ["konsep-dasar", "derajat", "koefisien", "suku", "jenis-polinomial"]
+layout: "sub-materi"
+sub_materi:
+  - { id: "1", title: "Apa Itu Polinomial" }
+  - { id: "2", title: "Unsur-Unsur Polinomial" }
+  - { id: "3", title: "Derajat & Bentuk Baku" }
+  - { id: "4", title: "Jenis-Jenis Polinomial" }
+  - { id: "5", title: "Polinomial atau Bukan" }
 components:
-  - "Concept Map Mini"
-  - "Interactive Anatomy"
-  - "Live Classifier"
-  - "Flashcard"
-  - "Quiz"
-  - "Reflection"
-  - "Activity TrueFalse"
+  - "Info Cards"
+  - "Sub Materi"
+  - "Activity Guided"
   - "Activity Matching"
   - "Activity Categorize"
   - "Activity Ordering"
-  - "Activity Cloze"
-  - "Activity ErrorHunt"
+  - "Activity TrueFalse"
+  - "Quiz Cards"
   - "Tantangan Akhir Bab"
+  - "Reflection"
 activities:
-  - "01-act-derajat"
-  - "01-act-jenis"
-  - "01-act-polinomial"
-  - "01-act-urut"
-  - "01-act-cloze"
-  - "01-act-error"
+  - "01-g1"
+  - "01-m1"
+  - "01-g2"
+  - "01-m2"
+  - "01-g3"
+  - "01-m3"
+  - "01-g4"
+  - "01-m4"
+  - "01-g5"
+  - "01-m5"
 challenge: "01-tantangan"
-xp_available: 210
+xp_available: 265
 katex: true
 ---
 
 # Bab 01 — Konsep Dasar Polinomial
 
-<!-- COMPONENT: Concept Map Mini
-     DEVELOPER: WAJIB dirender sebagai kartu/diagram interaktif bergaya Soft Neo Brutalism,
-     BUKAN menyalin blok teks ASCII apa adanya. Buat simpul bertahap
-     Definisi → Unsur → Derajat → Jenis → Membedakan sebagai kartu yang dapat diklik
-     menuju sub-bagian terkait; sorot simpul aktif saat halaman digulir.
-     Blok teks di bawah HANYA rujukan struktur. -->
+<!-- COMPONENT: Info Cards
+     DEVELOPER: enam bagian di bawah ini (Tujuan Pembelajaran, Kompetensi, Prasyarat,
+     Estimasi Waktu, Peta Konsep, Motivasi) JANGAN ditampilkan sebagai teks panjang.
+     Render sebagai deretan KARTU ringkas berwarna berbeda (grid responsif). Klik kartu ->
+     POP-UP berisi isinya. Siswa boleh melewatinya dan langsung menuju materi.
+     Beri label singkat pada kartu + ikon Lucide: target, puzzle, package, clock, map, flame. -->
 
-## 🎯 Tujuan Pembelajaran
+<details data-card="tujuan" data-icon="target">
+<summary>🎯 Tujuan Pembelajaran</summary>
 
 Setelah mempelajari bab ini, peserta didik diharapkan mampu:
 
-1. **Mendefinisikan** apa itu polinomial dan menuliskan **bentuk umumnya**.
-2. **Menyebut** setiap unsur: variabel, koefisien, konstanta, suku, dan derajat.
-3. **Menentukan** derajat, banyak suku, koefisien tertentu, dan konstanta dari sebuah polinomial.
-4. **Mengklasifikasikan** jenis polinomial (berdasarkan banyak suku & berdasarkan derajat).
-5. **Membedakan** mana bentuk yang polinomial dan mana yang **bukan** — ini jebakan favorit di ujian.
+1. Mendefinisikan polinomial dan menuliskan bentuk umumnya.
+2. Menentukan variabel, koefisien, konstanta, suku, dan derajat.
+3. Mengklasifikasikan jenis polinomial.
+4. Membedakan bentuk yang merupakan polinomial dan yang bukan.
 
-## 🧩 Kompetensi yang Dipelajari
+</details>
 
-- **K1 — Mengidentifikasi unsur & jenis polinomial.**
+<details data-card="kompetensi" data-icon="puzzle">
+<summary>🧩 Kompetensi</summary>
 
-## 📦 Prasyarat
+**K1 — Mengidentifikasi unsur dan jenis polinomial.**
 
-- Sudah membaca **Bab 00 (Pengantar)**.
-- Paham notasi pangkat: $x^3$ berarti $x \times x \times x$.
-- Paham istilah "suku sejenis" (misal $3x$ dan $5x$ sejenis; $3x$ dan $3x^2$ tidak).
+</details>
 
-## ⏱️ Estimasi Waktu Belajar
+<details data-card="prasyarat" data-icon="package">
+<summary>📦 Prasyarat</summary>
 
-**±90 menit** (materi ±35 menit, contoh ±20 menit, latihan ±35 menit). Waktu belajar dapat dibagi menjadi beberapa sesi; progres tersimpan otomatis.
+- Notasi pangkat: $x^3$ berarti $x \times x \times x$.
+- Istilah suku sejenis: $3x$ dan $5x$ sejenis, sedangkan $3x$ dan $3x^2$ tidak.
 
-## 🗺️ Peta Konsep Kecil
+</details>
 
-<!-- COMPONENT: Concept Map Mini (lanjutan)
-     DEVELOPER: tampilkan sebagai alur kartu interaktif, bukan teks ASCII mentah. -->
+<details data-card="waktu" data-icon="clock">
+<summary>⏱️ Estimasi Waktu</summary>
+
+**±75 menit.** Dapat dibagi menjadi beberapa sesi; progres tersimpan otomatis.
+
+</details>
+
+<details data-card="peta" data-icon="map">
+<summary>🗺️ Peta Konsep</summary>
+
+<!-- COMPONENT: Concept Map Mini
+     DEVELOPER: render sebagai kartu/diagram interaktif yang dapat diklik menuju sub-materi.
+     Blok di bawah hanya rujukan struktur. -->
 
 ```
-KONSEP DASAR POLINOMIAL
-│
-├─ 1. Apa itu polinomial?  ─────► definisi & bentuk umum
-├─ 2. Unsur-unsur          ─────► variabel · koefisien · konstanta · suku
-├─ 3. Derajat              ─────► pangkat tertinggi
-├─ 4. Jenis-jenis          ─────► menurut jumlah suku & menurut derajat
-└─ 5. Polinomial atau bukan? ───► aturan pangkat: bilangan bulat ≥ 0
+Apa itu polinomial → Unsur-unsur → Derajat & bentuk baku
+                                 → Jenis-jenis
+                                 → Polinomial atau bukan
 ```
 
-## 🔥 Motivasi
+</details>
 
-Sebelum kita bisa **mengoperasikan**, **membagi**, atau **mencari akar** sebuah polinomial, kita harus mampu **mengenalinya** terlebih dahulu—sebagaimana pengenalan huruf mendahului kemampuan membaca kalimat.
+<details data-card="motivasi" data-icon="flame">
+<summary>🔥 Motivasi</summary>
 
-Kabar baiknya: konsep di bab ini **sederhana tapi fundamental**. Salah paham kecil di sini (misalnya salah sebut derajat, atau mengira $\frac{1}{x}$ itu polinomial) akan menjalar jadi kesalahan besar di bab-bab berikutnya. Jadi mari kita kunci fondasinya kuat-kuat.
+Sebelum dapat mengoperasikan, membagi, atau mencari akar polinomial, kita harus mampu mengenalinya lebih dahulu. Kesalahan kecil di bab ini—misalnya salah menyebut derajat—akan berlanjut menjadi kesalahan besar pada bab berikutnya.
+
+</details>
 
 ---
 
-## 1️⃣ Apa Itu Polinomial?
+<!-- COMPONENT: Sub Materi
+     DEVELOPER: judul sub-materi di bawah ini WAJIB sticky (menempel di bawah judul bab saat
+     digulir), berdesain khusus, dan berganti otomatis saat memasuki sub-materi berikutnya. -->
 
-Mari mulai dari kata-katanya. **Poli** artinya "banyak", **nomial** artinya "suku". Jadi **polinomial = suku banyak**. Sesederhana itu: bentuk aljabar yang tersusun dari **banyak suku yang dijumlahkan/dikurangkan**.
+## 1️⃣ Apa Itu Polinomial
 
-Perhatikan bentuk ini:
-$$2x^3 + 5x^2 - 4x + 7$$
+**Poli** berarti "banyak", **nomial** berarti "suku". Jadi polinomial adalah **suku banyak**: bentuk aljabar yang tersusun dari beberapa suku yang dijumlahkan atau dikurangkan.
 
-Ini adalah polinomial. Ia punya empat "potongan" yang dipisahkan tanda $+$ atau $-$. Tiap potongan itu disebut **suku**.
+> **Definisi.** Polinomial dalam variabel $x$ berbentuk
+> $$a_n x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0$$
+> dengan pangkat $n$ merupakan **bilangan bulat tak negatif**, koefisien $a_i$ bilangan real, dan $a_n \neq 0$.
 
-### Definisi formal
+Aturan kunci yang membedakan polinomial dari bentuk lain: **pangkat variabelnya selalu $0, 1, 2, 3, \dots$** — tidak boleh negatif dan tidak boleh pecahan.
 
-> **Polinomial dalam variabel $x$** adalah bentuk:
-> $$a_n x^n + a_{n-1}x^{n-1} + \dots + a_2 x^2 + a_1 x + a_0$$
-> dengan:
-> - $n$ adalah **bilangan bulat tak negatif** ($n = 0, 1, 2, 3, \dots$),
-> - $a_n, a_{n-1}, \dots, a_0$ adalah **bilangan real** (disebut koefisien),
-> - $a_n \neq 0$ (koefisien pangkat tertinggi tidak nol, supaya derajatnya jelas).
+### 📘 Contoh
 
-Notasi $a_n$ tidak perlu dikhawatirkan; notasi tersebut hanya cara ringkas untuk menuliskan "koefisien di depan $x^n$". Contohnya pada $2x^3 + 5x^2 - 4x + 7$:
+Perhatikan $2x^3 + 5x^2 - 4x + 7$. Bentuk ini polinomial karena setiap pangkatnya ($3, 2, 1, 0$) merupakan bilangan bulat tak negatif.
 
-- $a_3 = 2$ (koefisien $x^3$)
-- $a_2 = 5$ (koefisien $x^2$)
-- $a_1 = -4$ (koefisien $x^1$)
-- $a_0 = 7$ (konstanta, yaitu koefisien $x^0 = 1$)
+Sebaliknya, $\dfrac{3}{x} + 1$ **bukan** polinomial, sebab $\dfrac{3}{x} = 3x^{-1}$ berpangkat negatif.
 
-**Kenapa pangkatnya harus bilangan bulat tak negatif?** Inilah aturan emas yang membedakan polinomial dari bukan polinomial. Kita bahas tuntas di bagian 5. Untuk sekarang, ingat kalimat ini baik-baik: **pangkat variabel pada polinomial selalu $0, 1, 2, 3, \dots$ — tidak boleh negatif, tidak boleh pecahan.**
+### 🎓 Latihan Terbimbing
 
-### Bentuk umum & bentuk baku (standar)
+<!-- COMPONENT: Activity Guided -->
 
-Polinomial paling enak dibaca kalau ditulis dari **pangkat tertinggi ke terendah**. Ini disebut **bentuk baku (standard form)**.
+```json
+{ "type":"activity", "widget":"guided", "id":"01-g1", "competency":"K1",
+  "title":"Menguji apakah suatu bentuk merupakan polinomial",
+  "prompt":"Tentukan apakah $\\sqrt{x} + 4x^2$ merupakan polinomial.",
+  "steps":[
+    {"ask":"Langkah 1. Ubah $\\sqrt{x}$ menjadi bentuk pangkat. Hasilnya adalah ….","type":"mc","options":["$x^{1/2}$","$x^{2}$","$x^{-1}$"],"answer":"$x^{1/2}$","feedback":"Tepat. Akar pangkat dua sama dengan pangkat $\\frac{1}{2}$."},
+    {"ask":"Langkah 2. Apakah pangkat $\\frac{1}{2}$ memenuhi syarat pangkat polinomial?","type":"mc","options":["Tidak, karena bukan bilangan bulat","Ya, karena bernilai positif"],"answer":"Tidak, karena bukan bilangan bulat","feedback":"Benar. Pangkat wajib bilangan bulat tak negatif, sedangkan $\\frac{1}{2}$ adalah pecahan."},
+    {"ask":"Langkah 3. Jadi, kesimpulannya adalah ….","type":"mc","options":["Bukan polinomial","Polinomial berderajat 2"],"answer":"Bukan polinomial","feedback":"Benar. Cukup satu pangkat yang menyalahi aturan untuk membuat seluruh bentuk bukan polinomial."}
+  ],
+  "conclusion":"Aturan emas: periksa pangkat setiap suku. Bila ada satu saja pangkat negatif atau pecahan, bentuk tersebut bukan polinomial.",
+  "reward":{"xp":15} }
+```
 
-Contoh: $-4x + x^3 + 7 + 5x^2$ sebaiknya dirapikan menjadi
-$$x^3 + 5x^2 - 4x + 7$$
+### ✍️ Latihan Mandiri
 
-⚡ **Tips:** Selalu rapikan ke bentuk baku sebelum mengerjakan apa pun. Banyak kesalahan derajat terjadi hanya karena polinomial belum diurutkan.
+<!-- COMPONENT: Activity TrueFalse -->
+
+```json
+{ "type":"activity", "widget":"truefalse", "id":"01-m1", "competency":"K1",
+  "prompt":"Tentukan nilai kebenaran tiap pernyataan.",
+  "statements":[
+    {"s":"$x^3 - \\sqrt{7}$ merupakan polinomial.","a":true,"why":"$\\sqrt{7}$ hanya konstanta; pangkat variabelnya tetap bilangan bulat."},
+    {"s":"$\\frac{2}{x^2} + x$ merupakan polinomial.","a":false,"why":"$\\frac{2}{x^2} = 2x^{-2}$ berpangkat negatif."},
+    {"s":"Bilangan $9$ merupakan polinomial.","a":true,"why":"Konstanta adalah polinomial berderajat 0."},
+    {"s":"$2^x + 1$ merupakan polinomial.","a":false,"why":"Variabel berada pada posisi pangkat, sehingga termasuk fungsi eksponen."}
+  ],
+  "reward":{"xp":15} }
+```
 
 ---
 
 ## 2️⃣ Unsur-Unsur Polinomial
 
-Mari bedah "anatomi" sebuah polinomial. Kita pakai $2x^3 + 5x^2 - 4x + 7$ sebagai pasien.
+<!-- VISUAL: Anatomi suku
+     DEVELOPER: tampilkan $2x^3 + 5x^2 - 4x + 7$ sebagai blok-blok suku terpisah. Saat suku
+     disentuh/di-hover, sorot bagiannya dan beri label: koefisien, variabel, pangkat, konstanta.
+     Gunakan warna yang sama dengan kelas hl-coef / hl-var / hl-pow / hl-const. -->
 
-<!-- COMPONENT: Interactive Anatomy -->
-<!-- Tampilkan polinomial 2x^3 + 5x^2 - 4x + 7 dengan bagian yang bisa di-hover: hover angka -> "koefisien", hover x -> "variabel", hover 7 -> "konstanta", hover tiap blok -> "suku". Gaya: highlight blok warna. -->
+Perhatikan penamaan setiap bagian pada satu suku:
 
-### a. Suku
+$$\htmlClass{hl-coef}{2}\,\htmlClass{hl-var}{x}^{\htmlClass{hl-pow}{3}}$$
 
-**Suku** adalah bagian-bagian yang dipisahkan oleh tanda $+$ atau $-$.
+- **Suku** — bagian yang dipisahkan tanda $+$ atau $-$. Pada $2x^3 + 5x^2 - 4x + 7$ terdapat **4 suku**.
+- **Variabel** — huruf yang nilainya dapat berubah, di sini $\htmlClass{hl-var}{x}$.
+- **Koefisien** — bilangan pengali variabel, di sini $\htmlClass{hl-coef}{2}$. **Tandanya ikut**: pada $-4x$ koefisiennya $-4$.
+- **Pangkat** — bilangan $\htmlClass{hl-pow}{3}$ pada contoh di atas.
+- **Konstanta** — suku tanpa variabel, yaitu $\htmlClass{hl-const}{7}$. Nilainya sama dengan $f(0)$.
 
-$$\underbrace{2x^3}_{\text{suku 1}} \; \underbrace{+\,5x^2}_{\text{suku 2}} \; \underbrace{-\,4x}_{\text{suku 3}} \; \underbrace{+\,7}_{\text{suku 4}}$$
+> 💡 Bila suku ditulis $x^2$ tanpa angka di depan, koefisiennya adalah $1$. Pada $-x^2$, koefisiennya $-1$.
 
-Polinomial ini punya **4 suku**.
+### 📘 Contoh
 
-> ⚠️ **Perhatikan:** tanda di depan suku **ikut milik suku itu**. Suku ketiga adalah $-4x$ (bukan $4x$). Ini penting saat menyebut koefisien.
+Pada $x^3 - 6x^2 + 5x - 8$: koefisien $x^3$ adalah $1$ (bukan $3$), koefisien $x^2$ adalah $-6$, koefisien $x$ adalah $5$, dan konstantanya $-8$.
 
-### b. Variabel
+Perhatikan pula $3x^5 - 4x^3 + 6x - 10$. Suku $x^4$ dan $x^2$ tidak tertulis, artinya **koefisiennya $0$** — bukan "tidak ada".
 
-**Variabel** adalah huruf yang mewakili bilangan yang bisa berubah-ubah nilainya. Di sini variabelnya adalah $x$. Variabel bisa juga huruf lain: $y$, $t$, $z$, dan seterusnya.
+### 🎓 Latihan Terbimbing
 
-### c. Koefisien
-
-**Koefisien** adalah bilangan yang **mengalikan** variabel pada tiap suku.
-
-| Suku | Koefisien |
-|------|-----------|
-| $2x^3$ | $2$ |
-| $5x^2$ | $5$ |
-| $-4x$ | $-4$ |
-| $7$ | (ini konstanta) |
-
-> 💡 Kalau suatu suku ditulis $x^2$ saja tanpa angka di depan, koefisiennya adalah **$1$** (karena $x^2 = 1 \cdot x^2$). Kalau $-x^2$, koefisiennya $-1$.
-
-### d. Konstanta
-
-**Konstanta** adalah suku yang **tidak mengandung variabel** — sebuah angka berdiri sendiri. Pada contoh kita, konstantanya adalah $7$.
-
-Kenapa disebut "konstanta"? Karena nilainya **tetap**, tidak ikut berubah walau $x$ berubah. Secara teknis, konstanta adalah koefisien dari $x^0$ (ingat $x^0 = 1$), sehingga $7 = 7x^0$.
-
----
-
-## 3️⃣ Derajat Polinomial
-
-Ini konsep paling sering ditanya. Pahami sekali, terpakai selamanya.
-
-> **Derajat** sebuah polinomial adalah **pangkat tertinggi** dari variabelnya (setelah disederhanakan).
-
-Pada $2x^3 + 5x^2 - 4x + 7$, pangkat-pangkatnya adalah $3, 2, 1, 0$. Yang tertinggi adalah $3$, jadi **derajatnya = 3**.
-
-Istilah pendukung:
-- **Suku pemimpin (leading term):** suku dengan pangkat tertinggi, di sini $2x^3$.
-- **Koefisien utama (leading coefficient):** koefisien suku pemimpin, di sini $2$.
-
-### Contoh cepat menentukan derajat
-
-| Polinomial | Derajat | Alasan |
-|-----------|---------|--------|
-| $7x^5 - x^2 + 9$ | $5$ | pangkat tertinggi $5$ |
-| $3x - 8$ | $1$ | pangkat tertinggi $1$ |
-| $10$ | $0$ | $10 = 10x^0$, pangkat $0$ |
-| $x^4 + 2x^6 - 1$ | $6$ | jangan tertipu urutan! rapikan dulu |
-
-> ⚠️ **Jebakan klasik:** derajat **bukan** banyaknya suku, dan **bukan** pangkat suku pertama yang terlihat. Selalu cari pangkat **tertinggi**. Rapikan ke bentuk baku dulu.
-
-### Derajat pada dua variabel (pengayaan singkat)
-
-Kalau ada dua variabel, derajat sebuah suku adalah **jumlah** pangkatnya. Misal pada $4x^2y^3$, derajat sukunya $2+3 = 5$. Untuk bab ini kita fokus pada **satu variabel** saja, tapi tak ada salahnya tahu.
-
----
-
-<!-- COMPONENT: Activity TrueFalse -->
-> **Latihan Interaktif — Benar/Salah.** Tentukan nilai kebenaran tiap pernyataan berikut.
+<!-- COMPONENT: Activity Guided -->
 
 ```json
-{ "type":"activity", "widget":"truefalse", "id":"01-act-derajat", "competency":"K1",
-  "prompt":"Benar atau salah?",
-  "statements":[
-    {"s":"Derajat dari $x^4+2x^6-1$ adalah 4.","a":false,"why":"Pangkat tertinggi adalah 6, jadi derajatnya 6. Rapikan dulu ke bentuk baku!"},
-    {"s":"Derajat konstanta $12$ adalah 0.","a":true,"why":"$12=12x^0$, jadi derajatnya 0."},
-    {"s":"Banyaknya suku sama dengan derajat.","a":false,"why":"$x^5+1$ punya 2 suku tapi berderajat 5."},
-    {"s":"Koefisien utama dari $-6x^5+x^2$ adalah $-6$.","a":true,"why":"Koefisien suku berpangkat tertinggi ($-6x^5$)."}
+{ "type":"activity", "widget":"guided", "id":"01-g2", "competency":"K1",
+  "title":"Membaca unsur polinomial secara teliti",
+  "prompt":"Diketahui $P(x) = 3x^5 - 4x^3 + 6x - 10$. Tentukan koefisien $x^4$ dan konstantanya.",
+  "steps":[
+    {"ask":"Langkah 1. Apakah suku $x^4$ tertulis pada $P(x)$?","type":"mc","options":["Tidak tertulis","Tertulis dengan koefisien 4"],"answer":"Tidak tertulis","feedback":"Benar. Urutan pangkat yang tampak hanya 5, 3, 1, dan 0."},
+    {"ask":"Langkah 2. Jika suatu suku tidak tertulis, berapakah koefisiennya?","type":"mc","options":["$0$","Tidak memiliki koefisien","$1$"],"answer":"$0$","feedback":"Tepat. Suku yang hilang berarti berkoefisien 0, sehingga dapat dituliskan $0x^4$."},
+    {"ask":"Langkah 3. Tentukan konstanta dari $P(x)$.","type":"mc","options":["$-10$","$10$","$6$"],"answer":"$-10$","feedback":"Benar. Suku tanpa variabel adalah $-10$; tanda negatif ikut."}
   ],
-  "reward":{"xp":20} }
+  "conclusion":"Kebiasaan menuliskan koefisien nol untuk suku yang hilang akan sangat membantu pada pembagian Horner di Bab 03.",
+  "reward":{"xp":15} }
 ```
+
+### ✍️ Latihan Mandiri
+
+<!-- COMPONENT: Activity Matching -->
+
+```json
+{ "type":"activity", "widget":"matching", "id":"01-m2", "competency":"K1",
+  "prompt":"Untuk polinomial $4x^3 - x^2 + 7$, pasangkan setiap unsur dengan nilainya.",
+  "pairs":[
+    ["Koefisien $x^3$","$4$"],
+    ["Koefisien $x^2$","$-1$"],
+    ["Koefisien $x$","$0$"],
+    ["Konstanta","$7$"]
+  ],
+  "reward":{"xp":15} }
+```
+
+---
+
+## 3️⃣ Derajat & Bentuk Baku
+
+> **Derajat** polinomial adalah **pangkat tertinggi** variabelnya setelah disederhanakan.
+
+Pada $2x^3 + 5x^2 - 4x + 7$, pangkat-pangkatnya $3, 2, 1, 0$; yang tertinggi $3$, sehingga derajatnya **3**. Suku $2x^3$ disebut **suku pemimpin**, dan $2$ disebut **koefisien pemimpin**.
+
+**Bentuk baku** berarti menuliskan polinomial terurut dari pangkat tertinggi ke terendah.
+
+<!-- VISUAL: Perapian ke bentuk baku
+     DEVELOPER: animasikan perpindahan posisi suku dari -2 + x^4 - 3x + x^2 menjadi
+     x^4 + x^2 - 3x - 2. Setiap suku bergerak ke posisi barunya, dengan pangkat disorot. -->
+
+$$-2 + x^4 - 3x + x^2 \;\longrightarrow\; \htmlClass{hl-1}{x^4} + \htmlClass{hl-2}{x^2} - \htmlClass{hl-3}{3x} - 2$$
+
+> ⚠️ Derajat **bukan** banyaknya suku, dan **bukan** pangkat suku pertama yang terlihat. Rapikan dahulu ke bentuk baku.
+
+### 📘 Contoh
+
+Tentukan derajat dan koefisien pemimpin dari $-2 + x^4 - 3x + x^2$.
+
+Bentuk bakunya $x^4 + x^2 - 3x - 2$. Derajatnya **4**, dan koefisien pemimpinnya **1** — bukan 4, karena 4 adalah pangkatnya.
+
+### 🎓 Latihan Terbimbing
+
+<!-- COMPONENT: Activity Guided -->
+
+```json
+{ "type":"activity", "widget":"guided", "id":"01-g3", "competency":"K1",
+  "title":"Menentukan derajat melalui bentuk baku",
+  "prompt":"Tentukan derajat dan koefisien pemimpin dari $2x^2 - x^5 + 7$.",
+  "steps":[
+    {"ask":"Langkah 1. Tuliskan bentuk bakunya.","type":"mc","options":["$-x^5 + 2x^2 + 7$","$2x^2 + 7 - x^5$","$x^5 + 2x^2 + 7$"],"answer":"$-x^5 + 2x^2 + 7$","feedback":"Tepat. Suku berpangkat tertinggi diletakkan paling depan beserta tandanya."},
+    {"ask":"Langkah 2. Berapakah derajatnya?","type":"mc","options":["$5$","$2$","$3$"],"answer":"$5$","feedback":"Benar, pangkat tertinggi adalah 5."},
+    {"ask":"Langkah 3. Berapakah koefisien pemimpinnya?","type":"mc","options":["$-1$","$1$","$2$"],"answer":"$-1$","feedback":"Tepat. Suku pemimpinnya $-x^5$, sehingga koefisiennya $-1$."}
+  ],
+  "conclusion":"Selalu rapikan ke bentuk baku sebelum menyebut derajat maupun koefisien pemimpin.",
+  "reward":{"xp":15} }
+```
+
+### ✍️ Latihan Mandiri
+
+<!-- COMPONENT: Activity Ordering -->
+
+```json
+{ "type":"activity", "widget":"ordering", "id":"01-m3", "competency":"K1",
+  "prompt":"Urutkan keempat bentuk berikut dari derajat TERKECIL ke TERBESAR.",
+  "options":["$5$","$2x-1$","$x^2$","$x^4-x$"],
+  "answer_order":[0,1,2,3],
+  "reward":{"xp":15} }
+```
+
+---
 
 ## 4️⃣ Jenis-Jenis Polinomial
 
 Polinomial dikelompokkan dengan dua cara.
 
-### A. Berdasarkan **banyak suku**
+**Berdasarkan banyaknya suku:**
 
 | Nama | Banyak suku | Contoh |
-|------|-------------|--------|
-| **Monomial** | 1 suku | $5x^3$ |
-| **Binomial** | 2 suku | $x^2 - 9$ |
-| **Trinomial** | 3 suku | $x^2 + 5x + 6$ |
-| Polinomial | 4 suku atau lebih | $x^3 + 2x^2 - x + 1$ |
+|------|:-----------:|--------|
+| Monomial | 1 | $5x^3$ |
+| Binomial | 2 | $x^2 - 9$ |
+| Trinomial | 3 | $x^2 + 5x + 6$ |
 
-(Untuk 4 suku ke atas biasanya cukup disebut "polinomial" saja.)
+**Berdasarkan derajat:**
 
-### B. Berdasarkan **derajat**
+| Derajat | Nama | Contoh |
+|:-------:|------|--------|
+| 0 | Konstan | $7$ |
+| 1 | Linear | $2x + 3$ |
+| 2 | Kuadrat | $x^2 - 5x + 6$ |
+| 3 | Kubik | $x^3 - 1$ |
+| 4 | Kuartik | $x^4 + 3x^2 - 2$ |
 
-| Derajat | Nama | Bentuk umum | Contoh |
-|---------|------|-------------|--------|
-| $0$ | Konstan | $a_0$ | $7$ |
-| $1$ | Linear | $a_1x + a_0$ | $2x + 3$ |
-| $2$ | Kuadrat | $a_2x^2 + a_1x + a_0$ | $x^2 - 5x + 6$ |
-| $3$ | Kubik | $a_3x^3 + \dots$ | $x^3 - 1$ |
-| $4$ | Kuartik | $a_4x^4 + \dots$ | $x^4 + 3x^2 - 2$ |
-| $5$ | Kuintik | $a_5x^5 + \dots$ | $x^5 - x$ |
+> 💡 Derajat menentukan **banyaknya akar maksimum**: polinomial berderajat $n$ memiliki paling banyak $n$ akar. Fakta ini dipakai pada Bab 04–05.
 
-<!-- COMPONENT: Flashcard -->
-<!-- Deck flashcard: depan = "Derajat 3 disebut?" belakang = "Kubik". Buat 2 arah (nama->contoh dan contoh->nama). Acak urutan. -->
+### 📘 Contoh
 
-> 💡 **Kaitan ke depan:** derajat menentukan **paling banyak berapa akar** yang bisa dimiliki polinomial. Polinomial derajat $n$ punya **paling banyak $n$ akar**. Kubik → maksimal 3 akar. Ini akan sangat berguna di Bab 04–05.
+Bentuk $x^3 - 8$ memiliki 2 suku dan berderajat 3. Jadi, bentuk ini adalah **binomial** yang sekaligus **kubik**. Kedua cara penamaan dapat digunakan bersamaan.
 
----
+### 🎓 Latihan Terbimbing
 
-<!-- COMPONENT: Activity Matching -->
-> **Latihan Interaktif — Menjodohkan.** Pasangkan setiap derajat dengan nama polinomialnya.
+<!-- COMPONENT: Activity Guided -->
 
 ```json
-{ "type":"activity", "widget":"matching", "id":"01-act-jenis", "competency":"K1",
-  "prompt":"Jodohkan derajat dengan nama polinomialnya",
+{ "type":"activity", "widget":"guided", "id":"01-g4", "competency":"K1",
+  "title":"Menamai polinomial dari dua sudut pandang",
+  "prompt":"Klasifikasikan $-6x^5 + x^2$ berdasarkan banyaknya suku dan derajatnya.",
+  "steps":[
+    {"ask":"Langkah 1. Berapa banyak sukunya?","type":"mc","options":["2 suku","3 suku","1 suku"],"answer":"2 suku","feedback":"Benar, yaitu $-6x^5$ dan $x^2$."},
+    {"ask":"Langkah 2. Berdasarkan banyaknya suku, bentuk ini disebut ….","type":"mc","options":["Binomial","Trinomial","Monomial"],"answer":"Binomial","feedback":"Tepat, dua suku berarti binomial."},
+    {"ask":"Langkah 3. Berdasarkan derajatnya, bentuk ini disebut ….","type":"mc","options":["Kuintik (derajat 5)","Kuartik (derajat 4)","Kuadrat (derajat 2)"],"answer":"Kuintik (derajat 5)","feedback":"Benar, pangkat tertingginya 5."}
+  ],
+  "conclusion":"Satu polinomial dapat dinamai dari dua sudut sekaligus: menurut banyaknya suku dan menurut derajatnya.",
+  "reward":{"xp":15} }
+```
+
+### ✍️ Latihan Mandiri
+
+<!-- COMPONENT: Activity Matching -->
+
+```json
+{ "type":"activity", "widget":"matching", "id":"01-m4", "competency":"K1",
+  "prompt":"Pasangkan setiap derajat dengan nama polinomialnya.",
   "pairs":[
     ["Derajat 0","Konstan"],
     ["Derajat 1","Linear"],
@@ -269,42 +345,62 @@ Polinomial dikelompokkan dengan dua cara.
     ["Derajat 3","Kubik"],
     ["Derajat 4","Kuartik"]
   ],
-  "reward":{"xp":20} }
+  "reward":{"xp":15} }
 ```
-
-## 5️⃣ Polinomial atau BUKAN? (Aturan Emas)
-
-Bagian ini penting untuk dikuasai karena soal "manakah yang merupakan polinomial" hampir selalu muncul.
-
-> **Aturan emas:** Sebuah bentuk adalah polinomial **hanya jika** setiap variabelnya berpangkat **bilangan bulat tak negatif** ($0,1,2,3,\dots$), dan variabel **tidak berada di penyebut** maupun **di dalam tanda akar**.
-
-Mari uji beberapa "tersangka":
-
-| Bentuk | Polinomial? | Alasan |
-|--------|:-----------:|--------|
-| $3x^2 - 7x + 1$ | ✅ Ya | semua pangkat bulat $\geq 0$ |
-| $\dfrac{5}{x} + 2$ | ❌ Bukan | $\frac{5}{x} = 5x^{-1}$, pangkat **negatif** |
-| $\sqrt{x} + 3$ | ❌ Bukan | $\sqrt{x} = x^{1/2}$, pangkat **pecahan** |
-| $x^3 + \dfrac{2}{x^2}$ | ❌ Bukan | $\frac{2}{x^2} = 2x^{-2}$, pangkat negatif |
-| $4x^2 + \dfrac{x}{3}$ | ✅ Ya | $\frac{x}{3} = \frac{1}{3}x$; **konstanta** di penyebut boleh! |
-| $2^x + 1$ | ❌ Bukan | variabel jadi **pangkat** (ini eksponen, bukan polinomial) |
-| $5$ | ✅ Ya | konstanta = polinomial derajat 0 |
-| $x^2\sqrt{3} - x$ | ✅ Ya | $\sqrt{3}$ hanya **koefisien**, variabelnya tetap berpangkat bulat |
-
-> ⚠️ **Dua jebakan halus:**
-> 1. **Variabel di penyebut** → bukan polinomial ($\frac{1}{x}$). Tapi **angka di penyebut** → boleh ($\frac{x}{3}$).
-> 2. **Akar dari angka** ($\sqrt{3}$) sebagai koefisien → boleh. **Akar dari variabel** ($\sqrt{x}$) → bukan polinomial.
-
-⚡ **Tips cepat:** Ubah setiap suku ke bentuk $x^{\text{pangkat}}$. Kalau ada **satu saja** pangkat yang negatif atau pecahan → **bukan** polinomial.
 
 ---
 
-<!-- COMPONENT: Activity Categorize -->
-> **Latihan Interaktif — Kategorisasi.** Kelompokkan tiap bentuk ke dalam **Polinomial** atau **Bukan Polinomial** dengan menerapkan aturan pangkat.
+## 5️⃣ Polinomial atau Bukan
+
+> **Aturan emas.** Suatu bentuk merupakan polinomial **hanya jika** setiap pangkat variabelnya bilangan bulat tak negatif, variabel **tidak** berada di penyebut, dan variabel **tidak** berada di dalam tanda akar.
+
+<!-- VISUAL: Uji aturan emas
+     DEVELOPER: tampilkan sebagai tabel/kartu uji. Setiap bentuk diubah menjadi notasi pangkat
+     (animasi singkat), lalu ditandai lolos (hijau) atau gagal (merah) beserta alasannya. -->
+
+| Bentuk | Ditulis sebagai | Polinomial? |
+|--------|-----------------|:-----------:|
+| $3x^2 - 7x + 1$ | pangkat $2, 1, 0$ | ✅ Ya |
+| $\dfrac{5}{x} + 2$ | $5x^{-1} + 2$ | ❌ Bukan |
+| $\sqrt{x} + 3$ | $x^{1/2} + 3$ | ❌ Bukan |
+| $4x^2 + \dfrac{x}{3}$ | $4x^2 + \tfrac{1}{3}x$ | ✅ Ya |
+| $2^x + 1$ | variabel di pangkat | ❌ Bukan |
+| $x^2\sqrt{3} - x$ | $\sqrt{3}$ hanya koefisien | ✅ Ya |
+
+> ⚠️ Dua jebakan yang sering tertukar:
+> 1. Variabel di penyebut ($\frac{1}{x}$) → bukan polinomial. Angka di penyebut ($\frac{x}{3}$) → boleh.
+> 2. Akar dari **variabel** ($\sqrt{x}$) → bukan polinomial. Akar dari **angka** ($\sqrt{3}$) → boleh.
+
+### 📘 Contoh
+
+Manakah yang bukan polinomial: (a) $3x^4 - x$, (b) $\frac{2}{x} + 5$, (c) $x^2 - \sqrt{2}\,x + 1$?
+
+Jawabannya (b), sebab $\frac{2}{x} = 2x^{-1}$ berpangkat negatif. Bentuk (c) tetap polinomial karena $\sqrt{2}$ hanya berperan sebagai koefisien.
+
+### 🎓 Latihan Terbimbing
+
+<!-- COMPONENT: Activity Guided -->
 
 ```json
-{ "type":"activity", "widget":"categorize", "id":"01-act-polinomial", "competency":"K1",
-  "prompt":"Seret tiap bentuk ke kategori yang benar",
+{ "type":"activity", "widget":"guided", "id":"01-g5", "competency":"K1",
+  "title":"Membedakan angka di penyebut dan variabel di penyebut",
+  "prompt":"Tentukan status kedua bentuk berikut: $4x^2 + \\dfrac{x}{3}$ dan $4x^2 + \\dfrac{3}{x}$.",
+  "steps":[
+    {"ask":"Langkah 1. Bentuk $\\dfrac{x}{3}$ setara dengan ….","type":"mc","options":["$\\frac{1}{3}x$","$3x^{-1}$","$x^{-3}$"],"answer":"$\\frac{1}{3}x$","feedback":"Tepat. Angka pada penyebut hanya menjadi koefisien pecahan."},
+    {"ask":"Langkah 2. Bentuk $\\dfrac{3}{x}$ setara dengan ….","type":"mc","options":["$3x^{-1}$","$\\frac{1}{3}x$","$3x$"],"answer":"$3x^{-1}$","feedback":"Benar. Variabel pada penyebut menghasilkan pangkat negatif."},
+    {"ask":"Langkah 3. Jadi, manakah yang merupakan polinomial?","type":"mc","options":["Hanya $4x^2 + \\frac{x}{3}$","Hanya $4x^2 + \\frac{3}{x}$","Keduanya"],"answer":"Hanya $4x^2 + \\frac{x}{3}$","feedback":"Tepat. Angka di penyebut diperbolehkan, sedangkan variabel di penyebut tidak."}
+  ],
+  "conclusion":"Kuncinya: perhatikan apa yang berada di penyebut. Angka boleh, variabel tidak.",
+  "reward":{"xp":15} }
+```
+
+### ✍️ Latihan Mandiri
+
+<!-- COMPONENT: Activity Categorize -->
+
+```json
+{ "type":"activity", "widget":"categorize", "id":"01-m5", "competency":"K1",
+  "prompt":"Kelompokkan setiap bentuk berikut dengan menerapkan aturan pangkat.",
   "categories":["Polinomial","Bukan Polinomial"],
   "items":[
     ["$3x^2-\\sqrt{7}$","Polinomial"],
@@ -314,392 +410,172 @@ Mari uji beberapa "tersangka":
     ["$\\sqrt{x}+3$","Bukan Polinomial"],
     ["$9$","Polinomial"]
   ],
-  "reward":{"xp":25} }
-```
-
-## 📘 Contoh Bertingkat
-
-### 🟢 Contoh Sederhana
-
-**Contoh S1.** Tentukan banyak suku, derajat, dan konstanta dari $4x^2 - 7x + 9$.
-
-*Pembahasan.*
-- Suku: $4x^2$, $-7x$, $9$ → **3 suku** (trinomial).
-- Pangkat tertinggi $2$ → **derajat 2** (kuadrat).
-- Suku tanpa variabel → **konstanta = 9**.
-
-**Contoh S2.** Sebutkan koefisien $x^3$ dan koefisien $x$ pada $x^3 - 6x^2 + 5x - 8$.
-
-*Pembahasan.*
-- Koefisien $x^3$: karena ditulis $x^3$ tanpa angka, koefisiennya $= \mathbf{1}$.
-- Koefisien $x$: sukunya $+5x$, jadi koefisiennya $= \mathbf{5}$.
-
-**Contoh S3.** Rapikan $ -2 + x^4 - 3x + x^2$ ke bentuk baku, lalu sebutkan derajat & koefisien utama.
-
-*Pembahasan.*
-Urutkan dari pangkat tertinggi:
-$$x^4 + x^2 - 3x - 2$$
-Derajat $= 4$, koefisien utama $= 1$ (di depan $x^4$).
-
-### 🟡 Contoh Sedang
-
-**Contoh M1.** Manakah yang **bukan** polinomial? (a) $3x^4 - x$ (b) $\frac{2}{x} + 5$ (c) $x^2 - \sqrt{2}\,x + 1$
-
-*Pembahasan.*
-- (a) pangkat $4$ dan $1$, keduanya bulat $\geq 0$ → polinomial.
-- (b) $\frac{2}{x} = 2x^{-1}$, pangkat negatif → **BUKAN polinomial**.
-- (c) $\sqrt{2}$ hanya koefisien, variabel $x$ berpangkat $2$ dan $1$ → polinomial.
-
-Jawaban: **(b)**.
-
-**Contoh M2.** Diketahui polinomial $P(x) = 3x^5 - 4x^3 + 6x - 10$. Isilah:
-koefisien $x^5=\dots$, koefisien $x^4=\dots$, koefisien $x^3=\dots$, konstanta $=\dots$
-
-*Pembahasan.*
-- Koefisien $x^5 = 3$.
-- Koefisien $x^4 = \mathbf{0}$ — perhatikan, **tidak ada** suku $x^4$, artinya koefisiennya $0$! Ini sangat penting untuk Horner nanti.
-- Koefisien $x^3 = -4$.
-- Konstanta $= -10$.
-
-> 💡 **Ide kunci:** suku yang "hilang" bukan berarti tidak ada — koefisiennya bernilai $0$. Menuliskan $3x^5 + 0x^4 - 4x^3 + 0x^2 + 6x - 10$ akan sangat membantu pada Bab 03.
-
-**Contoh M3.** Sebuah polinomial berderajat 3, berupa trinomial, koefisien utama $2$, konstanta $-5$, dan tidak memuat suku $x^2$. Tuliskan satu kemungkinan bentuknya.
-
-*Pembahasan.*
-- Derajat 3 → ada $x^3$; koefisien utama $2$ → $2x^3$.
-- Trinomial → tepat 3 suku. Konstanta $-5$ sudah 1 suku, $2x^3$ suku kedua → butuh 1 suku lagi.
-- Tidak memuat $x^2$ → suku ketiga haruslah suku $x$ (misal $7x$).
-
-Satu kemungkinan: $\;2x^3 + 7x - 5$. (Jawaban tidak tunggal, asal memenuhi semua syarat.)
-
-### 🧠 Contoh HOTS
-
-**Contoh H1.** Diberikan bentuk $\;f(x) = (m-2)x^3 + 4x^2 - x + 1$. Agar $f(x)$ merupakan polinomial **berderajat 2**, tentukan nilai $m$.
-
-*Pembahasan.*
-Supaya derajatnya turun jadi 2, suku $x^3$ harus **hilang**. Suku $x^3$ hilang jika koefisiennya nol:
-$$m - 2 = 0 \;\Rightarrow\; m = 2$$
-Cek: dengan $m=2$, $f(x) = 0\cdot x^3 + 4x^2 - x + 1 = 4x^2 - x + 1$, benar berderajat 2. Jawaban: $\mathbf{m = 2}$.
-
-> 💡 Pelajaran: **koefisien utama tidak boleh nol** justru dipakai terbalik di sini — kita *sengaja* menolkan agar derajat turun.
-
-**Contoh H2.** Bentuk $g(x) = x^{2a-1} + 3x^2 - 5$ merupakan polinomial berderajat 5. Tentukan nilai $a$.
-
-*Pembahasan.*
-Agar derajatnya 5, pangkat tertinggi harus $5$. Suku $3x^2$ berderajat 2, jadi suku $x^{2a-1}$ lah yang mesti berderajat 5:
-$$2a - 1 = 5 \;\Rightarrow\; 2a = 6 \;\Rightarrow\; a = 3$$
-Cek juga syarat "bilangan bulat $\geq 0$": dengan $a=3$, pangkatnya $2(3)-1 = 5$, valid. Jawaban: $\mathbf{a = 3}$.
-
-**Contoh H3.** Nyatakan **benar/salah** dengan alasan: "Jumlah dua polinomial berderajat 3 selalu menghasilkan polinomial berderajat 3."
-
-*Pembahasan.*
-**Salah.** Derajat hasil penjumlahan bisa **turun** jika suku pemimpinnya saling meniadakan.
-Contoh penyangkal: $\;(x^3 + x) + (-x^3 + 2) = x + 2$, yang berderajat **1**, bukan 3.
-Jadi pernyataannya tidak selalu benar. (Ini bekal penting untuk Bab 02.)
-
----
-
-<!-- COMPONENT: Activity Ordering -->
-> **Latihan Interaktif — Mengurutkan.** Susun bentuk berikut dari derajat **terkecil ke terbesar**.
-
-```json
-{ "type":"activity", "widget":"ordering", "id":"01-act-urut", "competency":"K1",
-  "prompt":"Urutkan dari derajat TERKECIL ke TERBESAR",
-  "options":["$5$","$2x-1$","$x^2+3$","$x^4-x$"],
-  "answer_order":[0,1,2,3],
   "reward":{"xp":20} }
 ```
-
-<!-- COMPONENT: Activity Cloze -->
-> **Latihan Interaktif — Melengkapi.** Isi bagian rumpang dengan angka yang tepat.
-
-```json
-{ "type":"activity", "widget":"cloze", "id":"01-act-cloze", "competency":"K1",
-  "prompt":"Lengkapi kalimat kunci",
-  "template":"Pada $2x^3+5x^2-4x+7$: derajatnya {{0}}, koefisien utamanya {{1}}, dan konstantanya {{2}}.",
-  "answers":["3","2","7"],
-  "reward":{"xp":20} }
-```
-
-## ⚠️ Kesalahan yang Sering Dilakukan Siswa
-
-1. **Lupa tanda negatif pada koefisien.** Pada $x^2 - 4x$, koefisien $x$ adalah $-4$, bukan $4$.
-2. **Mengira koefisien $x^2$ pada $x^2$ adalah $2$.** Salah — koefisiennya $1$; angka $2$ itu pangkat.
-3. **Menganggap suku yang hilang tidak ada koefisiennya.** Pada $x^3 + 1$, koefisien $x^2$ dan $x$ adalah $0$, bukan "tidak ada".
-4. **Salah menentukan derajat karena belum dirapikan.** Selalu urutkan ke bentuk baku dulu.
-5. **Mengira $\frac{x}{3}$ bukan polinomial.** Salah — yang dilarang variabel di **penyebut** ($\frac{3}{x}$), bukan angka di penyebut.
-6. **Mengira $\sqrt{3}\,x$ bukan polinomial.** Salah — $\sqrt{3}$ hanya koefisien; yang dilarang adalah $\sqrt{x}$.
-7. **Menghitung derajat = banyak suku.** Dua hal berbeda! $x^5 + 1$ punya 2 suku tapi derajat 5.
-
----
-
-<!-- COMPONENT: Activity ErrorHunt -->
-> **Latihan Interaktif — Menemukan Kesalahan.** Cermati pengerjaan berikut; terdapat **satu langkah yang keliru**. Tandai langkah tersebut.
-
-```json
-{ "type":"activity", "widget":"error-hunt", "id":"01-act-error", "competency":"K1",
-  "prompt":"Menentukan derajat & koefisien utama dari $-2 + x^4 - 3x + x^2$. Manakah langkah yang SALAH?",
-  "steps":[
-    "Rapikan ke bentuk baku: $x^4 + x^2 - 3x - 2$.",
-    "Derajat = 4 (pangkat tertinggi).",
-    "Koefisien utama = 4.",
-    "Konstanta = $-2$."
-  ],
-  "wrong_index":2,
-  "why":"Koefisien utama adalah angka di depan $x^4$, yaitu $1$ — bukan $4$. Angka 4 itu pangkatnya, bukan koefisiennya.",
-  "reward":{"xp":25} }
-```
-
-## ⚡ Tips Cepat
-
-- **Rapikan dulu** ke bentuk baku sebelum apa pun.
-- Untuk cek polinomial: **tulis ulang tiap suku sebagai $x^{\text{pangkat}}$**. Ada pangkat negatif/pecahan? Bukan polinomial.
-- **Tuliskan koefisien nol** untuk suku yang hilang — kebiasaan ini sangat membantu pada pembagian Horner.
-- Ingat rima: **"Penyebut variabel & akar variabel → tanda bukan polinomial."**
-- Derajat $n$ → **maksimal $n$ akar**. Simpan fakta ini.
-
----
-
-## ✅ Ringkasan Sub Materi
-
-- **Polinomial** = suku banyak; bentuk umum $a_nx^n + \dots + a_1x + a_0$ dengan pangkat **bilangan bulat $\geq 0$**.
-- **Unsur:** variabel (huruf), koefisien (angka pengali), konstanta (suku tanpa variabel), suku (bagian dipisah $+/-$).
-- **Derajat** = pangkat tertinggi. **Koefisien utama** = koefisien suku berderajat tertinggi.
-- **Jenis:** menurut banyak suku (mono/bi/tri) & menurut derajat (konstan/linear/kuadrat/kubik/…).
-- **Bukan polinomial** jika ada variabel berpangkat negatif/pecahan, variabel di penyebut, atau variabel di dalam akar.
 
 ---
 
 ## 📝 Latihan Bertingkat
 
-Kerjakan dulu di kertas, baru buka pembahasan. Blok JSON di tiap set adalah data untuk mesin kuis aplikasi.
+<!-- COMPONENT: Quiz Cards
+     DEVELOPER: render 5 paket di bawah sebagai KARTU (A-E) berjajar, bukan daftar panjang.
+     Klik kartu -> POP-UP berisi soalnya (boleh scroll/slide). Tandai paket D dan E sebagai
+     OPSIONAL dengan XP bonus. Tiap item dirender mandiri; `short` hanya untuk jawaban bilangan. -->
 
-<!-- COMPONENT: Quiz -->
-<!-- Render 'set_mudah' sebagai kuis isian/pilihan. Ambil field: id, type, question (KaTeX), options, answer, explanation. Simpan skor per set ke Local Storage. -->
-
-### 🟢 Set A — 10 Soal Mudah
-
-1. Tentukan derajat $5x^3 - 2x + 1$.
-2. Berapa banyak suku pada $x^4 - x^3 + x^2 - x + 1$?
-3. Sebutkan konstanta dari $2x^2 - 9$.
-4. Sebutkan koefisien $x$ pada $7x^2 - 3x + 4$.
-5. Sebutkan koefisien utama dari $-6x^5 + x^2$.
-6. Polinomial derajat 1 disebut apa?
-7. $x^2 - 16$ termasuk jenis apa berdasarkan banyak suku?
-8. Rapikan $3 - x^2 + 2x$ ke bentuk baku.
-9. Berapa derajat dari konstanta $12$?
-10. Sebutkan koefisien $x^2$ pada $x^3 + x^2 - x$.
+### 🟢 Paket A — Dasar (5 soal)
 
 ```json
 {
-  "set_id": "01-set-A-mudah",
-  "level": "mudah",
+  "set_id": "01-set-A-mudah", "level": "mudah", "optional": false,
   "items": [
-    {"id": "A1", "type": "short", "question": "Derajat dari $5x^3 - 2x + 1$", "answer": "3", "explanation": "Pangkat tertinggi adalah 3."},
-    {"id": "A2", "type": "short", "question": "Banyak suku pada $x^4 - x^3 + x^2 - x + 1$", "answer": "5", "explanation": "Ada 5 bagian dipisah tanda +/-."},
-    {"id": "A3", "type": "short", "question": "Konstanta dari $2x^2 - 9$", "answer": "-9", "explanation": "Suku tanpa variabel adalah $-9$ (tanda ikut)."},
-    {"id": "A4", "type": "short", "question": "Koefisien $x$ pada $7x^2 - 3x + 4$", "answer": "-3", "explanation": "Sukunya $-3x$, jadi koefisien $-3$."},
-    {"id": "A5", "type": "short", "question": "Koefisien utama dari $-6x^5 + x^2$", "answer": "-6", "explanation": "Suku pangkat tertinggi $-6x^5$."},
-    {"id": "A6", "type": "mc", "question": "Polinomial derajat 1 disebut", "options": ["Konstan", "Linear", "Kuadrat", "Kubik"], "answer": "Linear", "explanation": "Derajat 1 = linear."},
-    {"id": "A7", "type": "mc", "question": "$x^2 - 16$ berdasarkan banyak suku adalah", "options": ["Monomial", "Binomial", "Trinomial", "Kuadrat"], "answer": "Binomial", "explanation": "2 suku = binomial."},
-    {"id": "A8", "type": "short", "question": "Bentuk baku dari $3 - x^2 + 2x$", "answer": "-x^2 + 2x + 3", "explanation": "Urutkan pangkat tertinggi ke terendah."},
-    {"id": "A9", "type": "short", "question": "Derajat konstanta $12$", "answer": "0", "explanation": "$12 = 12x^0$, derajat 0."},
-    {"id": "A10", "type": "short", "question": "Koefisien $x^2$ pada $x^3 + x^2 - x$", "answer": "1", "explanation": "$x^2 = 1·x^2$, koefisien 1."}
+    {"id":"A1","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Tentukan derajat dari polinomial $5x^3 - 2x + 1$.","answer":"3","explanation":"Pangkat tertinggi adalah 3."},
+    {"id":"A2","type":"mc","question":"Tentukan konstanta dari polinomial $2x^2 - 9$.","options":["$-9$","$9$","$2$","$-2$"],"answer":"$-9$","explanation":"Suku tanpa variabel adalah -9; tanda negatif ikut."},
+    {"id":"A3","type":"mc","question":"Tentukan koefisien $x$ pada polinomial $7x^2 - 3x + 4$.","options":["$-3$","$3$","$7$","$4$"],"answer":"$-3$","explanation":"Sukunya -3x, sehingga koefisiennya -3."},
+    {"id":"A4","type":"mc","question":"Berdasarkan banyaknya suku, bentuk $x^2 - 16$ termasuk ….","options":["Binomial","Monomial","Trinomial","Kuartik"],"answer":"Binomial","explanation":"Terdiri atas dua suku."},
+    {"id":"A5","type":"mc","question":"Tuliskan $3 - x^2 + 2x$ dalam bentuk baku, yaitu terurut dari pangkat tertinggi ke terendah.","options":["$-x^2 + 2x + 3$","$3 + 2x - x^2$","$x^2 + 2x + 3$","$2x - x^2 + 3$"],"answer":"$-x^2 + 2x + 3$","explanation":"Urutkan dari pangkat tertinggi."}
   ]
 }
 ```
+<details><summary><strong>Pembahasan Paket A</strong></summary>
 
-<details><summary><strong>Pembahasan Set A</strong></summary>
-
-1. **3** — pangkat tertinggi. 2. **5 suku**. 3. **$-9$** (tanda ikut). 4. **$-3$**. 5. **$-6$** (koef. $x^5$). 6. **Linear**. 7. **Binomial** (2 suku). 8. $-x^2 + 2x + 3$. 9. **0** ($12=12x^0$). 10. **1** ($x^2 = 1\cdot x^2$).
+1. Derajat **3**. 2. Konstanta **$-9$**. 3. Koefisien **$-3$**. 4. **Binomial**. 5. **$-x^2+2x+3$**.
 </details>
 
-### 🟡 Set B — 10 Soal Sedang
-
-1. Tentukan derajat & koefisien utama dari $2x^2 - x^5 + 7$.
-2. Pada $4x^4 - x^2 + 6$, berapa koefisien $x^3$?
-3. Manakah polinomial? (a) $\frac{3}{x}+x$ (b) $x^3 - \sqrt{5}$
-4. Klasifikasikan $x^3 - 8$ menurut banyak suku **dan** derajat.
-5. Tulis $x^4 - 1$ dengan menyertakan semua koefisien nol.
-6. Bentuk $x^{n} - 3$ berderajat 4. Berapa $n$?
-7. Sebutkan koefisien $x^2$ dan konstanta pada $\frac{1}{2}x^2 - 3x + \frac{5}{2}$.
-8. Apakah $2^x + x^2$ polinomial? Jelaskan.
-9. Sebuah binomial berderajat 3 dengan koefisien utama $-1$ dan konstanta $8$. Tulis bentuknya.
-10. Urutkan menurut derajat (kecil→besar): $x^2$, $5$, $x^4-x$, $2x-1$.
+### 🟡 Paket B — Menengah (5 soal)
 
 ```json
 {
-  "set_id": "01-set-B-sedang",
-  "level": "sedang",
-  "items": [
-    {"id": "B1", "type": "short", "question": "Derajat & koef. utama $2x^2 - x^5 + 7$", "answer": "derajat 5, koefisien $-1$", "explanation": "Suku pemimpin $-x^5$."},
-    {"id": "B2", "type": "short", "question": "Koefisien $x^3$ pada $4x^4 - x^2 + 6$", "answer": "0", "explanation": "Tidak ada suku $x^3$ → koefisien 0."},
-    {"id": "B3", "type": "mc", "question": "Manakah polinomial?", "options": ["$\\frac{3}{x}+x$", "$x^3 - \\sqrt{5}$", "Keduanya", "Tidak ada"], "answer": "$x^3 - \\sqrt{5}$", "explanation": "$3/x = 3x^{-1}$ bukan polinomial; √5 hanya konstanta."},
-    {"id": "B4", "type": "short", "question": "Klasifikasi $x^3 - 8$ (banyak suku & derajat)", "answer": "binomial, kubik (derajat 3)", "explanation": "2 suku, pangkat tertinggi 3."},
-    {"id": "B5", "type": "short", "question": "$x^4 - 1$ dengan semua koefisien", "answer": "x^4 + 0x^3 + 0x^2 + 0x - 1", "explanation": "Sisipkan suku hilang berkoefisien 0."},
-    {"id": "B6", "type": "short", "question": "$x^n - 3$ berderajat 4, maka n =", "answer": "4", "explanation": "Pangkat tertinggi = 4."},
-    {"id": "B7", "type": "short", "question": "Koef. $x^2$ & konstanta pada $\\frac{1}{2}x^2 - 3x + \\frac{5}{2}$", "answer": "koef $1/2$, konstanta $5/2$", "explanation": "Pecahan sebagai koefisien diperbolehkan."},
-    {"id": "B8", "type": "mc", "question": "Apakah $2^x + x^2$ polinomial?", "options": ["Ya", "Tidak"], "answer": "Tidak", "explanation": "$2^x$ = variabel sebagai pangkat (eksponensial), bukan polinomial."},
-    {"id": "B9", "type": "short", "question": "Binomial derajat 3, koef utama $-1$, konstanta 8", "answer": "-x^3 + 8", "explanation": "Dua suku: $-x^3$ dan $+8$."},
-    {"id": "B10", "type": "short", "question": "Urut derajat kecil→besar: $x^2, 5, x^4-x, 2x-1$", "answer": "5 (0), 2x-1 (1), x^2 (2), x^4-x (4)", "explanation": "Bandingkan pangkat tertinggi tiap bentuk."}
+  "set_id":"01-set-B-sedang","level":"sedang","optional": false,
+  "items":[
+    {"id":"B1","type":"mc","question":"Tentukan derajat dan koefisien pemimpin dari polinomial $2x^2 - x^5 + 7$.","options":["Derajat 5, koefisien pemimpin $-1$","Derajat 5, koefisien pemimpin $2$","Derajat 2, koefisien pemimpin $2$","Derajat 5, koefisien pemimpin $1$"],"answer":"Derajat 5, koefisien pemimpin $-1$","explanation":"Bentuk baku -x^5+2x^2+7."},
+    {"id":"B2","type":"mc","question":"Tentukan koefisien $x^3$ pada polinomial $4x^4 - x^2 + 6$. Perhatikan bahwa suku $x^3$ tidak tertulis.","options":["$0$","$4$","$-1$","Tidak memiliki koefisien"],"answer":"$0$","explanation":"Suku yang tidak tertulis berkoefisien 0."},
+    {"id":"B3","type":"mc","question":"Tuliskan $x^4 - 1$ secara lengkap dengan menyertakan SEMUA suku dari pangkat 4 hingga pangkat 0, termasuk suku yang berkoefisien nol.","options":["$x^4 + 0x^3 + 0x^2 + 0x - 1$","$x^4 + 0x^3 + 0x^2 - 1$","$x^4 - 0x^3 - 0x^2 - 0x - 1$","$x^4 + x^3 + x^2 + x - 1$"],"answer":"$x^4 + 0x^3 + 0x^2 + 0x - 1$","explanation":"Sisipkan suku x^3, x^2, dan x dengan koefisien 0."},
+    {"id":"B4","type":"mc","question":"Klasifikasikan $x^3 - 8$ berdasarkan banyaknya suku sekaligus derajatnya.","options":["Binomial berderajat 3 (kubik)","Trinomial berderajat 3 (kubik)","Binomial berderajat 8","Monomial berderajat 3"],"answer":"Binomial berderajat 3 (kubik)","explanation":"Dua suku, pangkat tertinggi 3."},
+    {"id":"B5","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Bentuk $x^n - 3$ diketahui berderajat 4. Tentukan nilai $n$.","answer":"4","explanation":"Pangkat tertinggi harus 4."}
   ]
 }
 ```
+<details><summary><strong>Pembahasan Paket B</strong></summary>
 
-<details><summary><strong>Pembahasan Set B</strong></summary>
-
-1. Rapikan: $-x^5 + 2x^2 + 7$ → derajat **5**, koef. utama **$-1$**.
-2. Tidak ada suku $x^3$ → koefisien **0**.
-3. (a) $\frac{3}{x}=3x^{-1}$ pangkat negatif → bukan. (b) $\sqrt5$ konstanta, $x^3$ pangkat bulat → **polinomial**.
-4. $x^3-8$: **binomial** (2 suku) & **kubik** (derajat 3).
-5. $x^4 + 0x^3 + 0x^2 + 0x - 1$.
-6. $n = 4$.
-7. Koef. $x^2 = \frac12$, konstanta $= \frac52$ (pecahan sebagai koefisien sah).
-8. **Bukan** — $2^x$ punya variabel di pangkat (fungsi eksponen), melanggar aturan emas.
-9. $-x^3 + 8$.
-10. Derajat: $5\,(0)$, $2x-1\,(1)$, $x^2\,(2)$, $x^4-x\,(4)$. Urutan: $5,\;2x-1,\;x^2,\;x^4-x$.
+1. Derajat **5**, koefisien pemimpin **$-1$**. 2. **$0$**. 3. **$x^4+0x^3+0x^2+0x-1$**. 4. **Binomial kubik**. 5. $n=\mathbf4$.
 </details>
 
-### 🔴 Set C — 10 Soal Sulit
-
-1. $f(x)=(2k-6)x^4 + 3x^2 - 1$ berderajat 2. Tentukan $k$.
-2. $x^{a+2} + x^3 - 4$ adalah polinomial berderajat 3 dan koefisien $x^5$ bernilai $1$. Mungkinkah? Jelaskan.
-3. Diketahui $P(x)$ trinomial derajat 4, konstanta $3$, tanpa suku $x^3$ dan tanpa suku $x$. Tulis bentuk umum $P(x)$ (pakai parameter).
-4. Bentuk $\frac{x^2 - 1}{x - 1}$: apakah polinomial? Jelaskan dengan menyederhanakan.
-5. Jika $A(x)$ berderajat 5 dan $B(x)$ berderajat 3, berapa derajat maksimum dan minimum dari $A(x)+B(x)$?
-6. Tentukan semua bilangan bulat $n \geq 0$ agar $x^{n-2}$ merupakan suku polinomial yang sah.
-7. $g(x) = px^3 + qx^2 + 5$ adalah binomial. Apa syarat $p$ dan $q$?
-8. Berapa derajat dari $(x^2+1)(x^3 - x)$ tanpa menjabarkan penuh?
-9. Bentuk $x^{2}+ x^{|m|} + 1$ berderajat 2. Tentukan semua nilai bulat $m$ yang mungkin.
-10. Benar/Salah: "Setiap konstanta bukan nol adalah polinomial berderajat 0." Jelaskan kasus konstanta $0$.
+### 🔴 Paket C — Lanjut (5 soal)
 
 ```json
 {
-  "set_id": "01-set-C-sulit",
-  "level": "sulit",
-  "items": [
-    {"id": "C1", "type": "short", "question": "$(2k-6)x^4 + 3x^2 - 1$ berderajat 2, maka k =", "answer": "3", "explanation": "Suku $x^4$ harus hilang: $2k-6=0$ → $k=3$."},
-    {"id": "C2", "type": "mc", "question": "$x^{a+2}+x^3-4$ derajat 3 DAN koef $x^5$ =1. Mungkin?", "options": ["Mungkin", "Tidak mungkin"], "answer": "Tidak mungkin", "explanation": "Koef $x^5=1$ butuh $a+2=5$→$a=3$, tapi lalu derajat jadi 5, bukan 3. Kontradiksi."},
-    {"id": "C3", "type": "short", "question": "Trinomial derajat 4, konstanta 3, tanpa $x^3$ & $x$", "answer": "ax^4 + bx^2 + 3, a≠0, b≠0", "explanation": "Tiga suku tersisa: $x^4$, $x^2$, konstanta."},
-    {"id": "C4", "type": "mc", "question": "$\\frac{x^2-1}{x-1}$ polinomial?", "options": ["Ya (=x+1)", "Tidak"], "answer": "Ya (=x+1)", "explanation": "Faktorkan: $(x-1)(x+1)/(x-1)=x+1$ untuk $x≠1$."},
-    {"id": "C5", "type": "short", "question": "Derajat maks & min dari A(deg5)+B(deg3)", "answer": "maks 5, min 5", "explanation": "Suku $x^5$ hanya dari A, tak bisa hilang → derajat tetap 5."},
-    {"id": "C6", "type": "short", "question": "Semua $n≥0$ agar $x^{n-2}$ suku sah", "answer": "n ≥ 2", "explanation": "Pangkat $n-2$ harus $≥0 → n≥2$."},
-    {"id": "C7", "type": "short", "question": "$px^3+qx^2+5$ binomial. Syarat p,q?", "answer": "tepat satu dari p,q nol (bukan keduanya)", "explanation": "Binomial = 2 suku; konstanta 5 sudah satu."},
-    {"id": "C8", "type": "short", "question": "Derajat $(x^2+1)(x^3-x)$", "answer": "5", "explanation": "Jumlahkan derajat: $2+3=5$."},
-    {"id": "C9", "type": "short", "question": "$x^2+x^{|m|}+1$ derajat 2, semua m bulat", "answer": "m ∈ {-2,-1,0,1,2}", "explanation": "Butuh |$m|≤2$ agar tak melebihi derajat 2; |m| juga bilangan bulat ≥0. Semua m dgn |$m|≤2$."},
-    {"id": "C10", "type": "mc", "question": "'Setiap konstanta ≠0 adalah polinomial derajat 0.' Kasus 0?", "options": ["Benar; 0 = polinomial nol, derajatnya tak terdefinisi", "Salah"], "answer": "Benar; 0 = polinomial nol, derajatnya tak terdefinisi", "explanation": "Konstanta 0 adalah 'polinomial nol', derajatnya biasanya tak didefinisikan (atau -∞)."}
+  "set_id":"01-set-C-sulit","level":"sulit","optional": false,
+  "items":[
+    {"id":"C1","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Diketahui $f(x)=(2k-6)x^4 + 3x^2 - 1$ berderajat 2. Tentukan nilai $k$.","answer":"3","explanation":"Suku x^4 harus hilang: 2k-6=0 sehingga k=3."},
+    {"id":"C2","type":"mc","question":"Manakah di antara bentuk berikut yang merupakan polinomial?","options":["$4x^2 + \\frac{x}{3}$","$\\frac{4}{x} + x^2$","$\\sqrt{x} + 3$","$3^x + x$"],"answer":"$4x^2 + \\frac{x}{3}$","explanation":"Angka pada penyebut diperbolehkan; variabel pada penyebut tidak."},
+    {"id":"C3","type":"mc","question":"Diketahui $A(x)$ berderajat 5 dan $B(x)$ berderajat 3. Manakah pernyataan yang tepat mengenai derajat $A(x)+B(x)$?","options":["Derajatnya tepat 5","Derajatnya paling banyak 5, dapat kurang dari itu","Derajatnya tepat 8","Derajatnya paling sedikit 8"],"answer":"Derajatnya tepat 5","explanation":"Suku x^5 tidak memiliki pasangan untuk saling menghilangkan."},
+    {"id":"C4","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Tentukan derajat hasil kali $(x^2+1)(x^3-x)$ tanpa menjabarkannya.","answer":"5","explanation":"Derajat hasil kali sama dengan jumlah derajat: 2+3=5."},
+    {"id":"C5","type":"mc","question":"Agar $px^3 + qx^2 + 5$ merupakan binomial (tepat dua suku), syarat apa yang harus dipenuhi oleh $p$ dan $q$?","options":["Tepat satu di antara $p$ dan $q$ bernilai nol","Keduanya bernilai nol","Keduanya tidak nol","$p$ sama dengan $q$"],"answer":"Tepat satu di antara $p$ dan $q$ bernilai nol","explanation":"Konstanta 5 sudah satu suku; agar totalnya dua suku, satu suku bervariabel harus hilang."}
   ]
 }
 ```
+<details><summary><strong>Pembahasan Paket C</strong></summary>
 
-<details><summary><strong>Pembahasan Set C</strong></summary>
-
-1. Agar derajat 2, suku $x^4$ hilang: $2k-6=0 \Rightarrow k=3$.
-2. **Tidak mungkin.** Koef $x^5=1$ menuntut $a+2=5\Rightarrow a=3$, tapi ini membuat sukunya $x^5$ sehingga derajat jadi 5, bertentangan dengan "derajat 3". Kontradiksi.
-3. Suku yang boleh: $x^4$, $x^2$, konstanta. Bentuk: $P(x)=ax^4 + bx^2 + 3$ dengan $a\neq0$, $b\neq0$ (agar tepat trinomial).
-4. Faktorkan: $\frac{(x-1)(x+1)}{x-1} = x+1$ (untuk $x\neq1$). Hasil sederhananya **polinomial** $x+1$.
-5. Suku $x^5$ hanya berasal dari $A$, tak ada pasangan untuk dihilangkan → derajat selalu tepat **5** (maks $=$ min $=5$).
-6. Pangkat $n-2 \geq 0 \Rightarrow n \geq 2$.
-7. Konstanta $5$ satu suku; agar binomial (2 suku), **tepat satu** dari $p,q$ boleh nol, tidak keduanya, dan tidak keduanya tak-nol. (Jika $p,q$ keduanya tak-nol → trinomial; keduanya nol → binomial? tidak, jadi monomial $5$.) Jadi: tepat satu dari $p,q$ bernilai nol.
-8. Derajat hasil kali $=$ jumlah derajat $=2+3=\mathbf5$.
-9. $|m|$ selalu bilangan bulat $\geq0$ (aturan pangkat aman). Agar derajat tetap 2, butuh $|m|\leq2$. Maka $m\in\{-2,-1,0,1,2\}$.
-10. **Benar** untuk konstanta tak-nol (mis. $7=7x^0$). Kasus konstanta **$0$** istimewa: disebut **polinomial nol**, derajatnya **tak terdefinisi** (kadang ditulis $-\infty$).
+1. $2k-6=0 \Rightarrow k=\mathbf3$. 2. **$4x^2+\frac{x}{3}$**. 3. Derajat **tepat 5**. 4. $2+3=\mathbf5$. 5. **Tepat satu** dari $p,q$ bernilai nol.
 </details>
 
-### 🧠 Set D — 5 Soal HOTS
+### 🧠 Paket D — HOTS (5 soal, opsional)
 
-1. Buktikan dengan contoh bahwa hasil kali dua binomial bisa berupa binomial (bukan selalu trinomial).
-2. Bentuk $f(x)=(m^2-4)x^3 + (m-2)x^2 + 1$. Tentukan $m$ agar $f$ berderajat **tepat 2**.
-3. Tentukan syarat $a,b$ agar $\frac{ax^3 + bx^2}{x^2}$ merupakan polinomial.
-4. Sebuah polinomial derajat 4 mempunyai koefisien utama $2$, konstanta sama dengan koefisien utama, dan jumlah semua koefisiennya $0$. Jika hanya memuat suku $x^4$, $x$, dan konstanta, tentukan koefisien $x$.
-5. Diberi $P(x) = x^3 + cx + d$. Diketahui $P(0)=5$ dan koefisien $x$ adalah dua kali konstanta. Tentukan $c$ dan $d$.
+> Paket ini **opsional**. Mengerjakannya memberi XP bonus.
 
 ```json
 {
-  "set_id": "01-set-D-hots",
-  "level": "hots",
-  "items": [
-    {"id": "D1", "type": "short", "question": "Contoh hasil kali dua binomial berupa binomial", "answer": "(x-1)(x+1)=x^2-1", "explanation": "Selisih kuadrat menghasilkan 2 suku."},
-    {"id": "D2", "type": "short", "question": "$(m^2-4)x^3+(m-2)x^2+1$ berderajat tepat $2, m$=", "answer": "m=-2", "explanation": "Butuh $m^2-4=0$ ($m=±2$) TAPI $m-2≠0$. Maka $m=-2$."},
-    {"id": "D3", "type": "short", "question": "Syarat a,b agar $\\frac{ax^3+bx^2}{x^2}$ polinomial", "answer": "berlaku untuk semua a,b (hasil = ax + b)", "explanation": "Tiap suku habis dibagi $x^2$ → $ax+b$, selalu polinomial."},
-    {"id": "D4", "type": "short", "question": "Koefisien x (lihat soal)", "answer": "-4", "explanation": "2 + k + 2 = 0 → k = -4."},
-    {"id": "D5", "type": "short", "question": "P(x)=x^3+cx+d, P(0)=5, c=2d", "answer": "d=5, c=10", "explanation": "P(0)=d=5; c=2d=10."}
+  "set_id":"01-set-D-hots","level":"hots","optional": true, "bonus_xp": 20,
+  "items":[
+    {"id":"D1","type":"mc","question":"Diketahui $f(x)=(m^2-4)x^3 + (m-2)x^2 + 1$ berderajat TEPAT 2. Tentukan nilai $m$.","options":["$m=-2$","$m=2$","$m=\\pm2$","$m=0$"],"answer":"$m=-2$","explanation":"Perlu m^2-4=0 agar suku x^3 hilang, tetapi m-2 tidak nol agar suku x^2 tetap ada."},
+    {"id":"D2","type":"mc","question":"Hasil kali dua binomial tidak selalu berupa trinomial. Manakah contoh yang menunjukkan hasil kali dua binomial dapat berupa binomial?","options":["$(x-1)(x+1) = x^2-1$","$(x+1)(x+2) = x^2+3x+2$","$(x+3)^2 = x^2+6x+9$","$(2x+1)(x+1) = 2x^2+3x+1$"],"answer":"$(x-1)(x+1) = x^2-1$","explanation":"Suku x saling menghilangkan sehingga tersisa dua suku."},
+    {"id":"D3","type":"mc","question":"Bentuk $x^{a+2} + x^3 - 4$ disyaratkan berderajat 3 sekaligus memiliki koefisien $x^5$ sama dengan 1. Mungkinkah kedua syarat itu dipenuhi bersamaan?","options":["Tidak mungkin, karena kedua syarat saling bertentangan","Mungkin, dengan $a=3$","Mungkin, dengan $a=1$","Mungkin, dengan $a=5$"],"answer":"Tidak mungkin, karena kedua syarat saling bertentangan","explanation":"Koefisien x^5=1 menuntut a=3, tetapi itu membuat derajatnya 5."},
+    {"id":"D4","type":"short","input_mode":"number","answer_format":"bilangan bulat","question":"Sebuah polinomial berderajat 4 hanya memuat suku $x^4$, suku $x$, dan konstanta. Koefisien pemimpinnya $2$, konstantanya sama dengan koefisien pemimpin, dan jumlah semua koefisiennya $0$. Tentukan koefisien $x$.","answer":"-4","explanation":"Bentuknya 2x^4 + kx + 2; 2+k+2=0 sehingga k=-4."},
+    {"id":"D5","type":"mc","question":"Pernyataan: setiap konstanta tak nol merupakan polinomial berderajat 0. Bagaimana kedudukan konstanta $0$?","options":["Disebut polinomial nol dan derajatnya tidak terdefinisi","Berderajat 0 juga","Bukan polinomial","Berderajat 1"],"answer":"Disebut polinomial nol dan derajatnya tidak terdefinisi","explanation":"Polinomial nol merupakan kasus khusus."}
   ]
 }
 ```
+<details><summary><strong>Pembahasan Paket D</strong></summary>
 
-<details><summary><strong>Pembahasan Set D</strong></summary>
-
-1. Ambil $(x-1)(x+1) = x^2 - 1$ — hanya **2 suku** (suku $x$ saling meniadakan). Terbukti hasil kali dua binomial bisa binomial.
-2. Agar derajat **tepat 2**: suku $x^3$ harus hilang → $m^2-4=0 \Rightarrow m=\pm2$. Tapi suku $x^2$ **tidak boleh** ikut hilang → $m-2\neq0 \Rightarrow m\neq2$. Maka $m=\mathbf{-2}$. (Cek: $m=-2$ beri $0\cdot x^3 + (-4)x^2 + 1 = -4x^2+1$, derajat 2. ✔)
-3. $\frac{ax^3+bx^2}{x^2} = \frac{ax^3}{x^2} + \frac{bx^2}{x^2} = ax + b$. Setiap suku habis dibagi, hasilnya $ax+b$ — **selalu polinomial** untuk sembarang $a,b$.
-4. Bentuk: $2x^4 + kx + c$. Konstanta $=$ koef utama $\Rightarrow c=2$. Jumlah semua koefisien $=0$: $2 + k + 2 = 0 \Rightarrow k=\mathbf{-4}$.
-5. $P(0)=d=5$. Koefisien $x$ dua kali konstanta: $c = 2d = 2(5)=10$. Jadi $c=10,\ d=5$.
+1. $m=\mathbf{-2}$ (agar $x^3$ hilang tetapi $x^2$ tetap ada). 2. $(x-1)(x+1)=x^2-1$. 3. **Tidak mungkin** — kedua syarat bertentangan. 4. $2+k+2=0 \Rightarrow k=\mathbf{-4}$. 5. **Polinomial nol**, derajat tidak terdefinisi.
 </details>
 
-### 🏆 Set E — 5 Soal Model TKA
+### 🏆 Paket E — Model TKA (5 soal, opsional)
 
-> Set ini melatih pola pikir TKA: baca cepat, kenali unsur, jangan terjebak.
-
-1. **(Pemodelan)** Penambahan volume drum saat panas: $V(T) = 0{,}05\,T^3 + 0{,}4\,T^2 + 20\,T$. Tentukan **derajat** dan **koefisien utama** fungsi ini, serta jelaskan makna "tidak ada konstanta" secara konteks.
-2. **(Konteks saham)** Banyak saham dimodelkan $f(x) = x^3 - 70x^2 - 600x + 74{.}000$. Sebutkan derajat, koefisien $x^2$, dan konstanta. Apa arti konstanta $74{.}000$ dalam konteks?
-3. **(Klasifikasi cepat)** Di antara berikut, ada berapa yang **merupakan** polinomial? $\ \dfrac{5}{x}+1,\ \ 3x^2 - \sqrt{7},\ \ x^{1/2}+x,\ \ 2^x,\ \ 9,\ \ x^4 - x^{-1}$
-4. **(Penalaran derajat)** Diketahui $A(x)$ berderajat 4 dan $B(x)$ berderajat 4. Manakah yang **pasti benar** tentang derajat $A(x) - B(x)$? (a) selalu 4 (b) paling banyak 4 (c) selalu 0 (d) paling sedikit 4
-5. **(Parameter)** Bentuk $h(x) = (2p-1)x^5 + 3x^3 - x + p$ merupakan polinomial berderajat 3. Tentukan $p$ lalu tentukan konstantanya.
+> Paket ini **opsional** dan bergaya soal TKA. Mengerjakannya memberi XP bonus.
 
 ```json
 {
-  "set_id": "01-set-E-tka",
-  "level": "tka",
-  "items": [
-    {"id": "E1", "type": "short", "source": "TKA-drum", "question": "Derajat & koef utama $V(T)=0{,}05T^3+0{,}4T^2+20T$", "answer": "derajat 3, koef utama 0,05; konstanta 0 artinya pada $T=0$ tak ada penambahan volume", "explanation": "Pada suhu 0°C (acuan) belum ada pemuaian → $V(0)=0$."},
-    {"id": "E2", "type": "short", "source": "TKA-saham", "question": "Derajat, koef $x^2$, konstanta dari $x^3-70x^2-600x+74{.}000$", "answer": "derajat 3, koef $x^2$ = $-70$, konstanta 74000", "explanation": "Konstanta = nilai saat $x=0$."},
-    {"id": "E3", "type": "mc", "question": "Berapa yang merupakan polinomial dari 6 bentuk", "options": ["1", "2", "3", "4"], "answer": "2", "explanation": "Hanya $3x^2$-√7 dan 9. Sisanya punya pangkat negatif/pecahan atau eksponensial."},
-    {"id": "E4", "type": "mc", "question": "Tentang derajat A(deg4)-B(deg4)", "options": ["selalu 4", "paling banyak 4", "selalu 0", "paling sedikit 4"], "answer": "paling banyak 4", "explanation": "Suku $x^4$ bisa saling hapus → derajat bisa turun; maksimum tetap 4."},
-    {"id": "E5", "type": "short", "question": "$(2p-1)x^5+3x^3-x+p$ berderajat 3, cari p & konstanta", "answer": "$p=1/2$, konstanta = $1/2$", "explanation": "$2p-1=0 → p=1/2$; konstanta = $p = 1/2$."}
+  "set_id":"01-set-E-tka","level":"tka","optional": true, "bonus_xp": 20,
+  "items":[
+    {"id":"E1","type":"mc","source":"TKA-drum","question":"Diketahui $V(T)=0{,}05\\,T^3 + 0{,}4\\,T^2 + 20\\,T$. Tentukan derajat dan koefisien pemimpinnya.","options":["Derajat 3, koefisien pemimpin $0{,}05$","Derajat 3, koefisien pemimpin $0{,}4$","Derajat 2, koefisien pemimpin $0{,}4$","Derajat 3, koefisien pemimpin $20$"],"answer":"Derajat 3, koefisien pemimpin $0{,}05$","explanation":"Pangkat tertinggi 3 dengan koefisien 0,05."},
+    {"id":"E2","type":"mc","source":"TKA-saham","question":"Diketahui $f(x)=x^3 - 70x^2 - 600x + 74{.}000$. Tentukan koefisien $x^2$ dan konstantanya.","options":["Koefisien $x^2 = -70$, konstanta $74{.}000$","Koefisien $x^2 = 70$, konstanta $74{.}000$","Koefisien $x^2 = -600$, konstanta $74{.}000$","Koefisien $x^2 = -70$, konstanta $-74{.}000$"],"answer":"Koefisien $x^2 = -70$, konstanta $74{.}000$","explanation":"Tanda negatif ikut; konstanta adalah f(0)."},
+    {"id":"E3","type":"mc","question":"Perhatikan enam bentuk berikut: $\\frac{5}{x}+1$; $3x^2-\\sqrt{7}$; $x^{1/2}+x$; $2^x$; $9$; $x^4-x^{-1}$. Berapa banyak di antaranya yang merupakan polinomial?","options":["$2$","$1$","$3$","$4$"],"answer":"$2$","explanation":"Hanya 3x^2-akar7 dan 9 yang memenuhi syarat."},
+    {"id":"E4","type":"mc","question":"Diketahui $A(x)$ dan $B(x)$ keduanya berderajat 4. Manakah pernyataan yang PASTI benar mengenai derajat $A(x)-B(x)$?","options":["Derajatnya paling banyak 4","Derajatnya selalu tepat 4","Derajatnya selalu 0","Derajatnya paling sedikit 4"],"answer":"Derajatnya paling banyak 4","explanation":"Suku x^4 dapat saling menghilangkan."},
+    {"id":"E5","type":"mc","question":"Diketahui $h(x)=(2p-1)x^5 + 3x^3 - x + p$ berderajat 3. Tentukan nilai $p$ dan konstantanya.","options":["$p=\\frac{1}{2}$, konstanta $\\frac{1}{2}$","$p=\\frac{1}{2}$, konstanta $3$","$p=2$, konstanta $2$","$p=0$, konstanta $0$"],"answer":"$p=\\frac{1}{2}$, konstanta $\\frac{1}{2}$","explanation":"2p-1=0 sehingga p=1/2; konstantanya adalah p."}
   ]
 }
 ```
+<details><summary><strong>Pembahasan Paket E</strong></summary>
 
-<details><summary><strong>Pembahasan Set E</strong></summary>
-
-**E1.** Pangkat tertinggi $3$ → **derajat 3**; koefisien utama $=0{,}05$. Tidak ada konstanta artinya $V(0)=0$: pada suhu acuan ($T=0$), belum terjadi pemuaian sama sekali — masuk akal secara fisika. *(Soal ini kita bedah operasinya di Bab 02.)*
-
-**E2.** Derajat **3**; koefisien $x^2 = -70$ (tanda ikut!); konstanta $= 74{.}000$. Konstanta adalah nilai $f(0)$ — banyak saham "awal" ketika $x=0$. *(Soal ini kita lanjutkan di Bab 02 & 06.)*
-
-**E3.** Uji satu per satu:
-- $\frac{5}{x}+1 = 5x^{-1}+1$ → pangkat negatif → **bukan**.
-- $3x^2 - \sqrt7$ → $\sqrt7$ konstanta → **polinomial** ✔
-- $x^{1/2}+x$ → pangkat pecahan → **bukan**.
-- $2^x$ → variabel di pangkat → **bukan**.
-- $9$ → konstanta → **polinomial** ✔
-- $x^4 - x^{-1}$ → pangkat $-1$ → **bukan**.
-
-Jumlah yang polinomial: **2**.
-
-**E4.** Suku $x^4$ dari $A$ dan $B$ bisa saling meniadakan bila koefisiennya sama, sehingga derajat bisa turun. Yang **pasti** benar: derajat **paling banyak 4**. Jawaban **(b)**.
-
-**E5.** Agar derajat 3, suku $x^5$ hilang: $2p-1=0 \Rightarrow p=\tfrac12$. Konstanta $=p=\tfrac12$. Cek: $h(x)=0\cdot x^5 + 3x^3 - x + \tfrac12$, derajat 3 ✔.
+**E1.** Derajat 3, koefisien pemimpin $0{,}05$. **E2.** $-70$ dan $74{.}000$. **E3.** Hanya $3x^2-\sqrt7$ dan $9$ → **2**. **E4.** Paling banyak 4. **E5.** $p=\tfrac12$, konstanta $\tfrac12$.
 </details>
 
 ---
 
-## 🏆 Tantangan Akhir Bab 1 — Uji Kompetensi
+## ⚠️ Kesalahan Umum & ⚡ Tips Cepat
+
+| Kesalahan | Perbaikan |
+|-----------|-----------|
+| Lupa tanda negatif pada koefisien | Pada $x^2-4x$, koefisien $x$ adalah $-4$ |
+| Mengira koefisien $x^2$ adalah $2$ | Koefisiennya $1$; angka 2 adalah pangkat |
+| Menganggap suku hilang tak berkoefisien | Koefisiennya $0$, bukan "tidak ada" |
+| Menyebut derajat sebelum merapikan | Rapikan ke bentuk baku terlebih dahulu |
+| Mengira $\frac{x}{3}$ bukan polinomial | Angka di penyebut boleh; variabel tidak |
+| Mengira derajat = banyaknya suku | Dua hal berbeda: $x^5+1$ punya 2 suku, derajat 5 |
+
+**Tips cepat:** rapikan ke bentuk baku → tulis tiap suku sebagai $x^{\text{pangkat}}$ untuk menguji keabsahan → tuliskan koefisien nol untuk suku yang hilang.
+
+---
+
+## ✅ Ringkasan
+
+- **Polinomial** = suku banyak; pangkat variabel wajib **bilangan bulat tak negatif**.
+- **Unsur:** suku, variabel, koefisien (tanda ikut), pangkat, konstanta ($=f(0)$).
+- **Derajat** = pangkat tertinggi; **koefisien pemimpin** = koefisien suku pemimpin.
+- **Jenis:** menurut banyak suku (mono/bi/trinomial) & menurut derajat (konstan/linear/kuadrat/kubik/kuartik).
+- **Bukan polinomial** bila ada pangkat negatif/pecahan, variabel di penyebut, atau variabel di dalam akar.
+
+---
+
+## 🏆 Tantangan Akhir Bab
 
 <!-- COMPONENT: Tantangan Akhir Bab
-     DEVELOPER: render sebagai sesi soal berwaktu dengan rekap capaian (bintang, poin, waktu terbaik).
-     Framing tetap sebagai asesmen/umpan balik belajar, bukan permainan peran. -->
-> Kerjakan rangkaian soal berikut dalam mode berwaktu untuk menguji penguasaan Anda atas konsep dasar polinomial. Perolehan bintang dan poin merupakan umpan balik atas ketepatan serta kecepatan; sistem menyimpan capaian terbaik Anda sebagai catatan kemajuan belajar.
+     DEVELOPER: render sebagai KARTU; klik -> POP-UP layar penuh (modal) berisi sesi berwaktu.
+     Tampilkan timer, lalu rekap capaian (skor, bintang, waktu, XP, lencana).
+     Seluruh butir bersifat mandiri - JANGAN menarik atau memecah aktivitas dari bagian materi. -->
+> Sesi berwaktu berisi 10 soal (5 menit) untuk menguji penguasaan Anda. Seluruh soal berbentuk pilihan sehingga dapat dikerjakan tanpa mengetik.
 
 ```json
 { "type":"challenge", "id":"01-tantangan", "competency":"K1",
   "title":"Tantangan Akhir Bab 1: Konsep Dasar Polinomial",
-  "mode":"timed", "time_limit_sec":150, "shuffle":true,
-  "pool":["01-act-derajat","01-act-jenis","01-act-polinomial","01-act-urut","01-act-cloze","01-act-error","01-set-A-mudah"],
+  "mode":"timed", "time_limit_sec":300, "display":"modal", "shuffle":true,
   "scoring":{"per_correct":10,"time_bonus":true},
   "stars":{"3":90,"2":70,"1":50},
   "reward":{"xp":80,"badge":"pengenal-polinomial"},
-  "record":{"track_best_time":true,"track_best_score":true} }
+  "record":{"track_best_time":true,"track_best_score":true},
+  "items":[
+    {"id":"T1","type":"mc","question":"Tentukan derajat dari polinomial $x^4 + 2x^6 - 1$.","options":["$6$","$4$","$2$","$3$"],"answer":"$6$","explanation":"Rapikan ke bentuk baku: pangkat tertinggi adalah 6."},
+    {"id":"T2","type":"mc","question":"Tentukan koefisien pemimpin dari polinomial $-2 + x^4 - 3x + x^2$.","options":["$1$","$4$","$-2$","$-3$"],"answer":"$1$","explanation":"Bentuk baku x^4+x^2-3x-2; koefisien x^4 adalah 1."},
+    {"id":"T3","type":"mc","question":"Benar atau salah: bentuk $\\frac{3}{x} + 1$ merupakan polinomial.","options":["Salah","Benar"],"answer":"Salah","explanation":"3/x sama dengan 3x pangkat -1, yaitu pangkat negatif."},
+    {"id":"T4","type":"mc","question":"Benar atau salah: banyaknya suku suatu polinomial selalu sama dengan derajatnya.","options":["Salah","Benar"],"answer":"Salah","explanation":"Contoh: x^5+1 memiliki 2 suku tetapi berderajat 5."},
+    {"id":"T5","type":"mc","question":"Tentukan konstanta dari polinomial $x^3 - 4x + 7$.","options":["$7$","$-4$","$0$","$3$"],"answer":"$7$","explanation":"Suku tanpa variabel, sama dengan f(0)."},
+    {"id":"T6","type":"mc","question":"Berdasarkan derajatnya, bentuk $x^3 - 1$ termasuk polinomial ….","options":["Kubik","Kuadrat","Linear","Kuartik"],"answer":"Kubik","explanation":"Derajat 3 disebut kubik."},
+    {"id":"T7","type":"mc","question":"Tentukan koefisien $x^2$ pada polinomial $3x^5 - 4x^3 + 6x - 10$.","options":["$0$","$6$","$-4$","$3$"],"answer":"$0$","explanation":"Suku x^2 tidak ada, artinya koefisiennya 0."},
+    {"id":"T8","type":"mc","question":"Seorang siswa menentukan derajat dan koefisien pemimpin dari $-2 + x^4 - 3x + x^2$ melalui langkah berikut. Langkah 1: rapikan menjadi $x^4 + x^2 - 3x - 2$. Langkah 2: derajatnya 4. Langkah 3: koefisien pemimpinnya 4. Langkah 4: konstantanya $-2$. Manakah langkah yang SALAH?","options":["Langkah 3, karena koefisien pemimpin seharusnya 1","Langkah 1, karena bentuk bakunya keliru","Langkah 2, karena derajatnya seharusnya 2","Langkah 4, karena konstantanya seharusnya 2"],"answer":"Langkah 3, karena koefisien pemimpin seharusnya 1","explanation":"Angka 4 adalah pangkat, sedangkan koefisien x^4 adalah 1."},
+    {"id":"T9","type":"mc","question":"Urutkan bentuk berikut dari derajat TERKECIL ke TERBESAR: $x^2$, $5$, $x^4-x$, $2x-1$.","options":["$5$, $2x-1$, $x^2$, $x^4-x$","$5$, $x^2$, $2x-1$, $x^4-x$","$2x-1$, $5$, $x^2$, $x^4-x$","$x^4-x$, $x^2$, $2x-1$, $5$"],"answer":"$5$, $2x-1$, $x^2$, $x^4-x$","explanation":"Derajatnya berturut-turut 0, 1, 2, dan 4."},
+    {"id":"T10","type":"mc","question":"Diketahui $f(x)=(m-2)x^3 + 4x^2 - x + 1$. Agar $f(x)$ berderajat 2, tentukan nilai $m$.","options":["$m=2$","$m=-2$","$m=0$","$m=3$"],"answer":"$m=2$","explanation":"Suku x^3 harus hilang: m-2=0 sehingga m=2."}
+  ] }
 ```
 
 ---
@@ -707,24 +583,21 @@ Jumlah yang polinomial: **2**.
 ## 📝 Refleksi
 
 <!-- COMPONENT: Reflection -->
-
-1. Dengan bahasa Anda sendiri, apa **satu aturan** yang membedakan polinomial dari bukan polinomial?
-2. Kesalahan mana dari daftar "kesalahan umum" yang paling berpotensi Anda lakukan?
-3. Kenapa penting menuliskan koefisien nol untuk suku yang hilang? (Petunjuk: pikirkan Bab 03.)
+1. Dengan bahasa Anda sendiri, apa satu aturan yang membedakan polinomial dari bukan polinomial?
+2. Kesalahan mana pada tabel di atas yang paling berpotensi Anda lakukan?
+3. Mengapa penting menuliskan koefisien nol untuk suku yang hilang?
 
 ---
 
-## ➡️ Persiapan Menuju Sub Materi Berikutnya
+## ➡️ Persiapan Menuju Bab Berikutnya
 
-Pada bab ini, kita telah mempelajari cara **mengenali** polinomial beserta seluruh unsurnya sebagai fondasi materi berikutnya.
+Pada bab ini kita telah mampu mengenali polinomial beserta seluruh unsurnya.
 
-Di **Bab 02 — Operasi & Nilai Polinomial**, kita mulai "menghidupkan" polinomial: menjumlah, mengurang, mengalikan, dan yang paling penting — **menghitung nilainya** dengan substitusi. Di sinilah soal saham ($f(x)=x^3-70x^2-600x+74{.}000$) dan soal drum akan benar-benar kita selesaikan.
+Pada **Bab 02 — Operasi dan Nilai Polinomial**, kita akan mulai mengoperasikannya: menjumlahkan, mengurangkan, mengalikan, dan menghitung nilainya melalui substitusi. Di sanalah soal saham dan soal drum akan diselesaikan.
 
-Bekal yang akan sangat berguna dari bab ini:
-- Kebiasaan menulis **bentuk baku** & **koefisien nol**.
-- Paham bahwa **konstanta = nilai saat $x=0$** (ini pintu masuk ke "nilai polinomial").
+Bekal yang perlu dibawa: kebiasaan menulis **bentuk baku** dan **koefisien nol**, serta pemahaman bahwa **konstanta = nilai saat $x=0$**.
 
 > Lanjutkan ke **Bab 02**.
 
 <!-- COMPONENT: Summary -->
-<!-- Progress bar: 2/8 selesai. Tombol "Lanjut ke Bab 02 →". -->
+<!-- Progress bar: 2/8. -->

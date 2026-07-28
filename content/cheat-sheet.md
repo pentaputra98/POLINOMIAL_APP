@@ -18,7 +18,7 @@ Lembar sakti satu halaman. Hafalkan yang bertanda ⭐.
 
 ## 🧱 Konsep Dasar
 - Bentuk umum: $a_nx^n+\dots+a_1x+a_0$, pangkat **bilangan bulat $\ge0$**, $a_n\neq0$.
-- Derajat = pangkat tertinggi. Koef utama = $a_n$. Konstanta = $a_0$.
+- Derajat = pangkat tertinggi. Koef pemimpin = $a_n$. Konstanta = $a_0$.
 - ⭐ **Bukan polinomial:** pangkat negatif/pecahan, variabel di penyebut, variabel di dalam akar.
 - Jenis (suku): monomial (1), binomial (2), trinomial (3).
 - Jenis (derajat): konstan (0), linear (1), kuadrat (2), kubik (3), kuartik (4).
@@ -47,7 +47,7 @@ $$a^3\pm b^3=(a\pm b)(a^2\mp ab+b^2)$$
 ## 📐 Teorema
 - ⭐ **Sisa:** sisa $f\div(x-k)=f(k)$; $f\div(ax-b)=f\!\left(\tfrac{b}{a}\right)$.
 - ⭐ **Faktor:** $(x-k)$ faktor $\iff f(k)=0 \iff k$ akar.
-- **Akar Rasional:** kandidat $=\pm\dfrac{\text{faktor konstanta}}{\text{faktor koef utama}}$.
+- **Akar Rasional:** kandidat $=\pm\dfrac{\text{faktor konstanta}}{\text{faktor koef pemimpin}}$.
 - Faktorisasi: cari akar → Horner → ulangi.
 
 ## 🔗 Vieta

@@ -55,7 +55,7 @@ Dua polinomial sama bila koefisien suku-suku sepadan bernilai sama. *(Bab 02)*
 ### Koefisien
 Bilangan yang mengalikan variabel pada suatu suku (membawa tandanya sendiri). *(Bab 01)*
 
-### Koefisien utama (leading coefficient)
+### Koefisien pemimpin (leading coefficient)
 Koefisien suku berderajat tertinggi, $a_n$. *(Bab 01)*
 
 ### Konstanta
@@ -65,7 +65,7 @@ Suku tanpa variabel; sama dengan $f(0)$. *(Bab 01)*
 Polinomial berderajat 2 / 3 / 4. *(Bab 01)*
 
 ### Monik
-Polinomial dengan koefisien utama $=1$. *(Bab 04–05)*
+Polinomial dengan koefisien pemimpin $=1$. *(Bab 04–05)*
 
 ### Monomial
 Polinomial dengan **1 suku**, mis. $5x^3$. *(Bab 01)*
@@ -86,7 +86,7 @@ Mengganti variabel dengan nilai tertentu untuk menghitung nilai polinomial. *(Ba
 Bagian polinomial yang dipisahkan tanda $+$ atau $-$. *(Bab 01)*
 
 ### Teorema Akar Rasional
-Kandidat akar rasional $=\pm\dfrac{\text{faktor konstanta}}{\text{faktor koef utama}}$ (koefisien bulat). *(Bab 04)*
+Kandidat akar rasional $=\pm\dfrac{\text{faktor konstanta}}{\text{faktor koef pemimpin}}$ (koefisien bulat). *(Bab 04)*
 
 ### Teorema Faktor
 $(x-k)$ faktor $f(x) \iff f(k)=0 \iff k$ akar. *(Bab 04)*

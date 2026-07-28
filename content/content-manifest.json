@@ -21,125 +21,532 @@
     }
   },
   "competencies": [
-    { "code": "K1", "title": "Mengidentifikasi unsur & jenis polinomial", "chapter": "01" },
-    { "code": "K2", "title": "Melakukan operasi & menghitung nilai polinomial", "chapter": "02" },
-    { "code": "K3", "title": "Membagi polinomial (bersusun, Horner, Horner-Kino)", "chapter": "03" },
-    { "code": "K4", "title": "Menerapkan Teorema Sisa & Teorema Faktor", "chapter": "04" },
-    { "code": "K5", "title": "Menyelesaikan persamaan polinomial & Teorema Vieta", "chapter": "05" },
-    { "code": "K6", "title": "Menyelesaikan soal HOTS, kontekstual, & model TKA", "chapter": "06" }
+    {
+      "code": "K1",
+      "title": "Mengidentifikasi unsur & jenis polinomial",
+      "chapter": "01"
+    },
+    {
+      "code": "K2",
+      "title": "Melakukan operasi & menghitung nilai polinomial",
+      "chapter": "02"
+    },
+    {
+      "code": "K3",
+      "title": "Membagi polinomial (bersusun, Horner, Horner-Kino)",
+      "chapter": "03"
+    },
+    {
+      "code": "K4",
+      "title": "Menerapkan Teorema Sisa & Teorema Faktor",
+      "chapter": "04"
+    },
+    {
+      "code": "K5",
+      "title": "Menyelesaikan persamaan polinomial & Teorema Vieta",
+      "chapter": "05"
+    },
+    {
+      "code": "K6",
+      "title": "Menyelesaikan soal HOTS, kontekstual, & model TKA",
+      "chapter": "06"
+    }
   ],
   "chapters": [
     {
-      "id": "00-intro", "order": 0, "file": "00-intro.md",
+      "id": "00-intro",
+      "order": 0,
+      "file": "00-intro.md",
       "title": "Pengantar Pembelajaran Polinomial",
-      "slug": "pengantar-polinomial", "duration_min": 25,
-      "prerequisites": [], "competencies": [],
+      "slug": "pengantar-polinomial",
+      "duration_min": 15,
+      "prerequisites": [],
+      "competencies": [],
       "summary": "Motivasi, kompetensi akhir, prasyarat, peta konsep, cara pakai aplikasi, tes diagnostik.",
-      "components": ["Hero", "Concept Map Interactive", "Diagnostic Quiz", "Progress Onboarding", "Interactive Example", "Reflection"],
-      "quiz_sets": ["00-diagnostik"],
-      "interactive": true
+      "components": [
+        "Hero",
+        "Info Cards",
+        "Concept Map Interactive",
+        "Quiz Cards",
+        "Progress Onboarding"
+      ],
+      "quiz_sets": [
+        "00-diagnostik"
+      ],
+      "interactive": true,
+      "layout": "gerbang"
     },
     {
-      "id": "01-konsep-dasar-polinomial", "order": 1, "file": "01-konsep-dasar-polinomial.md",
+      "id": "01-konsep-dasar-polinomial",
+      "order": 1,
+      "file": "01-konsep-dasar-polinomial.md",
       "title": "Konsep Dasar Polinomial",
-      "slug": "konsep-dasar-polinomial", "duration_min": 90,
-      "prerequisites": ["00-intro"], "competencies": ["K1"],
+      "slug": "konsep-dasar-polinomial",
+      "duration_min": 75,
+      "prerequisites": [
+        "00-intro"
+      ],
+      "competencies": [
+        "K1"
+      ],
       "summary": "Definisi, unsur, derajat, jenis, dan membedakan polinomial/bukan.",
-      "components": ["Interactive Anatomy", "Live Classifier", "Flashcard", "Quiz", "Reflection", "Activity TrueFalse", "Activity Matching", "Activity Categorize", "Activity Ordering", "Activity Cloze", "Activity ErrorHunt", "Tantangan Akhir Bab"],
-      "quiz_sets": ["01-set-A-mudah", "01-set-B-sedang", "01-set-C-sulit", "01-set-D-hots", "01-set-E-tka"],
-      "activities": ["01-act-derajat", "01-act-jenis", "01-act-polinomial", "01-act-urut", "01-act-cloze", "01-act-error"],
+      "components": [
+        "Info Cards",
+        "Sub Materi",
+        "Activity Guided",
+        "Activity Matching",
+        "Activity Categorize",
+        "Activity Ordering",
+        "Activity TrueFalse",
+        "Quiz Cards",
+        "Tantangan Akhir Bab",
+        "Reflection"
+      ],
+      "quiz_sets": [
+        "01-set-A-mudah",
+        "01-set-B-sedang",
+        "01-set-C-sulit",
+        "01-set-D-hots",
+        "01-set-E-tka"
+      ],
+      "activities": [
+        "01-g1",
+        "01-m1",
+        "01-g2",
+        "01-m2",
+        "01-g3",
+        "01-m3",
+        "01-g4",
+        "01-m4",
+        "01-g5",
+        "01-m5"
+      ],
       "challenge": "01-tantangan",
-      "xp_available": 210,
-      "interactive": true
+      "xp_available": 265,
+      "interactive": true,
+      "layout": "sub-materi",
+      "sub_materi": [
+        "Apa Itu Polinomial",
+        "Unsur-Unsur Polinomial",
+        "Derajat & Bentuk Baku",
+        "Jenis-Jenis Polinomial",
+        "Polinomial atau Bukan"
+      ]
     },
     {
-      "id": "02-operasi-dan-nilai-polinomial", "order": 2, "file": "02-operasi-dan-nilai-polinomial.md",
+      "id": "02-operasi-dan-nilai-polinomial",
+      "order": 2,
+      "file": "02-operasi-dan-nilai-polinomial.md",
       "title": "Operasi dan Nilai Polinomial",
-      "slug": "operasi-dan-nilai-polinomial", "duration_min": 100,
-      "prerequisites": ["01-konsep-dasar-polinomial"], "competencies": ["K2"],
+      "slug": "operasi-dan-nilai-polinomial",
+      "duration_min": 80,
+      "prerequisites": [
+        "01-konsep-dasar-polinomial"
+      ],
+      "competencies": [
+        "K2"
+      ],
       "summary": "Jumlah, kurang, kali, nilai/substitusi, kesamaan, identitas. Menyelesaikan TKA #7 (drum) & #8 (saham).",
-      "components": ["Live Calculation", "Step by Step Animation", "Interactive Example", "Quiz", "Reflection", "Activity ErrorHunt", "Activity Matching", "Activity Slider", "Activity Cloze", "Activity Categorize", "Activity TrueFalse", "Tantangan Akhir Bab"],
-      "quiz_sets": ["02-set-A-mudah", "02-set-B-sedang", "02-set-C-sulit", "02-set-D-hots", "02-set-E-tka"],
-      "activities": ["02-act-kurang", "02-act-identitas", "02-act-slider", "02-act-cloze", "02-act-identitas-kategori", "02-act-tf"],
+      "components": [
+        "Info Cards",
+        "Sub Materi",
+        "Activity Guided",
+        "Activity ErrorHunt",
+        "Activity Matching",
+        "Activity Slider",
+        "Activity Categorize",
+        "Quiz Cards",
+        "Tantangan Akhir Bab",
+        "Reflection"
+      ],
+      "quiz_sets": [
+        "02-set-A-mudah",
+        "02-set-B-sedang",
+        "02-set-C-sulit",
+        "02-set-D-hots",
+        "02-set-E-tka"
+      ],
+      "activities": [
+        "02-g1",
+        "02-m1",
+        "02-g2",
+        "02-m2",
+        "02-g3",
+        "02-m3",
+        "02-g4",
+        "02-m4",
+        "02-g5",
+        "02-m5"
+      ],
       "challenge": "02-tantangan",
-      "xp_available": 205,
-      "interactive": true
+      "xp_available": 235,
+      "interactive": true,
+      "layout": "sub-materi",
+      "sub_materi": [
+        "Penjumlahan & Pengurangan",
+        "Perkalian Polinomial",
+        "Nilai Polinomial & Substitusi",
+        "Kesamaan Polinomial",
+        "Identitas Polinomial"
+      ]
     },
     {
-      "id": "03-pembagian-polinomial", "order": 3, "file": "03-pembagian-polinomial.md",
+      "id": "03-pembagian-polinomial",
+      "order": 3,
+      "file": "03-pembagian-polinomial.md",
       "title": "Pembagian Polinomial",
-      "slug": "pembagian-polinomial", "duration_min": 110,
-      "prerequisites": ["02-operasi-dan-nilai-polinomial"], "competencies": ["K3"],
+      "slug": "pembagian-polinomial",
+      "duration_min": 90,
+      "prerequisites": [
+        "02-operasi-dan-nilai-polinomial"
+      ],
+      "competencies": [
+        "K3"
+      ],
       "summary": "Algoritma pembagian, bersusun, Horner, Horner-Kino, memilih metode. Menyelesaikan TKA #6.",
-      "components": ["Step by Step Animation", "Horner Interactive", "Method Comparator", "Quiz", "Reflection", "Activity TrueFalse", "Activity Ordering", "Activity HornerSteps", "Activity ErrorHunt", "Activity Cloze", "Activity Matching", "Tantangan Akhir Bab"],
-      "quiz_sets": ["03-set-A-mudah", "03-set-B-sedang", "03-set-C-sulit", "03-set-D-hots", "03-set-E-tka"],
-      "activities": ["03-act-algoritma", "03-act-bersusun", "03-act-horner", "03-act-axb", "03-act-kino", "03-act-metode"],
+      "components": [
+        "Info Cards",
+        "Sub Materi",
+        "Activity Guided",
+        "Activity HornerSteps",
+        "Activity Ordering",
+        "Activity ErrorHunt",
+        "Activity Matching",
+        "Activity TrueFalse",
+        "Quiz Cards",
+        "Tantangan Akhir Bab",
+        "Reflection"
+      ],
+      "quiz_sets": [
+        "03-set-A-mudah",
+        "03-set-B-sedang",
+        "03-set-C-sulit",
+        "03-set-D-hots",
+        "03-set-E-tka"
+      ],
+      "activities": [
+        "03-g1",
+        "03-m1",
+        "03-g2",
+        "03-m2",
+        "03-g3",
+        "03-m3",
+        "03-g4",
+        "03-m4",
+        "03-g5",
+        "03-m5"
+      ],
       "challenge": "03-tantangan",
-      "xp_available": 215,
-      "interactive": true
+      "xp_available": 240,
+      "interactive": true,
+      "layout": "sub-materi",
+      "sub_materi": [
+        "Algoritma Pembagian",
+        "Pembagian Bersusun",
+        "Skema Horner",
+        "Pembagi Kuadrat",
+        "Memilih Metode"
+      ]
     },
     {
-      "id": "04-teorema-sisa-dan-faktor", "order": 4, "file": "04-teorema-sisa-dan-faktor.md",
+      "id": "04-teorema-sisa-dan-faktor",
+      "order": 4,
+      "file": "04-teorema-sisa-dan-faktor.md",
       "title": "Teorema Sisa dan Teorema Faktor",
-      "slug": "teorema-sisa-dan-faktor", "duration_min": 100,
-      "prerequisites": ["03-pembagian-polinomial"], "competencies": ["K4"],
+      "slug": "teorema-sisa-dan-faktor",
+      "duration_min": 85,
+      "prerequisites": [
+        "03-pembagian-polinomial"
+      ],
+      "competencies": [
+        "K4"
+      ],
       "summary": "Teorema Sisa & Faktor, akar rasional, faktorisasi. Menyelesaikan TKA #5.",
-      "components": ["Proof Reveal", "Root Finder Interactive", "Factor Peeler", "Quiz", "Reflection", "Activity TrueFalse", "Activity Cloze", "Activity Matching", "Activity Categorize", "Activity Ordering", "Activity ErrorHunt", "Tantangan Akhir Bab"],
-      "quiz_sets": ["04-set-A-mudah", "04-set-B-sedang", "04-set-C-sulit", "04-set-D-hots", "04-set-E-tka"],
-      "activities": ["04-act-sisa", "04-act-rumus", "04-act-faktor", "04-act-rasional", "04-act-langkah", "04-act-trap"],
+      "components": [
+        "Info Cards",
+        "Sub Materi",
+        "Activity Guided",
+        "Activity TrueFalse",
+        "Activity Matching",
+        "Activity Categorize",
+        "Activity Ordering",
+        "Activity ErrorHunt",
+        "Quiz Cards",
+        "Tantangan Akhir Bab",
+        "Reflection"
+      ],
+      "quiz_sets": [
+        "04-set-A-mudah",
+        "04-set-B-sedang",
+        "04-set-C-sulit",
+        "04-set-D-hots",
+        "04-set-E-tka"
+      ],
+      "activities": [
+        "04-g1",
+        "04-m1",
+        "04-g2",
+        "04-m2",
+        "04-g3",
+        "04-m3",
+        "04-g4",
+        "04-m4",
+        "04-g5",
+        "04-m5"
+      ],
       "challenge": "04-tantangan",
-      "xp_available": 210,
-      "interactive": true
+      "xp_available": 235,
+      "interactive": true,
+      "layout": "sub-materi",
+      "sub_materi": [
+        "Teorema Sisa",
+        "Mencari Sisa Tanpa Membagi",
+        "Teorema Faktor",
+        "Teorema Akar Rasional",
+        "Faktorisasi Polinomial"
+      ]
     },
     {
-      "id": "05-persamaan-polinomial-dan-vieta", "order": 5, "file": "05-persamaan-polinomial-dan-vieta.md",
+      "id": "05-persamaan-polinomial-dan-vieta",
+      "order": 5,
+      "file": "05-persamaan-polinomial-dan-vieta.md",
       "title": "Persamaan Polinomial dan Teorema Vieta",
-      "slug": "persamaan-polinomial-dan-vieta", "duration_min": 100,
-      "prerequisites": ["04-teorema-sisa-dan-faktor"], "competencies": ["K5"],
+      "slug": "persamaan-polinomial-dan-vieta",
+      "duration_min": 85,
+      "prerequisites": [
+        "04-teorema-sisa-dan-faktor"
+      ],
+      "competencies": [
+        "K5"
+      ],
       "summary": "Persamaan polinomial, Vieta, menyusun persamaan dari akar & syarat. TKA #8 via Vieta.",
-      "components": ["Vieta Explorer", "Root Transform Interactive", "Quiz", "Reflection", "Activity TrueFalse", "Activity Cloze", "Activity Matching", "Activity ErrorHunt", "Tantangan Akhir Bab"],
-      "quiz_sets": ["05-set-A-mudah", "05-set-B-sedang", "05-set-C-sulit", "05-set-D-hots", "05-set-E-tka"],
-      "activities": ["05-act-persamaan", "05-act-faktor", "05-act-vieta", "05-act-menyusun", "05-act-transform", "05-act-trap"],
+      "components": [
+        "Info Cards",
+        "Sub Materi",
+        "Activity Guided",
+        "Activity TrueFalse",
+        "Activity Matching",
+        "Activity Categorize",
+        "Activity ErrorHunt",
+        "Quiz Cards",
+        "Tantangan Akhir Bab",
+        "Reflection"
+      ],
+      "quiz_sets": [
+        "05-set-A-mudah",
+        "05-set-B-sedang",
+        "05-set-C-sulit",
+        "05-set-D-hots",
+        "05-set-E-tka"
+      ],
+      "activities": [
+        "05-g1",
+        "05-m1",
+        "05-g2",
+        "05-m2",
+        "05-g3",
+        "05-m3",
+        "05-g4",
+        "05-m4",
+        "05-g5",
+        "05-m5"
+      ],
       "challenge": "05-tantangan",
-      "xp_available": 205,
-      "interactive": true
+      "xp_available": 235,
+      "interactive": true,
+      "layout": "sub-materi",
+      "sub_materi": [
+        "Persamaan & Akarnya",
+        "Teorema Vieta",
+        "Ekspresi Simetris Akar",
+        "Menyusun Persamaan",
+        "Transformasi Akar"
+      ]
     },
     {
-      "id": "06-strategi-hots-dan-tka", "order": 6, "file": "06-strategi-hots-dan-tka.md",
+      "id": "06-strategi-hots-dan-tka",
+      "order": 6,
+      "file": "06-strategi-hots-dan-tka.md",
       "title": "Strategi HOTS dan TKA",
-      "slug": "strategi-hots-dan-tka", "duration_min": 110,
-      "prerequisites": ["05-persamaan-polinomial-dan-vieta"], "competencies": ["K6"],
+      "slug": "strategi-hots-dan-tka",
+      "duration_min": 85,
+      "prerequisites": [
+        "05-persamaan-polinomial-dan-vieta"
+      ],
+      "competencies": [
+        "K6"
+      ],
       "summary": "Kerangka keputusan, pola soal, kombinasi konsep, pemodelan, shortcut, jebakan. Studi kasus TKA #5-#8.",
-      "components": ["Decision Flow Interactive", "Case Study Walkthrough", "Trap Radar", "Quiz", "Reflection", "Activity Matching", "Activity Categorize", "Activity Ordering", "Activity TrueFalse", "Activity Cloze", "Activity ErrorHunt", "Tantangan Akhir Bab"],
-      "quiz_sets": ["06-set-A-mudah", "06-set-B-sedang", "06-set-C-sulit", "06-set-D-hots", "06-set-E-tka"],
-      "activities": ["06-act-alat", "06-act-katakunci", "06-act-kombinasi", "06-act-konteks", "06-act-shortcut", "06-act-trap"],
+      "components": [
+        "Info Cards",
+        "Sub Materi",
+        "Activity Guided",
+        "Activity Matching",
+        "Activity Categorize",
+        "Activity Ordering",
+        "Activity TrueFalse",
+        "Activity ErrorHunt",
+        "Quiz Cards",
+        "Tantangan Akhir Bab",
+        "Reflection"
+      ],
+      "quiz_sets": [
+        "06-set-A-mudah",
+        "06-set-B-sedang",
+        "06-set-C-sulit",
+        "06-set-D-hots",
+        "06-set-E-tka"
+      ],
+      "activities": [
+        "06-g1",
+        "06-m1",
+        "06-g2",
+        "06-m2",
+        "06-g3",
+        "06-m3",
+        "06-g4",
+        "06-m4",
+        "06-g5",
+        "06-m5"
+      ],
       "challenge": "06-tantangan",
-      "xp_available": 210,
-      "interactive": true
+      "xp_available": 235,
+      "interactive": true,
+      "layout": "sub-materi",
+      "sub_materi": [
+        "Kerangka Keputusan",
+        "Mengenali Pola Soal",
+        "Soal Kombinasi Konsep",
+        "Soal Kontekstual",
+        "Cara Pintas & Jebakan"
+      ]
     },
     {
-      "id": "07-ringkasan-dan-bank-soal", "order": 7, "file": "07-ringkasan-dan-bank-soal.md",
+      "id": "07-ringkasan-dan-bank-soal",
+      "order": 7,
+      "file": "07-ringkasan-dan-bank-soal.md",
       "title": "Ringkasan dan Bank Soal",
-      "slug": "ringkasan-dan-bank-soal", "duration_min": 120,
-      "prerequisites": ["06-strategi-hots-dan-tka"], "competencies": ["K1", "K2", "K3", "K4", "K5", "K6"],
+      "slug": "ringkasan-dan-bank-soal",
+      "duration_min": 90,
+      "prerequisites": [
+        "06-strategi-hots-dan-tka"
+      ],
+      "competencies": [
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5",
+        "K6"
+      ],
       "summary": "Ringkasan, cheat sheet, peta konsep akhir, FAQ, bank soal campur, simulasi mini TKA.",
-      "components": ["Concept Map Full", "Cheat Sheet Card", "FAQ Accordion", "Mixed Quiz", "TKA Simulation Timer", "Reflection", "Activity Matching", "Activity Cloze", "Activity TrueFalse", "Activity Categorize", "Tantangan Akhir Bab"],
-      "quiz_sets": ["07-bank-A-mudah", "07-bank-B-sedang", "07-bank-C-sulit", "07-bank-D-hots", "07-simulasi-tka"],
-      "activities": ["07-act-rumus", "07-act-cek", "07-act-faq", "07-act-alat"],
+      "components": [
+        "Info Cards",
+        "Sub Materi",
+        "Activity Guided",
+        "Activity Matching",
+        "Activity TrueFalse",
+        "Activity Categorize",
+        "Activity ErrorHunt",
+        "Cheat Sheet Card",
+        "FAQ Accordion",
+        "Quiz Cards",
+        "Tantangan Akhir Bab",
+        "Reflection"
+      ],
+      "quiz_sets": [
+        "07-bank-A-mudah",
+        "07-bank-B-sedang",
+        "07-bank-C-sulit",
+        "07-bank-D-hots",
+        "07-bank-E-tka"
+      ],
+      "activities": [
+        "07-g1",
+        "07-m1",
+        "07-g2",
+        "07-m2",
+        "07-g3",
+        "07-m3",
+        "07-g4",
+        "07-m4",
+        "07-g5",
+        "07-m5"
+      ],
       "challenge": "07-tantangan",
-      "xp_available": 185,
-      "interactive": true
+      "xp_available": 250,
+      "interactive": true,
+      "layout": "sub-materi",
+      "sub_materi": [
+        "Tinjauan Konsep & Operasi",
+        "Tinjauan Pembagian",
+        "Tinjauan Teorema Sisa & Faktor",
+        "Tinjauan Persamaan & Vieta",
+        "Tinjauan Strategi & Jebakan"
+      ]
     }
   ],
   "resources": [
-    { "id": "glosarium", "file": "glosarium.md", "title": "Glosarium Istilah", "type": "reference" },
-    { "id": "cheat-sheet", "file": "cheat-sheet.md", "title": "Cheat Sheet Rumus", "type": "reference" }
+    {
+      "id": "glosarium",
+      "file": "glosarium.md",
+      "title": "Glosarium Istilah",
+      "type": "reference"
+    },
+    {
+      "id": "cheat-sheet",
+      "file": "cheat-sheet.md",
+      "title": "Cheat Sheet Rumus",
+      "type": "reference"
+    }
   ],
   "tka_source_problems": [
-    { "ref": "TKA-no5", "topic": "Titik potong sumbu X (akar)", "primary_chapter": "04", "also_in": ["06", "07"], "function": "x^3+3x^2-10x-24", "answer": "(-2,0) dan (3,0)" },
-    { "ref": "TKA-no6", "topic": "Sisa pembagian oleh kuadrat (kesamaan)", "primary_chapter": "03", "also_in": ["04", "06", "07"], "function": "x^4+ax^3+bx^2+x-6 ÷ (x^2+x+1) sisa 5x-1", "answer": "a+b = -1" },
-    { "ref": "TKA-no7", "topic": "Operasi polinomial (perkalian konstanta)", "primary_chapter": "02", "also_in": ["06", "07"], "function": "10·(0,05T^3+0,4T^2+20T)", "answer": "0,5T^3+4T^2+200T (D)" },
-    { "ref": "TKA-no8", "topic": "Nilai polinomial & Vieta (kontekstual)", "primary_chapter": "02", "also_in": ["05", "06", "07"], "function": "x^3-70x^2-600x+74000 = 2000", "answer": "40 & 60 unit mungkin; 30 tidak" }
+    {
+      "ref": "TKA-no5",
+      "topic": "Titik potong sumbu X (akar)",
+      "primary_chapter": "04",
+      "also_in": [
+        "06",
+        "07"
+      ],
+      "function": "x^3+3x^2-10x-24",
+      "answer": "(-2,0) dan (3,0)"
+    },
+    {
+      "ref": "TKA-no6",
+      "topic": "Sisa pembagian oleh kuadrat (kesamaan)",
+      "primary_chapter": "03",
+      "also_in": [
+        "04",
+        "06",
+        "07"
+      ],
+      "function": "x^4+ax^3+bx^2+x-6 ÷ (x^2+x+1) sisa 5x-1",
+      "answer": "a+b = -1"
+    },
+    {
+      "ref": "TKA-no7",
+      "topic": "Operasi polinomial (perkalian konstanta)",
+      "primary_chapter": "02",
+      "also_in": [
+        "06",
+        "07"
+      ],
+      "function": "10·(0,05T^3+0,4T^2+20T)",
+      "answer": "0,5T^3+4T^2+200T (D)"
+    },
+    {
+      "ref": "TKA-no8",
+      "topic": "Nilai polinomial & Vieta (kontekstual)",
+      "primary_chapter": "02",
+      "also_in": [
+        "05",
+        "06",
+        "07"
+      ],
+      "function": "x^3-70x^2-600x+74000 = 2000",
+      "answer": "40 & 60 unit mungkin; 30 tidak"
+    }
   ],
   "quiz_schema": {
     "description": "Blok ```json``` dengan `set_id`+`items` berisi satu set kuis.",
@@ -150,39 +557,162 @@
       "items": [
         {
           "id": "string unik dalam set",
-          "type": "short | mc | multi | proof",
+          "type": "short | mc | multi | truefalse | proof",
           "competency": "K1..K6 (opsional)",
           "source": "referensi TKA (opsional)",
-          "question": "string berisi KaTeX",
-          "options": "array (khusus mc/multi)",
-          "answer": "string (short/mc/proof) atau array (multi)",
+          "question": "KALIMAT PERINTAH LENGKAP + KaTeX. Wajib mandiri (self-contained).",
+          "instruction": "opsional: penjelasan cara menjawab bila tidak jelas dari tipe soal",
+          "input_mode": "khusus short: 'number' | 'text'. Default 'number'.",
+          "answer_format": "khusus short: contoh format jawaban, mis. 'bilangan bulat' atau 'pecahan a/b'",
+          "options": "array (wajib untuk mc/multi)",
+          "answer": "string (short/mc/proof) atau array (multi/truefalse)",
           "explanation": "string pembahasan singkat"
         }
       ]
+    },
+    "authoring_rules": {
+      "self_contained": "WAJIB. Tiap item harus dapat dipahami sendiri tanpa membaca prosa di atasnya, karena app merender item secara terpisah. Tulis kalimat perintah lengkap (mis. 'Tentukan derajat dari polinomial $5x^3-2x+1$.'), BUKAN potongan seperti 'Derajat dari $5x^3-2x+1$'.",
+      "minimize_keyboard": "Utamakan tipe non-ketik: mc, multi, truefalse. Gunakan `short` HANYA bila jawabannya satu bilangan (bulat/pecahan sederhana); sertakan `input_mode` dan `answer_format`.",
+      "no_ambiguous_answers": "DILARANG jawaban multi-bagian pada `short` (mis. '(x-2)(x-3); x=2 atau x=3' atau 'derajat 5, koefisien -1'). Pecah menjadi beberapa item, atau ubah menjadi `mc` dengan opsi gabungan.",
+      "no_expression_typing": "Jawaban berupa ekspresi aljabar (mis. 'x^2+2x+1') TIDAK boleh `short`; gunakan `mc` dengan 4 opsi ekspresi.",
+      "explicit_requirements": "Bila soal menuntut format khusus (mis. menyertakan suku berkoefisien nol, mengurutkan, menyebut kedua akar), nyatakan tuntutan itu secara eksplisit di dalam `question`.",
+      "ordering_in_quiz": "Untuk soal pengurutan di dalam set kuis, gunakan `mc` berisi beberapa kandidat urutan lengkap (bukan isian teks berkoma)."
+    }
+  },
+  "page_architecture": {
+    "description": "Struktur baku tiap bab materi (01-06). Tujuan: konten padat, alur jelas, scroll pendek.",
+    "urutan": [
+      "1. Info Cards (header) — Tujuan Pembelajaran, Kompetensi, Prasyarat, Estimasi Waktu, Peta Konsep, Motivasi",
+      "2. Sub-materi berulang — Teori → Contoh → Latihan Terbimbing → Latihan Mandiri",
+      "3. Latihan Bertingkat — 5 kartu (A-E), masing-masing 5 soal",
+      "4. Kesalahan Umum & Tips Cepat",
+      "5. Ringkasan",
+      "6. Tantangan Akhir Bab",
+      "7. Refleksi",
+      "8. Persiapan Menuju Bab Berikutnya"
+    ],
+    "info_cards": {
+      "directive": "Bagian pembuka (Tujuan/Kompetensi/Prasyarat/Waktu/Peta Konsep/Motivasi) TIDAK ditampilkan sebagai teks panjang. Render sebagai deretan KARTU ringkas berwarna-beda (grid responsif, boleh sejajar/berbeda baris). Klik kartu -> POP-UP berisi isinya. Siswa boleh melewatinya dan langsung ke materi.",
+      "marker": "<!-- COMPONENT: Info Cards -->"
+    },
+    "sub_materi": {
+      "directive": "Tiap sub-materi memakai pola tetap: Teori (ringkas & visual) -> Contoh -> Latihan Terbimbing -> Latihan Mandiri. Contoh WAJIB selaras dengan latihan yang menyertainya.",
+      "sticky_heading": "Judul sub-materi harus STICKY (menempel di bawah judul bab saat digulir) dengan desain khusus, dan berganti otomatis saat memasuki sub-materi berikutnya.",
+      "marker": "<!-- COMPONENT: Sub Materi -->"
+    },
+    "latihan_bertingkat": {
+      "directive": "Render sebagai 5 KARTU (A-E). Klik -> POP-UP berisi soal (boleh scroll/slide) agar halaman utama tidak panjang.",
+      "jumlah_soal": "5 soal per paket.",
+      "opsional": "Paket D (HOTS) dan E (TKA) bersifat OPSIONAL; tandai jelas dan beri XP bonus bila dikerjakan."
+    },
+    "tantangan": {
+      "directive": "Render sebagai KARTU; klik -> POP-UP layar penuh (modal) berisi sesi berwaktu."
+    }
+  },
+  "visual_conventions": {
+    "description": "Penekanan visual pada teori agar tidak sekadar teks tebal.",
+    "katex_highlight": {
+      "cara": "Penulis konten memakai \\htmlClass{...}{...} di dalam KaTeX. Developer mengaktifkan opsi KaTeX `trust: true` dan `strict: false`, lalu menata kelas berikut lewat CSS (wajib kontras baik pada mode terang & gelap).",
+      "kelas": {
+        "hl-var": "variabel",
+        "hl-coef": "koefisien",
+        "hl-pow": "pangkat",
+        "hl-const": "konstanta",
+        "hl-term": "penanda satu suku utuh",
+        "hl-1": "posisi/kelompok padanan ke-1 (mis. koefisien yang disamakan)",
+        "hl-2": "posisi/kelompok padanan ke-2",
+        "hl-3": "posisi/kelompok padanan ke-3"
+      },
+      "aturan": "Warna hanya untuk memperjelas struktur, bukan hiasan. Pasangan yang setara memakai kelas yang sama."
+    },
+    "visual_directive": {
+      "marker": "<!-- VISUAL: ... -->",
+      "arti": "Perintah membuat tampilan/animasi khusus (mis. panah distribusi perkalian, bentuk rumah pembagian porogapit, tabel Horner beranimasi). Developer WAJIB mewujudkannya, bukan menampilkan teks biasa."
     }
   },
   "interaction_schema": {
     "description": "Blok ```json``` dengan `type`:`activity` = micro-interaksi di tengah materi; `type`:`challenge` = Tantangan Akhir Bab (asesmen akhir bab). Parser membedakan berdasarkan field `type` (activity/challenge) vs kehadiran `set_id` (quiz).",
     "placement_principle": "Learning beat: sisipkan 1 aktivitas 30-60 detik setiap 1-2 konsep; jangan >2 layar scroll tanpa interaksi. 1 Tantangan Akhir Bab per bab.",
     "activity_widgets": {
-      "matching": { "prompt": "string", "pairs": "[[kiri, kanan], ...] (>=2)", "reward": "{xp}" },
-      "categorize": { "prompt": "string", "categories": "[nama, ...] (>=2)", "items": "[[teks(KaTeX), kategori], ...]", "reward": "{xp}" },
-      "ordering": { "prompt": "string", "options": "[teks, ...]", "answer_order": "permutasi indeks urutan benar; engine mengacak tampilan", "reward": "{xp}" },
-      "cloze": { "prompt": "string", "template": "teks dengan placeholder {{0}} {{1}} ...", "answers": "[jawaban per blank sesuai indeks]", "reward": "{xp}" },
-      "truefalse": { "prompt": "string", "statements": "[{s:teks, a:boolean, why:string}, ...]", "reward": "{xp}" },
-      "error-hunt": { "prompt": "string", "steps": "[langkah, ...]", "wrong_index": "int (langkah yang salah)", "why": "string", "reward": "{xp}" },
-      "horner-steps": { "note": "DIPAKAI DI BAB 03. Tabel Horner interaktif divalidasi sel-demi-sel.", "poly": "[koefisien tinggi->rendah]", "k": "number", "expected_quotient": "[koefisien hasil bagi, tinggi->rendah]", "expected_remainder": "number", "reward": "{xp}" },
-      "slider": { "note": "DIPAKAI DI BAB 02. Slider x -> hitung f(x) real-time + grafik.", "poly": "[koefisien tinggi->rendah]", "x_min": "number", "x_max": "number", "step": "number (langkah slider)", "show_graph": "boolean", "checkpoints": "[{x, fx, note}] titik periksa opsional", "reward": "{xp}" }
+      "guided": {
+        "peran": "LATIHAN TERBIMBING (latihan pertama pada tiap sub-materi). Soal dipecah menjadi 2-4 langkah; peserta memilih jawaban tiap langkah, lalu sistem menjelaskan mengapa langkah itu benar sebelum melanjutkan. Berfungsi seperti guru yang menuntun.",
+        "prompt": "pernyataan soal utuh",
+        "steps": "[{ask, type:'mc', options[], answer, feedback}] — tiap langkah wajib berupa pilihan (tanpa mengetik)",
+        "conclusion": "kalimat penutup/kesimpulan setelah semua langkah benar",
+        "reward": "{xp}",
+        "ui": "Tampilkan satu langkah pada satu waktu; setelah dijawab, tampilkan `feedback` lalu tombol lanjut. Salah = beri kesempatan ulang dengan petunjuk."
+      },
+      "matching": {
+        "prompt": "string",
+        "pairs": "[[kiri, kanan], ...] (>=2)",
+        "reward": "{xp}"
+      },
+      "categorize": {
+        "prompt": "string",
+        "categories": "[nama, ...] (>=2)",
+        "items": "[[teks(KaTeX), kategori], ...]",
+        "reward": "{xp}"
+      },
+      "ordering": {
+        "prompt": "string",
+        "options": "[teks, ...]",
+        "answer_order": "permutasi indeks urutan benar; engine mengacak tampilan",
+        "reward": "{xp}"
+      },
+      "cloze": {
+        "prompt": "string",
+        "template": "teks dengan placeholder {{0}} {{1}} ...",
+        "answers": "[jawaban per blank sesuai indeks]",
+        "reward": "{xp}"
+      },
+      "truefalse": {
+        "prompt": "string",
+        "statements": "[{s:teks, a:boolean, why:string}, ...]",
+        "reward": "{xp}"
+      },
+      "error-hunt": {
+        "prompt": "string",
+        "steps": "[langkah, ...]",
+        "wrong_index": "int (langkah yang salah)",
+        "why": "string",
+        "reward": "{xp}"
+      },
+      "horner-steps": {
+        "note": "SIAP DIPASANG DI BAB 03. Tabel Horner interaktif divalidasi sel-demi-sel.",
+        "poly": "[koefisien tinggi->rendah]",
+        "k": "number",
+        "expected_bring_down": "[baris hasil]",
+        "expected_remainder": "number",
+        "reward": "{xp}"
+      },
+      "slider": {
+        "note": "SIAP DIPASANG DI BAB 02. Slider x -> hitung f(x) real-time + grafik.",
+        "poly": "[koefisien tinggi->rendah]",
+        "x_min": "number",
+        "x_max": "number",
+        "show_graph": "boolean",
+        "reward": "{xp}"
+      }
     },
     "challenge_fields": {
-      "id": "string unik", "title": "string", "competency": "K1..K6",
-      "mode": "timed | untimed", "time_limit_sec": "number",
-      "shuffle": "boolean",
-      "pool": "[id aktivitas / set_id kuis / id item] yang ditarik ke Tantangan Akhir Bab",
+      "id": "string unik",
+      "title": "string",
+      "competency": "K1..K6",
+      "mode": "timed | untimed",
+      "time_limit_sec": "number. Pedoman: minimal 25-30 detik per item (mis. 12 item -> 300-360 detik). JANGAN terlalu ketat.",
+      "display": "'modal' = tampilkan sebagai pop-up layar penuh agar fokus (default untuk Tantangan Akhir Bab).",
+      "shuffle": "boolean (mengacak urutan item, bukan memecah item)",
+      "items": "WAJIB: array item MANDIRI (self-contained) milik tantangan itu sendiri, dengan skema sama seperti item kuis (type/question/options/answer/explanation). Utamakan mc, multi, truefalse.",
       "scoring": "{per_correct:number, time_bonus:boolean}",
       "stars": "{\"3\": ambangSkor, \"2\": ..., \"1\": ...}",
       "reward": "{xp:number, badge:string}",
       "record": "{track_best_time:boolean, track_best_score:boolean}"
+    },
+    "challenge_rules": {
+      "no_pooling": "JANGAN menarik soal dari `pool` aktivitas/set kuis. Widget aktivitas (error-hunt, cloze, matching) kehilangan konteks saat dipecah menjadi butir tantangan (mis. hanya muncul 'Langkah 1..4' tanpa daftar langkahnya, atau 'Lengkapi kalimat kunci - bagian 1' tanpa kalimatnya). Tantangan WAJIB memakai `items` mandiri.",
+      "self_contained": "Tiap butir tantangan harus memuat seluruh konteks di dalam `question` (termasuk daftar langkah bila menanyakan langkah yang salah).",
+      "prefer_non_typing": "Gunakan mc/multi/truefalse agar dapat dikerjakan cepat tanpa keyboard.",
+      "timing": "Alokasikan waktu realistis; peserta harus mungkin meraih 3 bintang."
     }
   },
   "gamification": {
@@ -190,25 +720,87 @@
     "xp": {
       "source": "field `reward.xp` pada activity & challenge; kuis biasa juga boleh memberi xp (mis. 5/benar).",
       "levels": [
-        { "level": 1, "min_xp": 0, "title": "Pemula" },
-        { "level": 2, "min_xp": 150, "title": "Penjelajah" },
-        { "level": 3, "min_xp": 400, "title": "Penguasa Muda" },
-        { "level": 4, "min_xp": 800, "title": "Ahli" },
-        { "level": 5, "min_xp": 1400, "title": "Master Polinomial" }
+        {
+          "level": 1,
+          "min_xp": 0,
+          "title": "Pemula"
+        },
+        {
+          "level": 2,
+          "min_xp": 150,
+          "title": "Penjelajah"
+        },
+        {
+          "level": 3,
+          "min_xp": 400,
+          "title": "Penguasa Muda"
+        },
+        {
+          "level": 4,
+          "min_xp": 800,
+          "title": "Ahli"
+        },
+        {
+          "level": 5,
+          "min_xp": 1400,
+          "title": "Master Polinomial"
+        }
       ]
     },
     "badges": [
-      { "id": "pengenal-polinomial", "competency": "K1", "chapter": "01", "unlock": "selesaikan Tantangan Akhir Bab 01" },
-      { "id": "operator-polinomial", "competency": "K2", "chapter": "02", "unlock": "selesaikan Tantangan Akhir Bab 02" },
-      { "id": "pembagi-ulung", "competency": "K3", "chapter": "03", "unlock": "selesaikan Tantangan Akhir Bab 03" },
-      { "id": "ahli-teorema", "competency": "K4", "chapter": "04", "unlock": "selesaikan Tantangan Akhir Bab 04" },
-      { "id": "penakluk-vieta", "competency": "K5", "chapter": "05", "unlock": "selesaikan Tantangan Akhir Bab 05" },
-      { "id": "ahli-strategi", "competency": "K6", "chapter": "06", "unlock": "selesaikan Tantangan Akhir Bab 06" },
-      { "id": "master-polinomial", "competency": "ALL", "unlock": "selesaikan simulasi TKA (bab 07) dengan >=3 bintang" }
+      {
+        "id": "pengenal-polinomial",
+        "competency": "K1",
+        "chapter": "01",
+        "unlock": "selesaikan Tantangan Akhir Bab 01"
+      },
+      {
+        "id": "operator-polinomial",
+        "competency": "K2",
+        "chapter": "02",
+        "unlock": "selesaikan Tantangan Akhir Bab 02"
+      },
+      {
+        "id": "pembagi-ulung",
+        "competency": "K3",
+        "chapter": "03",
+        "unlock": "selesaikan Tantangan Akhir Bab 03"
+      },
+      {
+        "id": "ahli-teorema",
+        "competency": "K4",
+        "chapter": "04",
+        "unlock": "selesaikan Tantangan Akhir Bab 04"
+      },
+      {
+        "id": "penakluk-vieta",
+        "competency": "K5",
+        "chapter": "05",
+        "unlock": "selesaikan Tantangan Akhir Bab 05"
+      },
+      {
+        "id": "ahli-strategi",
+        "competency": "K6",
+        "chapter": "06",
+        "unlock": "selesaikan Tantangan Akhir Bab 06"
+      },
+      {
+        "id": "master-polinomial",
+        "competency": "ALL",
+        "unlock": "selesaikan simulasi TKA (bab 07) dengan >=3 bintang"
+      }
     ],
-    "stars": { "description": "Bintang Tantangan Akhir Bab dari ambang skor pada field `stars`; simpan bintang tertinggi." },
-    "records": { "description": "Simpan capaian waktu & skor terbaik per Tantangan Akhir Bab sebagai umpan balik kemajuan.", "storage_keys": "poli.v1.record.<challengeId>" },
-    "streak": { "description": "Streak belajar harian (opsional).", "storage_keys": "poli.v1.streak" },
+    "stars": {
+      "description": "Bintang Tantangan Akhir Bab dari ambang skor pada field `stars`; simpan bintang tertinggi."
+    },
+    "records": {
+      "description": "Simpan capaian waktu & skor terbaik per Tantangan Akhir Bab sebagai umpan balik kemajuan.",
+      "storage_keys": "poli.v1.record.<challengeId>"
+    },
+    "streak": {
+      "description": "Streak belajar harian (opsional).",
+      "storage_keys": "poli.v1.streak"
+    },
     "competition_note": "Tanpa backend. Kompetisi antar teman terjadi lewat pembandingan bintang/waktu/level secara lokal (rekor pribadi). (Fitur share-code & class-seed TIDAK diaktifkan pada versi ini.)"
   }
 }
