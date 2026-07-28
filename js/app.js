@@ -314,19 +314,9 @@
     // Render KaTeX SETELAH injeksi DOM (wajib untuk SPA)
     if (window.MR && window.MR.render) window.MR.render(viewRoot);
 
-    // Slot kuis & komponen belum aktif di Fase 1 → disembunyikan supaya
-    // tidak ada area kosong. Konten statis di sekitarnya tetap informatif.
-    // Mesin kuis (Fase 3) dipasang pada tiap slot set soal.
-    if (window.Quiz) {
-      viewRoot.querySelectorAll(".quiz-slot").forEach(function (el) {
-        var set = (doc.quizzes || []).filter(function (q) { return q.set_id === el.dataset.setId; })[0];
-        if (set) Quiz.mount(el, set, meta.id);
-        else el.hidden = true;
-      });
-    } else {
-      viewRoot.querySelectorAll(".quiz-slot").forEach(function (el) { el.hidden = true; });
-    }
-    // Latihan Interaktif (Fase 4)
+    /* Latihan Interaktif dipasang LANGSUNG di tengah materi — memang di sanalah
+       tempatnya sebagai "learning beat" (lihat placement_principle di manifest).
+       Widget guided adalah latihan pertama pada tiap sub-materi. */
     if (window.Activity) {
       viewRoot.querySelectorAll(".activity-slot").forEach(function (el) {
         var a = (doc.activities || []).filter(function (x) { return x.id === el.dataset.activityId; })[0];
@@ -335,14 +325,15 @@
     } else {
       viewRoot.querySelectorAll(".activity-slot").forEach(function (el) { el.hidden = true; });
     }
-    // Tantangan Akhir Bab (Fase 4)
-    if (window.Challenge) {
-      viewRoot.querySelectorAll(".challenge-slot").forEach(function (el) {
-        var c = (doc.challenges || []).filter(function (x) { return x.id === el.dataset.challengeId; })[0];
-        if (c) Challenge.mount(el, c, doc); else el.hidden = true;
-      });
+
+    /* Latihan Bertingkat & Tantangan Akhir Bab TIDAK dirender di halaman:
+       keduanya menjadi KARTU yang membuka pop-up/modal (page_architecture).
+       QuizCards memasang isinya secara MALAS — 25 soal per bab baru dibangun
+       saat kartunya diketuk. Inilah yang memendekkan halaman secara drastis. */
+    if (window.QuizCards) {
+      QuizCards.apply(viewRoot, doc, meta.id);
     } else {
-      viewRoot.querySelectorAll(".challenge-slot").forEach(function (el) { el.hidden = true; });
+      viewRoot.querySelectorAll(".quiz-slot,.challenge-slot").forEach(function (el) { el.hidden = true; });
     }
     viewRoot.querySelectorAll(".component-slot").forEach(function (el) { el.hidden = true; });
 

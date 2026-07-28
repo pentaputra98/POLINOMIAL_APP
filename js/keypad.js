@@ -124,6 +124,26 @@
     build();
     target = input;
     onChangeCb = onChange || null;
+
+    /* MODE NUMERIK. Konten baru menjadikan seluruh soal isian bernilai satu
+       bilangan (field `input_mode:"number"`), sehingga tab variabel hanya
+       menambah kebingungan. Tab itu disembunyikan dan tab angka dipaksa aktif;
+       tombol angka, koma, minus, dan garis miring sudah memadai — termasuk
+       untuk `answer_format` berupa "pecahan a/b". */
+    var numerik = input && input.dataset && input.dataset.numeric === "1";
+    var tabVar = sheet.querySelector('.kp-tab[data-tab="var"]');
+    var tabNum = sheet.querySelector('.kp-tab[data-tab="num"]');
+    var gridVar = sheet.querySelector("#kpVar");
+    var gridNum = sheet.querySelector("#kpNum");
+    if (tabVar) tabVar.hidden = !!numerik;
+    sheet.classList.toggle("is-numeric", !!numerik);
+    if (numerik) {
+      if (tabVar) tabVar.classList.remove("is-active");
+      if (tabNum) tabNum.classList.add("is-active");
+      if (gridVar) gridVar.hidden = true;
+      if (gridNum) gridNum.hidden = false;
+    }
+
     sheet.hidden = false;
     requestAnimationFrame(function () { sheet.classList.add("is-open"); });
     document.body.classList.add("keypad-open");
@@ -150,9 +170,10 @@
    * bawaan perangkat muncul, sehingga papan tombol aplikasi menjadi satu-
    * satunya jalur masukan (dan pasti tersedia di semua perangkat).
    */
-  function attach(input, onChange) {
+  function attach(input, onChange, opts) {
     if (!input || input.dataset.keypad) return;
     input.dataset.keypad = "1";
+    if (opts && opts.numeric) input.dataset.numeric = "1";
     input.setAttribute("inputmode", "none");
     input.setAttribute("autocomplete", "off");
     input.setAttribute("autocapitalize", "off");

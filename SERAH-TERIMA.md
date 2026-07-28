@@ -1,6 +1,6 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=65`** · Cache SW **`polinomial-v47`**
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=67`** · Cache SW **`polinomial-v49`**
 >
 > 🚫 **JANGAN PUSH.** Aplikasi versi lama sedang dipakai siswa secara live.
 > Seluruh commit disimpan LOKAL sampai Fase 1–5 selesai dan pemilik memberi
@@ -8,8 +8,7 @@
 >
 > ⚠️ **Sedang berlangsung: pembangunan ulang ke arsitektur halaman berstruktur.**
 > Konten sudah ditulis ulang seluruhnya (commit `4f0deb0`); aplikasi menyusul
-> secara bertahap. **Fase 1 (Fondasi) & Fase 2 (Kerangka Halaman) SELESAI** —
-> lihat §11 dan §12. Fase 3–5 belum.
+> secara bertahap. **Fase 1–3 SELESAI** — lihat §11, §12, §13. Fase 4–5 belum.
 > Bagian §3 dan §7 di bawah masih menggambarkan keadaan SEBELUM penulisan ulang
 > dan akan diperbarui saat tiap fase selesai.
 
@@ -416,6 +415,24 @@ lalu **menghitung sendiri** pembagiannya.
 
 ---
 
+## 10b. OVERRIDE PEMILIK UNTUK FASE 5 — PETA KONSEP (29 Juli 2026)
+
+Menggantikan rencana sebelumnya (parser ASCII → peta interaktif):
+
+1. **Bukan parser ASCII murni.** Peta konsep TIDAK boleh tampil sebagai teks
+   biasa maupun blok ASCII.
+2. **Desain:** parser harus menghasilkan **bagan kotak (box/flowchart)** yang
+   rapi, modern, dan terstruktur, dibangun dengan **CSS**.
+3. **READ-ONLY — batasan tegas:** peta konsep murni estetika visual.
+   **DILARANG** memberi fitur **zoom** dan **DILARANG** membuat elemennya
+   dapat diklik. Tidak ada interaksi apa pun.
+
+Konsekuensi teknis: `ctx.nextFence()` tetap dipakai untuk MEMBACA struktur dari
+fence ASCII, tetapi keluarannya berupa bagan kotak CSS statis. Penampil bagan
+layar penuh pada `enhance.js` **tidak boleh** dipasang pada peta konsep.
+
+---
+
 ## 12. PEMBANGUNAN ULANG — FASE 2: KERANGKA HALAMAN (29 Juli 2026)
 
 ### Yang dikerjakan
@@ -487,6 +504,92 @@ periksa `document.scripts` menampilkan versi yang diharapkan.
 - Kartu "Peta Konsep" masih memuat 1 fence ASCII + 1 slot komponen di dalam
   pop-up (Fase 5).
 - Bilah setinggi 63 px karena tombol ikonnya mempertahankan target sentuh 44 px.
+
+---
+
+## 13. PEMBANGUNAN ULANG — FASE 3: MESIN KUIS & WIDGET GUIDED (29 Juli 2026)
+
+### Yang dikerjakan
+| Berkas | Perubahan |
+|---|---|
+| **`js/quizcards.js`** (baru) | Latihan Bertingkat → 5 KARTU (A–E) + pop-up; Tantangan → KARTU + modal layar penuh. **Pemasangan MALAS**: isi kuis baru dibangun saat kartunya diketuk pertama kali, lalu DISIMPAN (tidak dibuang saat ditutup) agar jawaban tetap utuh |
+| `js/activity.js` | **Widget `guided`** (35 pemakaian) — sebelumnya hilang total tanpa jejak. Jalur mount tersendiri: satu langkah pada satu waktu, `feedback` per langkah, salah = mencoba lagi dengan pilihan yang sudah dicoba dinonaktifkan, ditutup `conclusion` + XP |
+| `js/challenge.js` | **Mekanisme `pool` DIBUANG** beserta `fromActivity()`. Soal kini HANYA dari `items` mandiri milik tantangan |
+| `js/quiz.js` | `input_mode` & `answer_format` dipakai; **urutan opsi diacak** |
+| `js/keypad.js` | Mode NUMERIK: tab variabel disembunyikan, tab angka dipaksa aktif |
+| `js/app.js` | Kuis/tantangan tidak lagi dipasang inline; diserahkan ke `QuizCards` |
+| `css/style.css` | `.quizcards`, `.qc-card`, `.ch-card`, widget `guided`, `.q-fmt` |
+
+### ⚠️ DUA CACAT SERIUS YANG DITEMUKAN & DIPERBAIKI
+
+**(1) Tantangan menghasilkan soal tanpa konteks — bug yang Anda laporkan.**
+`buildQuestions()` hanya membaca `ch.pool`, dan `fromActivity()` memecah widget
+menjadi butir: `error-hunt` menjadi opsi `"Langkah 1".."Langkah 4"` **tanpa
+daftar langkahnya**, `cloze` menjadi `"…— bagian 1"` **tanpa kalimatnya**.
+Konten baru tidak memakai `pool` sama sekali, sehingga tantangan menghasilkan
+**0 soal**. Seluruh mesin `pool` dihapus; soal kini dari `items` mandiri.
+Terverifikasi: **75 butir** di 7 tantangan (10×6 + 15), dan butir
+"temukan langkah salah" tampil **utuh sepanjang 315 karakter** berisi keempat
+langkahnya.
+
+**(2) 95% kunci jawaban berada di opsi PERTAMA.**
+Terukur pada konten: **303 dari 319** kunci `mc`/`multi` ada di posisi 0
+(posisi 1: 6 · posisi 2: 10). Artinya peserta yang selalu memilih **A**
+memperoleh ±95% tanpa memahami materi — dan itu terbukti: pengujian pertama
+saya mengeklik opsi pertama pada 10 soal tantangan dan memperoleh **10/10**.
+`content/` tetap sumber kebenaran, jadi **aplikasi yang mengacak**: `quiz.js`
+dan `challenge.js` kini mengacak urutan opsi. Penilaian membandingkan **NILAI**
+opsi (`data-val`) dengan `answer`, bukan indeksnya, sehingga kebenaran penilaian
+tidak terpengaruh. Urutan disimpan per butir agar tidak berubah saat digambar
+ulang. Regresi: **25/25 butir Bab 01 tetap dinilai benar** sesudah diacak.
+
+### PENGURANGAN TINGGI HALAMAN (piksel, lebar ±961 px)
+| Bab | Fase 2 | Fase 3 | Selisih |
+|---|---:|---:|---:|
+| pengantar-polinomial | 4.647 | **2.444** | −2.203 (−47,4%) |
+| konsep-dasar | 14.483 | **12.007** | −2.476 (−17,1%) |
+| operasi-dan-nilai | 14.917 | **12.646** | −2.271 (−15,2%) |
+| pembagian | 16.684 | **14.155** | −2.529 (−15,2%) |
+| teorema-sisa-faktor | 14.800 | **12.284** | −2.516 (−17,0%) |
+| persamaan-vieta | 15.073 | **12.623** | −2.450 (−16,3%) |
+| strategi-hots | 14.386 | **12.015** | −2.371 (−16,5%) |
+| ringkasan-bank-soal | 13.750 | **11.358** | −2.392 (−17,4%) |
+| **TOTAL** | **118.740** | **89.532** | **−29.208 (−24,6%)** |
+
+**Angka bersih ini LEBIH KECIL daripada yang dipindahkan.** Rinciannya:
+* Isi kuis yang keluar dari alur halaman: **±4.745 px per bab** (25 soal).
+  Bagian "Latihan Bertingkat" menyusut dari ±5.100 px menjadi **390 px (−93%)**.
+* Tetapi **35 widget `guided` yang sebelumnya TIDAK TAMPIL SAMA SEKALI** kini
+  dirender: **±2.250 px per bab** (5 × ±450 px). Materi yang tadinya hilang
+  sekarang ada — pertukaran yang jelas menguntungkan.
+
+**Profil sisa tinggi (Bab 01, 11.590 px):** lima sub-materi **7.487 px (65%)**
+— itu materi ajarnya sendiri (teori + contoh + terbimbing + mandiri). Sisanya:
+Persiapan 411 · Latihan Bertingkat 390 · Kesalahan Umum 381 · header 268 ·
+Ringkasan 250 · Tantangan 208 · Refleksi 158. Pemendekan lebih jauh berarti
+menyembunyikan pelajaran, bukan lagi soal.
+
+### Bukti terverifikasi
+| Cek | Hasil |
+|---|---|
+| Kartu kuis · kartu tantangan | **36 · 7** — cocok dengan 36 set & 7 tantangan di konten |
+| Widget `guided` | **35/35** (sebelumnya **0**) · total aktivitas **70/70** (sebelumnya 35) |
+| Soal dirender inline | **0** — seluruhnya malas, di dalam pop-up |
+| Butir tantangan | **75** (10×6 + 15); Bab 07 = "Simulasi TKA" 15 soal/20 menit |
+| Paket D & E | bertanda **opsional** + lencana bonus **+20 XP** |
+| `guided` end-to-end | jalur salah memberi petunjuk & menonaktifkan pilihan; jalur benar menampilkan `feedback` konten; 3/3 langkah → `conclusion`; XP 0 → 15; chip jadi "Selesai" |
+| Mode input numerik | `data-numeric` terpasang, "Format jawaban: bilangan bulat" tampil, `aria-describedby` tersambung, keypad `is-numeric` dengan tab variabel tersembunyi; ketuk `3` → dinilai benar, skor naik |
+| Kemajuan kartu | "1/5 benar", bar 20%; dibuka ulang → jawaban & skor tetap utuh |
+| Sesi tantangan | timer jalan, 10/10, skor 115 (bonus waktu +15), 01:14, +80 XP, lencana `pengenal-polinomial`, rekor baru, rekap kompetensi K1 10/10 |
+| Penilaian sesudah opsi diacak | **25/25 benar** |
+| 8 bab | **0 error KaTeX · 0 gagal muat · 0 pesan konsol** |
+| 360 px | scroll horizontal **0 px**; kartu 1 per baris; pop-up & modal 338 px di dalam viewport, tanpa scroll mendatar |
+
+### Catatan
+- `Challenge.mount(slot, ch, doc)` masih menerima `doc` demi kecocokan
+  pemanggilan, tetapi parameter itu **tidak lagi dipakai** sejak `pool` dibuang.
+- Bintang/lencana/rekor sudah berfungsi (bawaan `challenge.js`); pematangan
+  gamifikasi menyeluruh tetap menjadi lingkup **Fase 4**.
 
 ---
 

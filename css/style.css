@@ -1551,6 +1551,154 @@ body.dgview-open{overflow:hidden;}
 /* isi pop-up tidak boleh memaksa scroll mendatar pada layar sempit */
 .ov-body .pre-wrap,.ov-body .katex-display{overflow-x:auto;}
 
+/* =====================================================================
+   FASE 3 — KARTU LATIHAN BERTINGKAT, KARTU TANTANGAN, WIDGET GUIDED
+   ===================================================================== */
+
+/* ---------- Kartu paket A-E ---------- */
+.quizcards{
+  display:grid;gap:.55rem;margin:.9rem 0 .35rem;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+}
+.qc-store{display:none;}
+.qc-card{
+  display:flex;align-items:center;gap:.6rem;
+  width:100%;text-align:left;
+  padding:.6rem .65rem;
+  background:var(--tone,var(--surface-2));color:var(--ink);
+  border:var(--bd) solid var(--line);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow-sm);cursor:pointer;
+  transition:transform var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease);
+}
+.qc-card:hover,.qc-card:focus-visible{transform:translate(-2px,-2px);box-shadow:var(--shadow);}
+.qc-card:active{transform:translate(1px,1px);box-shadow:none;}
+.qc-letter{
+  flex:0 0 auto;display:grid;place-items:center;
+  width:2.1rem;height:2.1rem;
+  background:var(--surface);border:var(--bd-thin) solid var(--line);border-radius:10px;
+  font-family:var(--font-display);font-weight:700;font-size:1.05rem;
+}
+.qc-main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:.18rem;}
+.qc-level{
+  font-family:var(--font-display);font-weight:700;font-size:.92rem;
+  display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;
+}
+.qc-opt{
+  font-family:var(--font-body);font-weight:700;font-size:.68rem;
+  text-transform:uppercase;letter-spacing:.03em;
+  padding:.05rem .3rem;border:var(--bd-thin) solid var(--line);border-radius:6px;
+  background:var(--surface);
+}
+.qc-prog{
+  display:flex;align-items:center;gap:.28rem;
+  font-size:.78rem;color:var(--ink-soft);
+}
+.qc-prog .lu{width:.9em;height:.9em;}
+.qc-bar{
+  display:block;height:5px;border:var(--bd-thin) solid var(--line);
+  border-radius:99px;background:var(--surface);overflow:hidden;
+}
+.qc-bar-fill{display:block;height:100%;width:0;background:var(--ok);transition:width var(--t) var(--ease);}
+.qc-bonus{
+  flex:0 0 auto;display:flex;align-items:center;gap:.15rem;
+  font-family:var(--font-display);font-weight:700;font-size:.78rem;
+  padding:.1rem .32rem;border:var(--bd-thin) solid var(--line);border-radius:6px;
+  background:var(--surface);
+}
+.qc-bonus .lu{width:.9em;height:.9em;}
+.qc-go{flex:0 0 auto;opacity:.6;}
+.qc-go .lu{width:1.1em;height:1.1em;}
+.qc-card.is-complete .qc-letter{background:var(--ok);color:#fff;}
+.quizcards-hint{
+  display:flex;align-items:flex-start;gap:.4rem;
+  font-size:.82rem;color:var(--ink-soft);margin:0 0 1rem;
+}
+.quizcards-hint .lu{width:.95em;height:.95em;flex:0 0 auto;margin-top:.15em;}
+
+/* ---------- Kartu Tantangan Akhir Bab ---------- */
+.ch-card{
+  display:flex;align-items:center;gap:.65rem;width:100%;text-align:left;
+  margin:.9rem 0 1rem;padding:.7rem .7rem;
+  background:var(--butter);color:var(--ink);
+  border:var(--bd) solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);cursor:pointer;
+  transition:transform var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease);
+}
+.ch-card:hover,.ch-card:focus-visible{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.ch-card:active{transform:translate(1px,1px);box-shadow:var(--shadow-sm);}
+.ch-card-ico{flex:0 0 auto;display:grid;place-items:center;
+  width:2.4rem;height:2.4rem;background:var(--surface);
+  border:var(--bd-thin) solid var(--line);border-radius:12px;}
+.ch-card-ico .lu{width:1.35em;height:1.35em;}
+.ch-card-main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:.2rem;}
+.ch-card-title{font-family:var(--font-display);font-weight:700;font-size:.98rem;line-height:1.2;}
+.ch-card-meta{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;
+  font-size:.8rem;color:var(--ink-soft);}
+.ch-card-meta .lu{width:.9em;height:.9em;}
+.ch-card-stars{display:flex;gap:.15rem;}
+.ch-star{display:inline-grid;place-items:center;opacity:.3;}
+.ch-star .lu{width:1em;height:1em;}
+.ch-star.on{opacity:1;color:var(--coral);}
+:root[data-theme="dark"] .ch-star.on{color:#FFD97A;}
+
+/* ---------- WIDGET GUIDED (Latihan Terbimbing) ---------- */
+.w-guided .g-title{font-family:var(--font-display);font-weight:700;margin:.1rem 0 .3rem;}
+.g-track{display:flex;gap:.3rem;margin:.5rem 0 .7rem;}
+.g-dot{
+  width:1.5rem;height:.42rem;border-radius:99px;
+  border:var(--bd-thin) solid var(--line);background:var(--surface);
+  transition:background var(--t) var(--ease);
+}
+.g-dot.is-now{background:var(--sky);}
+.g-dot.is-ok{background:var(--ok);}
+.g-step{
+  border-top:var(--bd-thin) dashed var(--line);
+  padding-top:.6rem;margin-top:.6rem;
+}
+.g-step:first-child{border-top:0;padding-top:0;margin-top:0;}
+.g-ask{font-weight:600;margin:0 0 .5rem;}
+.g-opts{display:grid;gap:.4rem;}
+.g-opt{
+  text-align:left;padding:.5rem .6rem;
+  background:var(--surface);color:var(--ink);
+  border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);
+  cursor:pointer;font-size:.94rem;
+  transition:transform var(--t-fast) var(--ease),background var(--t-fast) var(--ease);
+}
+.g-opt:hover:not(:disabled){transform:translateX(2px);background:var(--surface-2);}
+.g-opt:disabled{cursor:default;}
+.g-opt.is-ok{background:var(--mint);border-color:var(--ok);font-weight:700;}
+.g-opt.is-no{background:var(--peach);opacity:.75;text-decoration:line-through;}
+.g-fb{
+  display:flex;align-items:flex-start;gap:.4rem;
+  margin-top:.55rem;padding:.5rem .6rem;
+  border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);
+  font-size:.9rem;
+}
+.g-fb.is-ok{background:var(--mint);}
+.g-fb.is-no{background:var(--peach);}
+.g-fb .lu{width:1.05em;height:1.05em;flex:0 0 auto;margin-top:.1em;}
+.g-fb-ico{display:grid;place-items:center;flex:0 0 auto;}
+.g-next{margin-top:.6rem;}
+.g-done{
+  margin-top:.8rem;padding:.65rem .7rem;
+  background:var(--lavender);
+  border:var(--bd) solid var(--line);border-radius:var(--radius-sm);
+}
+.g-done-head{display:flex;align-items:center;gap:.4rem;
+  font-family:var(--font-display);margin-bottom:.35rem;}
+.g-done-head .lu{width:1.1em;height:1.1em;}
+.g-again{margin-top:.6rem;}
+
+/* ---------- Format jawaban pada soal isian ---------- */
+.q-fmt{
+  display:flex;align-items:center;gap:.3rem;
+  font-size:.8rem;color:var(--ink-soft);margin:.3rem 0 0;
+}
+.q-fmt .lu{width:.9em;height:.9em;flex:0 0 auto;}
+/* Keypad mode numerik: tab variabel disembunyikan, grid angka melebar */
+.keypad.is-numeric .kp-tab[data-tab="var"]{display:none;}
+
 /* ---------- AKSESIBILITAS ---------- */
 :focus-visible{outline:3px solid var(--coral);outline-offset:2px;border-radius:4px;}
 :root[data-theme="dark"] :focus-visible{outline-color:#FFD97A;}

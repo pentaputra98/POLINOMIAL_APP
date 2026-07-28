@@ -1,8 +1,10 @@
 /* =========================================================================
    challenge.js — Tantangan Akhir Bab (asesmen berwaktu).
 
-   Data dari blok ```json bertipe "challenge". Soal ditarik dari `pool`
-   (gabungan id aktivitas dan set_id kuis) — engine TIDAK mengarang soal.
+   Data dari blok ```json bertipe "challenge". Soal diambil HANYA dari `items`
+   milik tantangan itu sendiri — engine TIDAK mengarang soal dan TIDAK menarik
+   dari `pool`. Mekanisme `pool` telah dibuang karena merusak konteks soal
+   (lihat catatan pada buildQuestions dan challenge_rules di manifest).
 
    Aturan penilaian (disetujui pengguna):
      * Ambang `stars` dibaca sebagai PERSENTASE skor maksimum, bukan skor
@@ -43,68 +45,38 @@
   }
 
   /* ------------------------------------------------------------------ *
-   * Menyusun daftar soal dari `pool`
-   * Aktivitas diubah menjadi butir bergaya pilihan/isian agar dapat
-   * dinilai cepat dalam mode berwaktu; set kuis dipakai apa adanya.
+   * Menyusun daftar soal — HANYA dari `items` milik tantangan itu sendiri
+   *
+   * MEKANISME `pool` SUDAH DIBUANG. Dahulu tantangan menarik soal dari
+   * aktivitas dan set kuis, lalu memecah widget menjadi butir-butir. Cara itu
+   * MERUSAK KONTEKS dan menghasilkan soal yang mustahil dijawab, misalnya
+   * "Langkah 1..4" tanpa daftar langkahnya, atau "Lengkapi kalimat kunci —
+   * bagian 1" tanpa kalimatnya. Itulah bug yang dilaporkan dari uji coba
+   * dengan siswa.
+   *
+   * `interaction_schema.challenge_rules.no_pooling` pada manifest kini
+   * MELARANGNYA, dan seluruh tantangan pada konten memiliki `items` mandiri
+   * yang memuat seluruh konteks di dalam `question` (termasuk daftar langkah).
    * ------------------------------------------------------------------ */
-  function fromActivity(a) {
-    var out = [];
-    if (a.widget === "truefalse") {
-      (a.statements || []).forEach(function (s, i) {
-        out.push({ id: a.id + ":" + i, type: "mc", question: s.s,
-                   options: ["Benar", "Salah"], answer: s.a ? "Benar" : "Salah",
-                   explanation: s.why, competency: a.competency });
-      });
-    } else if (a.widget === "cloze") {
-      (a.answers || []).forEach(function (ans, i) {
-        out.push({ id: a.id + ":" + i, type: "short",
-                   question: a.prompt + " — bagian " + (i + 1),
-                   answer: ans, competency: a.competency });
-      });
-    } else if (a.widget === "matching") {
-      (a.pairs || []).forEach(function (p, i) {
-        out.push({ id: a.id + ":" + i, type: "mc", question: p[0],
-                   options: shuffle(a.pairs.map(function (q) { return q[1]; })),
-                   answer: p[1], competency: a.competency });
-      });
-    } else if (a.widget === "categorize") {
-      (a.items || []).forEach(function (it, i) {
-        out.push({ id: a.id + ":" + i, type: "mc", question: it[0],
-                   options: a.categories.slice(), answer: it[1], competency: a.competency });
-      });
-    } else if (a.widget === "ordering") {
-      out.push({ id: a.id, type: "mc", question: a.prompt + " — manakah yang paling awal?",
-                 options: a.options.slice(),
-                 answer: a.options[a.answer_order[0]], competency: a.competency });
-    } else if (a.widget === "error-hunt") {
-      out.push({ id: a.id, type: "mc", question: a.prompt,
-                 options: (a.steps || []).map(function (s, i) { return "Langkah " + (i + 1); }),
-                 answer: "Langkah " + (a.wrong_index + 1),
-                 explanation: a.why, competency: a.competency });
-    } else if (a.widget === "horner-steps") {
-      out.push({ id: a.id, type: "short",
-                 question: a.prompt + " — berapa sisanya?",
-                 answer: String(a.expected_remainder), competency: a.competency });
-    }
-    // widget "slider" bersifat eksplorasi → tidak diberi skor
-    return out;
+  /* Urutan opsi diacak. Pada konten, 95% kunci mc/multi ditulis sebagai opsi
+     pertama; tanpa pengacakan, memilih "A" terus-menerus menghasilkan skor
+     hampir sempurna. Penilaian membandingkan NILAI opsi, bukan indeksnya.
+     Urutan disimpan per butir agar tidak berubah saat soal digambar ulang. */
+  function optionOrder(q) {
+    if (!q.options || !q.options.length) return [];
+    if (!q.__opts) q.__opts = shuffle(q.options);
+    return q.__opts;
   }
 
-  function buildQuestions(ch, doc) {
-    var acts = {}, sets = {};
-    (doc.activities || []).forEach(function (a) { acts[a.id] = a; });
-    (doc.quizzes || []).forEach(function (q) { sets[q.set_id] = q; });
-
-    var qs = [];
-    (ch.pool || []).forEach(function (id) {
-      if (acts[id]) qs = qs.concat(fromActivity(acts[id]));
-      else if (sets[id]) {
-        (sets[id].items || []).forEach(function (it) {
-          if (it.type === "proof") return;              // tidak dinilai otomatis
-          qs.push(Object.assign({}, it, { id: id + ":" + it.id }));
-        });
-      }
+  function buildQuestions(ch) {
+    var qs = (ch.items || []).filter(function (it) {
+      return it && it.type !== "proof";      // proof tidak dinilai otomatis
+    }).map(function (it) {
+      return Object.assign({}, it);
     });
+    if (!qs.length && window.console) {
+      console.warn("[Challenge] " + (ch.id || "?") + " tidak memiliki items.");
+    }
     return ch.shuffle ? shuffle(qs) : qs;
   }
 
@@ -203,7 +175,7 @@
       stage.innerHTML =
         '<div class="ch-q">' + smart(q.question) + "</div>" +
         (q.type === "mc" || q.type === "multi"
-          ? '<div class="ch-opts">' + (q.options || []).map(function (o, k) {
+          ? '<div class="ch-opts">' + optionOrder(q).map(function (o, k) {
               return '<button type="button" class="ch-opt" data-val="' + esc(o) + '">' +
                 '<span class="q-mark">' + String.fromCharCode(65 + k) + "</span>" +
                 '<span class="q-optlabel">' + smart(o) + "</span></button>";

@@ -163,6 +163,35 @@
   }
 
   /* ------------------------------------------------------------------ *
+   * URUTAN OPSI DIACAK — wajib untuk keabsahan asesmen
+   *
+   * Pada konten, kunci jawaban hampir selalu ditulis sebagai opsi PERTAMA
+   * (terukur: 303 dari 319 kunci mc/multi, yaitu 95%, berada di posisi 0).
+   * Bila urutannya ditampilkan apa adanya, peserta yang selalu memilih "A"
+   * memperoleh ±95% tanpa memahami materi.
+   *
+   * `content/` tetap sumber kebenaran — yang menyesuaikan adalah aplikasi.
+   * Penilaian membandingkan NILAI opsi (data-val) dengan `answer`, bukan
+   * indeksnya, sehingga pengacakan tidak memengaruhi kebenaran penilaian.
+   *
+   * Urutan disimpan pada objek butir agar TETAP SAMA selama satu kunjungan
+   * halaman: mengacak ulang saat render berikutnya akan memindahkan jawaban
+   * yang sudah dipilih peserta.
+   * ------------------------------------------------------------------ */
+  function shuffled(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function optionOrder(it) {
+    if (!it.options || !it.options.length) return [];
+    if (!it.__opts) it.__opts = shuffled(it.options);
+    return it.__opts;
+  }
+
+  /* ------------------------------------------------------------------ *
    * Render satu butir soal
    * ------------------------------------------------------------------ */
   function renderItem(it, idx, setId) {
@@ -175,7 +204,7 @@
 
     if (it.type === "mc" || it.type === "multi") {
       h += '<div class="q-opts' + (it.type === "multi" ? " is-multi" : "") + '">' +
-        (it.options || []).map(function (o, k) {
+        optionOrder(it).map(function (o, k) {
           return '<button type="button" class="q-opt" data-val="' + esc(o) + '">' +
             '<span class="q-mark">' + String.fromCharCode(65 + k) + "</span>" +
             '<span class="q-optlabel">' + smart(o) + "</span></button>";
@@ -197,9 +226,24 @@
         }).join("") + "</div>";
       } else {
         var n = partCount(it.answer);
+        /* Konten baru menetapkan `input_mode` dan `answer_format` pada setiap
+           soal isian (seluruhnya numerik). Keduanya dipakai untuk:
+             - menyalakan mode NUMERIK pada keypad aplikasi, sehingga peserta
+               tidak disuguhi 40 tombol aljabar untuk menjawab satu bilangan;
+             - menampilkan format yang diharapkan, agar tidak ada jawaban
+               bermakna ganda. */
+        var numerik = (it.input_mode || "number") === "number";
         h += '<div class="q-input-row">' +
-          '<input class="q-input" type="text" placeholder="Ketuk untuk menjawab…" aria-label="Jawaban" />' +
+          '<input class="q-input" type="text" placeholder="Ketuk untuk menjawab…"' +
+            ' aria-label="Jawaban"' +
+            (numerik ? ' data-numeric="1"' : "") +
+            (it.answer_format ? ' aria-describedby="fmt-' + esc(setId) + "-" + esc(it.id) + '"' : "") +
+          " />" +
           "</div>" +
+          (it.answer_format
+            ? '<p class="q-fmt" id="fmt-' + esc(setId) + "-" + esc(it.id) + '">' +
+              icon("info") + " Format jawaban: <b>" + esc(it.answer_format) + "</b></p>"
+            : "") +
           (n > 1
             ? '<p class="q-hint">' + icon("info") + " Jawaban terdiri dari <b>" + n +
               " bagian</b> — pisahkan dengan tanda koma.</p>"
@@ -283,7 +327,7 @@
 
     // pasang keypad pada tiap isian
     slot.querySelectorAll(".q-input, .q-part").forEach(function (inp) {
-      if (window.Keypad) Keypad.attach(inp);
+      if (window.Keypad) Keypad.attach(inp, null, { numeric: inp.dataset.numeric === "1" });
     });
 
     // pulihkan jawaban tersimpan

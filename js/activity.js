@@ -42,6 +42,7 @@
   function same(a, b) { return window.Quiz ? Quiz.compare(a, b) : norm(a) === norm(b); }
 
   var WIDGET_LABEL = {
+    guided: "Latihan Terbimbing",
     matching: "Menjodohkan", categorize: "Mengelompokkan", ordering: "Mengurutkan",
     cloze: "Melengkapi", truefalse: "Benar atau Salah", "error-hunt": "Temukan Kekeliruan",
     "horner-steps": "Skema Horner", slider: "Eksplorasi Nilai"
@@ -526,6 +527,152 @@
   }
 
   /* ------------------------------------------------------------------ *
+   * GUIDED — Latihan Terbimbing (widget terbanyak: 35 pemakaian)
+   *
+   * Berbeda dari widget lain: TIDAK ada tombol "Periksa" global. Soal dipecah
+   * menjadi beberapa langkah; peserta memilih jawaban satu langkah, sistem
+   * menjelaskan MENGAPA langkah itu benar (`feedback`), baru lanjut. Salah
+   * berarti mencoba lagi — bukan gagal — sesuai peran "guru yang menuntun".
+   * Ditutup oleh `conclusion`.
+   *
+   * Karena alurnya berbeda, guided memakai jalur mount tersendiri.
+   * ------------------------------------------------------------------ */
+  function buildGuided(d) {
+    var xp = (d.reward && d.reward.xp) || 0;
+    var sudah = window.Gamify && Gamify.isDone("act:" + d.id);
+    var n = (d.steps || []).length;
+    return '<div class="act-head">' +
+        '<span class="act-kind">' + icon("graduation-cap") +
+          "<span>Latihan Terbimbing</span></span>" +
+        (xp ? '<span class="act-xp' + (sudah ? " is-done" : "") + '">' +
+          icon(sudah ? "circle-check" : "zap") + (sudah ? "Selesai" : "+" + xp + " XP") + "</span>" : "") +
+      "</div>" +
+      (d.title ? '<p class="g-title">' + smart(d.title) + "</p>" : "") +
+      (d.prompt ? '<p class="act-prompt">' + smart(d.prompt) + "</p>" : "") +
+      '<div class="g-track" aria-hidden="true">' +
+        Array.apply(null, Array(n)).map(function (_, i) {
+          return '<span class="g-dot" data-dot="' + i + '"></span>';
+        }).join("") +
+      "</div>" +
+      '<div class="g-steps"></div>' +
+      '<div class="g-done" hidden></div>';
+  }
+
+  function mountGuided(slot, d) {
+    var steps = d.steps || [];
+    var host = slot.querySelector(".g-steps");
+    var done = slot.querySelector(".g-done");
+    var cur = 0;
+
+    function tandai(i, kelas) {
+      var dot = slot.querySelector('.g-dot[data-dot="' + i + '"]');
+      if (dot) dot.className = "g-dot " + kelas;
+    }
+
+    function tampilkan(i) {
+      var st = steps[i];
+      if (!st) return selesai();
+      var wrap = document.createElement("div");
+      wrap.className = "g-step";
+      wrap.innerHTML =
+        '<p class="g-ask">' + smart(st.ask) + "</p>" +
+        '<div class="g-opts" role="group" aria-label="Pilihan jawaban langkah ' + (i + 1) + '">' +
+          shuffle(st.options || []).map(function (o) {
+            /* esc() sudah meng-escape kutip ganda, jadi aman sebagai atribut */
+            return '<button type="button" class="g-opt" data-val="' + esc(o) + '">' + smart(o) + "</button>";
+          }).join("") +
+        "</div>" +
+        '<div class="g-fb" hidden></div>';
+      host.appendChild(wrap);
+      if (window.MR) MR.render(wrap);
+      if (window.Icons) Icons.hydrate(wrap);
+      tandai(i, "is-now");
+
+      wrap.querySelector(".g-opts").addEventListener("click", function (e) {
+        var b = e.target.closest(".g-opt");
+        if (!b || wrap.dataset.beres) return;
+        var benar = same(b.dataset.val, st.answer);
+        if (!benar) {
+          /* Salah = kesempatan mencoba lagi, dengan petunjuk. Pilihan yang
+             sudah dicoba dinonaktifkan agar peserta menyempitkan pilihan,
+             bukan menebak berulang. */
+          b.classList.add("is-no");
+          b.disabled = true;
+          var fbn = wrap.querySelector(".g-fb");
+          fbn.hidden = false;
+          fbn.className = "g-fb is-no";
+          fbn.innerHTML = icon("circle-x") + " Belum tepat. Cermati kembali langkah ini, lalu pilih yang lain.";
+          if (window.Icons) Icons.hydrate(fbn);
+          if (window.SFX) SFX.play("pop");
+          return;
+        }
+        wrap.dataset.beres = "1";
+        b.classList.add("is-ok");
+        wrap.querySelectorAll(".g-opt").forEach(function (x) { x.disabled = true; });
+        tandai(i, "is-ok");
+        var fb = wrap.querySelector(".g-fb");
+        fb.hidden = false;
+        fb.className = "g-fb is-ok";
+        fb.innerHTML = '<span class="g-fb-ico">' + icon("circle-check") + "</span>" +
+          "<span>" + smart(st.feedback || "Tepat.") + "</span>";
+        if (window.MR) MR.render(fb);
+        if (window.Icons) Icons.hydrate(fb);
+        if (window.SFX) SFX.play("correct");
+
+        var akhir = i + 1 >= steps.length;
+        var next = document.createElement("button");
+        next.type = "button";
+        next.className = "btn btn-primary g-next";
+        next.innerHTML = akhir ? icon("circle-check") + " Lihat kesimpulan"
+                               : icon("arrow-right") + " Langkah berikutnya";
+        wrap.appendChild(next);
+        if (window.Icons) Icons.hydrate(next);
+        next.addEventListener("click", function () {
+          next.remove();
+          cur = i + 1;
+          tampilkan(cur);
+          var b2 = host.lastElementChild;
+          if (b2 && b2.scrollIntoView) b2.scrollIntoView({ block: "nearest" });
+        });
+      });
+    }
+
+    function selesai() {
+      done.hidden = false;
+      done.className = "g-done";
+      done.innerHTML =
+        '<div class="g-done-head">' + icon("graduation-cap") + "<b>Kesimpulan</b></div>" +
+        (d.conclusion ? "<p>" + smart(d.conclusion) + "</p>" : "") +
+        '<button type="button" class="btn g-again">' + icon("rotate-ccw") + " Ulangi latihan</button>";
+      if (window.MR) MR.render(done);
+      if (window.Icons) Icons.hydrate(done);
+
+      if (window.Gamify && d.reward && d.reward.xp) {
+        var got = Gamify.addXP(d.reward.xp, "act:" + d.id);
+        if (got.gained) {
+          var chip = slot.querySelector(".act-xp");
+          if (chip) {
+            chip.classList.add("is-done");
+            chip.innerHTML = icon("circle-check") + "Selesai";
+            if (window.Icons) Icons.hydrate(chip);
+          }
+          if (window.showToast) showToast(icon("zap") + " +" + got.gained + " XP" +
+            (got.leveledUp ? " · Naik ke Level " + got.level + "!" : ""), "ok");
+        }
+      }
+      done.querySelector(".g-again").addEventListener("click", function () {
+        host.innerHTML = "";
+        done.hidden = true;
+        slot.querySelectorAll(".g-dot").forEach(function (x) { x.className = "g-dot"; });
+        cur = 0;
+        tampilkan(0);
+      });
+    }
+
+    tampilkan(0);
+  }
+
+  /* ------------------------------------------------------------------ *
    * Pemasangan
    * ------------------------------------------------------------------ */
   var BUILD = {
@@ -541,6 +688,19 @@
 
   function mount(slot, d) {
     if (!slot || !d || slot.dataset.mounted) return;
+
+    /* guided memakai jalur tersendiri: alurnya bertahap, tanpa "Periksa" global */
+    if (d.widget === "guided") {
+      slot.dataset.mounted = "1";
+      slot.hidden = false;
+      slot.className = "activity-block w-guided";
+      slot.innerHTML = buildGuided(d);
+      if (window.MR) MR.render(slot);
+      if (window.Icons) Icons.hydrate(slot);
+      mountGuided(slot, d);
+      return;
+    }
+
     if (!BUILD[d.widget]) { slot.hidden = true; return; }
     slot.dataset.mounted = "1";
     slot.hidden = false;
