@@ -125,6 +125,113 @@ blockquote>p:first-child .lead-icon{color:var(--ink);}
   --shadow-lg:6px 6px 0 var(--line);
 }
 
+/* =====================================================================
+   PENANDA STRUKTUR RUMUS  (visual_conventions.katex_highlight)
+   Dipakai konten lewat \htmlClass{...}{...} di dalam KaTeX; membutuhkan
+   opsi KaTeX trust:true (lihat js/mathrender.js).
+
+   Warna HANYA untuk memperjelas struktur, bukan hiasan: pasangan yang
+   setara memakai kelas yang sama. Seluruh warna dipilih agar kontrasnya
+   >= 7:1 (AAA) terhadap --surface pada kedua tema.
+   ===================================================================== */
+:root {
+  --hl-var:#12468F;      /* variabel      */
+  --hl-coef:#8C2A12;     /* koefisien     */
+  --hl-pow:#5B2E9D;      /* pangkat       */
+  --hl-const:#0F5527;    /* konstanta     */
+  --hl-1:#0D585F;        /* padanan ke-1  */
+  --hl-2:#8E1573;        /* padanan ke-2  */
+  --hl-3:#6E4200;        /* padanan ke-3  */
+  --hl-term-bg:rgba(18,70,143,.10);
+}
+:root[data-theme="dark"] {
+  --hl-var:#9CC8FF;
+  --hl-coef:#FFB4A2;
+  --hl-pow:#DCBBFF;
+  --hl-const:#8FE9AE;
+  --hl-1:#83E6EC;
+  --hl-2:#FFAEE2;
+  --hl-3:#FFD98A;
+  --hl-term-bg:rgba(156,200,255,.16);
+}
+
+.hl-var{color:var(--hl-var);}
+.hl-coef{color:var(--hl-coef);}
+.hl-pow{color:var(--hl-pow);}
+.hl-const{color:var(--hl-const);}
+.hl-1{color:var(--hl-1);}
+.hl-2{color:var(--hl-2);}
+.hl-3{color:var(--hl-3);}
+/* satu suku utuh: diberi latar lembut + garis bawah agar batasnya terlihat
+   tanpa bergantung pada warna saja (aman untuk buta warna) */
+.hl-term{
+  background:var(--hl-term-bg);
+  border-radius:6px;
+  padding:.05em .18em;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
+/* Pembeda tambahan selain warna: tebalkan sedikit agar penanda tetap
+   terbaca pada cetakan hitam-putih maupun bagi pengguna buta warna. */
+.hl-var,.hl-coef,.hl-pow,.hl-const,.hl-1,.hl-2,.hl-3{font-weight:700;}
+
+/* =====================================================================
+   FONDASI VISUAL  (<!-- VISUAL: ... --> -> js/visuals.js)
+   Dua mekanisme inti:
+   (1) LAPISAN JANGKAR — KaTeX merender rumusnya, lalu SVG menggambar panah
+       di atasnya dengan berpegang pada elemen ber-\htmlClass. KaTeX sendiri
+       tidak memiliki panah antar-suku, jadi harus dua lapis seperti ini.
+   (2) RUMAH POROGAPIT — grid CSS, bukan rumus: KaTeX tidak punya \longdiv.
+   ===================================================================== */
+.visual-slot{margin:1.1rem 0;}
+.vfig{
+  position:relative;
+  border:var(--bd) solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface);
+  box-shadow:var(--shadow);
+  padding:.9rem .8rem .8rem;
+  overflow:hidden;
+}
+.vfig-head{
+  display:flex;align-items:center;gap:.45rem;
+  font-family:var(--font-display);font-weight:700;
+  font-size:.95rem;margin-bottom:.6rem;
+}
+.vfig-head .lu{width:1.1em;height:1.1em;}
+.vfig-body{position:relative;}
+/* area yang diukur oleh lapisan jangkar; overflow-x agar tak pernah
+   memaksa halaman menggulir mendatar pada 360px */
+.vstage{position:relative;overflow-x:auto;padding:.35rem .1rem .5rem;}
+.vstage .katex-display{margin:.35rem 0;}
+/* SVG panah menumpang di atas rumus; tidak menangkap sentuhan */
+.v-overlay{position:absolute;inset:0;pointer-events:none;overflow:visible;}
+.v-overlay path,.v-overlay line{fill:none;stroke-width:2.5;stroke-linecap:round;}
+.v-overlay .v-arrow{stroke:var(--hl-2);}
+.v-overlay .v-arrow-2{stroke:var(--hl-1);}
+.v-overlay text{font-family:var(--font-body);font-size:11px;font-weight:700;fill:var(--ink);}
+/* jangkar yang sedang disorot oleh animasi */
+.v-anchor-on{outline:2.5px solid currentColor;outline-offset:2px;border-radius:4px;}
+.vfig-controls{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;}
+.vfig-note{font-size:.85rem;color:var(--ink-soft);margin-top:.5rem;}
+
+/* --- Rumah pembagian porogapit ---------------------------------------- */
+.porogapit{display:inline-grid;gap:0 .5rem;font-family:var(--font-mono);}
+.pg-quot{grid-row:1;border-bottom:var(--bd) solid var(--line);padding:.15rem .4rem .25rem;}
+.pg-div{grid-row:2;grid-column:1;padding:.25rem .35rem;align-self:start;}
+/* "rumah": kurung siku terbalik = garis kiri + garis atas pada sel yang dibagi */
+.pg-dend{
+  grid-row:2;grid-column:2;
+  border-left:var(--bd) solid var(--line);
+  border-top:var(--bd) solid var(--line);
+  border-top-left-radius:8px;
+  padding:.25rem .4rem;
+}
+.pg-step{grid-column:2;padding:.1rem .4rem;}
+.pg-step.is-sub{border-bottom:var(--bd-thin) solid var(--line);}
+.pg-step.is-dim{opacity:.35;}
+.pg-active{background:var(--hl-term-bg);border-radius:6px;}
+
 /* ---------- RESET ---------- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 

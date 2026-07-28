@@ -1,6 +1,12 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **27 Juli 2026** · Versi aset **`?b=60`** · Cache SW **`polinomial-v42`**
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=61`** · Cache SW **`polinomial-v43`**
+>
+> ⚠️ **Sedang berlangsung: pembangunan ulang ke arsitektur halaman berstruktur.**
+> Konten sudah ditulis ulang seluruhnya (commit `4f0deb0`); aplikasi menyusul
+> secara bertahap. **Fase 1 (Fondasi) SELESAI** — lihat §11. Fase 2–5 belum.
+> Bagian §3 dan §7 di bawah masih menggambarkan keadaan SEBELUM penulisan ulang
+> dan akan diperbarui saat tiap fase selesai.
 
 ---
 
@@ -333,6 +339,75 @@ sambil membiarkan `$` untuk MR — **belum dikerjakan, menunggu keputusan Anda**
 | **Regresi penilaian: SELURUH soal isian** | **217 dinilai benar, 0 gagal** (38 dilewati: isian ganda & mc) |
 | Kunci mc/multi cocok dengan opsi | **40/40**, sama persis dengan sebelum perubahan |
 | Field dinilai tersentuh | 23, `normalize()` identik semua |
+
+---
+
+## 11. PEMBANGUNAN ULANG — FASE 1: FONDASI (29 Juli 2026)
+
+### Inventaris konten baru (terukur, bukan ingatan)
+36 set kuis · 70 aktivitas · 7 tantangan · **180 butir kuis** (mc 121 · short 53 ·
+multi 6) · **75 butir tantangan** · widget: **guided 35** · matching 12 · truefalse 6 ·
+categorize 6 · error-hunt 5 · ordering 4 · slider 1 · horner-steps 1 ·
+**22 direktif VISUAL** · **51 pemakaian `\htmlClass`** · 12 fence ASCII.
+Validasi konten: **0 masalah** (tidak ada `pool`, semua `display:modal`, semua
+`short` ber-`input_mode`+`answer_format`, semua aktivitas ber-`reward.xp`).
+
+### Yang dikerjakan
+| Berkas | Perubahan |
+|---|---|
+| `js/mathrender.js` | **`trust:true` + `strict:false`** pada `katex.render` DAN `renderMathInElement`. Inilah kunci fase ini — tanpa `trust`, KaTeX **membuang `\htmlClass` diam-diam** sehingga 51 penanda struktur tidak pernah tampil |
+| `css/style.css` | 8 kelas `hl-*` (token terang & gelap) + fondasi visual: `.vfig`, `.vstage`, `.v-overlay`, `.porogapit` |
+| **`js/visuals.js`** (baru) | Mesin direktif VISUAL: registry, lapisan jangkar+panah SVG, rumah porogapit, parser LaTeX→koefisien, pembagian panjang, Horner |
+| `js/markdown.js` | frontmatter kini mengurai **flow-map** (`sub_materi: - { id, title }`); direktif `<!-- VISUAL -->` **ditangkap jadi slot** (sebelumnya ikut terbuang pembersih komentar) |
+| `js/icons.js` | +4 ikon · +blok **ALIAS** nama Lucide lama→baru · `✍️`→`pencil`, `⭐`→`star` · `applyEmoji` kini memindai **seluruh sel tabel** (dahulu hanya `td:first-child`) |
+| **`tools/gen-icons.py`** (baru) | Pembangkit `icons.js` dari `lib/lucide/icons/*.svg` — dokumen lama merujuknya tetapi berkasnya tidak ada |
+| `js/examples.js` | **DIHAPUS** (keputusan K3a); konten baru menulis Contoh sebagai prosa di dalam sub-materi |
+
+### Mengapa panah & porogapit BUKAN pekerjaan KaTeX
+KaTeX tidak memiliki panah antar-suku maupun `\longdiv`. Keduanya dibangun
+sebagai **dua lapis**: KaTeX merender rumus, lalu SVG menggambar di atasnya
+dengan berpegang pada **jangkar DOM** dari `\htmlClass` milik penulis. Rumah
+porogapit adalah **grid CSS** (garis kiri + garis atas = kurung siku terbalik).
+
+**Konten tetap sumber kebenaran.** Tidak ada rumus/angka yang diketik ulang di
+`visuals.js`: panah distribusi *mengangkat* rumus `$$…$$` dari `.md` dan memakai
+jangkar `hl-coef`/`hl-1`/`hl-2` penulis; porogapit *membaca* "Bagi $A$ oleh $B$"
+lalu **menghitung sendiri** pembagiannya.
+
+### Bukti terverifikasi
+| Cek | Hasil |
+|---|---|
+| `hl-*` terender | **51** — padanan tepat dengan 51 `\htmlClass` di konten (sebelumnya **0**) |
+| Slot VISUAL terbentuk | **22** — sama dengan jumlah direktif |
+| Builder aktif | 2 (`panah-distribusi`, `rumah-pembagian-porogapit`); 20 slot lain **disembunyikan** — bukan kotak kosong, dan direktif tidak pernah tampil sebagai teks |
+| Uji mandiri mesin polinomial | `longDivide(2x³-3x²+4x-5, x-2)` → $H=2x^2+x+6$, $S=7$ · `horner([1,0,-7,6],1)` → sisa 0 — **cocok dengan konten** |
+| Geometri panah | mulai 84,6 px (pusat `3`) → berakhir 103,2 (`x`) dan 124,6 (`−2`); tidak terpotong |
+| Rumah porogapit | atap $2x^2+x+6$ (dihitung), garis kiri+atas 3 px, 3 siklus tersingkap bertahap |
+| frontmatter | `sub_materi` jadi objek `{id,title}`; `layout`, `xp_available:265`, 10 aktivitas, id tantangan terbaca |
+| Kontras `hl-*` | terang **8,15–9,14** · gelap **9,23–11,83** (AAA butuh ≥7) |
+| 8 bab | **2224 rumus, 0 error KaTeX, 0 gagal muat, 0 `$` bocor** |
+| Emoji mentah | **8 → 0**. Enam `✅`/`❌` di kolom terakhir tabel Bab 01 diperbaiki |
+| Scroll horizontal @360 px | **0 px** (Bab 02 & 03) |
+| Konsol | **0 pesan** |
+
+### Catatan
+- Dua `✓` (U+2713) tersisa **di dalam rumus KaTeX** (`\;✓` pada Bab 03 & 05).
+  Itu glif matematika yang dirender KaTeX, bukan emoji mentah — dibiarkan.
+- 12 fence ASCII **masih tampil sebagai teks** (peta konsep, tabel Horner).
+  Penggantiannya masuk Fase 5; `visuals.js` sudah menyediakan `ctx.nextFence()`
+  untuk mengangkat datanya.
+- Belum dikerjakan (sesuai rencana): Info Cards pop-up, sticky sub-materi,
+  kartu+pop-up latihan bertingkat, modal tantangan, widget `guided`,
+  `input_mode`, `optional`/`bonus_xp`, 20 visual sisanya.
+
+### Temuan konten — dilaporkan, TIDAK diubah
+1. `content-manifest.json:684` menamai `expected_bring_down`, tetapi
+   `03-pembagian-polinomial.md:322` memakai **`expected_quotient`**. Isi konten
+   benar; nama di manifest yang perlu diselaraskan.
+2. `content-manifest.json:688` belum mencantumkan `step` dan `checkpoints` yang
+   dipakai `slider` di `02-…md:312`.
+3. `cloze` masih terdokumentasi di manifest tetapi **0 dipakai**.
+4. `hl-term` terdaftar, 0 dipakai — gayanya sudah disiapkan.
 
 ---
 

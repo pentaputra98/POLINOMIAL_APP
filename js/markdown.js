@@ -35,8 +35,32 @@
     if (/^".*"$/.test(s) || /^'.*'$/.test(s)) return s.slice(1, -1);
     return s;
   }
+  /* Flow-map sebaris: { id: "1", title: "Apa Itu Polinomial" }
+     Dipakai frontmatter `sub_materi`. Tanpa ini, tiap butir terbaca sebagai
+     STRING mentah "{ id: ... }" dan judul sub-materi tidak dapat diambil. */
+  function parseFlowMap(v) {
+    var obj = {};
+    var body = v.slice(1, -1);
+    // pisah pada koma yang BERADA DI LUAR tanda kutip
+    var parts = [], buf = "", q = null;
+    for (var i = 0; i < body.length; i++) {
+      var c = body[i];
+      if (q) { if (c === q) q = null; buf += c; continue; }
+      if (c === '"' || c === "'") { q = c; buf += c; continue; }
+      if (c === ",") { parts.push(buf); buf = ""; continue; }
+      buf += c;
+    }
+    if (buf.trim()) parts.push(buf);
+    parts.forEach(function (p) {
+      var k = p.indexOf(":");
+      if (k < 0) return;
+      obj[unquote(p.slice(0, k)).trim()] = parseScalar(p.slice(k + 1));
+    });
+    return obj;
+  }
   function parseScalar(v) {
     v = v.trim();
+    if (/^\{[\s\S]*\}$/.test(v)) return parseFlowMap(v);
     if (/^\[.*\]$/.test(v)) {
       return v.slice(1, -1).split(",").map(unquote).filter(function (x) { return x !== ""; });
     }
@@ -54,7 +78,8 @@
       var li = /^\s+-\s+(.*)$/.exec(line);
       if (li && curKey) {
         if (!Array.isArray(front[curKey])) front[curKey] = [];
-        front[curKey].push(unquote(li[1]));
+        var v = li[1].trim();
+        front[curKey].push(/^\{[\s\S]*\}$/.test(v) ? parseFlowMap(v) : unquote(v));
         return;
       }
       var kv = /^([A-Za-z0-9_-]+):\s*(.*)$/.exec(line);
@@ -238,7 +263,7 @@
   function parse(raw) {
     var fm = parseFrontmatter(String(raw).replace(/\r\n/g, "\n"));
     var text = fm.body;
-    var quizzes = [], fences = [], maths = [], components = [], headings = [];
+    var quizzes = [], fences = [], maths = [], components = [], headings = [], visuals = [];
 
     // (a) FENCE dulu — melindungi isi bagan ASCII & menangkap blok ```json
     text = text.replace(/```([A-Za-z0-9_-]*)[ \t]*\n([\s\S]*?)```/g, function (_, lang, code) {
@@ -277,6 +302,22 @@
           note: [inlineNote, afterNote].filter(Boolean).join("\n").trim()
         });
         return "\n" + S + "COMP" + (components.length - 1) + S + "\n";
+      }
+    );
+
+    // (c2) DIREKTIF VISUAL — <!-- VISUAL: Nama \n DEVELOPER: perintah -->
+    // Sebelumnya ikut terbuang oleh pembersih komentar di bawah, sehingga
+    // 22 perintah tampilan/animasi hilang tanpa jejak. Sekarang tiap direktif
+    // menjadi SLOT yang diisi oleh js/visuals.js.
+    text = text.replace(
+      /<!--\s*VISUAL:\s*([^\n>]*?)\s*(?:\n([\s\S]*?))?-->[ \t]*\n?/g,
+      function (_, name, note) {
+        visuals.push({
+          name: String(name).replace(/-+$/, "").trim(),
+          key: slugify(String(name)),
+          note: String(note || "").replace(/^\s*DEVELOPER:\s*/i, "").replace(/\s+/g, " ").trim()
+        });
+        return "\n" + S + "VIS" + (visuals.length - 1) + S + "\n";
       }
     );
 
@@ -321,6 +362,11 @@
       return '<div class="component-slot" data-component="' + escAttr(c.name) +
         '" data-index="' + n + '" hidden></div>';
     });
+    html = html.replace(new RegExp(S + "VIS(\\d+)" + S, "g"), function (_, n) {
+      var v = visuals[+n];
+      return '<div class="visual-slot" data-visual="' + escAttr(v.key) +
+        '" data-visual-name="' + escAttr(v.name) + '" data-index="' + n + '"></div>';
+    });
 
     return {
       front: fm.front,
@@ -330,6 +376,7 @@
       challenges: challenges,   // Tantangan Akhir Bab
       blocks: quizzes,          // seluruh blok json, urutan asli
       components: components,
+      visuals: visuals,         // direktif <!-- VISUAL: ... -->
       headings: headings
     };
   }

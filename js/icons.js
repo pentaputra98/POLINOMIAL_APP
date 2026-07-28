@@ -1,6 +1,9 @@
 /* =========================================================================
    icons.js — Sistem ikon Lucide (LOKAL, offline, inline SVG).
-   Dibangkitkan dari lib/lucide/icons/*.svg  (lisensi ISC, lihat lib/lucide/LICENSE)
+   Blok PATHS DIBANGKITKAN dari lib/lucide/icons/*.svg oleh tools/gen-icons.py
+   (lisensi ISC, lihat lib/lucide/LICENSE). Jangan sunting PATHS dengan tangan —
+   tambahkan nama ikonnya lalu jalankan:  python tools/gen-icons.py --apply
+   Blok EMOJI dan ALIAS di bawah dirawat manual dan aman untuk disunting.
 
    BUKAN webfont: inline SVG mewarisi currentColor sehingga otomatis benar di
    mode terang/gelap, dan kebal terhadap bug "kotak" saat nama/versi font
@@ -18,6 +21,7 @@
   "use strict";
 
   var PATHS = {
+    "arrow-down": '<path d="M12 5v14" /> <path d="m19 12-7 7-7-7" />',
     "arrow-left": '<path d="m12 19-7-7 7-7" /> <path d="M19 12H5" />',
     "arrow-right": '<path d="M5 12h14" /> <path d="m12 5 7 7-7 7" />',
     "arrow-up-right": '<path d="M7 7h10v10" /> <path d="M7 17 17 7" />',
@@ -40,12 +44,14 @@
     "circle-play": '<path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z" /> <circle cx="12" cy="12" r="10" />',
     "circle-question-mark": '<circle cx="12" cy="12" r="10" /> <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /> <path d="M12 17h.01" />',
     "circle-x": '<circle cx="12" cy="12" r="10" /> <path d="m15 9-6 6" /> <path d="m9 9 6 6" />',
+    "clipboard-check": '<rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="m9 14 2 2 4-4" />',
     "clipboard-list": '<rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="M12 11h4" /> <path d="M12 16h4" /> <path d="M8 11h.01" /> <path d="M8 16h.01" />',
     "clipboard-pen": '<path d="M16 4h2a2 2 0 0 1 2 2v2" /> <path d="M21.34 15.664a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" /> <path d="M8 22H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <rect x="8" y="2" width="8" height="4" rx="1" />',
     "clock": '<circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" />',
     "compass": '<circle cx="12" cy="12" r="10" /> <path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" />',
     "construction": '<rect x="2" y="6" width="20" height="8" rx="1" /> <path d="M17 14v7" /> <path d="M7 14v7" /> <path d="M17 3v3" /> <path d="M7 3v3" /> <path d="M10 14 2.3 6.3" /> <path d="m14 6 7.7 7.7" /> <path d="m8 6 8 8" />',
     "divide": '<circle cx="12" cy="6" r="1" /> <line x1="5" x2="19" y1="12" y2="12" /> <circle cx="12" cy="18" r="1" />',
+    "equal": '<line x1="5" x2="19" y1="9" y2="9" /> <line x1="5" x2="19" y1="15" y2="15" />',
     "eraser": '<path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21" /> <path d="m5.082 11.09 8.828 8.828" />',
     "expand": '<path d="m15 15 6 6" /> <path d="m15 9 6-6" /> <path d="M21 16v5h-5" /> <path d="M21 8V3h-5" /> <path d="M3 16v5h5" /> <path d="m3 21 6-6" /> <path d="M3 8V3h5" /> <path d="M9 9 3 3" />',
     "factory": '<path d="M12 16h.01" /> <path d="M16 16h.01" /> <path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" /> <path d="M8 16h.01" />',
@@ -88,6 +94,7 @@
     "sparkles": '<path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /> <path d="M20 2v4" /> <path d="M22 4h-4" /> <circle cx="4" cy="20" r="2" />',
     "square-pen": '<path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /> <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />',
     "star": '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />',
+    "step-forward": '<path d="M10.029 4.285A2 2 0 0 0 7 6v12a2 2 0 0 0 3.029 1.715l9.997-5.998a2 2 0 0 0 .003-3.432z" /> <path d="M3 4v16" />',
     "stethoscope": '<path d="M11 2v2" /> <path d="M5 2v2" /> <path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /> <path d="M8 15a6 6 0 0 0 12 0v-3" /> <circle cx="20" cy="10" r="2" />',
     "sun": '<circle cx="12" cy="12" r="4" /> <path d="M12 2v2" /> <path d="M12 20v2" /> <path d="m4.93 4.93 1.41 1.41" /> <path d="m17.66 17.66 1.41 1.41" /> <path d="M2 12h2" /> <path d="M20 12h2" /> <path d="m6.34 17.66-1.41 1.41" /> <path d="m19.07 4.93-1.41 1.41" />',
     "target": '<circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" />',
@@ -104,7 +111,7 @@
     "x": '<path d="M18 6 6 18" /> <path d="m6 6 12 12" />',
     "zap": '<path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" />',
     "zoom-in": '<circle cx="11" cy="11" r="8" /> <line x1="21" x2="16.65" y1="21" y2="16.65" /> <line x1="11" x2="11" y1="8" y2="14" /> <line x1="8" x2="14" y1="11" y2="11" />',
-    "zoom-out": '<circle cx="11" cy="11" r="8" /> <line x1="21" x2="16.65" y1="21" y2="16.65" /> <line x1="8" x2="14" y1="11" y2="11" />',
+    "zoom-out": '<circle cx="11" cy="11" r="8" /> <line x1="21" x2="16.65" y1="21" y2="16.65" /> <line x1="8" x2="14" y1="11" y2="11" />'
   };
 
   /* Emoji di berkas .md dipetakan ke ikon Lucide saat render.
@@ -157,7 +164,24 @@
       "🔑": "key-round",
       "🟢": "circle",
       "🟡": "circle",
-      "🔴": "circle"
+      "🔴": "circle",
+      /* Ditambahkan pada Fase 1. "✍️" muncul 35x sebagai penanda
+         "Latihan Mandiri" dan sebelumnya BOCOR sebagai emoji mentah. */
+      "✍️": "pencil",
+      "✍": "pencil",
+      "⭐": "star"
+  };
+
+  /* Tabel pemetaan pemilik memakai nama Lucide LAMA. Lucide telah mengganti
+     nama beberapa ikon, sehingga alias di bawah menjaga agar nama lama tetap
+     berlaku tanpa perlu menyunting konten atau dokumentasi. */
+  var ALIAS = {
+      "alert-triangle": "triangle-alert",
+      "check-circle": "circle-check",
+      "help-circle": "circle-question-mark",
+      "x-circle": "circle-x",
+      "alert-circle": "circle-alert",
+      "edit": "pencil"
   };
   var EMOJI_CLASS = {
       "🟢": "lv-mudah",
@@ -166,6 +190,7 @@
   };
   function svg(name, opts) {
     opts = opts || {};
+    if (ALIAS[name]) name = ALIAS[name];
     var inner = PATHS[name];
     if (!inner) {
       if (window.console) console.warn("[Icons] tidak dikenal:", name);
@@ -278,7 +303,10 @@
 
   /** Terapkan penggantian emoji ke seluruh heading & callout dalam root. */
   function applyEmoji(root) {
-    var sel = "h1, h2, h3, h4, blockquote > p:first-child, details > summary, td:first-child";
+    /* Catatan: dahulu hanya `td:first-child`, sehingga penanda ✅/❌ pada KOLOM
+       TERAKHIR tabel (mis. tabel "Uji aturan emas" Bab 01) tetap tampil sebagai
+       emoji mentah. Seluruh sel kini dipindai. */
+    var sel = "h1, h2, h3, h4, blockquote > p:first-child, details > summary, td, th";
     (root || document).querySelectorAll(sel).forEach(function (el) {
       replaceEmoji(el);          // emoji pembuka -> ikon di kiri
       replaceTrailingEmoji(el);  // emoji hiasan penutup -> ikon di kanan

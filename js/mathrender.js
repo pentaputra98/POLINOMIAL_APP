@@ -29,6 +29,31 @@
     return '<span class="mfb">' + s.trim() + '</span>';
   }
 
+  /* ------------------------------------------------------------------ *
+   * Opsi KaTeX baku.
+   *
+   * trust:true  WAJIB. Konten memakai \htmlClass{...}{...} untuk menandai
+   *             struktur rumus (hl-var, hl-coef, hl-pow, hl-const, hl-1..3).
+   *             KaTeX memperlakukan \htmlClass sebagai perintah "tepercaya"
+   *             dan MEMBUANGNYA diam-diam bila trust tidak dinyalakan — itulah
+   *             sebabnya sebelum ini 51 penanda warna tidak pernah muncul.
+   *             Aman di sini: seluruh LaTeX berasal dari berkas konten kita
+   *             sendiri, tidak ada masukan pengguna yang dirender sebagai math.
+   * strict:false  agar notasi lokal (mis. koma desimal 0{,}5) tidak memicu
+   *             peringatan konsol.
+   *
+   * Jangkar visual: \htmlClass juga menjadi PEGANGAN DOM bagi js/visuals.js
+   * untuk menggambar panah/garis penghubung di atas rumus yang sudah terender.
+   * ------------------------------------------------------------------ */
+  function KOPT(block){
+    return {
+      displayMode: !!block,
+      throwOnError: false,
+      trust: true,
+      strict: false
+    };
+  }
+
   function render(root){
     if(!root) return;
 
@@ -38,7 +63,7 @@
       const tex = el.dataset.tex || "";
       if(window.katex && window.katex.render){
         try{
-          window.katex.render(tex, el, { displayMode: el.classList.contains("m-block"), throwOnError:false });
+          window.katex.render(tex, el, KOPT(el.classList.contains("m-block")));
           el.dataset.done="1"; return;
         }catch(e){}
       }
@@ -56,7 +81,9 @@
             { left: "$",  right: "$",  display: false }
           ],
           ignoredClasses: ["m", "mfb"],   // don't reprocess placeholders
-          throwOnError: false
+          throwOnError: false,
+          trust: true,                    // lihat catatan pada KOPT()
+          strict: false
         });
       }catch(e){}
     }

@@ -348,11 +348,12 @@
 
     if (kind === "bab") renderDocFoot(meta);
 
-    // Contoh dijadikan kartu: soal tampil, pembahasan disembunyikan di balik tombol.
-    // Dijalankan SEBELUM emoji/ikon agar susunan elemen masih asli saat dipindai.
-    if (window.Examples) Examples.apply(viewRoot);
     // Emoji pemimpin pada judul/callout diganti ikon Lucide (berkas .md tetap utuh)
     if (window.Icons) { Icons.applyEmoji(viewRoot); Icons.hydrate(viewRoot); }
+    // Direktif <!-- VISUAL: ... --> diwujudkan. WAJIB sesudah MR.render:
+    // panah berpegang pada jangkar \htmlClass yang baru ada setelah KaTeX
+    // selesai merender, dan posisinya diukur dari tata letak sungguhan.
+    if (window.Visuals) Visuals.mount(viewRoot);
     if (window.Enhance) Enhance.apply(viewRoot);
     setupStickyToc();
   }

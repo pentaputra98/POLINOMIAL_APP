@@ -8,8 +8,8 @@
        diperbarui penulis.
    Naikkan CACHE saat aset shell berubah.
    ========================================================================= */
-const CACHE = "polinomial-v42";
-const V = "?b=60";
+const CACHE = "polinomial-v43";
+const V = "?b=61";
 
 const SHELL = [
   "./",
@@ -27,7 +27,7 @@ const SHELL = [
   "./js/quiz.js" + V,
   "./js/activity.js" + V,
   "./js/challenge.js" + V,
-  "./js/examples.js" + V,
+  "./js/visuals.js" + V,
   "./js/enhance.js" + V,
   "./js/scratchpad.js" + V,
   "./js/app.js" + V,
