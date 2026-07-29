@@ -1,7 +1,8 @@
 # HANDOFF — Lanjutkan di Sesi Baru
 
-> Dibuat 29 Juli 2026. Berkas ini adalah **titik masuk** untuk sesi berikutnya.
-> Rincian lengkap tiap fase ada di `SERAH-TERIMA.md` (§10b, §11–§15).
+> Dibuat 29 Juli 2026, diperbarui setelah putaran revisi QA (§16 SERAH-TERIMA).
+> Berkas ini adalah **titik masuk** untuk sesi berikutnya.
+> Rincian lengkap tiap fase ada di `SERAH-TERIMA.md` (§10b, §11–§16).
 
 ---
 
@@ -11,9 +12,10 @@ Tempel ini ke sesi baru:
 
 > Lanjutkan pekerjaan aplikasi Polinomial di `POLINOMIAL_APP`. Baca
 > `HANDOFF-SESI-BARU.md` lalu `SERAH-TERIMA.md` sebelum menyentuh kode; jangan
-> mengandalkan ingatan. Fase 1–5 sudah selesai dan ada **10 commit lokal yang
-> BELUM di-push** — push tetap ditahan sampai saya beri izin. Konfirmasikan
-> bahwa kamu sudah membaca keduanya, lalu ringkas keadaan aplikasi.
+> mengandalkan ingatan. Fase 1–5 dan putaran revisi QA sudah selesai; ada
+> **14 commit lokal yang BELUM di-push** — push tetap ditahan sampai saya beri
+> izin. Konfirmasikan bahwa kamu sudah membaca keduanya, lalu ringkas keadaan
+> aplikasi.
 
 ---
 
@@ -22,9 +24,10 @@ Tempel ini ke sesi baru:
 | Hal | Keadaan |
 |---|---|
 | Fase 1–5 | **SELESAI** dan terverifikasi |
-| Commit lokal | **10 commit ahead** dari `origin/main` |
+| Revisi QA pasca-Fase 5 | **SELESAI** (10 perbaikan, lihat §16 SERAH-TERIMA) |
+| Commit lokal | **14 commit ahead** dari `origin/main` |
 | Working tree | bersih (0 berkas berubah) |
-| Versi aset | `?b=82` · cache SW `polinomial-v64` |
+| Versi aset | `?b=90` · cache SW `polinomial-v72` |
 | Menunggu | **Final Review pemilik**, lalu izin push |
 
 ### 🚫 ATURAN PALING PENTING: JANGAN PUSH
@@ -32,8 +35,12 @@ Aplikasi versi **lama** masih dipakai siswa secara live. Seluruh commit disimpan
 LOKAL. Push hanya setelah pemilik menyelesaikan Final Review dan memberi lampu
 hijau eksplisit.
 
-### Sepuluh commit lokal (terbaru di atas)
+### Empat belas commit lokal (terbaru di atas)
 ```
+51ec420 fix(slider): kunci tak lagi terbaca perkalian, kotak nilai tanpa label ganda
+d371fe6 fix(a11y): keypad numerik untuk skema Horner, target sentuh slider 44px
+7e93b4c fix(visual): kartu kosong, glif bukti, pangkat porogapit, panah Horner
+b24e527 docs: tambah HANDOFF-SESI-BARU.md sebagai titik masuk sesi berikutnya
 1dda82d feat(fase-5): wujudkan 20 direktif VISUAL sisa — 22 dari 22 kini terwujud
 226545d feat(fase-5): 12 fence ASCII jadi bagan CSS read-only, peta perjalanan jadi kartu
 d8d814e feat(fase-4): ambang lencana dari manifest, bonus XP paket opsional, Panel Capaian
@@ -61,34 +68,49 @@ Wajib lewat `http://` — `file://` memblokir `fetch` dan Service Worker.
 | Cek | Nilai |
 |---|---|
 | Direktif VISUAL terwujud | **22/22** (22 slot → 22 figure, 0 disembunyikan) |
+| Kartu langkah kosong pada visual bertahap | **0** (dahulu 3) |
 | Fence ASCII jadi komponen | **12/12** (7 peta konsep · 1 spanduk · 4 tabel Horner) |
 | ASCII mentah · bagan interaktif lama | 0 · 0 |
 | Tombol di dalam peta konsep | **0** (read-only) |
+| Tabel Horner: beranimasi · statis | **2 · 2**; hanya yang beranimasi dipudarkan |
 | Info Cards | **47**, 0 kosong |
 | Kartu kuis · tantangan · guided | **36 · 7 · 35** |
 | Penanda `hl-*` | **51** |
-| KaTeX | **1227 rumus · 0 error** |
-| `$` bocor · emoji mentah · gagal muat · konsol | 0 · 0 · 0 · 0 |
+| KaTeX | **1228 rumus · 0 error** |
+| `$` bocor · emoji mentah · glif ∎ · gagal muat · konsol | 0 · 0 · 0 · 0 · 0 |
 | @360 px | 0 scroll horizontal · 0 komponen meluap |
+
+> **1228, bukan 1227.** Selisih satu muncul sejak widget `slider` merender DUA
+> blok (definisi $f(x)$ + baris evaluasi), bukan satu. Selisihnya terjelaskan;
+> bila angka ini berubah lagi tanpa sebab yang jelas, itu regresi.
 
 ---
 
 ## 3. YANG MASIH TERBUKA
 
-1. **`horner-steps` (Bab 03) & `slider` (Bab 02) belum diverifikasi** terhadap
-   field konten baru: `expected_quotient`, `expected_remainder`, `step`,
-   `checkpoints`. Keduanya ada di `activity.js` sejak versi lama dan ikut
-   terhitung dalam 35 widget, tetapi **kebenaran perilakunya belum diuji**.
-   → Ini pekerjaan konkret pertama yang siap dikerjakan.
-2. **Final Review pemilik**, lalu izin push.
-3. Ketidaksesuaian manifest vs `.md` (dibiarkan atas keputusan pemilik —
-   `.md` adalah otoritas, kode menyesuaikan):
-   * manifest menulis `expected_bring_down`, konten memakai `expected_quotient`
-   * manifest belum mencantumkan `step` & `checkpoints` pada `slider`
-   * `cloze` terdokumentasi tetapi 0 dipakai
-4. `js/diagrams.js` (16 KB) kini **praktis mati** — seluruh fence ASCII sudah
+1. **Final Review pemilik**, lalu izin push.
+2. Ketidaksesuaian manifest vs `.md` — **sudah dibuktikan tidak berdampak**
+   (dibiarkan atas keputusan pemilik; `.md` adalah otoritas, kode menyesuaikan):
+   * manifest menulis `expected_bring_down`, konten memakai `expected_quotient`.
+     Diperiksa: `expected_bring_down` **hanya muncul di manifest**, tidak pernah
+     di `js/` maupun di data konten. Mesin membaca `expected_quotient`.
+   * manifest belum mencantumkan `step` & `checkpoints` pada `slider`;
+     mesin sudah mendukung keduanya.
+   * `cloze` terdokumentasi tetapi 0 dipakai.
+3. `js/diagrams.js` (16 KB) kini **praktis mati** — seluruh fence ASCII sudah
    dihabiskan `Visuals.upgradeAscii()` sebelum `enhance.js` berjalan. Kandidat
    hapus, **belum diizinkan**.
+4. Kosmetik yang diketahui dan **dibiarkan**: catatan titik periksa slider
+   memakai teks biasa (`x = 0 → f(x) = -4. …`) karena isinya diambil apa adanya
+   dari `note` milik konten.
+
+### Sudah SELESAI (jangan dikerjakan ulang)
+* **`horner-steps` & `slider` terverifikasi penuh** — perilaku, penilaian,
+  keypad, titik periksa, dan tata letak @360 px. Rincian di §16a SERAH-TERIMA.
+* **Sepuluh perbaikan hasil QA manual pemilik** — kartu kosong, batas judul
+  pengumpul kartu, glif ∎, pangkat porogapit, panah Horner, pemudaran tabel
+  Horner statis, keypad numerik Horner, target sentuh slider, kunci slider,
+  kotak nilai slider. Rincian per butir di §16b SERAH-TERIMA.
 
 ---
 
@@ -122,6 +144,8 @@ js/
   icons.js      [PATHS DIBANGKITKAN] 95 ikon + peta EMOJI + blok ALIAS nama lama
   mathrender.js KaTeX: trust:true + strict:false  ← kunci \htmlClass & jangkar
   markdown.js   parser; frontmatter flow-map; tangkap <!-- VISUAL --> jadi slot
+                (token VIS terdaftar di RE_TOKEN_LINE — lihat jebakan #15);
+                glif ∎ diganti lencana "Terbukti"
   content.js    pemuat manifest & .md
   store.js      localStorage poli.v1.*
   gamify.js     XP·level·lencana·bintang·rekor·streak (ambang dari manifest)
@@ -129,9 +153,11 @@ js/
   pagekit.js    Info Cards → kartu+pop-up · bilah sub-materi sticky · ToC kartu
   quizcards.js  Latihan Bertingkat → 5 kartu (lazy mount) · Tantangan → modal
   quiz.js       mesin kuis; input_mode/answer_format
-  activity.js   9 widget termasuk guided (35 pemakaian)
+  activity.js   9 widget termasuk guided (35 pemakaian); horner-steps memakai
+                keypad mode numerik; slider menampilkan definisi + evaluasi
   challenge.js  sesi berwaktu + hitung mundur 3-2-1; HANYA `items`, tanpa pool
   visuals.js    22 builder VISUAL + konversi 12 fence ASCII  ← berkas terbesar
+                panah irama Horner (turun/×k/+) digambar per langkah
   keypad.js     papan tombol; mode numerik; z-index 200
   enhance.js    auto-fit rumus (jalur diagram kini tak terpakai)
   diagrams.js   [PRAKTIS MATI — kandidat hapus]
@@ -199,6 +225,37 @@ viewRoot.innerHTML = …
 14. **Tanda berada DI LUAR pembungkus `\htmlClass`.** Mengambil isi jangkar dari
     DOM menghilangkan tandanya → hitungan yang ditampilkan bisa **salah**.
     Baca tanda dari LaTeX sumber (`signedAnchors`).
+15. **Setiap token blok WAJIB terdaftar di `RE_TOKEN_LINE`** (`markdown.js`).
+    `VIS` pernah tertinggal, sehingga baris tokennya jatuh ke cabang paragraf
+    menjadi `<p>TOKEN</p>`; sesudah token ditukar dengan `<div class="visual-slot">`,
+    peramban memecah `<p><div></div></p>` menjadi **paragraf KOSONG + div**.
+    Paragraf kosong itu terserap menjadi **kartu kosong** pada visual bertahap.
+16. **`return` di dalam `forEach` MELEWATI, bukan menghentikan.** Pengumpul
+    kartu visual bermaksud "berhenti di judul" tetapi hanya melewatinya,
+    sehingga menembus `### Contoh` dan menyeret paragraf seksi lain. Pakai
+    bendera `habis`. Perhatikan pula: sebagian slot justru **diawali** judul
+    (`### 📘 Contoh` / `### 🎯 Penerapan`) — judul di depan materi harus
+    dilewati, judul sesudah ada isi harus menghentikan.
+17. **`polyToTex()` hanya benar untuk polinomial utuh.** Baris antara pembagian
+    bersusun adalah **jendela koefisien** di tengah polinomial; tanpa
+    dikembalikan ke derajat sebenarnya (tambah nol di ekor), $2x^3-4x^2$ tampil
+    sebagai $2x-4$. Gejalanya halus: bentuknya tetap "masuk akal".
+18. **Aturan gaya untuk komponen beranimasi harus DIBATASI** ke komponen yang
+    benar-benar punya kendali langkah. `.htab-mult td{opacity:.3}` tanpa
+    pembatas ikut memudarkan tabel Horner pada bagian Contoh — yang tidak
+    pernah bisa disingkap. Sekarang: `.htab.is-anim …`.
+19. **`getComputedStyle` pada pseudo-elemen slider WebKit mengembalikan nilai
+    palsu** (lebar thumb terbaca = lebar elemen, latar transparan). Jangan
+    memakainya sebagai bukti; ambil tangkapan layar. Perkakas screenshot
+    **berhasil** bila panel Browser sedang ditampilkan.
+20. **`elementFromPoint` sesudah mengubah `scrollTop` pada tik yang sama**
+    memakai koordinat kedaluwarsa dan mengembalikan elemen yang salah. Ukur
+    ulang `getBoundingClientRect()` pada pemanggilan `javascript_tool`
+    BERIKUTNYA, bukan di tik yang sama.
+21. **Ekspresi pencocokan pada skrip uji harus dipertahankan antar-putaran.**
+    Menyederhanakannya di putaran berikutnya pernah menghasilkan "15 langkah
+    salah" yang murni **artefak pengujian**. Bedakan bug aplikasi dari artefak
+    sebelum melaporkan.
 
 ---
 
@@ -208,8 +265,14 @@ viewRoot.innerHTML = …
 * Bersihkan SW + cache sebelum menguji perubahan kode.
 * `.app-main` memakai `scroll-behavior:smooth` → **matikan dulu**
   (`app.style.scrollBehavior='auto'`) sebelum mengukur posisi gulir.
-* **Perkakas screenshot sering macet** → andalkan pengukuran DOM lewat
-  `javascript_tool`. Ukur angka, jangan menilai dari kesan.
+* **Perkakas screenshot macet bila panel Browser tidak ditampilkan** ("not
+  compositing frames"). Bila panelnya tampak, screenshot **berhasil** — dan
+  untuk hal yang tidak dapat diukur (mis. tebal rel slider yang digambar
+  pseudo-elemen) itulah satu-satunya bukti yang sah. Selebihnya: ukur angka
+  lewat `javascript_tool`, jangan menilai dari kesan.
+* **Jangan mengukur geometri pada tik yang sama dengan perubahan `scrollTop`.**
+  `elementFromPoint` akan memakai koordinat kedaluwarsa dan menjawab salah.
+  Gulir dulu, ukur pada pemanggilan berikutnya.
 * Panel peramban kadang **tidak meng-composite**: transisi CSS bisa **membeku
   di nilai tengah** dan rAF tidak jalan. Untuk mengukur posisi akhir, matikan
   transisinya sesaat (`el.style.transition='none'`).
@@ -244,11 +307,15 @@ aktivitas ber-`reward.xp`, alokasi waktu ≥30 detik/butir.
 ## 9. LANGKAH BERIKUTNYA YANG DISARANKAN
 
 1. Konfirmasi sudah membaca berkas ini + `SERAH-TERIMA.md`, ringkas keadaan.
-2. Tunggu arahan pemilik. Bila diminta melanjutkan pekerjaan teknis, mulai dari
-   **verifikasi `horner-steps` & `slider`** (§3 butir 1) — lingkupnya jelas dan
-   kecil.
+2. **STANDBY.** Seluruh pekerjaan teknis yang terjadwal sudah tuntas; tidak ada
+   lagi butir yang siap dikerjakan tanpa arahan. Tunggu permintaan pemilik.
+   Bila diminta membereskan sisa, satu-satunya kandidat berlingkup jelas adalah
+   penghapusan `js/diagrams.js` (§3 butir 3) — **butuh izin lebih dahulu**.
 3. Setiap perubahan: bertahap → tunjukkan bukti terukur → tunggu persetujuan.
-4. **Jangan push** tanpa lampu hijau eksplisit.
+4. **Naikkan `?b=` dan nama `CACHE` SEGERA sesudah tiap sunting** `js/`/`css/`,
+   bukan sekali di akhir. Pada sesi revisi QA versinya naik lima kali
+   (82 → 90) justru karena aturan ini dipatuhi.
+5. **Jangan push** tanpa lampu hijau eksplisit.
 
 ---
 © 2026 · Penta Putra Purnomo, S.Pd., Gr.

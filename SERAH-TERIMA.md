@@ -1,24 +1,26 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
-> Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=82`** · Cache SW **`polinomial-v64`**
+> Titik masuk sesi baru ada di `HANDOFF-SESI-BARU.md`; berkas ini adalah
+> rincian lengkapnya.
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=90`** · Cache SW **`polinomial-v72`**
 >
 > 🚫 **JANGAN PUSH.** Aplikasi versi lama sedang dipakai siswa secara live.
-> Seluruh commit disimpan LOKAL sampai Fase 1–5 selesai dan pemilik memberi
+> Seluruh commit disimpan LOKAL (kini **14 commit**) sampai pemilik memberi
 > lampu hijau final.
 >
-> ⚠️ **Sedang berlangsung: pembangunan ulang ke arsitektur halaman berstruktur.**
-> Konten sudah ditulis ulang seluruhnya (commit `4f0deb0`); aplikasi menyusul
-> secara bertahap. **Fase 1–4 SELESAI** — lihat §11, §12, §13, §13b, §14.
-> Fase 5 (visual) belum.
-> Bagian §3 dan §7 di bawah masih menggambarkan keadaan SEBELUM penulisan ulang
-> dan akan diperbarui saat tiap fase selesai.
+> ✅ **Pembangunan ulang ke arsitektur halaman berstruktur SELESAI.**
+> Konten ditulis ulang seluruhnya (commit `4f0deb0`), lalu **Fase 1–5**
+> (§11–§15) dan **putaran revisi QA pemilik** (§16) sudah tuntas dan
+> terverifikasi.
+> Bagian §3 dan §7 di bawah masih menggambarkan keadaan SEBELUM penulisan
+> ulang; angka yang berlaku sekarang ada di §16c.
 
 ---
 
 ## 0. PERAN & INSTRUKSI UNTUK SESI BARU
 
 Kamu adalah **Senior Frontend Engineer + Instructional UI Specialist** yang melanjutkan
-aplikasi pembelajaran ini. **Seluruh 5 fase pembangunan sudah SELESAI dan terverifikasi.**
+aplikasi pembelajaran ini. **Seluruh 5 fase pembangunan beserta putaran revisi QA
+pemilik (§16) sudah SELESAI dan terverifikasi.**
 
 **Tugasmu sekarang: STANDBY.** Jangan memulai pekerjaan besar atau refactor atas
 inisiatif sendiri. Tunggu permintaan pembaruan/perbaikan dari saya, lalu kerjakan
@@ -183,6 +185,10 @@ satu entri ke objek `PATHS` di `js/icons.js`. Nama memakai konvensi Lucide terba
    `content-manifest.json` tidak terdampak (Jekyll hanya memproses Markdown), jadi
    gejalanya menyesatkan: manifest berhasil dimuat, isi bab tidak.
 
+> **Daftar jebakan ini adalah yang TERTUA.** Jebakan #11–#21 yang ditemukan pada
+> Fase 1–5 dan putaran revisi QA terkumpul di `HANDOFF-SESI-BARU.md` §6 —
+> **baca daftar itu juga sebelum menyentuh kode.**
+
 ---
 
 ## 7. STATUS AKHIR — TERVERIFIKASI
@@ -243,7 +249,9 @@ Horner & slider engine **cocok persis** dengan `expected_quotient`/`checkpoints`
    `<`, `>`, `&` lalu biarkan `MR.render` menangani `$…$` — aman karena
    `renderMathInElement` bekerja pada simpul teks setelah HTML diurai.
    Manfaatnya: penulis konten tidak perlu lagi mengingat larangan `<`.
-   **Belum dikerjakan — menyentuh 3 berkas engine, menunggu izin Anda.**
+   **SUDAH DIKERJAKAN pada Fase 2** (lihat §12): `smart()` di `quiz.js`,
+   `activity.js`, dan `challenge.js` kini tetap meng-`esc()` string ber-`$`.
+   **Butir 6 SELESAI.**
 
 ---
 
@@ -328,7 +336,8 @@ yang juga ber-`$` **0 sebelum** dan **0 sesudah**.
 
 Aturannya sekarang: **jangan pernah menaruh `$` pada string yang memuat `<`.**
 Perbaikan sistemik yang lebih baik — membuat `smart()` tetap meng-`esc()` `<`, `>`, `&`
-sambil membiarkan `$` untuk MR — **belum dikerjakan, menunggu keputusan Anda** (butir 8.6).
+sambil membiarkan `$` untuk MR — **SUDAH DIKERJAKAN pada Fase 2** (§12, butir 8.6).
+Aturan di atas tetap dipegang sebagai kebiasaan aman saat menyunting konten.
 
 ### Bukti verifikasi
 | Cek | Hasil |
@@ -889,10 +898,11 @@ jangkar dari DOM, padahal penulis menaruh **tanda di luar** pembungkus
 sumber, dan jumlah kolom kini **dihitung** dari koefisien. Terverifikasi cocok
 dengan hasil yang tertulis di konten.
 
-### ⏳ Sisa kecil
-Widget aktivitas `horner-steps` (Bab 03) dan `slider` (Bab 02) **belum
-diverifikasi** terhadap field konten baru (`expected_quotient`, `step`,
+### ⏳ Sisa kecil — SUDAH SELESAI, lihat §16a
+Widget aktivitas `horner-steps` (Bab 03) dan `slider` (Bab 02) belum
+diverifikasi terhadap field konten baru (`expected_quotient`, `step`,
 `checkpoints`). Keduanya sudah ada di `activity.js` sejak versi lama.
+**Verifikasinya dituntaskan pada §16a.**
 
 ### Bukti Fase 5 (8 bab)
 | Cek | Hasil |
@@ -912,6 +922,196 @@ diverifikasi** terhadap field konten baru (`expected_quotient`, `step`,
 
 ---
 
+## 16. VERIFIKASI WIDGET SISA & REVISI QA PEMILIK (29 Juli 2026)
+
+Tiga commit lokal: `7e93b4c`, `d371fe6`, `51ec420`.
+**`content/` tidak disentuh sama sekali** — seluruh cacat berada di perender.
+
+---
+
+### 16a. Verifikasi `horner-steps` & `slider` — butir terakhir Fase 5
+
+Seluruh nilai acuan **dihitung ulang secara mandiri di dalam pengujian**, bukan
+disalin dari `activity.js`, lalu dibandingkan dengan konten.
+
+**`horner-steps` (Bab 03, `03-m3`) — LULUS**
+
+| Cek | Hasil |
+|---|---|
+| Struktur | `k = 2` + koefisien 2, −3, 4, −5 dari konten; 7 kotak isian (3 baris ×, 4 baris +, terakhir ber-`hs-sisa`), aria-label tepat |
+| Hitungan mandiri vs konten | hasil **[2, 1, 6, 7]** · pengali **[4, 2, 12]** — cocok persis dengan `expected_quotient:[2,1,6]` & `expected_remainder:7` |
+| Jalur benar | **7/7**, XP **+20** sesuai `reward.xp` |
+| Jalur salah (h1 & h3 dirusak) | **5/7**, tepat dua sel itu bertanda `is-no`, kunci konten tampil, XP tidak cair ulang |
+| Ulangi | 7 kotak kosong, 0 sisa kelas, umpan balik tersembunyi |
+| Keypad | `inputmode="none"`, `z-index:200`; mengisi ketujuh sel dengan menekan tombol keypad sungguhan → **7/7** |
+| Tanda minus | keypad menyisipkan `-` (U+002D); `Quiz.normalize` juga memetakan `−` (U+2212) → `-`, jadi kedua bentuk dinilai sama |
+| @360 px | tabel 300 px, luapan 0, scroll horizontal 0 |
+
+**`slider` (Bab 02, `02-m3`) — LULUS**
+
+| Cek | Hasil |
+|---|---|
+| Rentang | min −3 · maks 4 · step 0,5 · awal 0,5; **kedua titik periksa (x=0, x=2) jatuh tepat pada kisi langkah** |
+| Ketepatan | **15/15 posisi** cocok dengan hitungan mandiri $2x^3-5x^2+3x-4$ |
+| Titik periksa | menyala tepat di x=0 → f=−4 dan x=2 → f=−2, sesuai `fx` konten; catatan penulis tampil apa adanya |
+| Penilaian | 0/2 → 1/2 → **2/2**; XP **+15**, chip jadi "Selesai" |
+| Grafik | kurva 121 titik, sumbu nol, titik penanda mengikuti nilai |
+| @360 px | luapan 0, scroll horizontal 0 |
+
+**Manifest vs konten — terbukti tidak berdampak.** `expected_bring_down` hanya
+muncul di `content-manifest.json:684`; **tidak pernah** di `js/` maupun di data
+konten. Mesin membaca `expected_quotient` — kode sudah menyesuaikan konten
+sesuai aturan emas. Sama halnya `step` & `checkpoints`: mesin mendukungnya,
+manifest saja yang belum mencantumkan. Murni dokumentasi.
+
+---
+
+### 16b. Sepuluh perbaikan hasil QA manual pemilik
+
+Butir (1)–(6) berasal dari tiga catatan QA Anda; butir (7)–(10) dari temuan
+yang saya laporkan saat memverifikasi kedua widget di §16a.
+
+**(1) Kartu KOSONG pada visual bertahap — akar di parser.**
+`RE_TOKEN_LINE` ([markdown.js:134](js/markdown.js:134)) memuat `QUIZ|FENCE|COMP`
+tetapi **tidak `VIS`**. Baris token direktif VISUAL karena itu jatuh ke cabang
+paragraf menjadi `<p>TOKEN</p>`; sesudah token ditukar dengan
+`<div class="visual-slot">`, peramban memecah `<p><div></div></p>` menjadi
+**paragraf KOSONG + div**. Paragraf kosong itulah yang terserap menjadi kartu
+pertama pada tiga figure Bab 04.
+Terukur: paragraf kosong Bab 04 **11 → 1**; kartu kosong 8 bab **3 → 0**.
+
+**(2) Cacat kedua yang tersingkap karenanya.** Setelah kartu kosong hilang,
+jatahnya terisi paragraf dari seksi **📘 Contoh** di bawah judul berikutnya —
+pengumpul ternyata *melewati* judul, bukan berhenti (komentarnya sudah
+menyatakan niat "hentikan", kodenya tidak; `return` di dalam `forEach` hanya
+melewati). Judul kini menutup pengumpulan **setelah ada isi**, tetapi dilewati
+bila berdiri persis di depan materi — pola "Sistem dua persamaan" dan
+"Pengupasan faktor" yang slotnya langsung diikuti `### 📘 Contoh` /
+`### 🎯 Penerapan`.
+Hasil: Pembuktian **4 kartu** (tiga langkah bukti + catatan 💡), Sistem dua
+persamaan **3**, Pengupasan faktor **6**. Total figure tetap **22/22**.
+
+**(3) Glif akhir bukti ∎.** U+220E tampil sebagai kotak hitam tanpa keterangan.
+Hanya ada **satu** di seluruh konten
+([04-teorema-sisa-dan-faktor.md:135](content/04-teorema-sisa-dan-faktor.md:135)).
+Berkas `.md` tetap utuh; perender menggantinya dengan lencana **✓ Terbukti**
+berikon Lucide, sejalan dengan penanganan emoji. Glif mentah tersisa: **0**.
+
+**(4) Pangkat porogapit SALAH — cacat paling serius putaran ini.**
+Baris antara pembagian bersusun adalah **jendela koefisien** di tengah
+polinomial, sedangkan `polyToTex()` membaca elemen pertama sebagai suku
+berderajat tertinggi. Jendelanya tidak pernah dikembalikan ke derajat
+sebenarnya, sehingga $2x^2(x-2)=2x^3-4x^2$ tampil sebagai "$2x-4$" dan sisa
+sementara $x^2+4x$ tampil sebagai "$x+4$" — pembagiannya salah di mata siswa.
+Kini tiap jendela diberi koefisien nol di ekor sesuai derajatnya. Cocok baris
+demi baris dengan tabel siklus di
+[03-pembagian-polinomial.md:193](content/03-pembagian-polinomial.md:193):
+
+| Tampilan | Tabel konten |
+|---|---|
+| $-(2x^3-4x^2)$ | $2x^2(x-2)=2x^3-4x^2$ |
+| $x^2+4x$ | "$x^2$, turunkan $4x$" |
+| $-(x^2-2x)$ | $x(x-2)=x^2-2x$ |
+| $6x-5$ | "$6x$, turunkan $-5$" |
+| $-(6x-12)$ | $6(x-2)=6x-12$ |
+| $7$ | "$7$ → berhenti" |
+
+Penyingkapan bertahap tetap jalan: 0 → siklus 1 → 2 → 3.
+**Isi materinya sendiri sudah benar dan tidak ambigu** — diperiksa terhadap
+perhitungan mandiri, sehingga izin pemilik untuk menyunting `.md` tidak dipakai.
+
+**(5) Panah irama Horner.** Tiap langkah menggambar panah berlabel: **turun**
+(kolom pertama), **× k** (busur dari hasil sebelumnya naik ke baris ×k kolom
+berikutnya), dan **+** (dari koefisien atas turun ke hasil). Rumus sumbernya
+`hasil[kolom−1−baris]` sehingga **Horner-Kino** ikut terlayani — dua baris
+pengali dengan sumber bergeser 1 dan 2 kolom. Digambar ulang lewat `watch()`
+saat tata letak berubah.
+Terukur @360 px: lapisan SVG sejajar tabel **dx 0 · dy 0 · dw 0**; ujung panah
+× k di **x = 159,3** vs pusat sel sasaran **x = 159**.
+
+**(6) Tabel Horner statis tidak lagi pudar.** Aturan `opacity:.3` berlaku umum
+untuk semua `.htab`, padahal hanya tabel beranimasi yang punya kendali
+penyingkap — tabel Horner pada bagian **Contoh** tersamar selamanya. Pemudaran
+kini dibatasi ke `.htab.is-anim`. Terukur: 2 tabel beranimasi tetap 0,3 sebelum
+disingkap; **2 tabel statis kini opacity 1**.
+
+**(7) Keypad numerik untuk skema Horner.** [activity.js:392](js/activity.js:392)
+memanggil `Keypad.attach` tanpa opsi, sehingga tab variabel ikut tampil padahal
+ketujuh selnya bernilai bilangan. Kini `{ numeric: true }`, sejalan dengan
+[quiz.js:330](js/quiz.js:330). Terverifikasi: `data-numeric` pada 7 sel, keypad
+`is-numeric`, tab variabel tersembunyi, tab angka aktif; regresi penilaian
+lewat keypad sungguhan tetap **7/7**.
+
+**(8) Target sentuh slider.** Kotak `.sl-range` hanya setinggi 10 px sehingga
+area ketuk vertikalnya terukur **±20 px** — jauh di bawah 44 px, padahal keypad
+aplikasi justru ada karena perangkat siswa tidak selalu andal. Kotak dinaikkan
+ke **44 px** dan **relnya digambar oleh pseudo-elemen track** (10 px), bukan
+oleh latar elemen, sehingga tampilannya tidak berubah. Thumb 26 px dipusatkan
+`margin-top:-8px`; ditambahkan cincin fokus pada thumb.
+Terukur: kotak **44 px**, area ketuk efektif **42 px** (dari ±20 px).
+Bukti tampilan rel diambil lewat **tangkapan layar** — `getComputedStyle` pada
+pseudo-elemen slider WebKit mengembalikan nilai palsu (lebar thumb terbaca
+660 px = lebar elemen).
+
+**(9) Kunci slider terbaca sebagai perkalian.** `"f(0) = -4 · f(2) = -2"` tidak
+memuat kata sepanjang ≥3 huruf, sehingga `smart()` mengirim **seluruh** string
+ke KaTeX dan pemisah `·` terender sebagai `⋅`. Tiap kesamaan kini dibungkus
+`$…$` tersendiri dan dipisah kata **"dan"**. Aman terhadap jebakan #10: string
+ini tidak dinilai dan tidak memuat `<`.
+Terverifikasi: 2 rumus terpisah, **0** tanda `⋅`, 0 error KaTeX.
+
+**(10) Label ganda pada kotak nilai slider.** Bentuk lama
+`f(x) = <polinomial> ⇒ <nilai>` menyebut $f(x)$ dua kali dan memakai `⇒` untuk
+hubungan yang sebenarnya kesamaan. Kini dua baris berbeda peran: **definisi**
+ditulis sekali (kecil, redup) dan **evaluasi** yang berubah mengikuti penggeser.
+Ditambahkan `texNum()` agar desimal di dalam LaTeX memakai konvensi konten
+`0{,}5`. Terverifikasi lima posisi: $f(-3)=-112$ · $f(0)=-4$ · $f(0{,}5)=-3{,}5$
+· $f(2)=-2$ · $f(4)=56$.
+
+---
+
+### 16c. Angka acuan yang BERLAKU SEKARANG (8 bab)
+
+| Cek | Hasil |
+|---|---|
+| Direktif VISUAL terwujud | **22/22**, 0 slot disembunyikan |
+| Kartu langkah kosong | **0** (dahulu 3) |
+| KaTeX | **1228 rumus · 0 error** |
+| Penanda `hl-*` | **51** |
+| Info Cards | **47**, 0 kosong |
+| Kartu kuis · tantangan · guided | **36 · 7 · 35** · total aktivitas **70** |
+| Fence ASCII jadi komponen | **12/12**; ASCII mentah **0** |
+| Tabel Horner beranimasi · statis | **2 · 2**; hanya yang beranimasi dipudarkan |
+| Tombol/tautan di dalam peta konsep | **0** — read-only utuh |
+| `$` bocor · emoji mentah · glif ∎ · gagal muat · konsol | **0 · 0 · 0 · 0 · 0** |
+| Scroll horizontal @360 px | **0 px** |
+
+> **1228, bukan 1227.** Selisih satu muncul karena widget `slider` kini
+> merender DUA blok (definisi + evaluasi), bukan satu. Selisihnya terjelaskan;
+> bila angka ini bergeser lagi tanpa sebab yang jelas, itu regresi.
+
+Capaian sintetis pengujian sudah dibersihkan dari `localStorage`
+(diverifikasi: XP 0, `act:02-m3` dan `act:03-m3` keduanya `false`).
+
+---
+
+### 16d. Pelajaran proses dari putaran ini
+
+1. **Satu perbaikan dapat menyingkap cacat yang selama ini tersamar.** Kartu
+   kosong menutupi batas pengumpulan yang salah selama lima fase. Sesudah
+   memperbaiki sesuatu, periksa ulang apa yang dahulu "kebetulan benar".
+2. **Angka acuan yang berubah harus DIJELASKAN, bukan disamakan.** 1227 → 1228
+   sah karena sebabnya diketahui; menyamakannya diam-diam akan menyembunyikan
+   regresi berikutnya.
+3. **Bedakan bug aplikasi dari artefak pengujian.** Sempat terbaca "15 langkah
+   slider salah"; ternyata saya menyederhanakan ekspresi pencocokan antar-
+   putaran. Setelah disamakan: 0 salah. Laporkan bedanya, jangan buru-buru
+   menyebutnya bug.
+4. **Bukti visual kadang satu-satunya yang sah.** Tebal rel slider tidak dapat
+   diukur lewat `getComputedStyle`; tangkapan layar yang membuktikannya.
+
+---
+
 ## 9. CARA KERJA YANG SAYA HARAPKAN
 
 - **Bertahap + checkpoint.** Selesaikan satu hal, tunjukkan bukti, tunggu saya.
@@ -925,11 +1125,13 @@ diverifikasi** terhadap field konten baru (`expected_quotient`, `step`,
 
 ## 10. KALIMAT PEMBUKA UNTUK SESI BARU
 
-> Aplikasi Polinomial di `POLINOMIAL_APP` sudah selesai 5 fase dan terverifikasi
-> (lihat `SERAH-TERIMA.md` di folder aplikasi — baca lebih dulu, jangan andalkan
-> ingatan). Untuk saat ini **standby** saja; nanti saya sampaikan permintaan
-> pembaruan atau perbaikan. Konfirmasikan dulu bahwa kamu sudah membaca berkas itu
-> dan ringkas keadaan terakhir aplikasi dalam beberapa kalimat.
+> Aplikasi Polinomial di `POLINOMIAL_APP` sudah selesai 5 fase **beserta putaran
+> revisi QA** (§16) dan terverifikasi. Baca `HANDOFF-SESI-BARU.md` lalu
+> `SERAH-TERIMA.md` di folder aplikasi lebih dulu — jangan andalkan ingatan.
+> Ada **14 commit lokal yang BELUM di-push**; push tetap ditahan sampai saya
+> beri izin. Untuk saat ini **standby** saja; nanti saya sampaikan permintaan
+> pembaruan atau perbaikan. Konfirmasikan dulu bahwa kamu sudah membaca kedua
+> berkas itu dan ringkas keadaan terakhir aplikasi dalam beberapa kalimat.
 
 ---
 © 2026 · Penta Putra Purnomo, S.Pd., Gr.
