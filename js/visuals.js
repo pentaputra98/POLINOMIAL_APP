@@ -76,6 +76,10 @@
     return n;
   }
   function icon(name) { return window.Icons ? window.Icons.svg(name) : ""; }
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
   function reduceMotion() {
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
@@ -435,10 +439,273 @@
   };
 
   /* ===================================================================== *
+   * 6b) BAGAN DARI FENCE ASCII
+   *
+   * Konten memuat 12 blok ASCII (peta konsep, tabel Horner, spanduk ide
+   * pemersatu). Blok itu HANYA rujukan struktur bagi developer dan TIDAK boleh
+   * tampil mentah (concept_map_directive di manifest). Semuanya diubah menjadi
+   * komponen CSS di sini — datanya tetap dibaca dari ASCII milik penulis.
+   *
+   * OVERRIDE PEMILIK (§10b SERAH-TERIMA): peta konsep bersifat READ-ONLY.
+   * Dibangun dari <div> biasa — bukan tombol/tautan — tanpa zoom, tanpa
+   * penanganan klik, dan tanpa penampil layar penuh.
+   * ===================================================================== */
+
+  /** Rantai bercabang: "A → B → C" + baris lanjutan "→ X" sebagai cabang. */
+  function parseChain(text) {
+    var lines = String(text).split("\n").filter(function (l) { return l.trim(); });
+    if (!lines.length) return null;
+    var head = lines[0].split("→").map(function (s) { return s.trim(); }).filter(Boolean);
+    if (head.length < 2) return null;
+    var fan = [];
+    for (var i = 1; i < lines.length; i++) {
+      var l = lines[i].trim();
+      if (l.indexOf("→") !== 0) return null;          // bukan pola cabang
+      var t = l.replace(/^→\s*/, "").trim();
+      if (t) fan.push(t);
+    }
+    if (!fan.length) return { spine: head, fan: [] };  // rantai lurus
+    // simpul terakhir baris pertama adalah cabang PERTAMA
+    return { spine: head.slice(0, -1), fan: [head[head.length - 1]].concat(fan) };
+  }
+
+  function renderConceptMap(data) {
+    var wrap = el("div", "cmap");
+    wrap.setAttribute("role", "img");
+    var label = data.spine.concat(data.fan).join(", ");
+    wrap.setAttribute("aria-label", "Peta konsep: " + label);
+
+    var spine = el("div", "cmap-spine");
+    data.spine.forEach(function (t, i) {
+      if (i) spine.appendChild(el("span", "cmap-arrow", icon("arrow-right")));
+      spine.appendChild(el("div", "cmap-node", esc(t)));
+    });
+    wrap.appendChild(spine);
+
+    if (data.fan.length) {
+      if (data.spine.length) spine.appendChild(el("span", "cmap-arrow", icon("arrow-right")));
+      var fan = el("div", "cmap-fan");
+      data.fan.forEach(function (t) {
+        var row = el("div", "cmap-fanrow");
+        row.appendChild(el("span", "cmap-tick", ""));
+        row.appendChild(el("div", "cmap-node is-leaf", esc(t)));
+        fan.appendChild(row);
+      });
+      wrap.appendChild(fan);
+    }
+    return wrap;
+  }
+
+  /** Spanduk "ide pemersatu" Bab 07 — bentuknya khas, ditangani tersendiri. */
+  function renderUnifying(text) {
+    var t = String(text);
+    var judul = (t.match(/^\s*([A-Z][A-Z\s]+)\s*$/m) || [])[1] || "POLINOMIAL";
+    var ide = (t.match(/nilai\s*=\s*[^\n]+/) || [])[0] || "";
+    var bawah = (t.match(/STRATEGI[^\n]*/) || [])[0] || "";
+    var kolom = ["Konsep Dasar", "Operasi & Nilai", "Pembagian",
+                 "Teorema Sisa/Faktor", "Persamaan & Vieta"];
+    var wrap = el("div", "umap");
+    wrap.setAttribute("role", "img");
+    wrap.setAttribute("aria-label", "Peta konsep akhir: " + judul + ", " + ide);
+    wrap.appendChild(el("div", "umap-top", esc(judul.trim())));
+    var row = el("div", "umap-cols");
+    kolom.forEach(function (k) { row.appendChild(el("div", "cmap-node", esc(k))); });
+    wrap.appendChild(row);
+    if (ide) wrap.appendChild(el("div", "umap-idea",
+      '<span class="umap-idea-lab">IDE PEMERSATU</span><span>' + esc(ide.trim()) + "</span>"));
+    if (bawah) wrap.appendChild(el("div", "umap-bottom", esc(bawah.trim())));
+    return wrap;
+  }
+
+  /* --- Tabel Horner dari ASCII ---------------------------------------- *
+   * Angka pengali & baris hasil TIDAK dibaca dari ASCII, melainkan DIHITUNG
+   * dari k dan koefisiennya. Hasil hitung lalu dibandingkan dengan baris
+   * hasil pada ASCII sebagai pemeriksaan — bila tidak cocok, itu
+   * ketidaksesuaian nyata pada konten dan bagannya tidak ditampilkan. */
+  function angka(s) {
+    return String(s).replace(/[−–]/g, "-").trim();
+  }
+  function tokNum(s) {
+    var out = [], re = /[-+]?\d+(?:[.,]\d+)?(?:\/\d+)?/g, m;
+    while ((m = re.exec(angka(s)))) out.push(m[0]);
+    return out;
+  }
+  function parseHornerAscii(text) {
+    var lines = String(text).split("\n");
+    var bar = lines.filter(function (l) { return l.indexOf("│") >= 0; });
+    var hasil = null;
+    for (var i = 0; i < lines.length; i++) {
+      if (/[└─]{3,}/.test(lines[i]) && lines[i + 1]) { hasil = lines[i + 1]; break; }
+    }
+    if (bar.length < 2 || !hasil) return null;
+
+    function kiriKanan(l) {
+      var p = l.split("│");
+      return { kiri: p[0], kanan: p.slice(1).join("│") };
+    }
+    var b0 = kiriKanan(bar[0]);
+    var coefs = tokNum(b0.kanan).map(Number);
+    if (!coefs.length) return null;
+
+    // baris hasil: bagian sebelum "|" = hasil bagi, sesudahnya = sisa
+    var hp = hasil.split("|");
+    var hBagi = tokNum(hp[0]).map(Number);
+    var hSisa = hp.length > 1 ? tokNum(hp[1]).map(Number) : [];
+
+    if (bar.length === 2) {
+      var km = angka(b0.kiri).match(/k\s*=\s*(-?\d+(?:\/\d+)?)/i);
+      if (!km) return null;
+      var kv = km[1].indexOf("/") > 0
+        ? Number(km[1].split("/")[0]) / Number(km[1].split("/")[1])
+        : Number(km[1]);
+      return { mode: "simple", k: kv, coefs: coefs, asciiBagi: hBagi, asciiSisa: hSisa };
+    }
+    // Horner-Kino: dua baris pengali, labelnya = -b dan -c
+    var mults = bar.slice(1).map(function (l) {
+      var n = tokNum(kiriKanan(l).kiri);
+      return n.length ? Number(n[0]) : null;
+    });
+    if (mults.some(function (v) { return v === null; })) return null;
+    return { mode: "kino", mults: mults, coefs: coefs, asciiBagi: hBagi, asciiSisa: hSisa };
+  }
+
+  function renderHornerTable(d) {
+    var n = d.coefs.length;
+    var baris = [], hasil = [], sisa = [];
+
+    if (d.mode === "simple") {
+      var h = horner(d.coefs, d.k);
+      baris = [h.mult.slice()];                       // null pada kolom pertama
+      hasil = h.quotient.slice();
+      sisa = [h.remainder];
+      // periksa terhadap ASCII penulis
+      var cocok = d.asciiBagi.length
+        ? hasil.every(function (v, i) { return Math.abs(v - d.asciiBagi[i]) < 1e-9; })
+        : true;
+      if (d.asciiSisa.length) cocok = cocok && Math.abs(d.asciiSisa[0] - h.remainder) < 1e-9;
+      if (!cocok) return null;
+    } else {
+      /* Horner-Kino: tiap koefisien hasil menyumbang ke dua kolom berikutnya,
+         dikali mults[0] (geser 1) dan mults[1] (geser 2). */
+      var r1 = new Array(n).fill(null), r2 = new Array(n).fill(null);
+      var q = [], k = n - 2;                          // banyak koefisien hasil bagi
+      var work = d.coefs.slice();
+      for (var i = 0; i < k; i++) {
+        var c = work[i];
+        q.push(c);
+        if (i + 1 < n) { r1[i + 1] = c * d.mults[0]; work[i + 1] += r1[i + 1]; }
+        if (i + 2 < n) { r2[i + 2] = c * d.mults[1]; work[i + 2] += r2[i + 2]; }
+      }
+      baris = [r1, r2];
+      hasil = q;
+      sisa = work.slice(k);
+      var ok = d.asciiBagi.length
+        ? q.every(function (v, i) { return Math.abs(v - d.asciiBagi[i]) < 1e-9; })
+        : true;
+      if (!ok) return null;
+    }
+
+    var tab = el("table", "htab");
+    function sel(txt, cls) {
+      var td = document.createElement("td");
+      if (cls) td.className = cls;
+      td.textContent = txt == null ? "" : fmtNum(txt).replace("{,}", ",");
+      return td;
+    }
+    var thead = document.createElement("thead");
+    var trh = document.createElement("tr");
+    var th0 = document.createElement("th");
+    th0.textContent = d.mode === "simple" ? "k = " + fmtNum(d.k).replace("{,}", ",") : "pengali";
+    trh.appendChild(th0);
+    d.coefs.forEach(function (c) {
+      var th = document.createElement("th");
+      th.textContent = fmtNum(c).replace("{,}", ",");
+      trh.appendChild(th);
+    });
+    thead.appendChild(trh); tab.appendChild(thead);
+
+    var tb = document.createElement("tbody");
+    baris.forEach(function (row, ri) {
+      var tr = document.createElement("tr");
+      tr.className = "htab-mult";
+      tr.dataset.step = ri;
+      var lab = document.createElement("th");
+      lab.textContent = d.mode === "simple" ? "×k" : fmtNum(d.mults[ri]).replace("{,}", ",");
+      tr.appendChild(lab);
+      row.forEach(function (v) { tr.appendChild(sel(v)); });
+      tb.appendChild(tr);
+    });
+    var trr = document.createElement("tr");
+    trr.className = "htab-res";
+    var labr = document.createElement("th");
+    labr.textContent = "hasil";
+    trr.appendChild(labr);
+    hasil.forEach(function (v) { trr.appendChild(sel(v, "is-quot")); });
+    sisa.forEach(function (v) { trr.appendChild(sel(v, "is-rem")); });
+    tb.appendChild(trr);
+    tab.appendChild(tb);
+
+    var wrap = el("div", "htab-wrap");
+    wrap.appendChild(tab);
+    var ket = el("p", "htab-legend",
+      '<span class="htab-key is-quot"></span> koefisien hasil bagi' +
+      '<span class="htab-key is-rem"></span> ' +
+      (d.mode === "simple" ? "sisa = f(k)" : "sisa (rx + s)"));
+    wrap.appendChild(ket);
+    return wrap;
+  }
+
+  /**
+   * Ubah SETIAP fence ASCII menjadi komponen yang semestinya.
+   * Dipanggil dari mount(); mencakup fence yang berada di dalam gudang kartu
+   * (mis. Peta Konsep di dalam Info Cards) karena komponennya statis dan
+   * tidak memerlukan pengukuran tata letak.
+   */
+  function upgradeAscii(root) {
+    var n = 0;
+    (root || document).querySelectorAll("pre.ascii").forEach(function (pre) {
+      var host = pre.closest(".pre-wrap") || pre;
+      if (host.dataset.upgraded) return;
+      var txt = pre.textContent || "";
+      var out = null;
+      try {
+        /* Dicoba BERURUTAN, bukan if/else-if berantai. Spanduk "ide pemersatu"
+           Bab 07 memuat "│" dan "└───" sehingga tertangkap dulu oleh cabang
+           Horner; ketika penguraiannya gagal, rantai else-if membuat bentuk
+           lain tidak pernah dicoba dan fence-nya lolos ke penangan lama. */
+        if (txt.indexOf("│") >= 0 && /[└─]{3,}/.test(txt)) {
+          var hd = parseHornerAscii(txt);
+          if (hd) out = renderHornerTable(hd);
+        }
+        if (!out && /[┌┬┐┴]/.test(txt)) out = renderUnifying(txt);
+        if (!out && txt.indexOf("→") >= 0) {
+          var cd = parseChain(txt);
+          if (cd) out = renderConceptMap(cd);
+        }
+      } catch (e) {
+        out = null;
+        /* JANGAN menelan galat diam-diam. Versi pertama fungsi ini memakai
+           `catch { out = null }` tanpa jejak; sebuah ReferenceError (esc belum
+           didefinisikan) tersembunyi total dan fence-nya diam-diam jatuh ke
+           penangan lama yang menghasilkan bagan DAPAT DIKLIK — melanggar aturan
+           read-only. Sekarang kegagalan selalu meninggalkan jejak. */
+        if (window.console) console.warn("[Visuals] fence gagal diurai:", e && e.message);
+      }
+      if (!out) return;                    // gagal urai -> biarkan apa adanya
+      host.dataset.upgraded = "1";
+      host.parentNode.insertBefore(out, host);
+      host.parentNode.removeChild(host);
+      n++;
+    });
+    return n;
+  }
+
+  /* ===================================================================== *
    * 7) MOUNT
    * ===================================================================== */
   function mount(root) {
     PAINTERS.length = 0;      // halaman berganti -> lupakan penggambar lama
+    upgradeAscii(root);       // 12 fence ASCII -> bagan CSS (read-only)
     (root || document).querySelectorAll(".visual-slot").forEach(function (slot) {
       if (slot.dataset.visualDone) return;
       slot.dataset.visualDone = "1";
@@ -462,6 +729,9 @@
 
   window.Visuals = {
     mount: mount,
+    upgradeAscii: upgradeAscii,
+    parseChain: parseChain,
+    parseHornerAscii: parseHornerAscii,
     repaint: repaint,
     watch: watch,
     register: function (k, fn) { BUILDERS[k] = fn; },

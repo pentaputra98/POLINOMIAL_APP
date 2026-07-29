@@ -60,6 +60,55 @@
       .replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
   }
 
+  /**
+   * Serap sebuah SEKSI <h2> (judul + seluruh isi sampai h2/hr berikutnya)
+   * menjadi satu kartu Info tambahan.
+   *
+   * Dipakai untuk "Peta Perjalanan" pada Bab 00, yang di konten ditulis sebagai
+   * seksi biasa — bukan <details data-card> seperti kartu lainnya. Dengan cara
+   * ini Bab 00 memperoleh 6 kartu sehingga gridnya 3 + 3, sama seperti bab
+   * materi, tanpa menyentuh berkas .md.
+   */
+  function serapSeksiJadiKartu(root, grid, gudang, opt) {
+    var h2 = [].slice.call(root.querySelectorAll(".doc h2")).filter(function (h) {
+      return opt.cocok.test(stripEmoji(h.textContent));
+    })[0];
+    if (!h2) return 0;
+
+    var judul = stripEmoji(h2.textContent) || opt.label;
+    var isi = el("div", "infocard-body");
+    var n = h2.nextElementSibling;
+    while (n) {
+      var next = n.nextElementSibling;
+      if (n.tagName === "H2" || n.tagName === "HR") break;
+      isi.appendChild(n);                       // dipindahkan, bukan disalin
+      n = next;
+    }
+    h2.parentNode.removeChild(h2);
+    if (!isi.childNodes.length) return 0;
+
+    var simpan = el("div", "infocard-store");
+    simpan.appendChild(isi);
+    gudang.appendChild(simpan);
+
+    var btn = el("button", "infocard " + (CARD_TONE[opt.key] || "tone-butter"),
+      '<span class="infocard-ico">' + icon(opt.ikon) + "</span>" +
+      '<span class="infocard-label">' + esc(opt.label) + "</span>" +
+      '<span class="infocard-more">' + icon("chevron-right") + "</span>");
+    btn.type = "button";
+    btn.setAttribute("role", "listitem");
+    btn.setAttribute("aria-label", judul + " — buka");
+    btn.addEventListener("click", function () {
+      if (!window.Overlay) return;
+      Overlay.open({
+        title: judul, icon: opt.ikon, node: isi, size: "lg",
+        variant: CARD_TONE[opt.key] || "tone-butter"
+      });
+    });
+    grid.appendChild(btn);
+    return 1;
+  }
+
   /* ===================================================================== *
    * 1) INFO CARDS
    * ===================================================================== */
@@ -132,6 +181,14 @@
         gudang.appendChild(simpan);
         d.parentNode.removeChild(d);
         dipakai++;
+      });
+
+      /* Bab 00 (layout "gerbang") menulis "Peta Perjalanan" sebagai SEKSI H2
+         tersendiri, bukan <details data-card>. Atas permintaan pemilik, seksi
+         itu diserap menjadi kartu Info ke-6 agar Bab 00 juga bergrid 3+3.
+         Isinya statis: bagan konsep read-only (lihat §10b). */
+      dipakai += serapSeksiJadiKartu(root, grid, gudang, {
+        cocok: /peta\s+perjalanan/i, key: "peta", ikon: "map", label: "Peta Konsep"
       });
 
       var petunjuk = el("p", "infocards-hint",

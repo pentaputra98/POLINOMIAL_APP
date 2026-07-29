@@ -1,6 +1,6 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=74`** · Cache SW **`polinomial-v56`**
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=78`** · Cache SW **`polinomial-v60`**
 >
 > 🚫 **JANGAN PUSH.** Aplikasi versi lama sedang dipakai siswa secara live.
 > Seluruh commit disimpan LOKAL sampai Fase 1–5 selesai dan pemilik memberi
@@ -788,6 +788,97 @@ Capaian sintetis dari pengujian sudah dibersihkan dari `localStorage`
 **Tersisa Fase 5:** 22 direktif VISUAL, 12 fence ASCII (peta konsep = bagan kotak
 CSS **read-only**, lihat §10b), `horner-steps` & `slider`, aksesibilitas & offline
 akhir.
+
+---
+
+## 15. PEMBANGUNAN ULANG — FASE 5: BAGAN & VISUAL (29 Juli 2026)
+
+### Yang SELESAI
+
+**(a) Seluruh 12 fence ASCII menjadi komponen CSS — 0 tampil mentah.**
+`Visuals.upgradeAscii()` memindai setiap `pre.ascii` dan mengubahnya:
+
+| Bentuk | Jumlah | Hasil |
+|---|---|---|
+| Rantai bercabang (peta konsep) | **7** | `.cmap` — kotak + panah, bercabang bila ada |
+| Spanduk "ide pemersatu" Bab 07 | **1** | `.umap` — judul, 5 kolom, ide, baris bawah |
+| Tabel Horner (termasuk Horner-Kino) | **4** | `.htab` — kolom hasil bagi & sisa diberi warna |
+
+**Angka tabel Horner DIHITUNG, bukan disalin.** Hanya `k` dan baris koefisien
+dibaca dari ASCII; pengali dan baris hasil dihitung `horner()` / algoritma Kino,
+lalu **dibandingkan dengan baris hasil milik penulis**. Bila tidak cocok, bagan
+tidak ditampilkan — jadi ketidaksesuaian konten tidak pernah disamarkan.
+
+**(b) Peta konsep READ-ONLY (override §10b).** Dibangun dari `<div>`, ber-`role="img"`
+dengan `aria-label` berisi seluruh simpul. Terukur di 8 bab: **0 tombol, 0 tautan,
+0 `data-href`, `cursor:default`, 0 kontrol zoom**. Penampil layar penuh `dgview`
+pada `enhance.js` tidak pernah terpasang karena fence sudah habis lebih dulu.
+
+**(c) Bab 00: "Peta Perjalanan" jadi kartu Info ke-6 (diminta pemilik).**
+Di konten ia ditulis sebagai seksi `<h2>` biasa, bukan `<details data-card>`.
+`serapSeksiJadiKartu()` menyerap judul + seluruh isinya menjadi kartu, sehingga
+Bab 00 kini **6 kartu → grid 3 + 3** sama seperti bab materi. Berkas `.md` utuh.
+
+### ⚠️ TIGA BUG DITEMUKAN — satu di antaranya regresi lama saya
+
+**Bug 1 (KRITIS, regresi sejak Fase 3): seluruh isi Info Cards terhapus.**
+`QuizCards.apply()` memanggil `Icons.hydrate(root)`, dan `hydrate` menyasar
+**semua** `[data-icon]` lalu menimpa `innerHTML`-nya. Konten menulis
+`<details data-card="tujuan" data-icon="target">` — atribut itu **metadata**,
+bukan penampung ikon. Akibatnya keenam `<details>` dikosongkan menjadi `<svg/>`
+dan **semua pop-up Info Cards kosong sejak Fase 3**; pemeriksaan saya di Fase 3
+hanya menghitung jumlah kartu, tidak isinya.
+Perbaikan di akar: `hydrate` kini hanya mengisi elemen yang **kosong** —
+penampung ikon selalu kosong, sehingga metadata konten tidak pernah tersentuh.
+Terverifikasi: 47 kartu di 8 bab, **0 kartu kosong**; kartu Prasyarat kembali
+menampilkan 6 rumus KaTeX.
+
+**Bug 2: `try/catch` menelan galat.** `upgradeAscii` memakai
+`catch { out = null }` tanpa jejak. Sebuah `ReferenceError` (`esc` belum
+didefinisikan di `visuals.js`) tersembunyi total, dan fence-nya diam-diam jatuh
+ke `diagrams.js` lama yang menghasilkan roadmap **dapat diklik** — melanggar
+aturan read-only. Kini setiap kegagalan menulis `console.warn`.
+
+**Bug 3: rantai `else if` menutup bentuk lain.** Spanduk Bab 07 memuat `│` dan
+`└───`, sehingga tertangkap cabang Horner; ketika penguraiannya gagal, rantai
+`else if` membuat bentuk "ide pemersatu" tidak pernah dicoba dan fence-nya lolos
+ke penangan lama. Dispatch diubah menjadi percobaan **berurutan**.
+
+### ⏳ YANG BELUM SELESAI — dilaporkan apa adanya
+Dari **22 direktif `<!-- VISUAL -->`**, yang sudah berupa komponen interaktif
+baru **2**: `panah-distribusi` (Bab 02) dan `rumah-pembagian-porogapit` (Bab 03)
+— keduanya dari Fase 1. **20 sisanya belum dibangun**; slotnya
+**disembunyikan**, sehingga tidak ada kotak kosong dan tidak ada direktif yang
+tampil sebagai teks mentah, tetapi tampilan/animasi yang diminta konten belum
+terwujud:
+
+* Bab 01 — anatomi suku · perapian ke bentuk baku · uji aturan emas
+* Bab 02 — penjumlahan bersusun · penyamaan koefisien
+* Bab 03 — tabel Horner **beranimasi** · skema Horner-Kino · bagan alir metode
+* Bab 04 — pembuktian bertahap · sistem dua persamaan · rantai kesetaraan ·
+  daftar kandidat akar · pengupasan faktor
+* Bab 05 — penurunan rumus Vieta · peta ekspresi simetris · pergeseran akar
+* Bab 06 — bagan alir keputusan · penyorot kata kunci · studi kasus · radar jebakan
+
+Catatan: tabel Horner **statis** sudah ada (butir a); yang belum adalah
+**animasi** irama turun–kali–jumlah dan bagan bertingkat Horner-Kino.
+Widget aktivitas `horner-steps` dan `slider` juga **belum diverifikasi** terhadap
+field konten baru (`expected_quotient`, `step`, `checkpoints`).
+
+### Bukti Fase 5 (8 bab)
+| Cek | Hasil |
+|---|---|
+| Fence ASCII jadi komponen | **12/12** (7 `.cmap` · 1 `.umap` · 4 `.htab`) |
+| ASCII mentah tersisa | **0** |
+| Bagan interaktif lama (dapat diklik) | **0** |
+| Tombol/tautan di dalam bagan | **0** — read-only terpenuhi |
+| Info Cards | **47**, **0 kosong** · Bab 00 kini **6 kartu (3+3)** |
+| Kartu kuis · tantangan · guided | **36 · 7 · 35** |
+| Penanda `hl-*` | **51** |
+| KaTeX | **1223 rumus · 0 error** |
+| `$` bocor · emoji mentah · gagal muat | **0 · 0 · 0** |
+| Scroll horizontal | **0 px** |
+| Konsol | **0 pesan** |
 
 ---
 

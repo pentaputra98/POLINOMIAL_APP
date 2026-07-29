@@ -1939,6 +1939,121 @@ body.dgview-open{overflow:hidden;}
   .cap-rec > :last-child{display:none;}   /* kolom "coba" disembunyikan */
 }
 
+/* =====================================================================
+   FASE 5 — BAGAN DARI FENCE ASCII
+
+   PETA KONSEP BERSIFAT READ-ONLY (override pemilik, §10b SERAH-TERIMA):
+   dibangun dari <div> biasa, TANPA cursor:pointer, TANPA :hover interaktif,
+   TANPA zoom, dan TANPA penanganan klik. Murni estetika visual.
+   ===================================================================== */
+.cmap{
+  display:flex;flex-direction:column;gap:.5rem;
+  padding:.8rem .7rem;margin:1rem 0;
+  background:var(--surface);
+  border:var(--bd) solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+}
+.cmap-spine{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem;}
+.cmap-node{
+  padding:.4rem .6rem;
+  background:var(--sky);color:var(--ink);
+  border:var(--bd-thin) solid var(--line);border-radius:10px;
+  font-family:var(--font-display);font-weight:700;font-size:.86rem;
+  line-height:1.25;
+  /* read-only: tidak ada isyarat dapat diklik */
+  cursor:default;user-select:text;
+}
+.cmap-node.is-leaf{background:var(--mint);}
+.cmap-arrow{display:grid;place-items:center;color:var(--ink-soft);flex:0 0 auto;}
+.cmap-arrow .lu{width:1.05em;height:1.05em;}
+.cmap-fan{
+  display:flex;flex-direction:column;gap:.35rem;
+  margin-left:.9rem;padding-left:.8rem;
+  border-left:var(--bd) solid var(--line);
+}
+.cmap-fanrow{display:flex;align-items:center;gap:.4rem;}
+.cmap-tick{
+  flex:0 0 auto;width:.8rem;height:0;
+  border-top:var(--bd-thin) solid var(--line);
+}
+
+/* --- Spanduk "ide pemersatu" Bab 07 --- */
+.umap{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  padding:.85rem .7rem;margin:1rem 0;
+  background:var(--surface);
+  border:var(--bd) solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+}
+.umap-top,.umap-bottom{
+  font-family:var(--font-display);font-weight:700;
+  letter-spacing:.04em;text-align:center;
+  padding:.35rem .7rem;
+  border:var(--bd-thin) solid var(--line);border-radius:10px;
+}
+.umap-top{background:var(--butter);font-size:1rem;}
+.umap-bottom{background:var(--lavender);font-size:.86rem;}
+.umap-cols{
+  display:grid;gap:.4rem;width:100%;
+  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+}
+.umap-idea{
+  display:flex;flex-direction:column;align-items:center;gap:.2rem;
+  width:100%;padding:.45rem .6rem;text-align:center;
+  background:var(--mint);
+  border:var(--bd-thin) dashed var(--line);border-radius:10px;
+  font-family:var(--font-mono);font-size:.86rem;
+}
+.umap-idea-lab{
+  font-family:var(--font-display);font-size:.68rem;
+  letter-spacing:.06em;color:var(--ink-soft);
+}
+
+/* --- Tabel Horner (dihitung engine, diverifikasi dengan ASCII penulis) --- */
+.htab-wrap{margin:1rem 0;overflow-x:auto;}
+.htab{
+  border-collapse:separate;border-spacing:0;
+  font-family:var(--font-mono);font-size:.88rem;
+  border:var(--bd) solid var(--line);border-radius:var(--radius-sm);
+  overflow:hidden;min-width:max-content;
+}
+.htab th,.htab td{
+  padding:.35rem .55rem;text-align:right;
+  border-left:var(--bd-thin) solid var(--line);
+  border-top:var(--bd-thin) solid var(--line);
+}
+.htab tr:first-child th,.htab tr:first-child td{border-top:0;}
+.htab th:first-child,.htab td:first-child{border-left:0;}
+.htab thead th{
+  background:var(--surface-2);
+  font-family:var(--font-display);font-weight:700;
+}
+.htab thead th:first-child,.htab tbody th{
+  text-align:left;white-space:nowrap;
+  background:var(--surface-2);
+  font-family:var(--font-display);font-size:.8rem;
+}
+.htab-mult td{color:var(--ink-soft);}
+.htab-res td{font-weight:700;}
+.htab-res td.is-quot{background:var(--mint);}
+.htab-res td.is-rem{background:var(--butter);}
+.htab-legend{
+  display:flex;align-items:center;flex-wrap:wrap;gap:.3rem;
+  font-size:.78rem;color:var(--ink-soft);margin:.4rem 0 0;
+}
+.htab-key{
+  display:inline-block;width:.85rem;height:.85rem;
+  border:var(--bd-thin) solid var(--line);border-radius:4px;
+  margin-left:.5rem;
+}
+.htab-key.is-quot{background:var(--mint);margin-left:0;}
+.htab-key.is-rem{background:var(--butter);}
+
+@media (max-width:480px){
+  .cmap-node{font-size:.8rem;padding:.35rem .5rem;}
+  .umap-cols{grid-template-columns:repeat(2,1fr);}
+}
+
 /* ---------- AKSESIBILITAS ---------- */
 :focus-visible{outline:3px solid var(--coral);outline-offset:2px;border-radius:4px;}
 :root[data-theme="dark"] :focus-visible{outline-color:#FFD97A;}

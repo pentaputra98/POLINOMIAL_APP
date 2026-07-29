@@ -204,9 +204,21 @@
       ' aria-hidden="true" focusable="false">' + inner + "</svg>";
   }
 
+  /**
+   * Isi setiap PENAMPUNG ikon dengan inline SVG.
+   *
+   * PENTING — hanya elemen KOSONG yang diisi. `data-icon` dipakai di dua peran
+   * berbeda: sebagai penampung (`<i data-icon="target"></i>`) DAN sebagai
+   * METADATA pada konten (`<details data-card="tujuan" data-icon="target">`).
+   * Versi sebelumnya menyasar semua `[data-icon]` dan menimpa `innerHTML`,
+   * sehingga seluruh isi keenam kartu Info terhapus dan pop-up-nya kosong.
+   * Penampung ikon selalu kosong, jadi syarat itu memisahkan keduanya dengan
+   * aman tanpa mengubah satu pun berkas konten.
+   */
   function hydrate(root) {
     (root || document).querySelectorAll("[data-icon]").forEach(function (el) {
       if (el.dataset.iconDone) return;
+      if (el.firstChild) return;                 // bukan penampung -> jangan disentuh
       el.innerHTML = svg(el.dataset.icon, {
         size: el.dataset.iconSize || "1em",
         stroke: el.dataset.iconStroke || 2
