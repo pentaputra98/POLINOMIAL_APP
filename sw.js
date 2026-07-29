@@ -8,8 +8,8 @@
        diperbarui penulis.
    Naikkan CACHE saat aset shell berubah.
    ========================================================================= */
-const CACHE = "polinomial-v71";
-const V = "?b=89";
+const CACHE = "polinomial-v72";
+const V = "?b=90";
 
 const SHELL = [
   "./",

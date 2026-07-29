@@ -1104,9 +1104,10 @@ h1,h2,h3,h4{font-family:var(--font-display);line-height:1.18;}
 
 /* slider */
 .sl-wrap{display:grid;gap:.55rem;}
-.sl-fx{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;padding:.5rem .6rem;
+.sl-fx{display:flex;flex-direction:column;align-items:flex-start;gap:.15rem;padding:.5rem .6rem;
   background:var(--bg);border:var(--bd-thin) solid var(--line);border-radius:10px;min-height:46px;}
-.sl-lab{font-weight:800;font-size:.85rem;color:var(--ink-soft);}
+.sl-def{font-size:.82rem;color:var(--ink-soft);}          /* definisi, ditulis sekali */
+.sl-val{font-weight:800;}                                  /* hasil evaluasi yang berubah */
 .sl-row{display:flex;align-items:center;gap:.6rem;}
 .sl-x{font-weight:800;font-size:.85rem;white-space:nowrap;}
 .sl-x b{display:inline-block;min-width:2.4em;text-align:center;background:var(--butter);

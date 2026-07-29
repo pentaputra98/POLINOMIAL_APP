@@ -430,6 +430,12 @@
     var r = Math.round(v * 1000) / 1000;
     return String(r).replace(".", ",");
   }
+  /* Versi LaTeX: konten memakai konvensi desimal `0{,}5` — tanpa kurung kurawal
+     KaTeX memperlakukan koma sebagai tanda baca dan menyisipkan spasi. */
+  function texNum(v) {
+    var r = Math.round(v * 1000) / 1000;
+    return String(r).replace(".", "{,}");
+  }
   function polyTex(poly) {
     var n = poly.length - 1, out = "";
     poly.forEach(function (c, i) {
@@ -445,7 +451,15 @@
     var mid = (d.x_min + d.x_max) / 2;
     return frame(d,
       '<div class="sl-wrap">' +
-        '<div class="sl-fx"><span class="sl-lab">f(x) =</span> <span class="sl-val" id="slv"></span></div>' +
+        /* Dua baris berbeda peran, bukan satu label yang mengulang isinya:
+           definisi fungsi ditulis SEKALI, lalu hasil evaluasi yang berubah
+           mengikuti penggeser. Bentuk lama "f(x) = <polinomial> ⇒ <nilai>"
+           menyebutkan f(x) dua kali dan memakai ⇒ untuk hubungan yang
+           sebenarnya kesamaan. */
+        '<div class="sl-fx">' +
+          '<span class="sl-def"></span>' +
+          '<span class="sl-val"></span>' +
+        "</div>" +
         '<div class="sl-row">' +
           '<span class="sl-x">x = <b class="sl-xval">' + fmt(mid) + "</b></span>" +
           '<input class="sl-range" type="range" min="' + d.x_min + '" max="' + d.x_max +
@@ -459,9 +473,17 @@
     var range = root.querySelector(".sl-range");
     var xv = root.querySelector(".sl-xval");
     var out = root.querySelector(".sl-val");
+    var def = root.querySelector(".sl-def");
     var box = root.querySelector(".sl-check");
     var svg = root.querySelector(".sl-graph svg");
     var dikunjungi = {};
+
+    // definisi fungsi ditulis sekali; hanya baris evaluasi yang berubah
+    if (def) {
+      def.innerHTML = window.MR ? MR.M("f(x) = " + polyTex(d.poly), false)
+                                : "f(x) = " + polyTex(d.poly);
+      if (window.MR) MR.render(def);
+    }
 
     // gambar kurva sekali
     if (svg) {
@@ -490,7 +512,8 @@
       var x = parseFloat(range.value);
       var y = evalPoly(d.poly, x);
       xv.textContent = fmt(x);
-      out.innerHTML = window.MR ? MR.M(polyTex(d.poly) + " \\;\\Rightarrow\\; " + fmt(y), false) : fmt(y);
+      var evalTex = "f(" + texNum(x) + ") = " + texNum(y);
+      out.innerHTML = window.MR ? MR.M(evalTex, false) : "f(" + fmt(x) + ") = " + fmt(y);
       if (window.MR) MR.render(out);
       if (svg && svg._meta) {
         var m = svg._meta;
@@ -524,9 +547,14 @@
       },
       reset: function () { dikunjungi = {}; range.value = (d.x_min + d.x_max) / 2; tampil(); },
       kunci: function () {
+        /* Tiap kesamaan dibungkus $…$ dan dipisah kata "dan". Bentuk lama
+           "f(0) = -4 · f(2) = -2" tidak memuat kata sepanjang 3 huruf,
+           sehingga smart() mengirim SELURUHNYA ke KaTeX dan pemisah "·"
+           terender sebagai ⋅ — terbaca sebagai perkalian antar-persamaan.
+           Aman: string ini tidak dinilai dan tidak memuat "<" (jebakan #7). */
         return (d.checkpoints || []).map(function (c) {
-          return "f(" + fmt(c.x) + ") = " + fmt(c.fx);
-        }).join(" · ");
+          return "$f(" + texNum(c.x) + ") = " + texNum(c.fx) + "$";
+        }).join(" dan ");
       },
       pesanBelum: "Geser slider hingga menyentuh semua titik periksa."
     };
