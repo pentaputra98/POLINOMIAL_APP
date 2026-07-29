@@ -389,7 +389,13 @@
   }
   function wireHorner(root, d) {
     var exp = hornerRows(d);
-    root.querySelectorAll(".hs-in").forEach(function (inp) { if (window.Keypad) Keypad.attach(inp); });
+    /* Seluruh sel skema Horner bernilai BILANGAN — baik baris pengali maupun
+       baris hasil dan sisa dihitung dari koefisien. Karena itu keypad dibuka
+       dalam mode numerik (tab variabel disembunyikan), sejalan dengan soal
+       isian di quiz.js:330. */
+    root.querySelectorAll(".hs-in").forEach(function (inp) {
+      if (window.Keypad) Keypad.attach(inp, null, { numeric: true });
+    });
     return {
       nilai: function () {
         var benar = 0, total = 0;

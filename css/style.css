@@ -1111,12 +1111,23 @@ h1,h2,h3,h4{font-family:var(--font-display);line-height:1.18;}
 .sl-x{font-weight:800;font-size:.85rem;white-space:nowrap;}
 .sl-x b{display:inline-block;min-width:2.4em;text-align:center;background:var(--butter);
   border:1.5px solid var(--line);border-radius:7px;padding:.05rem .3rem;}
-.sl-range{flex:1;-webkit-appearance:none;appearance:none;height:10px;background:var(--bg);
+/* Kotak elemen setinggi 44px demi target sentuh; RELNYA tetap setipis 10px
+   karena digambar oleh pseudo-elemen track, bukan oleh latar elemen. Versi
+   sebelumnya menetapkan tinggi elemen 10px sehingga area ketuk vertikalnya
+   hanya ~20px — terlalu sempit untuk perangkat sentuh. */
+.sl-range{flex:1;-webkit-appearance:none;appearance:none;height:44px;
+  background:transparent;border:0;border-radius:999px;cursor:pointer;}
+.sl-range::-webkit-slider-runnable-track{height:10px;background:var(--bg);
+  border:var(--bd-thin) solid var(--line);border-radius:999px;}
+.sl-range::-moz-range-track{height:10px;background:var(--bg);
   border:var(--bd-thin) solid var(--line);border-radius:999px;}
 .sl-range::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;
-  background:var(--coral);border:var(--bd-thin) solid var(--line);box-shadow:var(--shadow-sm);cursor:pointer;}
+  background:var(--coral);border:var(--bd-thin) solid var(--line);box-shadow:var(--shadow-sm);
+  cursor:pointer;margin-top:-8px;}
 .sl-range::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--coral);
   border:var(--bd-thin) solid var(--line);cursor:pointer;}
+.sl-range:focus-visible::-webkit-slider-thumb{outline:3px solid var(--coral);outline-offset:2px;}
+.sl-range:focus-visible::-moz-range-thumb{outline:3px solid var(--coral);outline-offset:2px;}
 .sl-graph{background:var(--bg);border:var(--bd-thin) solid var(--line);border-radius:10px;overflow:hidden;}
 .sl-graph svg{display:block;width:100%;height:150px;}
 .sl-axis{stroke:var(--ink-soft);stroke-width:1;stroke-dasharray:4 4;opacity:.6;}
