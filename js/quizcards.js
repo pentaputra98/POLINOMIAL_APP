@@ -81,7 +81,7 @@
     var slots = [].slice.call(root.querySelectorAll(".quiz-slot"));
     if (!slots.length) return 0;
 
-    var grid = null, dibuat = 0;
+    var grid = null, gudang = null, dibuat = 0;
 
     slots.forEach(function (slot, urutan) {
       var set = (doc.quizzes || []).filter(function (q) {
@@ -118,26 +118,40 @@
         buang.forEach(function (x) { x.hidden = true; });
       }
 
-      /* PEMBAHASAN DIHAPUS (keputusan pemilik, QA manual).
-         Blok <details> "Pembahasan Paket X" pada konten hanya memuat kunci
-         jawaban yang ditulis sebagai SATU paragraf ("1. … 2. … 3. …"), bukan
-         uraian langkah. Isinya juga sudah tersedia per butir lewat tombol
-         "Lihat jawaban" yang menampilkan field `explanation`. Karena itu tidak
-         dirender sama sekali — berkas .md tetap utuh, hanya tampilannya yang
-         menghilangkannya. */
+      /* PEMBAHASAN — diperlakukan BERBEDA menurut jenis setnya.
+       *
+       * Paket bertingkat A–E: bloknya hanya kunci jawaban yang ditulis sebagai
+       *   SATU paragraf ("1. … 2. … 3. …"), bukan uraian langkah, dan isinya
+       *   sudah tersedia per butir lewat tombol "Lihat jawaban". Tidak
+       *   dirender (keputusan pemilik dari QA manual).
+       *
+       * Set lain — khususnya Tes Diagnostik Bab 00: bloknya ditulis sebagai
+       *   daftar bernomor yang benar DAN memuat penalaran (mis. mengaitkan
+       *   pemfaktoran ke Teorema Vieta Bab 05). Blok itu benar-benar membahas,
+       *   jadi DIPERTAHANKAN dan disajikan di dalam pop-up sebagai bagian
+       *   terbuka utuh.
+       *
+       * Berkas .md tidak pernah diubah dalam kedua kasus. */
+      var paketBertingkat = /-(?:set|bank)-[A-Z]-/.test(String(set.set_id || ""));
       var bahas = slot.nextElementSibling;
-      if (bahas && bahas.tagName === "DETAILS" && /Pembahasan/i.test(bahas.textContent)) {
+      if (!bahas || bahas.tagName !== "DETAILS" || !/Pembahasan/i.test(bahas.textContent)) {
+        bahas = null;
+      }
+      var bahasSeksi = null;
+      if (bahas && paketBertingkat) {
+        bahas.parentNode.removeChild(bahas);          // dibuang
+      } else if (bahas) {
+        bahasSeksi = el("section", "qc-bahas");        // dipertahankan
+        var sum = bahas.querySelector("summary");
+        var judulBahas = sum ? sum.textContent.trim() : "Pembahasan";
+        if (sum) sum.parentNode.removeChild(sum);
+        bahasSeksi.appendChild(el("h3", "qc-bahas-head",
+          '<span class="qc-bahas-ico">' + icon("book-open") + "</span>" +
+          "<span>" + esc(judulBahas) + "</span>"));
+        // seluruh isi dipindahkan apa adanya — tidak ada yang dipotong
+        while (bahas.firstChild) bahasSeksi.appendChild(bahas.firstChild);
         bahas.parentNode.removeChild(bahas);
       }
-
-      /* PEMBAHASAN (<details> "Pembahasan Paket X") milik paket ini.
-         Dahulu baru dipindahkan saat kartu pertama kali diketuk, sehingga
-         sebelum itu ia tetap terlihat sebagai akordeon di halaman utama —
-         terpisah dari kartunya. Sekarang dipindahkan SEKARANG (ke gudang),
-         dan di dalam pop-up ditampilkan sebagai bagian TERBUKA UTUH, bukan
-         akordeon yang harus diklik lagi. */
-      var bahas = slot.nextElementSibling;
-      if (bahas && bahas.tagName !== "DETAILS") bahas = null;
 
       var card = el("button", "qc-card " + lv.tone);
       card.type = "button";
@@ -155,9 +169,12 @@
         "Paket " + huruf + " " + lv.label + ", " + total + " soal" +
         (opsional ? ", opsional, bonus " + bonus + " XP" : ""));
 
-      /* gudang: tempat isi kuis hidup di luar pop-up agar keadaannya kekal */
+      /* gudang: tempat isi kuis hidup di luar pop-up agar keadaannya kekal.
+         Disimpan di LUAR grid supaya grid hanya berisi kartu — penomoran
+         :nth-child pada CSS (untuk memusatkan baris terakhir) menjadi tepat. */
       var store = el("div", "qc-store");
       store.hidden = true;
+      if (bahasSeksi) store.appendChild(bahasSeksi);
       var isi = null;
 
       card.addEventListener("click", function () {
@@ -169,6 +186,7 @@
           isi.appendChild(mountPoint);
           store.insertBefore(isi, store.firstChild);
           if (window.Quiz) Quiz.mount(mountPoint, set, chapterId);
+          if (bahasSeksi) isi.appendChild(bahasSeksi);   // pembahasan di bawah soal
           if (window.MR) MR.render(isi);
           if (window.Icons) Icons.hydrate(isi);
         }
@@ -182,10 +200,13 @@
 
       if (!grid) {
         grid = el("div", "quizcards");
+        gudang = el("div", "qc-stores");
+        gudang.hidden = true;
         slot.parentNode.insertBefore(grid, slot);
+        grid.parentNode.insertBefore(gudang, grid.nextSibling);
       }
-      grid.appendChild(card);
-      grid.appendChild(store);
+      grid.appendChild(card);          // grid HANYA berisi kartu
+      gudang.appendChild(store);
       slot.parentNode.removeChild(slot);
       paintProgress(card, set);
       dibuat++;

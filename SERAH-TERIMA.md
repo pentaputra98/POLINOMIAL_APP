@@ -673,11 +673,38 @@ blockquote catatan di antara judul dan blok JSON, sehingga judul "Paket D/E"
 pada QA. Penelusuran kini melewati blockquote/`<hr>`/paragraf kosong (maksimal 5
 langkah) dan hanya menyembunyikan bila judul paketnya benar-benar ditemukan.
 
-**⚠️ Perlu diketahui:** aturan ini berlaku **seragam**, sehingga pembahasan
-**Tes Diagnostik Bab 00** juga ikut tidak dirender. Berbeda dari Paket A–E,
-blok itu ditulis sebagai daftar bernomor yang benar dan memuat penalaran
-(mis. kaitan ke Teorema Vieta Bab 05). Bila Anda ingin **hanya** yang itu
-dikembalikan, cukup beri tahu — pengecualiannya satu baris.
+**(c) Pengecualian Bab 00 (diminta pemilik).** Aturan penghapusan kini
+**hanya** berlaku bagi paket bertingkat (`set_id` cocok `-set-X-`/`-bank-X-`).
+Pembahasan **Tes Diagnostik Bab 00** dipertahankan karena benar-benar membahas:
+daftar bernomor yang rapi dengan penalaran (mis. mengaitkan pemfaktoran ke
+Teorema Vieta Bab 05). Disajikan di dalam pop-up kartu sebagai bagian terbuka
+utuh. Terverifikasi: **5 butir daftar terpisah**, 9 rumus, 0 error, berakhir di
+"Substitusi menjadi konsep utama pada Bab 02."
+
+### 7. Tata letak kartu 3 kolom (diminta pemilik)
+Info Cards dan Latihan Bertingkat kini **3 kartu per baris pada SEMUA ukuran
+layar**. Gridnya dibuat **6 kolom** dengan setiap kartu `span 2` — bukan 3 kolom
+langsung — karena trik itu memungkinkan **baris terakhir dipusatkan** saat
+jumlah kartunya bukan kelipatan tiga: kartu ke-4 digeser mulai kolom 2 sehingga
+dua kartu terakhir menempati kolom 2–5 (rata tengah).
+
+Pemilih `:nth-child(4):nth-last-child(2)` hanya cocok bila kartu ke-4 sekaligus
+kartu kedua-dari-akhir — tepat ketika totalnya 5. Dengan 6 kartu aturan itu
+tidak aktif, sehingga susunannya 3 + 3.
+
+Prasyaratnya: **gudang isi kartu dipindahkan KELUAR grid** (`.qc-stores`,
+`.infocard-stores`), supaya grid hanya berisi kartu dan penomoran `:nth-child`
+tepat. Pada layar < 560 px kartu beralih ke susunan **menumpuk & rata tengah**
+(panah penunjuk disembunyikan) agar tetap terbaca pada kolom selebar ±105 px.
+
+| Cek @360 px & @730 px | Hasil |
+|---|---|
+| Info Cards 6 kartu (Bab 01–06) | **3 + 3** penuh |
+| Info Cards 5 kartu (Bab 00 & 07) | **3 + 2 rata tengah** |
+| Latihan Bertingkat | **3 (A·B·C) + 2 (D·E) rata tengah** di 7 bab |
+| Kepresisian pemusatan | sisa kiri/kanan **117/116 px** @730 · **57/56 px** @360 |
+| Label terpotong | **0** |
+| Scroll horizontal | **0 px** |
 
 ### Regresi 8 bab sesudah revisi
 | Cek | Hasil |

@@ -1446,11 +1446,37 @@ body.dgview-open{overflow:hidden;}
 .tone-coral{--tone:var(--coral);}
 .tone-sage{--tone:var(--sage);}
 
-/* ---------- INFO CARDS ---------- */
-.infocards{
-  display:grid;gap:.55rem;margin:.9rem 0 .35rem;
-  grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
+/* =====================================================================
+   TATA LETAK KARTU 3 KOLOM (Info Cards & Latihan Bertingkat)
+   Berlaku pada SEMUA ukuran layar (keputusan pemilik): 3 kartu di baris
+   atas, 3 di baris bawah.
+
+   Gridnya 6 kolom dan setiap kartu span 2 — bukan 3 kolom langsung. Trik itu
+   memungkinkan BARIS TERAKHIR DIPUSATKAN saat jumlah kartunya tidak habis
+   dibagi tiga: kartu ke-4 digeser mulai kolom 2, sehingga dua kartu terakhir
+   menempati kolom 2–5 dari 6 (rata tengah). Dipakai untuk Latihan Bertingkat
+   (A–C di atas, D–E di bawah rata tengah) dan Info Cards Bab 00 yang berisi
+   5 kartu.
+
+   Pemilih :nth-child(4):nth-last-child(2) hanya cocok bila kartu ke-4
+   sekaligus kartu kedua-dari-akhir — yaitu tepat ketika totalnya 5. Dengan 6
+   kartu, aturan itu tidak aktif sehingga susunannya 3 + 3 rapi.
+   Gudang isi kartu sengaja disimpan di luar grid agar penomoran ini tepat.
+   ===================================================================== */
+.infocards,.quizcards{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:.5rem;
+  margin:.9rem 0 .35rem;
 }
+.infocards > .infocard,.quizcards > .qc-card{grid-column:span 2;}
+.infocards > .infocard:nth-child(4):nth-last-child(2),
+.quizcards > .qc-card:nth-child(4):nth-last-child(2){grid-column:2 / span 2;}
+/* kartu tunggal (mis. Tes Diagnostik Bab 00) melebar penuh */
+.infocards > .infocard:only-child,.quizcards > .qc-card:only-child{grid-column:1 / -1;}
+.infocard-stores,.qc-stores{display:none;}
+
+/* ---------- INFO CARDS ---------- */
 .infocard{
   display:flex;align-items:center;gap:.5rem;
   text-align:left;width:100%;
@@ -1570,11 +1596,7 @@ body.dgview-open{overflow:hidden;}
    FASE 3 — KARTU LATIHAN BERTINGKAT, KARTU TANTANGAN, WIDGET GUIDED
    ===================================================================== */
 
-/* ---------- Kartu paket A-E ---------- */
-.quizcards{
-  display:grid;gap:.55rem;margin:.9rem 0 .35rem;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-}
+/* ---------- Kartu paket A-E (tata letak grid: lihat blok 3 KOLOM) ---------- */
 .qc-store{display:none;}
 .qc-card{
   display:flex;align-items:center;gap:.6rem;
@@ -1727,9 +1749,53 @@ body.dgview-open{overflow:hidden;}
   margin-top:.25rem;
 }
 
-/* Gaya .qc-bahas DIHAPUS bersama fitur pembahasannya (keputusan pemilik):
-   blok itu hanya memuat kunci jawaban dalam satu paragraf, sementara kunci
-   per butir sudah tersedia lewat tombol "Lihat jawaban". */
+/* ---------- Pembahasan di dalam pop-up ----------
+   Hanya dipakai set yang pembahasannya BENAR-BENAR membahas — saat ini Tes
+   Diagnostik Bab 00. Paket bertingkat A–E tidak dirender karena isinya kunci
+   jawaban satu paragraf yang sudah tersedia per butir. */
+.qc-bahas{
+  margin-top:1rem;padding:.75rem .8rem;
+  background:var(--surface-2);
+  border:var(--bd) solid var(--line);border-radius:var(--radius-sm);
+}
+.qc-bahas-head{
+  display:flex;align-items:center;gap:.4rem;
+  font-family:var(--font-display);font-size:.98rem;margin:0 0 .5rem;
+}
+.qc-bahas-ico{display:grid;place-items:center;}
+.qc-bahas-ico .lu{width:1.1em;height:1.1em;}
+.qc-bahas > :last-child{margin-bottom:0;}
+.qc-bahas ol,.qc-bahas ul{margin:.2rem 0 .2rem 1.15rem;}
+.qc-bahas li{margin:.3rem 0;}
+.qc-bahas p{margin:.35rem 0;}
+
+/* ---------- Kartu 3 kolom pada layar sempit ----------
+   Pada 360 px, satu kolom hanya ±105 px sehingga susunan mendatar (ikon +
+   label + panah) tidak lagi terbaca. Di bawah 560 px kartu beralih menjadi
+   susunan MENUMPUK dan rata tengah; panah penunjuk disembunyikan karena
+   seluruh kartu memang dapat diketuk. */
+@media (max-width:560px){
+  .infocard{
+    flex-direction:column;text-align:center;
+    gap:.28rem;padding:.55rem .3rem;
+  }
+  .infocard-label{font-size:.78rem;line-height:1.2;}
+  .infocard-more{display:none;}
+  .infocard-ico .lu{width:1.4em;height:1.4em;}
+
+  .qc-card{
+    flex-direction:column;text-align:center;
+    gap:.3rem;padding:.55rem .3rem;
+  }
+  .qc-main{align-items:center;width:100%;}
+  .qc-level{justify-content:center;font-size:.78rem;line-height:1.2;}
+  .qc-prog{font-size:.7rem;justify-content:center;}
+  .qc-bar{width:100%;}
+  .qc-go{display:none;}
+  .qc-bonus{font-size:.7rem;padding:.05rem .25rem;}
+  .qc-opt{font-size:.6rem;}
+  .qc-letter{width:1.8rem;height:1.8rem;font-size:.95rem;}
+}
 
 /* ---------- Kartu Daftar Isi ---------- */
 .toccards{display:grid;gap:.45rem;}

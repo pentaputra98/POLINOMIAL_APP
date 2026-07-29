@@ -84,6 +84,11 @@
 
       var grid = el("div", "infocards");
       grid.setAttribute("role", "list");
+      /* Gudang isi kartu disimpan di LUAR grid supaya grid hanya berisi kartu.
+         Dengan begitu penomoran :nth-child pada CSS — dipakai untuk memusatkan
+         baris terakhir bila jumlah kartunya bukan kelipatan tiga — tetap tepat. */
+      var gudang = el("div", "infocard-stores");
+      gudang.hidden = true;
 
       kartu.forEach(function (d) {
         var key = d.getAttribute("data-card") || "";
@@ -101,9 +106,8 @@
           if (c.nodeType === 1 && c.tagName === "SUMMARY") continue;
           isi.appendChild(c);
         }
-        var gudang = el("div", "infocard-store");
-        gudang.hidden = true;
-        gudang.appendChild(isi);
+        var simpan = el("div", "infocard-store");
+        simpan.appendChild(isi);
 
         var btn = el("button", "infocard " + (CARD_TONE[key] || "tone-sky"),
           '<span class="infocard-ico">' + icon(ikon) + "</span>" +
@@ -124,16 +128,17 @@
           });
         });
 
-        grid.appendChild(btn);
-        grid.appendChild(gudang);
+        grid.appendChild(btn);          // grid HANYA berisi kartu
+        gudang.appendChild(simpan);
         d.parentNode.removeChild(d);
         dipakai++;
       });
 
       var petunjuk = el("p", "infocards-hint",
-        icon("arrow-right") + " Keenam kartu di atas bersifat pilihan — Anda dapat langsung menuju materi.");
+        icon("arrow-right") + " Kartu di atas bersifat pilihan — Anda dapat langsung menuju materi.");
       slot.parentNode.insertBefore(grid, slot.nextSibling);
-      grid.parentNode.insertBefore(petunjuk, grid.nextSibling);
+      grid.parentNode.insertBefore(gudang, grid.nextSibling);
+      gudang.parentNode.insertBefore(petunjuk, gudang.nextSibling);
       slot.hidden = true;
     });
     return dipakai;
