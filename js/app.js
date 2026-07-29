@@ -79,6 +79,86 @@
   }
   window.refreshXPChip = refreshXPChip;
 
+  /* ---------------- Panel Capaian (chip XP diketuk) ----------------
+   * Seluruh angka dibaca dari Gamify, yang sendirinya membaca blok
+   * `gamification` pada manifest — tidak ada ambang atau gelar yang
+   * ditulis ulang di sini.
+   */
+  function renderCapaian() {
+    if (!window.Gamify || !window.Overlay) return;
+    var st = Gamify.state();
+    var sk = Gamify.streak() || {};
+    var lencana = Gamify.badgeList();
+    var chs = Content.chapters();
+
+    var totalXP = chs.reduce(function (a, c) { return a + (c.xp_available || 0); }, 0);
+
+    var html =
+      '<div class="cap-level">' +
+        '<span class="cap-lv">' + st.level + "</span>" +
+        '<div class="cap-lvinfo">' +
+          "<b>" + esc(st.title) + "</b>" +
+          '<span class="cap-xp">' + st.xp + " XP" +
+            (totalXP ? " dari " + totalXP + " tersedia" : "") + "</span>" +
+          '<span class="cap-bar"><span class="cap-fill" style="width:' + st.pct + '%"></span></span>' +
+          '<span class="cap-next">' +
+            (st.isMax ? "Level tertinggi tercapai"
+                      : (st.nextXp - st.xp) + " XP lagi menuju " + esc(st.nextTitle)) +
+          "</span>" +
+        "</div>" +
+      "</div>" +
+      '<div class="cap-streak">' + Icons.svg("flame") +
+        " Streak <b>" + (sk.count || 0) + "</b> hari" +
+        (sk.best ? " · terbaik <b>" + sk.best + "</b>" : "") + "</div>" +
+      '<h3 class="cap-h">' + Icons.svg("award") + " Lencana</h3>" +
+      '<div class="cap-badges">' +
+        lencana.map(function (b) {
+          var meta = b.competency === "ALL" ? "Semua kompetensi"
+                   : (b.competency ? b.competency + (b.chapter ? " · Bab " + b.chapter : "") : "");
+          return '<div class="cap-badge' + (b.owned ? " is-own" : "") + '">' +
+            '<span class="cap-badge-ico">' + Icons.svg(b.owned ? "award" : "lock") + "</span>" +
+            '<span class="cap-badge-txt"><b>' + esc(b.id) + "</b>" +
+              (meta ? '<span class="cap-badge-meta">' + esc(meta) + "</span>" : "") +
+              (b.owned ? "" : '<span class="cap-badge-meta">' + esc(b.unlock || "") + "</span>") +
+            "</span></div>";
+        }).join("") +
+      "</div>" +
+      '<h3 class="cap-h">' + Icons.svg("trophy") + " Rekor Tantangan</h3>";
+
+    var adaRekor = false;
+    var baris = chs.map(function (c) {
+      if (!c.challenge) return "";
+      var r = Gamify.recordFor(c.challenge);
+      if (!r) return "";
+      adaRekor = true;
+      var bintang = "";
+      for (var i = 1; i <= 3; i++) {
+        bintang += '<span class="cap-star' + (i <= (r.stars || 0) ? " on" : "") + '">' +
+          Icons.svg("star") + "</span>";
+      }
+      return '<div class="cap-rec">' +
+        '<span class="cap-rec-bab">Bab ' + String(c.order).padStart(2, "0") + "</span>" +
+        '<span class="cap-rec-stars">' + bintang + "</span>" +
+        '<span class="cap-rec-num">' + (r.bestScore || 0) + " poin</span>" +
+        '<span class="cap-rec-num">' +
+          (r.bestTimeSec != null
+            ? String(Math.floor(r.bestTimeSec / 60)).padStart(2, "0") + ":" +
+              String(r.bestTimeSec % 60).padStart(2, "0")
+            : "—") + "</span>" +
+        '<span class="cap-rec-num">' + (r.attempts || 0) + "×</span>" +
+      "</div>";
+    }).join("");
+
+    html += adaRekor
+      ? '<div class="cap-recs"><div class="cap-rec cap-rec-head">' +
+          "<span>Bab</span><span>Bintang</span><span>Skor</span><span>Waktu</span><span>Coba</span>" +
+        "</div>" + baris + "</div>"
+      : '<p class="cap-empty">' + Icons.svg("info") +
+        " Belum ada Tantangan Akhir Bab yang dikerjakan.</p>";
+
+    Overlay.open({ title: "Capaian Belajar", icon: "star", html: html, size: "md" });
+  }
+
   /* ---------------- Tema terang/gelap ---------------- */
   function currentTheme() { return document.documentElement.getAttribute("data-theme") || "light"; }
   function applyTheme(t) {
@@ -527,6 +607,12 @@
   });
 
   /* ---------------- Tombol chrome ---------------- */
+  // Chip XP sudah ber-aria-label "Lihat capaian belajar" sejak awal, tetapi
+  // belum pernah punya penanganan klik. Sekarang membuka Panel Capaian.
+  var chipXP = gid("xpChip");
+  if (chipXP) {
+    chipXP.addEventListener("click", function () { SFX.play("pop"); renderCapaian(); });
+  }
   gid("btnTheme").addEventListener("click", function () {
     SFX.play("pop"); applyTheme(currentTheme() === "dark" ? "light" : "dark");
   });

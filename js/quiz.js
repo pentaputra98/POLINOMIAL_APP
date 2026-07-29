@@ -609,6 +609,20 @@
     if (fill) fill.style.width = (items.length ? Math.round(dijawab / items.length * 100) : 0) + "%";
     var bar = slot.querySelector(".q-score");
     if (bar) bar.classList.toggle("is-full", items.length > 0 && benar === items.length);
+
+    /* XP BONUS paket opsional (field `bonus_xp` pada blok JSON).
+       Manifest: "Paket D (HOTS) dan E (TKA) bersifat OPSIONAL; … beri XP bonus
+       BILA DIKERJAKAN." Karena itu syaratnya seluruh butir sudah DIJAWAB —
+       bukan harus semuanya benar; paket tersulit tidak boleh menghukum yang
+       mencoba. sourceId membuat pemberiannya idempoten (sekali saja). */
+    if (set.optional && set.bonus_xp && items.length > 0 &&
+        dijawab >= items.length && window.Gamify) {
+      var got = Gamify.addXP(set.bonus_xp, "bonus:" + set.set_id);
+      if (got.gained && window.showToast) {
+        showToast(icon("zap") + " Bonus paket opsional +" + got.gained + " XP" +
+          (got.leveledUp ? " · Naik ke Level " + got.level + "!" : ""), "ok");
+      }
+    }
   }
 
   window.Quiz = { mount: mount, normalize: normalize, compare: compare, analytics: analytics };

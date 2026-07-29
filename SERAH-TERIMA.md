@@ -1,6 +1,6 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=72`** · Cache SW **`polinomial-v54`**
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=74`** · Cache SW **`polinomial-v56`**
 >
 > 🚫 **JANGAN PUSH.** Aplikasi versi lama sedang dipakai siswa secara live.
 > Seluruh commit disimpan LOKAL sampai Fase 1–5 selesai dan pemilik memberi
@@ -8,7 +8,8 @@
 >
 > ⚠️ **Sedang berlangsung: pembangunan ulang ke arsitektur halaman berstruktur.**
 > Konten sudah ditulis ulang seluruhnya (commit `4f0deb0`); aplikasi menyusul
-> secara bertahap. **Fase 1–3 SELESAI** — lihat §11, §12, §13. Fase 4–5 belum.
+> secara bertahap. **Fase 1–4 SELESAI** — lihat §11, §12, §13, §13b, §14.
+> Fase 5 (visual) belum.
 > Bagian §3 dan §7 di bawah masih menggambarkan keadaan SEBELUM penulisan ulang
 > dan akan diperbarui saat tiap fase selesai.
 
@@ -718,6 +719,75 @@ tepat. Pada layar < 560 px kartu beralih ke susunan **menumpuk & rata tengah**
 | Error KaTeX · gagal muat · pesan konsol | **0 · 0 · 0** |
 | Scroll horizontal @375 px | **0 px** di 8 bab |
 | Semua bab mulai dari puncak | **8/8** |
+
+---
+
+## 14. PEMBANGUNAN ULANG — FASE 4: GAMIFIKASI (29 Juli 2026)
+
+### Hasil audit lebih dahulu
+`js/gamify.js` ternyata **sudah matang dan digerakkan manifest**: ambang & gelar
+level, definisi lencana, bintang sebagai **PERSENTASE** skor maksimum (keputusan
+terkunci §4), bonus waktu dibatasi 20% dan **tidak** ikut pembagi bintang, serta
+rekor lengkap (skor & waktu terbaik, jumlah percobaan). Rekap per kompetensi pada
+`challenge.js` juga sudah generik. Karena itu Fase 4 hanya perlu menutup **tiga
+celah nyata** — bukan membangun ulang.
+
+### Celah 1 — lencana `master-polinomial` terlalu murah
+`finishChallenge()` memberikan XP **dan** lencana pada ambang yang sama: ≥1
+bintang. Padahal manifest menetapkan `master-polinomial` bersyarat
+*"selesaikan simulasi TKA (bab 07) dengan **>=3 bintang**"*. Akibatnya lencana
+puncak bisa diperoleh hanya dengan 1 bintang.
+
+Sekarang ambang lencana dibaca **dari manifest**: angka bintang di-parse dari
+teks `unlock`; bila tidak ada, lencana lintas-kompetensi (`competency: "ALL"`)
+menuntut 3 bintang dan lencana per bab cukup 1. XP tetap pada aturan ≥1 bintang.
+
+Terverifikasi: pada **2 bintang** → `butuhBintang: 3`, lencana **tidak**
+diberikan, XP tetap diberikan. Pada **3 bintang** → lencana diberikan.
+Lencana per bab: `butuhBintang: 1`, diberikan pada 1 bintang.
+
+### Celah 2 — `bonus_xp` paket opsional belum pernah diberikan
+Field itu hanya dipakai untuk lencana pada kartu; XP-nya tidak pernah cair.
+Sekarang diberikan lewat `refreshScore()` saat **seluruh butir paket opsional
+sudah DIJAWAB** — bukan harus semuanya benar, sesuai manifest *"beri XP bonus
+bila dikerjakan"*; paket tersulit tidak boleh menghukum yang mencoba.
+`sourceId` (`bonus:<set_id>`) menjaga pemberiannya sekali saja.
+
+Terverifikasi Paket D Bab 01: XP **0 → 40** = 4 benar × 5 XP + **bonus 20**,
+`Gamify.isDone("bonus:01-set-D-hots") === true`, dan bonus tetap cair meski
+skornya 4/5.
+
+### Celah 3 — chip XP tidak dapat diketuk
+Chip di topbar sudah ber-`aria-label` "Lihat capaian belajar" sejak awal, tetapi
+**tidak punya penanganan klik**. Ditambahkan **Panel Capaian** (`renderCapaian()`
+di `app.js`, memakai `Overlay`) berisi: level + gelar + bar menuju level
+berikutnya, total XP terhadap **jumlah `xp_available` dari manifest**, streak
+harian, 7 lencana (dimiliki/terkunci beserta syaratnya), dan tabel rekor per bab
+(bintang, skor terbaik, waktu terbaik, jumlah percobaan).
+
+Terverifikasi: "Level 2 · Penjelajah", **220 XP dari 1695 tersedia**
+(1695 = jumlah `xp_available` 7 bab), bar 28%, *"180 XP lagi menuju Penguasa
+Muda"* (ambang manifest 400 − 220), 7 lencana, 2 baris rekor, 0 scroll mendatar.
+
+### Bukti Fase 4
+| Cek | Hasil |
+|---|---|
+| Ambang lencana dibaca dari manifest | `master-polinomial` **3 bintang** · per bab **1 bintang** |
+| Bonus XP paket opsional | **+20 XP** cair sekali, syaratnya "dikerjakan" |
+| Panel Capaian | level, gelar, XP/total, streak, 7 lencana, tabel rekor |
+| Total XP tersedia | **1695** — dihitung dari manifest, tidak ditulis keras |
+| Simulasi Bab 07 | 15 butir mencakup **6 kompetensi** (K1:2 K2:2 K3:2 K4:3 K5:3 K6:3) → rekap 6 baris |
+| Sesi tantangan (diuji Fase 3) | timer, skor 115 (bonus waktu +15), bintang, XP, lencana, rekor baru, rekap kompetensi |
+| Regresi 8 bab | 36 kartu kuis · 7 kartu tantangan · 35 guided · 46 Info Cards · susunan **3+2** di 7 bab |
+| Error KaTeX · gagal muat · konsol | **0 · 0 · 0** |
+| Scroll horizontal | **0 px** |
+
+Capaian sintetis dari pengujian sudah dibersihkan dari `localStorage`
+(diverifikasi: 0 XP, 0 lencana, pesan "belum ada tantangan").
+
+**Tersisa Fase 5:** 22 direktif VISUAL, 12 fence ASCII (peta konsep = bagan kotak
+CSS **read-only**, lihat §10b), `horner-steps` & `slider`, aksesibilitas & offline
+akhir.
 
 ---
 

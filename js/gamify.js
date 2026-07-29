@@ -195,10 +195,20 @@
     var rec = saveRecord(challenge.id, result);
     var out = { record: rec.record, newBest: rec, xp: null, badge: null };
     var rw = challenge.reward || {};
-    // syarat memperoleh hadiah: minimal 1 bintang
-    if (result.stars >= 1) {
-      if (rw.xp) out.xp = addXP(rw.xp, "challenge:" + challenge.id);
-      if (rw.badge) out.badge = awardBadge(rw.badge);
+    // XP diberikan dengan syarat minimal 1 bintang
+    if (result.stars >= 1 && rw.xp) out.xp = addXP(rw.xp, "challenge:" + challenge.id);
+    /* Lencana punya ambang bintangnya SENDIRI, dibaca dari manifest.
+       `master-polinomial` bersyarat "selesaikan simulasi TKA (bab 07) dengan
+       >=3 bintang" — sebelumnya ikut diberikan pada 1 bintang saja, sehingga
+       lencana puncak terlalu murah. Ambang diambil dari teks `unlock` bila
+       memuat angka bintang; bila tidak, lencana lintas-kompetensi
+       (competency "ALL") menuntut 3 bintang dan lencana per bab cukup 1. */
+    if (rw.badge) {
+      var def = badgeDef(rw.badge) || {};
+      var m = /(\d+)\s*bintang/i.exec(String(def.unlock || ""));
+      var perlu = m ? Number(m[1]) : (def.competency === "ALL" ? 3 : 1);
+      out.badgeNeedStars = perlu;
+      if (result.stars >= perlu) out.badge = awardBadge(rw.badge);
     }
     emit(out);
     return out;
