@@ -1727,23 +1727,9 @@ body.dgview-open{overflow:hidden;}
   margin-top:.25rem;
 }
 
-/* ---------- Pembahasan di dalam pop-up (selalu terbuka utuh) ---------- */
-.qc-bahas{
-  margin-top:1rem;padding:.75rem .8rem;
-  background:var(--surface-2);
-  border:var(--bd) solid var(--line);border-radius:var(--radius-sm);
-}
-.qc-bahas-head{
-  display:flex;align-items:center;gap:.4rem;
-  font-family:var(--font-display);font-size:.98rem;
-  margin:0 0 .5rem;
-}
-.qc-bahas-ico{display:grid;place-items:center;}
-.qc-bahas-ico .lu{width:1.1em;height:1.1em;}
-.qc-bahas > :last-child{margin-bottom:0;}
-/* pembahasan memuat daftar bernomor & rumus; pastikan tidak terpotong */
-.qc-bahas ol,.qc-bahas ul{margin:.2rem 0 .2rem 1.1rem;}
-.qc-bahas p{margin:.35rem 0;}
+/* Gaya .qc-bahas DIHAPUS bersama fitur pembahasannya (keputusan pemilik):
+   blok itu hanya memuat kunci jawaban dalam satu paragraf, sementara kunci
+   per butir sudah tersedia lewat tombol "Lihat jawaban". */
 
 /* ---------- Kartu Daftar Isi ---------- */
 .toccards{display:grid;gap:.45rem;}

@@ -95,17 +95,40 @@
       var opsional = !!set.optional;
       var bonus = set.bonus_xp || 0;
 
-      /* Judul h3 di atas slot ("### 🟢 Paket A — Dasar (5 soal)") sudah
-         terwakili oleh kartu; disembunyikan agar halaman tidak berulang. */
-      var h3 = slot.previousElementSibling;
-      while (h3 && h3.tagName !== "H3" && h3.tagName !== "H2" &&
-             !(h3.textContent || "").trim()) h3 = h3.previousElementSibling;
-      if (h3 && h3.tagName === "H3") h3.hidden = true;
+      /* Judul h3 paket ("### 🟢 Paket A — Dasar (5 soal)") beserta catatan
+         blockquote di bawahnya ("Paket ini opsional…") sudah sepenuhnya
+         terwakili oleh kartu: huruf, tingkat, jumlah soal, lencana OPSIONAL,
+         dan bonus XP. Keduanya disembunyikan agar halaman tidak berulang.
 
-      /* Blockquote catatan "Paket ini opsional…" juga menempel di h3 → ikut
-         disembunyikan karena informasinya sudah tampil sebagai lencana kartu. */
-      var note = h3 && h3.nextElementSibling;
-      if (note && note.tagName === "BLOCKQUOTE" && note !== slot) note.hidden = true;
+         Penelusuran harus MELEWATI blockquote. Paket D dan E menyisipkan
+         catatan di antara judul dan blok JSON, sehingga versi sebelumnya
+         berhenti di blockquote dan judul "Paket D/E" tetap tertinggal di
+         halaman — persis yang terlihat pada QA. */
+      var n = slot.previousElementSibling, hop = 0, buang = [];
+      while (n && hop++ < 5) {
+        if (n.tagName === "H3") { buang.push(n); break; }
+        if (n.tagName === "BLOCKQUOTE" || n.tagName === "HR" ||
+            (n.tagName === "P" && !n.textContent.trim())) {
+          buang.push(n); n = n.previousElementSibling; continue;
+        }
+        break;                       // elemen lain: jangan disentuh
+      }
+      // hanya sembunyikan bila judul paketnya benar-benar ditemukan
+      if (buang.length && buang[buang.length - 1].tagName === "H3") {
+        buang.forEach(function (x) { x.hidden = true; });
+      }
+
+      /* PEMBAHASAN DIHAPUS (keputusan pemilik, QA manual).
+         Blok <details> "Pembahasan Paket X" pada konten hanya memuat kunci
+         jawaban yang ditulis sebagai SATU paragraf ("1. … 2. … 3. …"), bukan
+         uraian langkah. Isinya juga sudah tersedia per butir lewat tombol
+         "Lihat jawaban" yang menampilkan field `explanation`. Karena itu tidak
+         dirender sama sekali — berkas .md tetap utuh, hanya tampilannya yang
+         menghilangkannya. */
+      var bahas = slot.nextElementSibling;
+      if (bahas && bahas.tagName === "DETAILS" && /Pembahasan/i.test(bahas.textContent)) {
+        bahas.parentNode.removeChild(bahas);
+      }
 
       /* PEMBAHASAN (<details> "Pembahasan Paket X") milik paket ini.
          Dahulu baru dipindahkan saat kartu pertama kali diketuk, sehingga
@@ -115,20 +138,6 @@
          akordeon yang harus diklik lagi. */
       var bahas = slot.nextElementSibling;
       if (bahas && bahas.tagName !== "DETAILS") bahas = null;
-      var bahasSeksi = null;
-      if (bahas) {
-        bahasSeksi = el("section", "qc-bahas");
-        var sum = bahas.querySelector("summary");
-        var judulBahas = sum ? sum.textContent.trim() : "Pembahasan";
-        if (sum) sum.parentNode.removeChild(sum);
-        var head = el("h3", "qc-bahas-head",
-          '<span class="qc-bahas-ico">' + icon("book-open") + "</span>" +
-          "<span>" + esc(judulBahas) + "</span>");
-        bahasSeksi.appendChild(head);
-        // pindahkan SELURUH isi <details> apa adanya — tanpa memotong apa pun
-        while (bahas.firstChild) bahasSeksi.appendChild(bahas.firstChild);
-        if (bahas.parentNode) bahas.parentNode.removeChild(bahas);
-      }
 
       var card = el("button", "qc-card " + lv.tone);
       card.type = "button";
@@ -149,9 +158,6 @@
       /* gudang: tempat isi kuis hidup di luar pop-up agar keadaannya kekal */
       var store = el("div", "qc-store");
       store.hidden = true;
-      /* Pembahasan disimpan di gudang SEJAK SEKARANG agar tidak lagi tampil
-         di halaman utama; ia menyusul masuk pop-up saat kartu dibuka. */
-      if (bahasSeksi) store.appendChild(bahasSeksi);
       var isi = null;
 
       card.addEventListener("click", function () {
@@ -163,7 +169,6 @@
           isi.appendChild(mountPoint);
           store.insertBefore(isi, store.firstChild);
           if (window.Quiz) Quiz.mount(mountPoint, set, chapterId);
-          if (bahasSeksi) isi.appendChild(bahasSeksi);   // pembahasan di bawah soal
           if (window.MR) MR.render(isi);
           if (window.Icons) Icons.hydrate(isi);
         }

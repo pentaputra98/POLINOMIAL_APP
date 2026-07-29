@@ -1,6 +1,6 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=71`** · Cache SW **`polinomial-v53`**
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=72`** · Cache SW **`polinomial-v54`**
 >
 > 🚫 **JANGAN PUSH.** Aplikasi versi lama sedang dipakai siswa secara live.
 > Seluruh commit disimpan LOKAL sampai Fase 1–5 selesai dan pemilik memberi
@@ -651,11 +651,43 @@ karena teks tautan sudah memuat lencana angka hasil penggantian emoji keycap —
 diperbaiki dengan membuang lencana/ikon dari salinan sebelum diambil judulnya
 (**angka ganda: 0**). Mengetuk kartu menutup pop-up lalu **melompat instan**.
 
+### 6. Pembahasan DIHAPUS & judul paket dibersihkan (revisi lanjutan)
+
+**(a) Blok "Pembahasan Paket X" tidak lagi dirender.**
+Alasan pemilik: isinya bukan uraian langkah, melainkan kunci jawaban yang
+ditulis sebagai **satu paragraf memanjang** — `1. Derajat 5, koefisien pemimpin
+−1. 2. 0. 3. x⁴+0x³+0x²+0x−1. 4. Binomial kubik. 5. n=4.` Nomor-nomornya
+menyatu, dan isinya sudah tersedia **per butir** lewat tombol "Lihat jawaban"
+(field `explanation`). Karena tidak membantu membahas, bloknya dibuang dari
+tampilan. **Berkas `.md` tetap utuh** — hanya perendernya yang mengabaikan.
+Gaya `.qc-bahas` di CSS ikut dihapus karena menjadi mati.
+
+**(b) Judul `### Paket A–E` dan catatan "Paket ini opsional…" disembunyikan.**
+Informasinya sudah lengkap pada kartu: huruf, tingkat, jumlah soal, lencana
+**OPSIONAL**, dan bonus **+20 XP**.
+
+Cacat yang ditemukan saat mengerjakan ini: penelusuran ke belakang dari slot
+berhenti pada elemen pertama yang bukan judul. Paket **D** dan **E** menyisipkan
+blockquote catatan di antara judul dan blok JSON, sehingga judul "Paket D/E"
+**tidak pernah ditemukan dan tetap tertinggal di halaman** — persis yang terlihat
+pada QA. Penelusuran kini melewati blockquote/`<hr>`/paragraf kosong (maksimal 5
+langkah) dan hanya menyembunyikan bila judul paketnya benar-benar ditemukan.
+
+**⚠️ Perlu diketahui:** aturan ini berlaku **seragam**, sehingga pembahasan
+**Tes Diagnostik Bab 00** juga ikut tidak dirender. Berbeda dari Paket A–E,
+blok itu ditulis sebagai daftar bernomor yang benar dan memuat penalaran
+(mis. kaitan ke Teorema Vieta Bab 05). Bila Anda ingin **hanya** yang itu
+dikembalikan, cukup beri tahu — pengecualiannya satu baris.
+
 ### Regresi 8 bab sesudah revisi
 | Cek | Hasil |
 |---|---|
 | Kartu kuis · tantangan · guided | **36 · 7 · 35** (tidak berubah) |
-| Pembahasan tersisa di halaman | **0** (36 di gudang kartu) |
+| Blok `<details>` pembahasan | **0** di 8 bab (juga 0 di dalam pop-up) |
+| Judul `### Paket` yang masih tampak | **0** di 8 bab (sebelumnya D & E tertinggal) |
+| Catatan "opsional" yang masih tampak | **0** di 8 bab |
+| Kunci per butir tetap tersedia | **5 tombol "Lihat jawaban" per paket**; contoh Bab 00 menampilkan penjelasan butir |
+| Kartu tetap lengkap | 5 kartu A–E · 2 lencana OPSIONAL · 2 × bonus +20 |
 | Error KaTeX · gagal muat · pesan konsol | **0 · 0 · 0** |
 | Scroll horizontal @375 px | **0 px** di 8 bab |
 | Semua bab mulai dari puncak | **8/8** |
