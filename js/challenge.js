@@ -127,7 +127,67 @@
           (rec ? " Coba lagi (perbaiki capaian)" : " Mulai Tantangan") + "</button>" +
       "</div>";
     if (window.Icons) Icons.hydrate(slot);
-    slot.querySelector(".ch-start").addEventListener("click", function () { runChallenge(slot, ch, doc); });
+    slot.querySelector(".ch-start").addEventListener("click", function () {
+      hitungMundur(slot, function () { runChallenge(slot, ch, doc); });
+    });
+  }
+
+  /* ------------------------------------------------------------------ *
+   * HITUNG MUNDUR 3-2-1 sebelum sesi dimulai
+   *
+   * Tanpa ini, timer langsung berjalan pada saat yang sama dengan munculnya
+   * soal pertama — peserta kehilangan beberapa detik hanya untuk menyadari
+   * bahwa sesi sudah mulai. Hitung mundur memberi jeda bersiap yang jelas.
+   * Menghormati prefers-reduced-motion: bila diaktifkan, sesi dimulai langsung.
+   * ------------------------------------------------------------------ */
+  function hitungMundur(slot, mulaiSesi) {
+    var kurangiGerak = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (kurangiGerak) { mulaiSesi(); return; }
+
+    var lap = document.createElement("div");
+    lap.className = "ch-countdown";
+    lap.setAttribute("role", "status");
+    lap.setAttribute("aria-live", "assertive");
+    lap.innerHTML =
+      '<div class="ch-cd-inner">' +
+        '<span class="ch-cd-num" aria-hidden="true">3</span>' +
+        '<span class="ch-cd-cap">Bersiap…</span>' +
+      "</div>";
+    // ditumpuk di dalam panel modal agar tetap terkurung pada area tantangan
+    var induk = slot.closest(".ov-panel") || slot;
+    var posisiLama = getComputedStyle(induk).position;
+    if (posisiLama === "static") induk.style.position = "relative";
+    induk.appendChild(lap);
+
+    var num = lap.querySelector(".ch-cd-num");
+    var cap = lap.querySelector(".ch-cd-cap");
+    var n = 3;
+
+    function detak() {
+      num.textContent = n > 0 ? String(n) : "Mulai!";
+      if (n === 0) {
+        num.classList.add("is-go");
+        cap.textContent = "";
+        lap.setAttribute("aria-label", "Mulai");
+      }
+      // paksa ulang animasi denyut
+      num.style.animation = "none";
+      void num.offsetWidth;
+      num.style.animation = "";
+      if (window.SFX) SFX.play(n > 0 ? "pop" : "swoosh");
+      if (n <= 0) {
+        setTimeout(function () {
+          if (lap.parentNode) lap.parentNode.removeChild(lap);
+          if (posisiLama === "static") induk.style.position = "";
+          mulaiSesi();
+        }, 420);
+        return;
+      }
+      n--;
+      setTimeout(detak, 700);
+    }
+    detak();
   }
 
   /* ------------------------------------------------------------------ *
@@ -291,7 +351,9 @@
     if (window.Icons) Icons.hydrate(slot);
     if (window.SFX) SFX.play(d.r.stars >= 2 ? "win" : "pop");
 
-    slot.querySelector(".ch-again").addEventListener("click", function () { runChallenge(slot, ch, doc); });
+    slot.querySelector(".ch-again").addEventListener("click", function () {
+      hitungMundur(slot, function () { runChallenge(slot, ch, doc); });
+    });
     slot.querySelector(".ch-back").addEventListener("click", function () { renderIntro(slot, ch, doc); });
   }
 

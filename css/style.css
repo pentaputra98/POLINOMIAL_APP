@@ -1216,8 +1216,23 @@ h1,h2,h3,h4{font-family:var(--font-display);line-height:1.18;}
    KEYPAD MATEMATIKA (pengganti keyboard perangkat)
    ========================================================================= */
 body.keypad-open{overflow:hidden;}
+/* TUMPUKAN LAPISAN (z-index) — satu tempat agar tidak saling menimpa:
+     30  bilah sub-materi sticky
+     40  topbar, bottom nav
+     50  scrim drawer
+     55  FAB papan coret
+     58  papan coret
+     60  drawer
+     70  toast
+    120  pop-up/modal (.ov-scrim)
+    200  KEYPAD — WAJIB tertinggi.
+   Keypad dahulu berada di 70, sehingga saat soal isian dibuka dari DALAM
+   pop-up kuis (z-index 120) papan tombolnya tersembunyi di belakang pop-up
+   dan soal menjadi mustahil dijawab. Keypad harus selalu di atas segalanya
+   karena ia satu-satunya jalur masukan pada perangkat yang tidak
+   memunculkan keyboard virtual. */
 .keypad{
-  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  position:fixed;left:0;right:0;bottom:0;z-index:200;
   background:var(--surface-2);border-top:var(--bd) solid var(--line);
   border-radius:18px 18px 0 0;box-shadow:0 -5px 0 var(--line);
   transform:translateY(100%);transition:transform .22s var(--ease);
@@ -1698,6 +1713,101 @@ body.dgview-open{overflow:hidden;}
 .q-fmt .lu{width:.9em;height:.9em;flex:0 0 auto;}
 /* Keypad mode numerik: tab variabel disembunyikan, grid angka melebar */
 .keypad.is-numeric .kp-tab[data-tab="var"]{display:none;}
+
+/* =====================================================================
+   REVISI FASE 3 — keypad di atas pop-up, pembahasan, kartu daftar isi,
+   hitung mundur tantangan
+   ===================================================================== */
+
+/* Saat keypad terbuka, panel pop-up MENYUSUT supaya kotak isian tidak
+   tertutup papan tombol. --kp-h diisi js/keypad.js dari tinggi nyata keypad. */
+:root.kp-up .ov-scrim{align-items:flex-start;}
+:root.kp-up .ov-panel{
+  max-height:calc(100dvh - var(--kp-h, 300px) - 1rem);
+  margin-top:.25rem;
+}
+
+/* ---------- Pembahasan di dalam pop-up (selalu terbuka utuh) ---------- */
+.qc-bahas{
+  margin-top:1rem;padding:.75rem .8rem;
+  background:var(--surface-2);
+  border:var(--bd) solid var(--line);border-radius:var(--radius-sm);
+}
+.qc-bahas-head{
+  display:flex;align-items:center;gap:.4rem;
+  font-family:var(--font-display);font-size:.98rem;
+  margin:0 0 .5rem;
+}
+.qc-bahas-ico{display:grid;place-items:center;}
+.qc-bahas-ico .lu{width:1.1em;height:1.1em;}
+.qc-bahas > :last-child{margin-bottom:0;}
+/* pembahasan memuat daftar bernomor & rumus; pastikan tidak terpotong */
+.qc-bahas ol,.qc-bahas ul{margin:.2rem 0 .2rem 1.1rem;}
+.qc-bahas p{margin:.35rem 0;}
+
+/* ---------- Kartu Daftar Isi ---------- */
+.toccards{display:grid;gap:.45rem;}
+.toccard{
+  display:flex;align-items:center;gap:.55rem;
+  width:100%;text-align:left;padding:.55rem .6rem;
+  background:var(--surface);color:var(--ink);
+  border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow-sm);cursor:pointer;
+  transition:transform var(--t-fast) var(--ease),background var(--t-fast) var(--ease);
+}
+.toccard:hover,.toccard:focus-visible{transform:translateX(2px);background:var(--surface-2);}
+.toccard:active{transform:translateX(0);box-shadow:none;}
+.toccard-no{
+  flex:0 0 auto;display:grid;place-items:center;
+  width:1.7rem;height:1.7rem;
+  background:var(--sky);border:var(--bd-thin) solid var(--line);border-radius:8px;
+  font-family:var(--font-display);font-weight:700;font-size:.82rem;
+}
+.toccard-title{
+  flex:1 1 auto;min-width:0;
+  font-family:var(--font-display);font-weight:700;font-size:.9rem;line-height:1.25;
+}
+.toccard-go{flex:0 0 auto;opacity:.5;}
+.toccard-go .lu{width:1em;height:1em;}
+
+/* ---------- Hitung mundur tantangan ---------- */
+.ch-countdown{
+  position:absolute;inset:0;z-index:5;
+  display:grid;place-items:center;
+  /* nilai eksplisit per tema — color-mix() belum didukung semua peramban */
+  background:rgba(255,248,231,.92);
+  backdrop-filter:blur(3px);
+  border-radius:inherit;
+}
+:root[data-theme="dark"] .ch-countdown{background:rgba(25,22,34,.93);}
+.ch-cd-inner{display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.ch-cd-num{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(3.4rem,16vw,6rem);line-height:1;
+  color:var(--ink);
+  display:grid;place-items:center;
+  min-width:5.2rem;padding:.15em .3em;
+  background:var(--butter);
+  border:var(--bd) solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);
+  animation:cd-pulse .62s var(--ease);
+}
+.ch-cd-num.is-go{
+  font-size:clamp(1.8rem,8vw,2.8rem);
+  background:var(--ok);color:#fff;
+}
+.ch-cd-cap{
+  font-family:var(--font-display);font-weight:700;
+  color:var(--ink-soft);font-size:.95rem;
+}
+@keyframes cd-pulse{
+  0%{transform:scale(.55);opacity:0;}
+  55%{transform:scale(1.06);opacity:1;}
+  100%{transform:scale(1);opacity:1;}
+}
+@media (prefers-reduced-motion:reduce){
+  .ch-cd-num{animation:none;}
+}
 
 /* ---------- AKSESIBILITAS ---------- */
 :focus-visible{outline:3px solid var(--coral);outline-offset:2px;border-radius:4px;}

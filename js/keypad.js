@@ -145,19 +145,34 @@
     }
 
     sheet.hidden = false;
-    requestAnimationFrame(function () { sheet.classList.add("is-open"); });
+    /* Reflow dipaksa DI SINI, lalu kelas is-open ditambahkan secara SINKRON.
+       Sebelumnya keduanya berada di dalam requestAnimationFrame; bila bingkai
+       tidak dihasilkan (tab tersembunyi / peramban menahan animasi), callback
+       itu tak pernah jalan sehingga keypad tetap tergeser ke bawah layar dan
+       seolah-olah tidak muncul. Memaksa reflow membuat transisi tetap
+       beranimasi tanpa bergantung pada rAF. */
+    void sheet.offsetHeight;
+    sheet.classList.add("is-open");
+    /* Beri tahu tata letak berapa tinggi keypad. Dipakai CSS untuk MENYUSUTKAN
+       panel pop-up ketika soal isian dibuka dari dalam pop-up, supaya kotak
+       isian tidak tertutup papan tombol. */
+    var kpH = Math.ceil(sheet.getBoundingClientRect().height) || 300;
+    document.documentElement.style.setProperty("--kp-h", kpH + "px");
+    document.documentElement.classList.add("kp-up");
     document.body.classList.add("keypad-open");
     fire();
     // pastikan input tetap terlihat di atas keypad
     setTimeout(function () {
       if (input && input.scrollIntoView) input.scrollIntoView({ block: "center", behavior: "smooth" });
-    }, 120);
+    }, 220);
   }
 
   function close() {
     if (!sheet) return;
     sheet.classList.remove("is-open");
     document.body.classList.remove("keypad-open");
+    document.documentElement.classList.remove("kp-up");
+    document.documentElement.style.removeProperty("--kp-h");
     setTimeout(function () { sheet.hidden = true; }, 200);
     if (target) target.blur();
     target = null;

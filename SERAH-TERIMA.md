@@ -1,6 +1,6 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=67`** · Cache SW **`polinomial-v49`**
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=71`** · Cache SW **`polinomial-v53`**
 >
 > 🚫 **JANGAN PUSH.** Aplikasi versi lama sedang dipakai siswa secara live.
 > Seluruh commit disimpan LOKAL sampai Fase 1–5 selesai dan pemilik memberi
@@ -590,6 +590,75 @@ menyembunyikan pelajaran, bukan lagi soal.
   pemanggilan, tetapi parameter itu **tidak lagi dipakai** sejak `pool` dibuang.
 - Bintang/lencana/rekor sudah berfungsi (bawaan `challenge.js`); pematangan
   gamifikasi menyeluruh tetap menjadi lingkup **Fase 4**.
+
+---
+
+## 13b. REVISI FASE 3 — HASIL QA MANUAL PEMILIK (29 Juli 2026)
+
+Lima butir revisi wajib dari QA manual, seluruhnya selesai & terverifikasi.
+
+### 1. Bug z-index keypad (KRITIS)
+Keypad berada di `z-index:70`, sedangkan pop-up di `120` — sehingga saat soal
+isian dibuka **dari dalam** pop-up kuis, papan tombolnya tersembunyi di
+belakang dan soal menjadi mustahil dijawab. Keypad dinaikkan ke **`z-index:200`**
+dan tumpukan lapisan didokumentasikan di satu tempat pada CSS.
+
+**Masalah turunan yang ikut diperbaiki:** meski sudah di depan, keypad menutupi
+bagian bawah pop-up. `keypad.js` sekarang mengukur tinggi keypad dan
+menuliskannya ke `--kp-h`, lalu CSS `:root.kp-up .ov-panel` **menyusutkan panel**
+agar berhenti tepat di atas keypad. Terukur pada 375×812: panel **715 → 483 px**,
+tepi bawah panel 498 px vs tepi atas keypad 499 px, kotak isian di 253–299 px
+(tidak tertutup). Uji titik di area keypad mengembalikan `DIV.kp-preview`
+**milik keypad**, bukan `.ov-scrim`; menekan tombol angka mengisi kotak isian
+di dalam pop-up.
+
+**Temuan tak terduga:** kelas `is-open` keypad dahulu ditambahkan di dalam
+`requestAnimationFrame`. Bila peramban tidak menghasilkan bingkai (tab latar,
+jendela tersembunyi), callback itu tidak pernah jalan sehingga keypad tetap
+tergeser ke bawah layar dan **seolah-olah tidak muncul**. Kini reflow dipaksa
+lalu kelas ditambahkan **sinkron**. Pelajaran yang sama diterapkan pada
+pemulihan `scroll-behavior` (memakai `setTimeout`, bukan rAF).
+
+### 2. Pembahasan menyatu ke dalam kartu
+Dahulu pembahasan baru dipindahkan saat kartu diketuk, sehingga sebelum itu
+tetap terlihat sebagai akordeon di halaman utama — terpisah dari kartunya.
+Sekarang dipindahkan **sejak render**, dan di dalam pop-up disajikan sebagai
+bagian `.qc-bahas` yang **terbuka utuh** (bukan `<details>` yang harus diklik
+lagi). Terverifikasi: pembahasan tersisa di halaman **0** di 8 bab, 36 tersimpan
+di gudang kartu; Paket C tampil 193 karakter dengan 4 rumus, dari
+"2k−6=0⇒k=3" sampai "Tepat satu dari p,q bernilai nol", `0` elemen tertutup.
+
+### 3. Pindah bab langsung ke puncak
+`.app-main` memakai `scroll-behavior:smooth`, dan sifat itu juga berlaku pada
+`scrollTop = 0` — sehingga berganti bab menggulir panjang dari posisi lama.
+Ditambahkan `jumpTop()` yang mematikan perilaku halus sesaat lalu memulihkannya.
+Dipakai di 4 titik rute (bab, referensi, beranda, daftar). Terverifikasi:
+dari posisi 6.000 px, sesudah pindah bab `scrollTop = 0` dengan
+`scroll-behavior: auto`; **8/8 bab mulai dari puncak**.
+
+### 4. Hitung mundur 3-2-1 tantangan
+`hitungMundur()` menampilkan lapisan **di dalam panel modal** sebelum sesi
+dimulai. Terverifikasi urutan **3 → 2 → 1 → "Mulai!"**; soal tidak muncul
+selama hitung mundur; sesudahnya timer terbaca **tepat 05:00** — membuktikan
+waktu belum berjalan. Dipasang juga pada tombol "Ulangi". Menghormati
+`prefers-reduced-motion`: bila aktif, sesi dimulai langsung.
+
+### 5. Daftar isi berbentuk kartu
+Deretan tautan teks diganti `.toccards` berisi kartu bernomor + judul + panah,
+konsisten dengan Info Cards dan kartu paket. Terverifikasi **11 kartu, 0 tautan
+teks biasa**. Cacat yang ikut ditemukan: judul terbaca "**1**Apa Itu Polinomial"
+karena teks tautan sudah memuat lencana angka hasil penggantian emoji keycap —
+diperbaiki dengan membuang lencana/ikon dari salinan sebelum diambil judulnya
+(**angka ganda: 0**). Mengetuk kartu menutup pop-up lalu **melompat instan**.
+
+### Regresi 8 bab sesudah revisi
+| Cek | Hasil |
+|---|---|
+| Kartu kuis · tantangan · guided | **36 · 7 · 35** (tidak berubah) |
+| Pembahasan tersisa di halaman | **0** (36 di gudang kartu) |
+| Error KaTeX · gagal muat · pesan konsol | **0 · 0 · 0** |
+| Scroll horizontal @375 px | **0 px** di 8 bab |
+| Semua bab mulai dari puncak | **8/8** |
 
 ---
 

@@ -378,6 +378,27 @@
     if (window.Icons) Icons.hydrate(foot);
   }
 
+  /**
+   * Lompat ke puncak SECARA INSTAN.
+   *
+   * `.app-main` memakai `scroll-behavior:smooth` di CSS agar pindah antar
+   * bagian dalam satu bab terasa halus. Namun sifat itu juga berlaku pada
+   * `scrollTop = 0`, sehingga saat BERGANTI BAB layar menggulir panjang dari
+   * posisi lama ke atas — memusingkan dan terasa lambat. Di sini perilaku
+   * halus dimatikan sesaat, lalu dipulihkan.
+   */
+  function jumpTop() {
+    var prev = appMain.style.scrollBehavior;
+    appMain.style.scrollBehavior = "auto";
+    appMain.scrollTop = 0;
+    if (window.scrollTo) window.scrollTo({ top: 0, behavior: "auto" });
+    /* Pulihkan lewat setTimeout, BUKAN requestAnimationFrame: rAF tidak
+       dijalankan bila peramban sedang tidak menghasilkan bingkai (tab latar,
+       jendela tersembunyi), sehingga `scroll-behavior:auto` akan tersangkut
+       dan gulir halus di dalam bab ikut mati. setTimeout selalu berjalan. */
+    setTimeout(function () { appMain.style.scrollBehavior = prev || ""; }, 0);
+  }
+
   function showBab(slug) {
     var meta = Content.chapterBySlug(slug);
     if (!meta) { setError("Bab tidak ditemukan", 'Slug "' + slug + '" tidak ada di manifest.'); return; }
@@ -385,7 +406,7 @@
     Content.loadChapter(meta).then(function (doc) {
       if (state.key !== "bab:" + slug) return;      // rute sudah berpindah
       renderDoc(meta, doc, "bab");
-      appMain.scrollTop = 0;
+      jumpTop();
       Content.prefetchAround(meta.id);
       if (window.Scratchpad && Scratchpad.setContext) Scratchpad.setContext(meta.id);
     }).catch(function (err) { setError("Gagal memuat bab", err.message); });
@@ -398,7 +419,7 @@
     Content.loadDoc(meta.file).then(function (doc) {
       if (state.key !== "ref:" + id) return;
       renderDoc(meta, doc, "ref");
-      appMain.scrollTop = 0;
+      jumpTop();
       if (window.Scratchpad && Scratchpad.setContext) Scratchpad.setContext("ref-" + id);
     }).catch(function (err) { setError("Gagal memuat referensi", err.message); });
   }
@@ -537,8 +558,8 @@
     state.view = r.view; state.slug = r.slug; state.id = r.id;
     state.key = r.view === "bab" ? "bab:" + r.slug : (r.view === "ref" ? "ref:" + r.id : r.view);
 
-    if (r.view === "beranda") { renderBeranda(); appMain.scrollTop = 0; }
-    else if (r.view === "daftar") { renderDaftar(); appMain.scrollTop = 0; }
+    if (r.view === "beranda") { renderBeranda(); jumpTop(); }
+    else if (r.view === "daftar") { renderDaftar(); jumpTop(); }
     else if (r.view === "bab") showBab(r.slug);
     else if (r.view === "ref") showRef(r.id);
 

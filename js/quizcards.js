@@ -107,10 +107,28 @@
       var note = h3 && h3.nextElementSibling;
       if (note && note.tagName === "BLOCKQUOTE" && note !== slot) note.hidden = true;
 
-      /* Pembahasan (<details>) setelah slot dipindahkan ke dalam pop-up: di
-         sanalah tempatnya, bukan di halaman utama. */
+      /* PEMBAHASAN (<details> "Pembahasan Paket X") milik paket ini.
+         Dahulu baru dipindahkan saat kartu pertama kali diketuk, sehingga
+         sebelum itu ia tetap terlihat sebagai akordeon di halaman utama —
+         terpisah dari kartunya. Sekarang dipindahkan SEKARANG (ke gudang),
+         dan di dalam pop-up ditampilkan sebagai bagian TERBUKA UTUH, bukan
+         akordeon yang harus diklik lagi. */
       var bahas = slot.nextElementSibling;
       if (bahas && bahas.tagName !== "DETAILS") bahas = null;
+      var bahasSeksi = null;
+      if (bahas) {
+        bahasSeksi = el("section", "qc-bahas");
+        var sum = bahas.querySelector("summary");
+        var judulBahas = sum ? sum.textContent.trim() : "Pembahasan";
+        if (sum) sum.parentNode.removeChild(sum);
+        var head = el("h3", "qc-bahas-head",
+          '<span class="qc-bahas-ico">' + icon("book-open") + "</span>" +
+          "<span>" + esc(judulBahas) + "</span>");
+        bahasSeksi.appendChild(head);
+        // pindahkan SELURUH isi <details> apa adanya — tanpa memotong apa pun
+        while (bahas.firstChild) bahasSeksi.appendChild(bahas.firstChild);
+        if (bahas.parentNode) bahas.parentNode.removeChild(bahas);
+      }
 
       var card = el("button", "qc-card " + lv.tone);
       card.type = "button";
@@ -131,18 +149,23 @@
       /* gudang: tempat isi kuis hidup di luar pop-up agar keadaannya kekal */
       var store = el("div", "qc-store");
       store.hidden = true;
+      /* Pembahasan disimpan di gudang SEJAK SEKARANG agar tidak lagi tampil
+         di halaman utama; ia menyusul masuk pop-up saat kartu dibuka. */
+      if (bahasSeksi) store.appendChild(bahasSeksi);
       var isi = null;
 
       card.addEventListener("click", function () {
         if (!window.Overlay) return;
         if (!isi) {
-          // pemasangan MALAS: baru dibangun saat pertama kali dibuka
+          // pemasangan MALAS: soal baru dibangun saat pertama kali dibuka
           isi = el("div", "qc-isi");
           var mountPoint = el("div", "");
           isi.appendChild(mountPoint);
-          store.appendChild(isi);
+          store.insertBefore(isi, store.firstChild);
           if (window.Quiz) Quiz.mount(mountPoint, set, chapterId);
-          if (bahas) isi.appendChild(bahas);      // pembahasan menyusul di bawah
+          if (bahasSeksi) isi.appendChild(bahasSeksi);   // pembahasan di bawah soal
+          if (window.MR) MR.render(isi);
+          if (window.Icons) Icons.hydrate(isi);
         }
         Overlay.open({
           title: "Paket " + huruf + " — " + lv.label,

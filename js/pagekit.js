@@ -50,6 +50,10 @@
     return n;
   }
   function icon(n) { return window.Icons ? window.Icons.svg(n) : ""; }
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
   function stripEmoji(s) { return String(s || "").replace(LEAD_EMOJI, "").trim(); }
   function norm(s) {
     return String(s || "").toLowerCase()
@@ -200,10 +204,42 @@
     var toc = root.querySelector("details.toc");
     if (toc) {
       toc.hidden = true;
-      var ol = toc.querySelector("ol");
+      /* Daftar isi disusun ulang menjadi KARTU, bukan deretan tautan teks,
+         agar sejalan dengan komponen lain (Info Cards, kartu paket).
+         Tautan aslinya tetap dipakai sebagai sumber judul & anchor. */
+      var tautan = [].slice.call(toc.querySelectorAll("ol a[data-toc]"));
+      var kisi = el("div", "toccards");
+      tautan.forEach(function (a, i) {
+        /* Tautan daftar isi sudah memuat lencana angka (mis. "1") di dalam
+           teksnya, hasil penggantian emoji keycap. Bila diambil apa adanya,
+           judul kartu menjadi "1Apa Itu Polinomial" — angkanya ganda dengan
+           lencana kartu. Salinan dibuat lalu lencana/ikonnya dibuang. */
+        var salin = a.cloneNode(true);
+        salin.querySelectorAll(".num-badge,.lead-icon,.tail-icon,svg").forEach(function (n) {
+          n.parentNode.removeChild(n);
+        });
+        var judul = (salin.textContent || "").replace(/^\s*\d+\s*/, "").trim() ||
+                    (a.textContent || "").trim();
+        var b = el("button", "toccard");
+        b.type = "button";
+        b.innerHTML =
+          '<span class="toccard-no">' + (i + 1) + "</span>" +
+          '<span class="toccard-title">' + esc(judul) + "</span>" +
+          '<span class="toccard-go">' + icon("arrow-right") + "</span>";
+        b.addEventListener("click", function () {
+          var id = a.getAttribute("data-toc");
+          var target = document.getElementById(id) ||
+                       root.querySelector('[id="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]');
+          if (window.Overlay) Overlay.close();
+          if (!target) return;
+          // lompat instan: pop-up baru saja ditutup, animasi hanya membingungkan
+          jumpTo(target);
+        });
+        kisi.appendChild(b);
+      });
       tocBtn.addEventListener("click", function () {
-        if (!window.Overlay || !ol) return;
-        Overlay.open({ title: "Daftar isi bab", icon: "list", node: ol, size: "sm" });
+        if (!window.Overlay) return;
+        Overlay.open({ title: "Daftar isi bab", icon: "list", node: kisi, size: "sm" });
       });
     } else {
       tocBtn.hidden = true;
@@ -221,6 +257,21 @@
     var aktif = -1;
 
     function barH() { return bar.getBoundingClientRect().height || 44; }
+
+    /* Lompat INSTAN ke sebuah elemen, memperhitungkan tinggi bilah sticky.
+       Dipakai kartu Daftar Isi: pop-up baru saja ditutup, sehingga animasi
+       gulir justru membingungkan. */
+    function jumpTo(target) {
+      if (!target) return;
+      var prev = scroller.style.scrollBehavior;
+      scroller.style.scrollBehavior = "auto";
+      scroller.scrollTop += target.getBoundingClientRect().top -
+                            bar.getBoundingClientRect().bottom - 8;
+      scroller.style.scrollBehavior = prev;
+      paint();
+      target.setAttribute("tabindex", "-1");
+      try { target.focus({ preventScroll: true }); } catch (e) {}
+    }
 
     function goto(s) {
       var prev = scroller.style.scrollBehavior;
