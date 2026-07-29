@@ -701,6 +701,957 @@
   }
 
   /* ===================================================================== *
+   * 6c) PEMBANTU KONTEKS TAMBAHAN
+   *     Setiap visual mengambil datanya dari konten di sekitar slot; tidak ada
+   *     rumus, tabel, atau kalimat yang diketik ulang di berkas ini.
+   * ===================================================================== */
+  function sibs(slot, arah) {
+    var out = [], n = slot[arah === "prev" ? "previousElementSibling" : "nextElementSibling"];
+    var hop = 0;
+    while (n && hop++ < 14) {
+      out.push(n);
+      n = n[arah === "prev" ? "previousElementSibling" : "nextElementSibling"];
+    }
+    return out;
+  }
+  /** n elemen math BLOK terdekat sesudah/sebelum slot. */
+  function mathBlocks(slot, count, arah) {
+    var out = [];
+    sibs(slot, arah).forEach(function (e) {
+      if (out.length >= count) return;
+      if (e.classList && e.classList.contains("m-block")) { out.push(e); return; }
+      var inner = e.querySelectorAll ? e.querySelectorAll(".m-block") : [];
+      for (var i = 0; i < inner.length && out.length < count; i++) out.push(inner[i]);
+    });
+    return out;
+  }
+  function nextTable(slot) {
+    var s = sibs(slot, "next");
+    for (var i = 0; i < s.length; i++) {
+      if (s[i].tagName === "TABLE") return s[i];
+      var t = s[i].querySelector && s[i].querySelector("table");
+      if (t) return t;
+    }
+    return null;
+  }
+  function nextHtab(slot) {
+    var s = sibs(slot, "next");
+    for (var i = 0; i < s.length; i++) {
+      if (s[i].classList && s[i].classList.contains("htab-wrap")) return s[i];
+      var t = s[i].querySelector && s[i].querySelector(".htab-wrap");
+      if (t) return t;
+    }
+    return null;
+  }
+  /** Baris tabel sebagai array-of-array teks (sel diambil apa adanya). */
+  function tableRows(tbl) {
+    return [].slice.call(tbl.querySelectorAll("tbody tr")).map(function (tr) {
+      return [].slice.call(tr.children);
+    });
+  }
+  function headText(tbl) {
+    return [].slice.call(tbl.querySelectorAll("thead th")).map(function (th) {
+      return th.textContent.trim();
+    });
+  }
+  /** Paragraf sesudah slot yang diawali <strong> berpola tertentu. */
+  function boldParas(slot, re, max) {
+    var out = [];
+    sibs(slot, "next").forEach(function (e) {
+      if (out.length >= (max || 8)) return;
+      if (e.tagName !== "P") return;
+      var b = e.querySelector("strong");
+      if (b && re.test(b.textContent)) out.push({ el: e, judul: b.textContent.trim() });
+    });
+    return out;
+  }
+  /** Pindahkan elemen ke dalam stage figure (bukan disalin). */
+  function adopt(stage, nodes) {
+    nodes.forEach(function (n) { stage.appendChild(n); });
+    if (window.MR) MR.render(stage);
+    if (window.Icons) Icons.hydrate(stage);
+  }
+  function note(host, html) {
+    var p = el("p", "vfig-note", html);
+    host.appendChild(p);
+    if (window.MR) MR.render(p);
+    if (window.Icons) Icons.hydrate(p);
+    return p;
+  }
+  function place(slot, fig) { slot.parentNode.insertBefore(fig, slot.nextSibling); }
+
+  /**
+   * Buang pembungkus \htmlClass{kelas}{isi} dan sisakan isinya.
+   *
+   * WAJIB dilakukan sebelum LaTeX dipecah pada tanda + / -, sebab nama
+   * kelasnya sendiri memuat tanda hubung (hl-1, hl-2, hl-3). Tanpa ini,
+   * pemecahan suku ikut memotong nama kelas sehingga LaTeX-nya rusak dan
+   * KaTeX gagal merender.
+   */
+  function unwrapHtmlClass(tex) {
+    var s = String(tex == null ? "" : tex), out = "", i = 0, tag = "\\htmlClass{";
+    while (i < s.length) {
+      var k = s.indexOf(tag, i);
+      if (k < 0) { out += s.slice(i); break; }
+      out += s.slice(i, k);
+      var j = k + tag.length, d = 1;
+      while (j < s.length && d > 0) { if (s[j] === "{") d++; else if (s[j] === "}") d--; j++; }
+      if (s[j] !== "{") { i = j; continue; }            // bentuk tak terduga
+      j++; d = 1;
+      var mulai = j;
+      while (j < s.length && d > 0) { if (s[j] === "{") d++; else if (s[j] === "}") d--; j++; }
+      out += s.slice(mulai, j - 1);
+      i = j;
+    }
+    return out;
+  }
+
+  /** Pecah LaTeX pada + / - TERLUAR (tidak di dalam {} maupun ()). */
+  function splitTerms(tex) {
+    var s = String(tex), out = [], buf = "", d = 0;
+    for (var i = 0; i < s.length; i++) {
+      var c = s[i];
+      if (c === "{" || c === "(" || c === "[") d++;
+      else if (c === "}" || c === ")" || c === "]") d--;
+      if (d === 0 && (c === "+" || c === "-") && buf.trim()) { out.push(buf); buf = c; continue; }
+      buf += c;
+    }
+    if (buf.trim()) out.push(buf);
+    return out.length ? out : [s];
+  }
+
+  /* ===================================================================== *
+   * 6d) BUILDER — 20 direktif sisa
+   * ===================================================================== */
+
+  /* --- 1. Anatomi suku (Bab 01) -------------------------------------- *
+   * Rumus $$2x^3$$ diangkat; tiap jangkar hl-* dapat disentuh dan
+   * memunculkan labelnya. Label diambil dari kelas jangkar. */
+  var LABEL_HL = {
+    "hl-coef": "koefisien", "hl-var": "variabel",
+    "hl-pow": "pangkat", "hl-const": "konstanta"
+  };
+  BUILDERS["anatomi-suku"] = function (slot, ctx) {
+    var m = mathBlocks(slot, 1, "next")[0];
+    if (!m) return null;
+    var f = figure(ctx.name, "puzzle");
+    place(slot, f.fig);
+    adopt(f.stage, [m]);
+    var anchors = [].slice.call(f.stage.querySelectorAll(
+      ".hl-coef,.hl-var,.hl-pow,.hl-const"));
+    if (!anchors.length) { f.fig.remove(); return null; }
+    var lab = el("p", "v-anat-label", "Ketuk salah satu bagian rumus.");
+    f.body.appendChild(lab);
+    anchors.forEach(function (a) {
+      var kelas = ["hl-coef", "hl-var", "hl-pow", "hl-const"].filter(function (k) {
+        return a.classList.contains(k);
+      })[0];
+      a.classList.add("v-tapable");
+      a.setAttribute("tabindex", "0");
+      a.setAttribute("role", "button");
+      a.setAttribute("aria-label", LABEL_HL[kelas] || "bagian");
+      function pilih() {
+        anchors.forEach(function (x) { x.classList.remove("v-anchor-on"); });
+        a.classList.add("v-anchor-on");
+        lab.className = "v-anat-label is-on " + kelas;
+        lab.textContent = LABEL_HL[kelas] || "bagian";
+      }
+      a.addEventListener("click", pilih);
+      a.addEventListener("mouseenter", pilih);
+      a.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pilih(); }
+      });
+    });
+    return f.fig;
+  };
+
+  /* --- 2. Perapian ke bentuk baku (Bab 01) --------------------------- *
+   * Rumus memuat "→"; sisi kiri & kanan dipisah, lalu suku sisi kanan
+   * dimunculkan bertahap dari pangkat tertinggi. */
+  BUILDERS["perapian-ke-bentuk-baku"] = function (slot, ctx) {
+    var m = mathBlocks(slot, 1, "next")[0];
+    if (!m) return null;
+    var tex = m.dataset.tex || "";
+    var bagi = tex.split(/\\longrightarrow|\\to|→/);
+    if (bagi.length < 2) return null;
+    var f = figure(ctx.name, "arrow-right");
+    place(slot, f.fig);
+
+    var kiri = el("div", "v-row");
+    kiri.appendChild(el("span", "v-row-lab", "acak"));
+    var kx = el("span", "");
+    kx.innerHTML = window.MR ? MR.M(unwrapHtmlClass(bagi[0]).trim(), false) : bagi[0];
+    kiri.appendChild(kx);
+    var kanan = el("div", "v-row is-target");
+    kanan.appendChild(el("span", "v-row-lab", "bentuk baku"));
+    var tx = el("span", "v-target");
+    kanan.appendChild(tx);
+    f.stage.appendChild(kiri); f.stage.appendChild(kanan);
+    if (m.parentNode) m.parentNode.removeChild(m);   // rumus asli tak ditampilkan dua kali
+    // sisi kiri harus dirender di sini; paint() hanya merender sisi kanan
+    if (window.MR) MR.render(f.stage);
+
+    /* Pembungkus \htmlClass dibuang LEBIH DAHULU, baru dipecah pada tanda
+       terluar — nama kelas hl-1/hl-2/hl-3 memuat tanda hubung. */
+    var suku = splitTerms(unwrapHtmlClass(bagi[1]).trim());
+    function paint(step) {
+      tx.innerHTML = "";
+      suku.slice(0, step).forEach(function (s, i) {
+        var sp = el("span", "v-term" + (i === step - 1 ? " is-new" : ""));
+        sp.innerHTML = window.MR ? MR.M(s.trim(), false) : s;
+        tx.appendChild(sp);
+      });
+      if (window.MR) MR.render(tx);
+    }
+    stepper(f.body, suku.length, paint);
+    note(f.body, icon("info") + " Suku disusun dari pangkat tertinggi ke terendah.");
+    return f.fig;
+  };
+
+  /* --- 3. Uji aturan emas (Bab 01) ----------------------------------- *
+   * Tabel 3 kolom (bentuk | ditulis sebagai | polinomial?) menjadi kartu uji
+   * yang tersingkap satu per satu, ditandai lolos/gagal. */
+  BUILDERS["uji-aturan-emas"] = function (slot, ctx) {
+    var tbl = nextTable(slot);
+    if (!tbl) return null;
+    var rows = tableRows(tbl);
+    if (!rows.length || rows[0].length < 3) return null;
+    var f = figure(ctx.name, "list-checks");
+    place(slot, f.fig);
+    var kisi = el("div", "v-tests");
+    f.stage.appendChild(kisi);
+    var kartu = rows.map(function (tds) {
+      var lolos = /✅|\bYa\b/i.test(tds[2].textContent) &&
+                  !/❌|Bukan/i.test(tds[2].textContent);
+      var c = el("div", "v-test");
+      c.appendChild(el("div", "v-test-form", tds[0].innerHTML));
+      var as = el("div", "v-test-as", tds[1].innerHTML);
+      c.appendChild(as);
+      var vd = el("div", "v-test-verdict");
+      c.appendChild(vd);
+      kisi.appendChild(c);
+      return { el: c, as: as, vd: vd, lolos: lolos };
+    });
+    if (window.MR) MR.render(kisi);
+    if (tbl.parentNode) tbl.parentNode.removeChild(tbl);
+
+    function paint(step) {
+      kartu.forEach(function (k, i) {
+        var buka = i < step;
+        k.el.className = "v-test" + (buka ? (k.lolos ? " is-pass" : " is-fail") : "");
+        k.as.style.visibility = buka ? "visible" : "hidden";
+        k.vd.innerHTML = buka
+          ? (k.lolos ? icon("circle-check") + "<span>Polinomial</span>"
+                     : icon("circle-x") + "<span>Bukan</span>")
+          : "";
+        if (buka && window.Icons) Icons.hydrate(k.vd);
+      });
+    }
+    stepper(f.body, kartu.length, paint);
+    return f.fig;
+  };
+
+  /* --- 4. Penjumlahan bersusun (Bab 02) ------------------------------ *
+   * Dua rumus blok berurutan disusun ke bawah; kolom per pangkat sejajar
+   * memakai jangkar hl-1..hl-3 & hl-const milik penulis, lalu tiap kolom
+   * dijumlahkan bertahap. */
+  /**
+   * Ambil suku BERTANDA untuk setiap kelas jangkar dari LaTeX sumber.
+   *
+   * PENTING: penulis membungkus sukunya saja — tandanya berada DI LUAR
+   * pembungkus, mis. "... - \htmlClass{hl-2}{3x^2} ...". Bila tanda itu
+   * diabaikan, kolom $3x^2$ terbaca "3x^2 + 3x^2" padahal seharusnya
+   * "3x^2 - 3x^2 = 0" — hitungan yang ditampilkan menjadi salah. Karena itu
+   * tanda di depan tiap pembungkus ikut dibaca.
+   */
+  function signedAnchors(tex, kelas) {
+    var s = String(tex == null ? "" : tex), hasil = {};
+    kelas.forEach(function (k) { hasil[k] = null; });
+    var tag = "\\htmlClass{", i = 0;
+    while (i < s.length) {
+      var a = s.indexOf(tag, i);
+      if (a < 0) break;
+      var j = a + tag.length, d = 1, ks = j;
+      while (j < s.length && d > 0) { if (s[j] === "{") d++; else if (s[j] === "}") d--; j++; }
+      var namaKelas = s.slice(ks, j - 1);
+      if (s[j] !== "{") { i = j; continue; }
+      j++; d = 1;
+      var vs = j;
+      while (j < s.length && d > 0) { if (s[j] === "{") d++; else if (s[j] === "}") d--; j++; }
+      var isi = s.slice(vs, j - 1);
+      // tanda terdekat sebelum pembungkus
+      var tanda = "+";
+      for (var p = a - 1; p >= 0; p--) {
+        var c = s[p];
+        if (c === " " || c === "\\" || c === ";" || c === ",") continue;
+        if (c === "-" || c === "−") tanda = "-";
+        break;
+      }
+      if (hasil.hasOwnProperty(namaKelas) && hasil[namaKelas] === null) {
+        hasil[namaKelas] = (tanda === "-" ? "-" : "") + unwrapHtmlClass(isi);
+      }
+      i = j;
+    }
+    return hasil;
+  }
+
+  BUILDERS["penjumlahan-bersusun"] = function (slot, ctx) {
+    var ms = mathBlocks(slot, 2, "next");
+    if (ms.length < 2) return null;
+    var KOL = ["hl-1", "hl-2", "hl-3", "hl-const"];
+    var baris = ms.map(function (m) { return signedAnchors(m.dataset.tex, KOL); });
+    // butuh minimal satu kolom terisi pada kedua baris
+    var adaKolom = KOL.some(function (k) { return baris[0][k] && baris[1][k]; });
+    if (!adaKolom) return null;
+
+    var f = figure(ctx.name, "table");
+    place(slot, f.fig);
+    var grid = el("div", "v-stack");
+    grid.style.gridTemplateColumns = "repeat(" + KOL.length + ",auto)";
+    f.stage.appendChild(grid);
+
+    baris.forEach(function (row) {
+      KOL.forEach(function (k, ci) {
+        var cell = el("div", "v-cell " + k);
+        cell.dataset.col = ci;
+        if (row[k]) cell.innerHTML = window.MR ? MR.M(row[k], false) : row[k];
+        grid.appendChild(cell);
+      });
+    });
+    var jml = KOL.map(function (k, ci) {
+      var cell = el("div", "v-cell v-sum " + k);
+      cell.dataset.col = ci;
+      grid.appendChild(cell);
+      return cell;
+    });
+    ms.forEach(function (m) { if (m.parentNode) m.parentNode.removeChild(m); });
+    if (window.MR) MR.render(grid);
+
+    /* Jumlah kolom DIHITUNG dari koefisiennya, bukan dirangkai sebagai teks,
+       supaya kolom yang saling menghabiskan benar-benar tampil sebagai 0. */
+    function jumlahKolom(k) {
+      var a = polyFromTex(baris[0][k] || "0");
+      var b = polyFromTex(baris[1][k] || "0");
+      if (!a || !b) return null;
+      var n = Math.max(a.length, b.length), out = [];
+      for (var i = 0; i < n; i++) {
+        out.push((a[a.length - 1 - i] || 0) + (b[b.length - 1 - i] || 0));
+      }
+      return polyToTex(out.reverse());
+    }
+    function paint(step) {
+      KOL.forEach(function (k, ci) {
+        var aktif = ci < step;
+        grid.querySelectorAll('[data-col="' + ci + '"]').forEach(function (c) {
+          c.classList.toggle("is-on", aktif);
+        });
+        jml[ci].innerHTML = "";
+        if (aktif) {
+          var t = jumlahKolom(k);
+          if (t !== null) {
+            jml[ci].innerHTML = window.MR ? MR.M(t, false) : t;
+            if (window.MR) MR.render(jml[ci]);
+          }
+        }
+      });
+    }
+    stepper(f.body, KOL.length, paint);
+    note(f.body, icon("info") + " Setiap kolom memuat satu pangkat; jumlahkan kolom demi kolom. " +
+      "Kolom yang saling menghabiskan menghasilkan " + (window.MR ? MR.M("0", false) : "0") + ".");
+    return f.fig;
+  };
+
+  /* --- 5 & 14. Penyamaan koefisien / Penurunan Vieta ----------------- *
+   * Rumus memuat pasangan jangkar berkelas sama (hl-1, hl-2, hl-3) di kedua
+   * ruas. Garis penghubung ditarik antar pasangan sewarna, lalu persamaan
+   * yang terbentuk dimunculkan. */
+  function pairLinkBuilder(iconName) {
+    return function (slot, ctx) {
+      var m = mathBlocks(slot, 1, "next")[0];
+      if (!m) return null;
+      var f = figure(ctx.name, iconName);
+      place(slot, f.fig);
+      adopt(f.stage, [m]);
+      var KELAS = ["hl-1", "hl-2", "hl-3"];
+      var pasang = [];
+      KELAS.forEach(function (k, i) {
+        var g = f.stage.querySelectorAll("." + k);
+        if (g.length >= 2) pasang.push({ kelas: k, a: g[0], b: g[g.length - 1], i: i });
+      });
+      if (!pasang.length) { f.fig.remove(); return null; }
+
+      var daftar = el("div", "v-eqs");
+      f.body.appendChild(daftar);
+      function tex(node) {
+        var a = node.querySelector("annotation");
+        return a ? a.textContent : node.textContent;
+      }
+      function paint(step) {
+        var pairs = pasang.slice(0, step).map(function (p) {
+          return { from: p.a, to: p.b, cls: "v-arrow" + (p.i ? "-" + (p.i + 1) : "") };
+        });
+        drawArrows(f.stage, pairs, { lift: 14 });
+        pasang.forEach(function (p, i) {
+          p.a.classList.toggle("v-anchor-on", i < step);
+          p.b.classList.toggle("v-anchor-on", i < step);
+        });
+        daftar.innerHTML = "";
+        pasang.slice(0, step).forEach(function (p) {
+          var row = el("div", "v-eq " + p.kelas);
+          row.innerHTML = window.MR ? MR.M(tex(p.a) + "=" + tex(p.b), false)
+                                    : tex(p.a) + " = " + tex(p.b);
+          daftar.appendChild(row);
+        });
+        if (window.MR) MR.render(daftar);
+      }
+      var st = stepper(f.body, pasang.length, paint);
+      watch(f.stage, function () { paint(st.step); });
+      return f.fig;
+    };
+  }
+  BUILDERS["penyamaan-koefisien"] = pairLinkBuilder("equal");
+  BUILDERS["penurunan-rumus-vieta"] = pairLinkBuilder("equal");
+
+  /* --- 6 & 7. Tabel Horner beranimasi / Skema Horner-Kino ------------ *
+   * Tabelnya sudah dibangun upgradeAscii() dari ASCII penulis (dan angkanya
+   * dihitung engine). Di sini tabel itu DIANGKAT ke dalam figure lalu diberi
+   * irama bertahap: turun → kali → jumlah. */
+  function hornerAnimBuilder(caption) {
+    return function (slot, ctx) {
+      var wrap = nextHtab(slot);
+      if (!wrap) return null;
+      var f = figure(ctx.name, "table");
+      place(slot, f.fig);
+      f.stage.appendChild(wrap);
+      var tab = wrap.querySelector(".htab");
+      var kolom = tab.querySelectorAll("thead th").length - 1;   // tanpa kolom label
+      var multRows = [].slice.call(tab.querySelectorAll(".htab-mult"));
+      var resRow = tab.querySelector(".htab-res");
+
+      function selAt(tr, ci) { return tr ? tr.children[ci + 1] : null; }
+      function paint(step) {
+        for (var c = 0; c < kolom; c++) {
+          var tampil = c < step;
+          multRows.forEach(function (tr) {
+            var s = selAt(tr, c);
+            if (s) s.classList.toggle("is-on", tampil);
+          });
+          var r = selAt(resRow, c);
+          if (r) r.classList.toggle("is-on", tampil);
+        }
+        var akt = tab.querySelector(".is-active");
+        if (akt) akt.classList.remove("is-active");
+        if (step > 0 && step <= kolom) {
+          var cur = selAt(resRow, step - 1);
+          if (cur) cur.classList.add("is-active");
+        }
+      }
+      stepper(f.body, kolom, paint);
+      note(f.body, icon("info") + " " + caption);
+      return f.fig;
+    };
+  }
+  BUILDERS["tabel-horner-beranimasi"] =
+    hornerAnimBuilder("Irama: <b>turun</b> → <b>kali k</b> → <b>jumlah</b>. Sel terakhir adalah sisa, dan nilainya sama dengan $f(k)$.");
+  BUILDERS["skema-horner-kino"] =
+    hornerAnimBuilder("Tiap koefisien hasil menyumbang dua nilai ke bawah: dikali $-b$ (geser 1 kolom) dan dikali $-c$ (geser 2 kolom). Dua sel terakhir membentuk sisa $rx+s$.");
+
+  /* --- 8 & 17. Bagan alir keputusan --------------------------------- *
+   * Dari tabel dua/tiga kolom: kolom pertama = pertanyaan/keadaan,
+   * kolom berikutnya = jawabannya. Pengguna memilih keadaan, jalurnya
+   * menyala menuju alat/metode beserta catatannya. */
+  function decisionBuilder(labelKiri) {
+    return function (slot, ctx) {
+      var tbl = nextTable(slot);
+      if (!tbl) return null;
+      var rows = tableRows(tbl);
+      if (rows.length < 2 || rows[0].length < 2) return null;
+      var head = headText(tbl);
+      var f = figure(ctx.name, "git-branch");
+      place(slot, f.fig);
+
+      var wrap = el("div", "v-flow");
+      var kiri = el("div", "v-flow-col");
+      kiri.appendChild(el("h4", "v-flow-h", esc(head[0] || labelKiri)));
+      var kanan = el("div", "v-flow-out");
+      var kosong = el("p", "v-flow-empty", icon("arrow-right") + " Pilih salah satu di kiri.");
+      kanan.appendChild(kosong);
+      wrap.appendChild(kiri); wrap.appendChild(kanan);
+      f.stage.appendChild(wrap);
+
+      var opsi = rows.map(function (tds, i) {
+        var b = el("button", "v-flow-opt");
+        b.type = "button";
+        b.innerHTML = tds[0].innerHTML;
+        kiri.appendChild(b);
+        return { b: b, tds: tds, i: i };
+      });
+      if (window.MR) MR.render(kiri);
+      if (tbl.parentNode) tbl.parentNode.removeChild(tbl);
+
+      opsi.forEach(function (o) {
+        o.b.addEventListener("click", function () {
+          opsi.forEach(function (x) { x.b.classList.toggle("is-on", x === o); });
+          kanan.innerHTML = "";
+          for (var c = 1; c < o.tds.length; c++) {
+            var box = el("div", "v-flow-res" + (c === 1 ? " is-main" : ""));
+            box.appendChild(el("span", "v-flow-lab", esc(head[c] || "")));
+            var v = el("div", "v-flow-val", o.tds[c].innerHTML);
+            box.appendChild(v);
+            kanan.appendChild(box);
+          }
+          if (window.MR) MR.render(kanan);
+          if (window.Icons) Icons.hydrate(kanan);
+          if (window.SFX) SFX.play("pop");
+        });
+      });
+      return f.fig;
+    };
+  }
+  BUILDERS["bagan-alir-pemilihan-metode"] = decisionBuilder("Bentuk pembagi");
+  BUILDERS["bagan-alir-keputusan"] = decisionBuilder("Yang diminta");
+
+  /* --- 9, 10, 13. Pengungkapan bertahap ----------------------------- *
+   * Paragraf & rumus sesudah slot ditampilkan satu per satu. Pada
+   * pembuktian, jangkar hl-1 (faktor yang menjadi nol) dipudarkan pada
+   * langkah terakhir sehingga hanya S yang tersisa. */
+  function revealBuilder(iconName, opts) {
+    opts = opts || {};
+    return function (slot, ctx) {
+      var ambil = [];
+      sibs(slot, "next").forEach(function (e) {
+        if (ambil.length >= (opts.max || 6)) return;
+        if (e.tagName === "H3" || e.tagName === "H2" || e.tagName === "HR") return;
+        if (e.classList && (e.classList.contains("activity-slot") ||
+            e.classList.contains("quiz-slot") || e.classList.contains("visual-slot"))) return;
+        if (e.tagName === "P" || e.classList.contains("m-block") ||
+            e.tagName === "BLOCKQUOTE" || e.classList.contains("htab-wrap")) ambil.push(e);
+      });
+      // hentikan di elemen pertama sesudah judul contoh
+      if (ambil.length < 2) return null;
+      var f = figure(ctx.name, iconName);
+      place(slot, f.fig);
+      var kartu = ambil.map(function (e) {
+        var c = el("div", "v-step-card");
+        c.appendChild(e);
+        f.stage.appendChild(c);
+        return c;
+      });
+      if (window.MR) MR.render(f.stage);
+      if (window.Icons) Icons.hydrate(f.stage);
+
+      function paint(step) {
+        kartu.forEach(function (c, i) { c.classList.toggle("is-on", i < step); });
+        if (opts.fadeHl) {
+          var fade = step >= kartu.length;
+          f.stage.querySelectorAll("." + opts.fadeHl).forEach(function (n) {
+            n.classList.toggle("v-faded", fade);
+          });
+        }
+      }
+      stepper(f.body, kartu.length, paint);
+      return f.fig;
+    };
+  }
+  BUILDERS["pembuktian-bertahap"] = revealBuilder("flask-conical", { fadeHl: "hl-1", max: 5 });
+  BUILDERS["sistem-dua-persamaan"] = revealBuilder("equal", { max: 5 });
+  BUILDERS["pengupasan-faktor"] = revealBuilder("layers", { max: 6 });
+
+  /* --- 11. Rantai kesetaraan (Bab 04) -------------------------------- *
+   * Rumus memuat tiga pernyataan setara pada jangkar hl-1/2/3. Ditampilkan
+   * sebagai segitiga; menyentuh satu simpul menyalakan dua lainnya. */
+  BUILDERS["rantai-kesetaraan"] = function (slot, ctx) {
+    var m = mathBlocks(slot, 1, "next")[0];
+    if (!m) return null;
+    var tmp = el("div", "");
+    tmp.appendChild(m);
+    if (window.MR) MR.render(tmp);
+    var teks = ["hl-1", "hl-2", "hl-3"].map(function (k) {
+      var n = tmp.querySelector("." + k);
+      if (!n) return null;
+      var a = n.querySelector("annotation");
+      return a ? a.textContent : n.textContent;
+    });
+    if (teks.some(function (t) { return !t; })) return null;
+
+    var f = figure(ctx.name, "git-branch");
+    place(slot, f.fig);
+    var tri = el("div", "v-tri");
+    f.stage.appendChild(tri);
+    var simpul = teks.map(function (t, i) {
+      var b = el("button", "v-tri-node n" + (i + 1));
+      b.type = "button";
+      b.innerHTML = window.MR ? MR.M(t, false) : esc(t);
+      tri.appendChild(b);
+      return b;
+    });
+    if (window.MR) MR.render(tri);
+    var ket = el("p", "vfig-note", "Ketuk salah satu simpul — dua simpul lain ikut menyala karena ketiganya setara.");
+    f.body.appendChild(ket);
+    simpul.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var nyala = !b.classList.contains("is-on");
+        simpul.forEach(function (x) { x.classList.toggle("is-on", nyala); });
+        tri.classList.toggle("is-on", nyala);
+        if (window.SFX) SFX.play("pop");
+      });
+    });
+    return f.fig;
+  };
+
+  /* --- 12. Daftar kandidat akar (Bab 04) ---------------------------- *
+   * Polinomial dan daftar kandidat dibaca dari rumus di sekitar slot;
+   * f(kandidat) DIHITUNG, bukan dihafal. */
+  BUILDERS["daftar-kandidat-akar"] = function (slot, ctx) {
+    var next = sibs(slot, "next");
+    var poly = null, kandidat = null;
+    for (var i = 0; i < next.length && (!poly || !kandidat); i++) {
+      var ms = next[i].classList && next[i].classList.contains("m")
+        ? [next[i]] : [].slice.call(next[i].querySelectorAll ? next[i].querySelectorAll(".m") : []);
+      for (var j = 0; j < ms.length; j++) {
+        var tex = ms[j].dataset.tex || "";
+        if (!poly) {
+          var mm = /f\(x\)\s*=\s*([^=]+)$/.exec(tex.replace(/\\,/g, ""));
+          if (mm) { var c = polyFromTex(mm[1]); if (c) poly = c; }
+        }
+        if (!kandidat && /\\pm/.test(tex)) {
+          var nums = (tex.match(/\\pm\s*(\d+)/g) || []).map(function (s) {
+            return Number(s.replace(/\\pm\s*/, ""));
+          });
+          if (nums.length >= 3) kandidat = nums;
+        }
+      }
+    }
+    if (!poly || !kandidat) return null;
+
+    var f = figure(ctx.name, "list-checks");
+    place(slot, f.fig);
+    note(f.body, icon("info") + " Ketuk kandidat; nilai " +
+      (window.MR ? MR.M("f(x)", false) : "f(x)") + " dihitung langsung oleh aplikasi.");
+    var bar = el("div", "v-cands");
+    f.stage.appendChild(bar);
+    var hasil = el("div", "v-cand-out");
+    f.stage.appendChild(hasil);
+
+    var semua = [];
+    kandidat.forEach(function (n) { semua.push(-n); semua.push(n); });
+    semua.sort(function (a, b) { return a - b; });
+    function evalPoly(c, x) {
+      var v = 0;
+      for (var i = 0; i < c.length; i++) v = v * x + c[i];
+      return v;
+    }
+    semua.forEach(function (x) {
+      var b = el("button", "v-cand", (x > 0 ? "+" : "") + x);
+      b.type = "button";
+      b.addEventListener("click", function () {
+        var v = evalPoly(poly, x);
+        var akar = Math.abs(v) < 1e-9;
+        b.classList.add(akar ? "is-root" : "is-dim");
+        b.disabled = true;
+        hasil.innerHTML = "";
+        var row = el("div", "v-cand-res " + (akar ? "is-root" : ""));
+        row.innerHTML = (akar ? icon("circle-check") : icon("circle-x")) +
+          (window.MR ? MR.M("f(" + x + ")=" + fmtNum(v), false) : "f(" + x + ")=" + v) +
+          "<span>" + (akar ? "akar ditemukan" : "bukan akar") + "</span>";
+        hasil.appendChild(row);
+        if (window.MR) MR.render(hasil);
+        if (window.Icons) Icons.hydrate(hasil);
+        if (window.SFX) SFX.play(akar ? "correct" : "pop");
+      });
+      bar.appendChild(b);
+    });
+    return f.fig;
+  };
+
+  /* --- 15. Peta ekspresi simetris (Bab 05) -------------------------- *
+   * Rumus-rumus SEBELUM slot berbentuk "target = ungkapan dalam jumlah &
+   * hasil kali". Dua kotak sumber ditampilkan tetap; memilih target
+   * memunculkan rumus perantaranya. */
+  BUILDERS["peta-ekspresi-simetris"] = function (slot, ctx) {
+    var ms = mathBlocks(slot, 4, "prev");
+    var item = [];
+    ms.forEach(function (m) {
+      var tex = m.dataset.tex || "";
+      var i = tex.indexOf("=");
+      if (i > 0) item.push({ target: tex.slice(0, i).trim(), rumus: tex.slice(i + 1).trim(), el: m });
+    });
+    if (item.length < 2) return null;
+
+    var f = figure(ctx.name, "map");
+    place(slot, f.fig);
+    var wrap = el("div", "v-sym");
+    var src = el("div", "v-sym-src");
+    ["x_1+x_2", "x_1x_2"].forEach(function (t, i) {
+      var b = el("div", "v-sym-box " + (i ? "hl-2" : "hl-1"));
+      b.appendChild(el("span", "v-sym-lab", i ? "hasil kali akar" : "jumlah akar"));
+      var v = el("span", "");
+      v.innerHTML = window.MR ? MR.M(t, false) : t;
+      b.appendChild(v);
+      src.appendChild(b);
+    });
+    var pilih = el("div", "v-sym-targets");
+    var out = el("div", "v-sym-out");
+    out.innerHTML = '<p class="v-flow-empty">Pilih salah satu ekspresi.</p>';
+    wrap.appendChild(src); wrap.appendChild(pilih); wrap.appendChild(out);
+    f.stage.appendChild(wrap);
+
+    item.forEach(function (it) {
+      var b = el("button", "v-sym-target");
+      b.type = "button";
+      b.innerHTML = window.MR ? MR.M(it.target, false) : it.target;
+      b.addEventListener("click", function () {
+        pilih.querySelectorAll(".v-sym-target").forEach(function (x) {
+          x.classList.toggle("is-on", x === b);
+        });
+        src.querySelectorAll(".v-sym-box").forEach(function (x) { x.classList.add("is-on"); });
+        out.innerHTML = "";
+        var row = el("div", "v-sym-formula");
+        row.innerHTML = window.MR ? MR.M(it.target + "=" + it.rumus, true) : it.target + "=" + it.rumus;
+        out.appendChild(row);
+        if (window.MR) MR.render(out);
+        if (window.SFX) SFX.play("pop");
+      });
+      pilih.appendChild(b);
+      if (it.el.parentNode) it.el.parentNode.removeChild(it.el);
+    });
+    if (window.MR) MR.render(wrap);
+    note(f.body, icon("info") + " Akar sesungguhnya tidak pernah dihitung — cukup jumlah dan hasil kalinya.");
+    return f.fig;
+  };
+
+  /* --- 16. Pergeseran akar (Bab 05) -------------------------------- *
+   * Tabel "akar baru | substitusi" menjadi garis bilangan: memilih baris
+   * menggeser akar dan menampilkan substitusi yang bersesuaian, sehingga
+   * arah geser dan arah substitusi terlihat berlawanan. */
+  BUILDERS["pergeseran-akar"] = function (slot, ctx) {
+    var tbl = nextTable(slot);
+    if (!tbl) return null;
+    var rows = tableRows(tbl);
+    if (rows.length < 2) return null;
+    var f = figure(ctx.name, "milestone");
+    place(slot, f.fig);
+
+    var AKAR = [2, 3];                     // akar contoh pada konten Bab 05
+    var line = el("div", "v-line");
+    var track = el("div", "v-line-track");
+    for (var t = -2; t <= 8; t++) {
+      var tick = el("span", "v-line-tick");
+      tick.style.left = ((t + 2) / 10 * 100) + "%";
+      tick.dataset.v = t;
+      if (t % 1 === 0) tick.appendChild(el("i", "v-line-num", String(t)));
+      track.appendChild(tick);
+    }
+    var dots = AKAR.map(function (a) {
+      var d = el("span", "v-line-dot");
+      d.dataset.base = a;
+      track.appendChild(d);
+      return d;
+    });
+    line.appendChild(track);
+    f.stage.appendChild(line);
+    var subst = el("div", "v-subst");
+    f.stage.appendChild(subst);
+
+    function taruh(geser, mode) {
+      dots.forEach(function (d) {
+        var b = Number(d.dataset.base);
+        var v = mode === "kali" ? b * geser : (mode === "neg" ? -b : b + geser);
+        d.style.left = ((v + 2) / 10 * 100) + "%";
+        d.title = String(v);
+        d.textContent = String(v);
+      });
+    }
+    taruh(0, "geser");
+
+    var pilih = el("div", "v-line-opts");
+    f.body.appendChild(pilih);
+    rows.forEach(function (tds) {
+      var b = el("button", "v-flow-opt");
+      b.type = "button";
+      b.innerHTML = tds[0].innerHTML;
+      b.addEventListener("click", function () {
+        pilih.querySelectorAll("button").forEach(function (x) {
+          x.classList.toggle("is-on", x === b);
+        });
+        var teks = tds[0].textContent;
+        var num = (teks.match(/-?\d+/) || [])[0];
+        var k = num ? Number(num) : 2;      // "k" simbolik → pakai 2 agar terlihat
+        if (/kebalikan/i.test(teks)) taruh(0, "geser");
+        else if (/×\s*\(-1\)|\(-1\)/.test(teks)) taruh(0, "neg");
+        else if (/×/.test(teks)) taruh(k || 2, "kali");
+        else if (/-\s*k|−\s*k/.test(teks)) taruh(-(k || 2), "geser");
+        else taruh(k || 2, "geser");
+        subst.innerHTML = '<span class="v-sym-lab">substitusi</span>' + tds[1].innerHTML;
+        if (window.MR) MR.render(subst);
+        if (window.SFX) SFX.play("pop");
+      });
+      pilih.appendChild(b);
+    });
+    if (window.MR) MR.render(pilih);
+    if (tbl.parentNode) tbl.parentNode.removeChild(tbl);
+    note(f.body, icon("info") + " Perhatikan: akar bergeser ke kanan, tetapi substitusinya justru " +
+      (window.MR ? MR.M("x \\to x-k", false) : "x → x−k") + " — arahnya berlawanan.");
+    return f.fig;
+  };
+
+  /* --- 18. Penyorot kata kunci (Bab 06) ---------------------------- *
+   * Tabel "kata kunci | konsep | alat" menjadi deretan chip; menyentuh chip
+   * memunculkan gelembung berisi konsep dan alatnya. */
+  BUILDERS["penyorot-kata-kunci"] = function (slot, ctx) {
+    var tbl = nextTable(slot);
+    if (!tbl) return null;
+    var rows = tableRows(tbl);
+    if (rows.length < 2 || rows[0].length < 3) return null;
+    var head = headText(tbl);
+    var f = figure(ctx.name, "lightbulb");
+    place(slot, f.fig);
+    var bar = el("div", "v-keys");
+    f.stage.appendChild(bar);
+    var bubble = el("div", "v-bubble");
+    bubble.innerHTML = '<p class="v-flow-empty">Ketuk sebuah kata kunci.</p>';
+    f.stage.appendChild(bubble);
+
+    rows.forEach(function (tds) {
+      var b = el("button", "v-key");
+      b.type = "button";
+      b.innerHTML = tds[0].innerHTML;
+      b.addEventListener("click", function () {
+        bar.querySelectorAll(".v-key").forEach(function (x) {
+          x.classList.toggle("is-on", x === b);
+        });
+        bubble.innerHTML =
+          '<div class="v-bubble-row"><span class="v-sym-lab">' + esc(head[1] || "Konsep") +
+            '</span><div>' + tds[1].innerHTML + "</div></div>" +
+          '<div class="v-bubble-row"><span class="v-sym-lab">' + esc(head[2] || "Alat") +
+            '</span><div>' + tds[2].innerHTML + "</div></div>";
+        if (window.MR) MR.render(bubble);
+        if (window.SFX) SFX.play("pop");
+      });
+      bar.appendChild(b);
+    });
+    if (window.MR) MR.render(bar);
+    if (tbl.parentNode) tbl.parentNode.removeChild(tbl);
+    return f.fig;
+  };
+
+  /* --- 19. Studi kasus bertahap (Bab 06) --------------------------- *
+   * Empat paragraf "**Studi kasus N — …**" menjadi kartu yang dapat dibuka. */
+  BUILDERS["studi-kasus-bertahap"] = function (slot, ctx) {
+    var paras = boldParas(slot, /Studi kasus/i, 6);
+    if (paras.length < 2) return null;
+    var f = figure(ctx.name, "clipboard-list");
+    place(slot, f.fig);
+    var kisi = el("div", "v-cases");
+    f.stage.appendChild(kisi);
+    paras.forEach(function (p) {
+      var card = el("div", "v-case");
+      var b = el("button", "v-case-head", icon("chevron-right") + "<span>" + esc(p.judul) + "</span>");
+      b.type = "button";
+      var body = el("div", "v-case-body");
+      body.appendChild(p.el);
+      // judul di dalam paragraf sudah terwakili tombol
+      var strong = p.el.querySelector("strong");
+      if (strong) strong.parentNode.removeChild(strong);
+      card.appendChild(b); card.appendChild(body);
+      kisi.appendChild(card);
+      b.addEventListener("click", function () {
+        var buka = !card.classList.contains("is-open");
+        card.classList.toggle("is-open", buka);
+        b.setAttribute("aria-expanded", String(buka));
+        if (window.SFX) SFX.play("pop");
+      });
+      b.setAttribute("aria-expanded", "false");
+    });
+    if (window.MR) MR.render(kisi);
+    if (window.Icons) Icons.hydrate(kisi);
+    return f.fig;
+  };
+
+  /* --- 20. Radar jebakan (Bab 06) ---------------------------------- *
+   * Tabel "jebakan | cara aman" menjadi kartu yang dapat dibalik. Setelah
+   * seluruh kartu dibuka, muncul kuis singkat "temukan jebakannya". */
+  BUILDERS["radar-jebakan"] = function (slot, ctx) {
+    var tbl = nextTable(slot);
+    if (!tbl) return null;
+    var rows = tableRows(tbl);
+    if (rows.length < 3) return null;
+    var f = figure(ctx.name, "triangle-alert");
+    place(slot, f.fig);
+    var kisi = el("div", "v-traps");
+    f.stage.appendChild(kisi);
+    var dibuka = 0;
+    var kartu = rows.map(function (tds, i) {
+      var c = el("button", "v-trap");
+      c.type = "button";
+      c.innerHTML =
+        '<span class="v-trap-face v-trap-front">' + icon("triangle-alert") +
+          "<span>" + tds[0].innerHTML + "</span></span>" +
+        '<span class="v-trap-face v-trap-back">' + icon("circle-check") +
+          "<span>" + tds[1].innerHTML + "</span></span>";
+      c.addEventListener("click", function () {
+        var balik = !c.classList.contains("is-flipped");
+        c.classList.toggle("is-flipped", balik);
+        if (balik && !c.dataset.seen) { c.dataset.seen = "1"; dibuka++; cekKuis(); }
+        if (window.SFX) SFX.play("pop");
+      });
+      kisi.appendChild(c);
+      return { el: c, tds: tds, i: i };
+    });
+    if (window.MR) MR.render(kisi);
+    if (window.Icons) Icons.hydrate(kisi);
+    if (tbl.parentNode) tbl.parentNode.removeChild(tbl);
+
+    var kuis = el("div", "v-trapquiz");
+    kuis.hidden = true;
+    f.body.appendChild(kuis);
+    function cekKuis() {
+      if (dibuka < kartu.length || !kuis.hidden) return;
+      /* Kuis dibentuk dari isi tabel itu sendiri: satu "cara aman" dipilih
+         acak, peserta menentukan jebakan mana yang cocok. Tidak ada soal
+         yang dikarang di luar konten. */
+      var benar = kartu[Math.floor(Math.random() * kartu.length)];
+      var opsi = shuffle(kartu).slice(0, Math.min(4, kartu.length));
+      if (opsi.indexOf(benar) < 0) opsi[0] = benar;
+      opsi = shuffle(opsi);
+      kuis.hidden = false;
+      kuis.innerHTML = '<div class="v-trapquiz-h">' + icon("circle-question-mark") +
+        " Temukan jebakannya — cara aman ini mengatasi jebakan yang mana?</div>" +
+        '<div class="v-trapquiz-safe">' + benar.tds[1].innerHTML + "</div>";
+      var box = el("div", "v-trapquiz-opts");
+      opsi.forEach(function (o) {
+        var b = el("button", "v-flow-opt");
+        b.type = "button";
+        b.innerHTML = o.tds[0].innerHTML;
+        b.addEventListener("click", function () {
+          var ok = o === benar;
+          b.classList.add(ok ? "is-ok" : "is-no");
+          box.querySelectorAll("button").forEach(function (x) { x.disabled = true; });
+          var fb = el("p", "v-trapquiz-fb " + (ok ? "is-ok" : "is-no"),
+            (ok ? icon("circle-check") + " Tepat." : icon("circle-x") + " Belum tepat."));
+          kuis.appendChild(fb);
+          if (window.Icons) Icons.hydrate(fb);
+          if (window.SFX) SFX.play(ok ? "correct" : "pop");
+        });
+        box.appendChild(b);
+      });
+      kuis.appendChild(box);
+      if (window.MR) MR.render(kuis);
+      if (window.Icons) Icons.hydrate(kuis);
+    }
+    note(f.body, icon("info") + " Ketuk kartu untuk membaliknya. Setelah semua dibalik, muncul kuis singkat.");
+    return f.fig;
+  };
+
+  function shuffle(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* ===================================================================== *
    * 7) MOUNT
    * ===================================================================== */
   function mount(root) {

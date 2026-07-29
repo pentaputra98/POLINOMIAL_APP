@@ -2054,6 +2054,269 @@ body.dgview-open{overflow:hidden;}
   .umap-cols{grid-template-columns:repeat(2,1fr);}
 }
 
+/* =====================================================================
+   FASE 5 — KOMPONEN 20 DIREKTIF VISUAL
+   Semua data berasal dari konten di sekitar slot (rumus ber-htmlClass,
+   tabel markdown, atau paragraf berjudul tebal).
+   ===================================================================== */
+.v-overlay .v-arrow-3{stroke:var(--hl-3);}
+
+/* --- umum --- */
+.v-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:.3rem 0;}
+.v-row-lab{
+  flex:0 0 auto;font-family:var(--font-display);font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);
+  padding:.12rem .4rem;border:var(--bd-thin) solid var(--line);border-radius:6px;
+}
+.v-row.is-target .v-row-lab{background:var(--mint);color:var(--ink);}
+.v-term{display:inline-block;margin-right:.15rem;}
+.v-term.is-new{animation:v-pop .3s var(--ease);}
+@keyframes v-pop{from{transform:translateY(-6px) scale(.9);opacity:0;}to{transform:none;opacity:1;}}
+.v-faded{opacity:.25;transition:opacity var(--t) var(--ease);}
+.v-tapable{cursor:pointer;border-radius:4px;}
+.v-flow-empty{
+  display:flex;align-items:center;gap:.35rem;
+  font-size:.84rem;color:var(--ink-soft);margin:0;
+}
+.v-flow-empty .lu{width:.95em;height:.95em;}
+
+/* --- 1. anatomi suku --- */
+.v-anat-label{
+  margin:.5rem 0 0;padding:.35rem .6rem;
+  font-family:var(--font-display);font-weight:700;font-size:.9rem;
+  border:var(--bd-thin) dashed var(--line);border-radius:8px;
+  color:var(--ink-soft);text-align:center;
+}
+.v-anat-label.is-on{border-style:solid;background:var(--hl-term-bg);}
+
+/* --- 3. uji aturan emas --- */
+.v-tests{display:grid;gap:.4rem;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));}
+.v-test{
+  padding:.5rem .6rem;background:var(--surface-2);
+  border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);
+  transition:background var(--t) var(--ease);
+}
+.v-test.is-pass{background:var(--mint);}
+.v-test.is-fail{background:var(--peach);}
+.v-test-form{font-size:.95rem;}
+.v-test-as{font-size:.82rem;color:var(--ink-soft);margin:.2rem 0;}
+.v-test-verdict{display:flex;align-items:center;gap:.3rem;font-size:.82rem;font-weight:700;}
+.v-test-verdict .lu{width:1em;height:1em;}
+
+/* --- 4. penjumlahan bersusun --- */
+.v-stack{display:inline-grid;gap:.25rem .5rem;font-family:var(--font-mono);}
+.v-cell{
+  padding:.25rem .4rem;text-align:right;border-radius:6px;
+  opacity:.35;transition:opacity var(--t) var(--ease),background var(--t) var(--ease);
+}
+.v-cell.is-on{opacity:1;background:var(--hl-term-bg);}
+.v-sum{border-top:var(--bd-thin) solid var(--line);font-weight:700;min-height:1.9em;}
+
+/* --- 5 & 14. pasangan koefisien --- */
+.v-eqs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem;}
+.v-eq{
+  padding:.25rem .55rem;background:var(--surface-2);
+  border:var(--bd-thin) solid currentColor;border-radius:8px;font-size:.92rem;
+}
+
+/* --- 6 & 7. tabel Horner beranimasi --- */
+.htab td.is-on,.htab td.is-active{transition:opacity var(--t) var(--ease);}
+.htab-mult td,.htab-res td{opacity:.3;}
+.htab-mult td.is-on,.htab-res td.is-on{opacity:1;}
+.htab-res td.is-active{outline:2.5px solid var(--coral);outline-offset:-2px;}
+
+/* --- 8 & 17. bagan alir keputusan --- */
+.v-flow{display:grid;gap:.6rem;grid-template-columns:1fr;}
+@media (min-width:640px){.v-flow{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);}}
+.v-flow-h{
+  font-family:var(--font-display);font-size:.8rem;margin:0 0 .35rem;
+  text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);
+}
+.v-flow-col{display:flex;flex-direction:column;gap:.3rem;}
+.v-flow-opt{
+  text-align:left;padding:.4rem .55rem;font-size:.86rem;
+  background:var(--surface);color:var(--ink);
+  border:var(--bd-thin) solid var(--line);border-radius:8px;cursor:pointer;
+}
+.v-flow-opt:hover{background:var(--surface-2);}
+.v-flow-opt.is-on{background:var(--sky);box-shadow:var(--shadow-sm);font-weight:700;}
+.v-flow-opt.is-ok{background:var(--mint);font-weight:700;}
+.v-flow-opt.is-no{background:var(--peach);}
+.v-flow-out{display:flex;flex-direction:column;gap:.4rem;justify-content:center;}
+.v-flow-res{
+  padding:.45rem .6rem;background:var(--surface-2);
+  border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);
+}
+.v-flow-res.is-main{background:var(--mint);border-width:var(--bd);}
+.v-flow-lab,.v-sym-lab{
+  display:block;font-family:var(--font-display);font-size:.68rem;
+  text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);
+}
+.v-flow-val{font-size:.92rem;}
+
+/* --- 9,10,13. pengungkapan bertahap --- */
+.v-step-card{
+  padding:.5rem .6rem;margin:.35rem 0;
+  background:var(--surface-2);
+  border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);
+  opacity:.25;filter:blur(1px);
+  transition:opacity var(--t) var(--ease),filter var(--t) var(--ease);
+}
+.v-step-card.is-on{opacity:1;filter:none;}
+.v-step-card > :first-child{margin-top:0;}
+.v-step-card > :last-child{margin-bottom:0;}
+
+/* --- 11. rantai kesetaraan (segitiga) --- */
+.v-tri{
+  display:grid;gap:.5rem;justify-items:center;
+  grid-template-columns:1fr 1fr;grid-template-areas:"a a" "b c";
+}
+.v-tri-node{
+  width:100%;padding:.5rem .6rem;font-size:.9rem;
+  background:var(--surface-2);color:var(--ink);
+  border:var(--bd) solid var(--line);border-radius:var(--radius-sm);
+  cursor:pointer;transition:background var(--t) var(--ease),transform var(--t-fast) var(--ease);
+}
+.v-tri-node.n1{grid-area:a;}
+.v-tri-node.n2{grid-area:b;}
+.v-tri-node.n3{grid-area:c;}
+.v-tri-node.is-on{background:var(--mint);transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+.v-tri.is-on{position:relative;}
+
+/* --- 12. kandidat akar --- */
+.v-cands{display:flex;flex-wrap:wrap;gap:.3rem;}
+.v-cand{
+  min-width:2.6rem;padding:.3rem .5rem;
+  font-family:var(--font-mono);font-weight:700;font-size:.86rem;
+  background:var(--surface);color:var(--ink);
+  border:var(--bd-thin) solid var(--line);border-radius:8px;cursor:pointer;
+}
+.v-cand.is-root{background:var(--ok);color:#fff;}
+.v-cand.is-dim{opacity:.35;}
+.v-cand-out{margin-top:.5rem;min-height:2rem;}
+.v-cand-res{
+  display:flex;align-items:center;gap:.4rem;font-size:.9rem;
+  padding:.35rem .55rem;border-radius:8px;background:var(--surface-2);
+}
+.v-cand-res.is-root{background:var(--mint);font-weight:700;}
+.v-cand-res .lu{width:1.05em;height:1.05em;}
+
+/* --- 15. peta ekspresi simetris --- */
+.v-sym{display:flex;flex-direction:column;gap:.5rem;}
+.v-sym-src{display:grid;gap:.4rem;grid-template-columns:1fr 1fr;}
+.v-sym-box{
+  padding:.45rem .6rem;text-align:center;
+  background:var(--surface-2);border:var(--bd) solid currentColor;
+  border-radius:var(--radius-sm);opacity:.55;
+  transition:opacity var(--t) var(--ease);
+}
+.v-sym-box.is-on{opacity:1;}
+.v-sym-targets{display:flex;flex-wrap:wrap;gap:.3rem;justify-content:center;}
+.v-sym-target{
+  padding:.3rem .55rem;font-size:.9rem;cursor:pointer;
+  background:var(--surface);color:var(--ink);
+  border:var(--bd-thin) solid var(--line);border-radius:8px;
+}
+.v-sym-target.is-on{background:var(--butter);font-weight:700;box-shadow:var(--shadow-sm);}
+.v-sym-out{min-height:2.6rem;}
+.v-sym-formula{
+  padding:.4rem .6rem;background:var(--mint);
+  border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);
+}
+
+/* --- 16. pergeseran akar (garis bilangan) --- */
+.v-line{padding:1.6rem .4rem 1.2rem;}
+.v-line-track{
+  position:relative;height:3px;background:var(--line);border-radius:2px;
+}
+.v-line-tick{position:absolute;top:-5px;width:1px;height:11px;background:var(--line);}
+.v-line-num{
+  position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:.66rem;color:var(--ink-soft);font-style:normal;
+}
+.v-line-dot{
+  position:absolute;top:50%;transform:translate(-50%,-50%);
+  display:grid;place-items:center;
+  width:1.5rem;height:1.5rem;
+  background:var(--coral);color:#fff;
+  border:var(--bd-thin) solid var(--line);border-radius:50%;
+  font-family:var(--font-mono);font-size:.68rem;font-weight:700;
+  transition:left .45s var(--ease);
+}
+.v-line-opts{display:flex;flex-wrap:wrap;gap:.3rem;}
+.v-subst{
+  margin-top:.4rem;padding:.4rem .6rem;text-align:center;
+  background:var(--surface-2);border:var(--bd-thin) dashed var(--line);
+  border-radius:var(--radius-sm);min-height:2.4rem;
+}
+
+/* --- 18. penyorot kata kunci --- */
+.v-keys{display:flex;flex-wrap:wrap;gap:.3rem;}
+.v-key{
+  padding:.28rem .55rem;font-size:.85rem;cursor:pointer;
+  background:var(--butter);color:var(--ink);
+  border:var(--bd-thin) solid var(--line);border-radius:99px;
+}
+.v-key.is-on{background:var(--coral);color:#fff;font-weight:700;}
+.v-bubble{
+  margin-top:.55rem;padding:.5rem .65rem;
+  background:var(--surface-2);border:var(--bd) solid var(--line);
+  border-radius:var(--radius-sm);min-height:3rem;
+}
+.v-bubble-row{margin:.25rem 0;}
+
+/* --- 19. studi kasus --- */
+.v-cases{display:flex;flex-direction:column;gap:.35rem;}
+.v-case{border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);overflow:hidden;}
+.v-case-head{
+  display:flex;align-items:center;gap:.4rem;width:100%;text-align:left;
+  padding:.45rem .6rem;cursor:pointer;
+  background:var(--surface-2);color:var(--ink);border:0;
+  font-family:var(--font-display);font-weight:700;font-size:.88rem;
+}
+.v-case-head .lu{transition:transform var(--t) var(--ease);}
+.v-case.is-open .v-case-head .lu{transform:rotate(90deg);}
+.v-case-body{display:none;padding:.5rem .6rem;font-size:.9rem;}
+.v-case.is-open .v-case-body{display:block;}
+
+/* --- 20. radar jebakan (kartu bolak-balik) --- */
+.v-traps{display:grid;gap:.4rem;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));}
+.v-trap{
+  position:relative;display:block;width:100%;min-height:5rem;
+  padding:0;cursor:pointer;background:none;border:0;text-align:left;
+}
+.v-trap-face{
+  display:flex;align-items:flex-start;gap:.4rem;
+  padding:.5rem .6rem;height:100%;
+  border:var(--bd-thin) solid var(--line);border-radius:var(--radius-sm);
+  font-size:.85rem;
+}
+.v-trap-front{background:var(--peach);}
+.v-trap-back{background:var(--mint);display:none;}
+.v-trap.is-flipped .v-trap-front{display:none;}
+.v-trap.is-flipped .v-trap-back{display:flex;}
+.v-trap-face .lu{flex:0 0 auto;width:1.05em;height:1.05em;margin-top:.15em;}
+.v-trapquiz{
+  margin-top:.7rem;padding:.55rem .65rem;
+  background:var(--lavender);border:var(--bd) solid var(--line);
+  border-radius:var(--radius-sm);
+}
+.v-trapquiz-h{
+  display:flex;align-items:center;gap:.35rem;
+  font-family:var(--font-display);font-weight:700;font-size:.88rem;margin-bottom:.35rem;
+}
+.v-trapquiz-safe{
+  padding:.35rem .55rem;margin-bottom:.45rem;font-size:.86rem;
+  background:var(--surface);border:var(--bd-thin) solid var(--line);border-radius:8px;
+}
+.v-trapquiz-opts{display:flex;flex-direction:column;gap:.25rem;}
+.v-trapquiz-fb{display:flex;align-items:center;gap:.3rem;margin:.4rem 0 0;font-size:.86rem;font-weight:700;}
+
+@media (max-width:480px){
+  .v-sym-src{grid-template-columns:1fr;}
+  .v-tri{grid-template-columns:1fr;grid-template-areas:"a" "b" "c";}
+}
+
 /* ---------- AKSESIBILITAS ---------- */
 :focus-visible{outline:3px solid var(--coral);outline-offset:2px;border-radius:4px;}
 :root[data-theme="dark"] :focus-visible{outline-color:#FFD97A;}

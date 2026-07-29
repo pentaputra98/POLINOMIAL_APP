@@ -1,6 +1,6 @@
 # SERAH-TERIMA — Aplikasi Polinomial Kelas XI
 > Salin seluruh isi berkas ini sebagai pesan pembuka di sesi baru.
-> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=78`** · Cache SW **`polinomial-v60`**
+> Terakhir diperbarui: **29 Juli 2026** · Versi aset **`?b=82`** · Cache SW **`polinomial-v64`**
 >
 > 🚫 **JANGAN PUSH.** Aplikasi versi lama sedang dipakai siswa secara live.
 > Seluruh commit disimpan LOKAL sampai Fase 1–5 selesai dan pemilik memberi
@@ -844,30 +844,60 @@ aturan read-only. Kini setiap kegagalan menulis `console.warn`.
 `else if` membuat bentuk "ide pemersatu" tidak pernah dicoba dan fence-nya lolos
 ke penangan lama. Dispatch diubah menjadi percobaan **berurutan**.
 
-### ⏳ YANG BELUM SELESAI — dilaporkan apa adanya
-Dari **22 direktif `<!-- VISUAL -->`**, yang sudah berupa komponen interaktif
-baru **2**: `panah-distribusi` (Bab 02) dan `rumah-pembagian-porogapit` (Bab 03)
-— keduanya dari Fase 1. **20 sisanya belum dibangun**; slotnya
-**disembunyikan**, sehingga tidak ada kotak kosong dan tidak ada direktif yang
-tampil sebagai teks mentah, tetapi tampilan/animasi yang diminta konten belum
-terwujud:
+### (d) SELURUH 22 DIREKTIF VISUAL TERWUJUD
+Terukur: **22 slot → 22 figure, 0 disembunyikan.** Setiap builder mengambil
+datanya dari konten di sekitar slot — tidak ada rumus, tabel, atau kalimat yang
+diketik ulang di `visuals.js`.
 
-* Bab 01 — anatomi suku · perapian ke bentuk baku · uji aturan emas
-* Bab 02 — penjumlahan bersusun · penyamaan koefisien
-* Bab 03 — tabel Horner **beranimasi** · skema Horner-Kino · bagan alir metode
-* Bab 04 — pembuktian bertahap · sistem dua persamaan · rantai kesetaraan ·
-  daftar kandidat akar · pengupasan faktor
-* Bab 05 — penurunan rumus Vieta · peta ekspresi simetris · pergeseran akar
-* Bab 06 — bagan alir keputusan · penyorot kata kunci · studi kasus · radar jebakan
+| Bab | Direktif | Sumber data | Bukti perilaku |
+|---|---|---|---|
+| 01 | anatomi suku | rumus + jangkar `hl-coef/var/pow` | 3 jangkar; ketuk → label "koefisien"/"pangkat" |
+| 01 | perapian ke bentuk baku | rumus ber-`\longrightarrow` | 4 suku muncul bertahap: `x^4`,`+x^2`,`-3x`,`-2` |
+| 01 | uji aturan emas | tabel 3 kolom | 6 kartu → **3 lolos + 3 gagal** (sesuai tabel) |
+| 02 | penjumlahan bersusun | dua rumus + jangkar `hl-1..3`,`hl-const` | kolom: **`3x^3`,`0`,`3x`,`3`** — sama dengan hasil di konten |
+| 02 | panah distribusi | rumus + jangkar (Fase 1) | 2 panah tepat di jangkar |
+| 02 | penyamaan koefisien | rumus, pasangan sewarna | 3 panah → **`a=3`,`b=−5`,`c=7`** |
+| 03 | rumah porogapit | "Bagi $A$ oleh $B$" (Fase 1) | hasil bagi & sisa dihitung engine |
+| 03 | tabel Horner beranimasi | `.htab` hasil fence | 0 → 8 sel tersingkap berirama |
+| 03 | skema Horner-Kino | `.htab` Kino | 2 baris pengali bertingkat |
+| 03 | bagan alir pemilihan metode | tabel 3 kolom | 6 opsi → "Horner · Sisa $=f(k)$" |
+| 04 | pembuktian bertahap | paragraf + rumus `hl-1`,`hl-2` | 5 kartu; **2 faktor $(x-k)$ memudar** |
+| 04 | sistem dua persamaan | paragraf + rumus | 5 kartu bertahap |
+| 04 | rantai kesetaraan | rumus `hl-1/2/3` | 3 simpul `f(k)=0`,`(x−k) faktor`,`k akar`; saling menyala |
+| 04 | daftar kandidat akar | `f(x)` + daftar `\pm` | 16 kandidat; uji $-2$ → **$f(-2)=0$**, dihitung engine |
+| 04 | pengupasan faktor | paragraf "Tahap N" + Horner | 6 kartu bertahap |
+| 05 | penurunan rumus Vieta | rumus, pasangan sewarna | 2 panah → **`b=−(p+q)`,`c=pq`** |
+| 05 | peta ekspresi simetris | 4 rumus SEBELUM slot | 4 target; pilih → `x_1^2+x_2^2=(x_1+x_2)^2-2x_1x_2` |
+| 05 | pergeseran akar | tabel substitusi | akar **2,3 → 4,5**; substitusi `x→x−k` (arah berlawanan) |
+| 06 | bagan alir keputusan | tabel 2 kolom | 8 opsi → "Teorema Vieta" |
+| 06 | penyorot kata kunci | tabel 3 kolom | 8 chip → gelembung "Teorema Sisa / $f(k)$" |
+| 06 | studi kasus bertahap | 4 paragraf berjudul | 4 kartu dapat dibuka |
+| 06 | radar jebakan | tabel 2 kolom | 10 kartu bolak-balik; kuis muncul **setelah semua dibalik**, 4 opsi + umpan balik |
 
-Catatan: tabel Horner **statis** sudah ada (butir a); yang belum adalah
-**animasi** irama turun–kali–jumlah dan bagan bertingkat Horner-Kino.
-Widget aktivitas `horner-steps` dan `slider` juga **belum diverifikasi** terhadap
-field konten baru (`expected_quotient`, `step`, `checkpoints`).
+**Dua bug ditemukan saat mengerjakan bagian ini:**
+
+*Bug 4 — pemecah suku memotong nama kelas.* `perapian-ke-bentuk-baku` memecah
+LaTeX pada tanda `+`/`-`, tetapi nama kelas `hl-1`/`hl-2`/`hl-3` **memuat tanda
+hubung**, sehingga LaTeX-nya rusak: 6 pecahan dan KaTeX gagal. Ditambahkan
+`unwrapHtmlClass()` (pembuka pembungkus dengan pencocokan kurung) dan
+`splitTerms()` (memecah hanya pada tanda TERLUAR). Sesudahnya: 4 suku, 0 error.
+
+*Bug 5 — hitungan yang ditampilkan salah.* `penjumlahan-bersusun` mengambil isi
+jangkar dari DOM, padahal penulis menaruh **tanda di luar** pembungkus
+(`... - \htmlClass{hl-2}{3x^2}`). Kolom $3x^2$ terbaca `3x^2 + 3x^2` — mestinya
+`3x^2 - 3x^2 = 0`. Ditambahkan `signedAnchors()` yang membaca tanda dari LaTeX
+sumber, dan jumlah kolom kini **dihitung** dari koefisien. Terverifikasi cocok
+dengan hasil yang tertulis di konten.
+
+### ⏳ Sisa kecil
+Widget aktivitas `horner-steps` (Bab 03) dan `slider` (Bab 02) **belum
+diverifikasi** terhadap field konten baru (`expected_quotient`, `step`,
+`checkpoints`). Keduanya sudah ada di `activity.js` sejak versi lama.
 
 ### Bukti Fase 5 (8 bab)
 | Cek | Hasil |
 |---|---|
+| Direktif VISUAL terwujud | **22/22** — 22 slot → 22 figure, **0 disembunyikan** |
 | Fence ASCII jadi komponen | **12/12** (7 `.cmap` · 1 `.umap` · 4 `.htab`) |
 | ASCII mentah tersisa | **0** |
 | Bagan interaktif lama (dapat diklik) | **0** |
