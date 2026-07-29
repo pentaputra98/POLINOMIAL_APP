@@ -125,13 +125,23 @@
     s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
     s = s.replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>");
     s = s.replace(/~~([^~]+)~~/g, "<del>$1</del>");
+    /* Tanda akhir bukti ∎ (U+220E) tampil sebagai kotak hitam tanpa keterangan
+       — peserta didik tidak mengenalinya. Berkas .md tetap utuh; PERENDER yang
+       menggantinya dengan lencana berlabel, sejalan dengan penanganan emoji. */
+    s = s.split("∎").join(
+      '<span class="qed"><i data-icon="circle-check"></i>Terbukti</span>');
     return s;
   }
 
   /* ------------------------------------------------------------------ *
    * 4) BLOCK MARKDOWN
    * ------------------------------------------------------------------ */
-  var RE_TOKEN_LINE = new RegExp("^" + S + "(QUIZ|FENCE|COMP)(\\d+)" + S + "$");
+  /* VIS wajib ikut terdaftar. Tanpa itu baris token direktif VISUAL jatuh ke
+     cabang paragraf sehingga menjadi <p>TOKEN</p>; setelah token ditukar dengan
+     <div class="visual-slot">, peramban memecah <p><div></div></p> menjadi
+     paragraf KOSONG + div. Paragraf kosong itulah yang terserap menjadi kartu
+     kosong pertama pada visual bertahap (Bab 04: 3 figure, masing-masing 1). */
+  var RE_TOKEN_LINE = new RegExp("^" + S + "(QUIZ|FENCE|COMP|VIS)(\\d+)" + S + "$");
   var RE_HTML_LINE = /^\s*<\/?(details|summary|div|section|article|figure|figcaption|table|thead|tbody|tr|td|th|p|span|br|img|iframe|video|audio|hr)\b/i;
 
   function isBlockStart(line) {

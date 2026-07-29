@@ -2119,11 +2119,34 @@ body.dgview-open{overflow:hidden;}
   border:var(--bd-thin) solid currentColor;border-radius:8px;font-size:.92rem;
 }
 
-/* --- 6 & 7. tabel Horner beranimasi --- */
-.htab td.is-on,.htab td.is-active{transition:opacity var(--t) var(--ease);}
-.htab-mult td,.htab-res td{opacity:.3;}
-.htab-mult td.is-on,.htab-res td.is-on{opacity:1;}
+/* --- 6 & 7. tabel Horner beranimasi ---
+   Pemudaran HANYA untuk tabel yang punya kendali langkah (kelas .is-anim
+   dipasang oleh hornerAnimBuilder). Aturan tanpa pembatas itu ikut memudarkan
+   tabel Horner pada bagian Contoh, yang tidak pernah bisa disingkap. */
+.htab.is-anim td.is-on,.htab.is-anim td.is-active{transition:opacity var(--t) var(--ease);}
+.htab.is-anim .htab-mult td,.htab.is-anim .htab-res td{opacity:.3;}
+.htab.is-anim .htab-mult td.is-on,.htab.is-anim .htab-res td.is-on{opacity:1;}
 .htab-res td.is-active{outline:2.5px solid var(--coral);outline-offset:-2px;}
+
+/* panah irama Horner: turun -> kali -> jumlah */
+.htab-wrap{position:relative;}
+.htab-arrows{inset:auto;}
+.htab-arrows path{stroke-width:2.5;}
+.htab-arrows .ht-turun{stroke:var(--hl-3);}
+.htab-arrows .ht-kali{stroke:var(--hl-1);}
+.htab-arrows .ht-jumlah{stroke:var(--coral);}
+.htab-arrows text{font-size:10.5px;font-weight:800;paint-order:stroke;
+  stroke:var(--surface);stroke-width:3px;}
+.htab-arrows .ht-kali-lab{fill:var(--hl-1);}
+.htab-arrows .ht-jumlah-lab{fill:var(--coral);}
+.htab-arrows .ht-turun-lab{fill:var(--hl-3);}
+
+/* tanda akhir bukti — pengganti glif ∎ yang tidak dikenali peserta didik */
+.qed{display:inline-flex;align-items:center;gap:.25rem;margin-left:.35rem;
+  padding:.05rem .4rem;background:var(--mint);border:1.5px solid var(--line);
+  border-radius:7px;font-size:.72rem;font-weight:800;letter-spacing:.01em;
+  vertical-align:.05em;}
+.qed .lu{width:.9em;height:.9em;}
 
 /* --- 8 & 17. bagan alir keputusan --- */
 .v-flow{display:grid;gap:.6rem;grid-template-columns:1fr;}

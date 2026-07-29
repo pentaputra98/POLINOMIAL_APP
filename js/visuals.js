@@ -254,6 +254,19 @@
    */
   function porogapit(fCoef, pCoef, res) {
     var wrap = el("div", "porogapit");
+    /* Baris antara adalah JENDELA koefisien di tengah polinomial, bukan
+       polinomial yang berdiri sendiri. polyToTex() membaca elemen pertama
+       sebagai suku berderajat (panjang-1), sehingga jendela harus dikembalikan
+       dulu ke derajat sebenarnya dengan menambahkan koefisien nol di ekor.
+       Tanpa ini, 2x^2(x-2)=2x^3-4x^2 tampil sebagai "2x-4" dan sisa sementara
+       x^2+4x tampil sebagai "x+4" — pembagiannya menjadi salah di mata siswa.
+       Acuan kebenaran: tabel siklus pada 03-pembagian-polinomial.md:193. */
+    var n = fCoef.length - pCoef.length;          // banyak siklus - 1
+    function padPangkat(coefs, ekor) {
+      var out = coefs.slice();
+      for (var z = 0; z < ekor; z++) out.push(0);
+      return out;
+    }
     function cell(cls, tex, row, col) {
       var c = el("div", cls);
       c.style.gridRow = row;
@@ -271,14 +284,15 @@
       var k = el("div", "pg-step is-sub v-step");
       k.style.gridRow = row++; k.style.gridColumn = 2;
       k.dataset.step = i;
-      k.innerHTML = window.MR ? window.MR.M("-\\;(" + polyToTex(st.kali) + ")", false)
-                              : "-(" + polyToTex(st.kali) + ")";
+      var kaliTex = polyToTex(padPangkat(st.kali, n - i));
+      k.innerHTML = window.MR ? window.MR.M("-\\;(" + kaliTex + ")", false)
+                              : "-(" + kaliTex + ")";
       wrap.appendChild(k);
       var s = el("div", "pg-step v-step");
       s.style.gridRow = row++; s.style.gridColumn = 2;
       s.dataset.step = i;
-      s.innerHTML = window.MR ? window.MR.M(polyToTex(st.sisaSementara), false)
-                              : polyToTex(st.sisaSementara);
+      var sisaTex = polyToTex(padPangkat(st.sisaSementara, Math.max(0, n - i - 1)));
+      s.innerHTML = window.MR ? window.MR.M(sisaTex, false) : sisaTex;
       wrap.appendChild(s);
     });
     return wrap;
@@ -1124,12 +1138,94 @@
       place(slot, f.fig);
       f.stage.appendChild(wrap);
       var tab = wrap.querySelector(".htab");
+      /* HANYA tabel yang benar-benar dianimasikan yang dipudarkan. Tabel Horner
+         pada bagian Contoh tidak punya kendali langkah, sehingga bila aturan
+         pudar berlaku umum angkanya tersamar selamanya (Bab 03 & 04). */
+      tab.classList.add("is-anim");
       var kolom = tab.querySelectorAll("thead th").length - 1;   // tanpa kolom label
       var multRows = [].slice.call(tab.querySelectorAll(".htab-mult"));
       var resRow = tab.querySelector(".htab-res");
+      var headCells = [].slice.call(tab.querySelectorAll("thead th"));
+      var langkahKini = 0;
 
       function selAt(tr, ci) { return tr ? tr.children[ci + 1] : null; }
+
+      /**
+       * Panah irama Horner untuk SATU langkah (kolom `cs`):
+       *   kolom 0 : turun   — koefisien pertama disalin apa adanya
+       *   kolom >0: kali    — hasil sebelumnya × pengali, mendarat di baris ×k
+       *             jumlah  — koefisien atas + isi baris ×k, turun ke hasil
+       * Sumber kali pada Horner-Kino bergeser sebanyak nomor barisnya, sehingga
+       * satu rumus `hasil[cs-1-ri]` melayani kedua mode.
+       */
+      function gambarPanah(cs) {
+        var lama = wrap.querySelector(".htab-arrows");
+        if (lama) lama.remove();
+        if (cs < 0 || cs >= kolom) return;
+        var box = tab.getBoundingClientRect();
+        if (!box.width) return;
+        var svg = svgEl("svg", { "class": "v-overlay htab-arrows" });
+        svg.setAttribute("style", "left:" + tab.offsetLeft + "px;top:" + tab.offsetTop +
+          "px;width:" + box.width + "px;height:" + box.height + "px");
+        var defs = svgEl("defs", {}); svg.appendChild(defs);
+        var seen = {};
+        function titik(sel2, sisi) {
+          var r = sel2.getBoundingClientRect();
+          return {
+            x: r.left - box.left + r.width / 2,
+            y: (sisi === "atas" ? r.top : sisi === "bawah" ? r.bottom : r.top + r.height / 2) - box.top
+          };
+        }
+        function panah(a, b, cls, label, busur) {
+          if (!a || !b) return;
+          busur = busur || 0;
+          if (!seen[cls]) {
+            var mk = svgEl("marker", {
+              id: "ht-" + cls, viewBox: "0 0 10 10", refX: "8", refY: "5",
+              markerWidth: "5", markerHeight: "5", orient: "auto-start-reverse"
+            });
+            var tip = svgEl("path", { d: "M0,0 L10,5 L0,10 z", "class": cls });
+            tip.setAttribute("style", "fill:currentColor;stroke:none");
+            mk.appendChild(tip); defs.appendChild(mk); seen[cls] = 1;
+          }
+          /* Panah "kali" menghubungkan dua sel yang bertetangga vertikal, jadi
+             tanpa busur ia jatuh nyaris rata di atas garis baris dan tidak
+             terbaca sebagai perpindahan. Titik kendali digeser ke bawah supaya
+             lengkungnya jelas; titik puncak kurva kuadratik = tengah + busur/2. */
+          var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+          var d = "M" + a.x + "," + a.y + " Q" + mx + "," + (my + busur) +
+                  " " + b.x + "," + (b.y - 3);
+          svg.appendChild(svgEl("path", { d: d, "class": cls, "marker-end": "url(#ht-" + cls + ")" }));
+          if (label) {
+            var tegak = Math.abs(a.x - b.x) < 2;
+            var tx = svgEl("text", {
+              x: tegak ? mx + 13 : mx,
+              y: tegak ? my + 4 : my + busur / 2 - 5,   // di dalam lengkung, bukan di atas angka
+              "text-anchor": tegak ? "start" : "middle", "class": cls + "-lab"
+            });
+            tx.textContent = label;
+            svg.appendChild(tx);
+          }
+        }
+        var kepala = headCells[cs + 1];
+        var hasilKini = selAt(resRow, cs);
+        if (cs === 0) {
+          panah(titik(kepala, "bawah"), titik(hasilKini, "atas"), "ht-turun", "turun");
+        } else {
+          multRows.forEach(function (tr, ri) {
+            var sumber = selAt(resRow, cs - 1 - ri);
+            var sasaran = selAt(tr, cs);
+            if (!sumber || !sasaran || !sasaran.textContent.trim()) return;
+            panah(titik(sumber, "atas"), titik(sasaran, "bawah"), "ht-kali",
+              multRows.length > 1 ? "" : "× k", 26 + ri * 10);
+          });
+          panah(titik(kepala, "bawah"), titik(hasilKini, "atas"), "ht-jumlah", "+");
+        }
+        wrap.appendChild(svg);
+      }
+
       function paint(step) {
+        langkahKini = step;
         for (var c = 0; c < kolom; c++) {
           var tampil = c < step;
           multRows.forEach(function (tr) {
@@ -1145,9 +1241,13 @@
           var cur = selAt(resRow, step - 1);
           if (cur) cur.classList.add("is-active");
         }
+        gambarPanah(step - 1);
       }
       stepper(f.body, kolom, paint);
       note(f.body, icon("info") + " " + caption);
+      /* Panah diukur dari tata letak sungguhan, jadi harus digambar ulang saat
+         lebar berubah (jebakan #10: scrollbar menggeser posisi sel). */
+      watch(f.stage, function () { gambarPanah(langkahKini - 1); });
       return f.fig;
     };
   }
@@ -1218,16 +1318,30 @@
   function revealBuilder(iconName, opts) {
     opts = opts || {};
     return function (slot, ctx) {
-      var ambil = [];
+      var ambil = [], habis = false;
       sibs(slot, "next").forEach(function (e) {
-        if (ambil.length >= (opts.max || 6)) return;
-        if (e.tagName === "H3" || e.tagName === "H2" || e.tagName === "HR") return;
+        if (habis || ambil.length >= (opts.max || 6)) return;
+        /* Judul/garis MENUTUP pengumpulan — tetapi hanya bila sudah ada isi.
+           Versi lama selalu melewatinya, sehingga penelusuran menembus
+           "### Contoh" dan menyeret paragraf milik seksi berikutnya ke dalam
+           kartu bukti (tersamar selama masih ada kartu kosong yang memakan
+           jatah). Judul yang berdiri PERSIS di depan materi — pola "Sistem dua
+           persamaan" dan "Pengupasan faktor", yang slotnya langsung diikuti
+           "### 📘 Contoh" / "### 🎯 Penerapan" — masih milik visual ini, jadi
+           dilewati selama belum satu pun elemen terkumpul. */
+        if (e.tagName === "H3" || e.tagName === "H2" || e.tagName === "HR") {
+          if (ambil.length) habis = true;
+          return;
+        }
         if (e.classList && (e.classList.contains("activity-slot") ||
             e.classList.contains("quiz-slot") || e.classList.contains("visual-slot"))) return;
+        /* Elemen hampa jangan dijadikan kartu: pernah menghasilkan kartu KOSONG
+           di urutan pertama pada tiga figure Bab 04. Akarnya sudah diperbaiki di
+           markdown.js, dan penjagaan ini mencegahnya berulang. */
+        if (!e.textContent.trim() && !e.querySelector("img,svg,table,input")) return;
         if (e.tagName === "P" || e.classList.contains("m-block") ||
             e.tagName === "BLOCKQUOTE" || e.classList.contains("htab-wrap")) ambil.push(e);
       });
-      // hentikan di elemen pertama sesudah judul contoh
       if (ambil.length < 2) return null;
       var f = figure(ctx.name, iconName);
       place(slot, f.fig);
