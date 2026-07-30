@@ -205,6 +205,13 @@
 
     var box = stage.getBoundingClientRect();
     var svg = svgEl("svg", { "class": "v-overlay" });
+    /* SVG adalah elemen TERGANTI: dengan `inset:0` tetapi lebar/tinggi `auto`,
+       ia memakai ukuran intrinsiknya (300×150), bukan merentang mengikuti
+       induk. Akibatnya `.vstage` melaporkan isi setinggi 150 px dan
+       `overflow-y:hidden` memotongnya. Ukurannya karena itu ditetapkan
+       eksplisit mengikuti stage. */
+    svg.setAttribute("style", "width:" + Math.ceil(box.width) + "px;height:" +
+      Math.ceil(box.height) + "px");
     var defs = svgEl("defs", {});
     svg.appendChild(defs);
 

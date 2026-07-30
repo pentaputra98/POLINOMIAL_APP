@@ -8,14 +8,14 @@
   <title>Polinomial Kelas XI — TKA Matematika Lanjut</title>
 
   <!-- Tema & layout (?b=N untuk cache-busting saat update) -->
-  <link rel="stylesheet" href="css/style.css?b=90" />
+  <link rel="stylesheet" href="css/style.css?b=103" />
 
   <!-- Ikon: Lucide inline SVG via js/icons.js (tidak perlu font ikon lagi) -->
 
   <!-- Ikon tab peramban. Tanpa baris ini peramban otomatis meminta /favicon.ico
        ke akar situs dan mencatat 404 di konsol. SVG dipilih karena satu berkas
        melayani semua ukuran dan tetap tajam di layar HiDPI. -->
-  <link rel="icon" href="favicon.svg?b=90" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg?b=103" type="image/svg+xml" />
 
   <!-- KaTeX (LOKAL, offline) -->
   <link rel="stylesheet" href="lib/katex/katex.min.css" />
@@ -26,9 +26,13 @@
   <script>
     (function () {
       try {
+        /* TERANG adalah bawaan (keputusan pemilik). Preferensi gelap milik
+           SISTEM sengaja TIDAK diikuti lagi — dahulu perangkat siswa yang
+           menyalakan mode gelap membuka aplikasi dalam tema gelap tanpa
+           pernah memilihnya. Hanya pilihan eksplisit lewat tombol tema
+           (tersimpan di poli.v1.prefs) yang dapat menjadikannya gelap. */
         var p = JSON.parse(localStorage.getItem("poli.v1.prefs") || "{}");
-        var t = p.theme || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        document.documentElement.setAttribute("data-theme", t);
+        document.documentElement.setAttribute("data-theme", p.theme === "dark" ? "dark" : "light");
       } catch (e) { document.documentElement.setAttribute("data-theme", "light"); }
     })();
   </script>
@@ -136,23 +140,23 @@
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
   <!-- ===================== SCRIPTS ===================== -->
-  <script src="js/icons.js?b=90" defer></script>
-  <script src="js/mathrender.js?b=90" defer></script>
-  <script src="js/markdown.js?b=90" defer></script>
-  <script src="js/store.js?b=90" defer></script>
-  <script src="js/gamify.js?b=90" defer></script>
-  <script src="js/content.js?b=90" defer></script>
-  <script src="js/diagrams.js?b=90" defer></script>
-  <script src="js/keypad.js?b=90" defer></script>
-  <script src="js/quiz.js?b=90" defer></script>
-  <script src="js/activity.js?b=90" defer></script>
-  <script src="js/challenge.js?b=90" defer></script>
-  <script src="js/overlay.js?b=90" defer></script>
-  <script src="js/pagekit.js?b=90" defer></script>
-  <script src="js/quizcards.js?b=90" defer></script>
-  <script src="js/visuals.js?b=90" defer></script>
-  <script src="js/enhance.js?b=90" defer></script>
-  <script src="js/scratchpad.js?b=90" defer></script>
-  <script src="js/app.js?b=90" defer></script>
+  <script src="js/icons.js?b=103" defer></script>
+  <script src="js/mathrender.js?b=103" defer></script>
+  <script src="js/markdown.js?b=103" defer></script>
+  <script src="js/store.js?b=103" defer></script>
+  <script src="js/gamify.js?b=103" defer></script>
+  <script src="js/content.js?b=103" defer></script>
+  <script src="js/diagrams.js?b=103" defer></script>
+  <script src="js/keypad.js?b=103" defer></script>
+  <script src="js/quiz.js?b=103" defer></script>
+  <script src="js/activity.js?b=103" defer></script>
+  <script src="js/challenge.js?b=103" defer></script>
+  <script src="js/overlay.js?b=103" defer></script>
+  <script src="js/pagekit.js?b=103" defer></script>
+  <script src="js/quizcards.js?b=103" defer></script>
+  <script src="js/visuals.js?b=103" defer></script>
+  <script src="js/enhance.js?b=103" defer></script>
+  <script src="js/scratchpad.js?b=103" defer></script>
+  <script src="js/app.js?b=103" defer></script>
 </body>
 </html>

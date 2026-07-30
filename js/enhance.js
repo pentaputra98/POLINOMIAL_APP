@@ -137,6 +137,14 @@
    * ------------------------------------------------------------------ */
   function enhanceMath(root) {
     root.querySelectorAll(".katex-display, .m-block").forEach(function (el) {
+      /* LEWATI PEMBUNGKUS. `.m-block` kerap membungkus `.katex-display`, dan
+         kedua-duanya cocok dengan pemilih di atas. Bila keduanya diproses,
+         yang terluar menetapkan tinggi kotak = tinggi HASIL SKALA, padahal
+         pembungkus di dalamnya masih menyumbang margin sendiri — rumusnya
+         tergeser turun lalu dipotong `overflow:hidden`. Terukur di potret
+         390 px: 9 blok terpotong sampai 35 px. Biarkan blok TERDALAM saja
+         yang menangani penyesuaian. */
+      if (el.querySelector(".katex-display, .m-block")) return;
       var inner = el.querySelector(".katex");
       if (!inner) return;
       // reset dulu agar pengukuran ulang (rotasi layar) benar
@@ -151,9 +159,20 @@
 
       var k = avail / natural;
       if (k >= MIN_MATH_SCALE) {
-        inner.style.transformOrigin = "left center";
+        /* Titik jangkar `left top`, BUKAN `left center`. Dengan jangkar di
+           tengah, isi tetap terpusat pada tinggi ASLI sementara tinggi kotak
+           diciutkan ke tinggi hasil skala — separuh selisihnya menjorok ke
+           bawah dan terpotong. Dengan `top`, tepi atas isi berimpit dengan
+           tepi atas kotak sehingga tingginya pas. */
+        inner.style.transformOrigin = "left top";
         inner.style.transform = "scale(" + k + ")";
-        el.style.height = Math.ceil(inner.getBoundingClientRect().height) + "px";
+        /* Seluruh aplikasi memakai `box-sizing:border-box`, jadi `height`
+           SUDAH termasuk padding. Tanpa menambahkan padding tegak, kotaknya
+           kurang tinggi tepat sebesar padding itu dan tepi bawah rumus
+           terpotong. */
+        var cs = window.getComputedStyle(el);
+        var padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+        el.style.height = Math.ceil(inner.getBoundingClientRect().height + padY) + "px";
         el.classList.add("is-fitted");
       } else {
         // terlalu panjang untuk diperkecil dgn nyaman → biarkan digeser

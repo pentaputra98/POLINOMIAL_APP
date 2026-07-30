@@ -640,6 +640,18 @@
 
   /* ---------------- Render rute ---------------- */
   function render() {
+    /* Tutup pop-up/modal yang masih terbuka SEBELUM rute berganti. Tanpa ini,
+       berpindah bab meninggalkan pop-up bab LAMA menutupi bab baru — isinya
+       sudah dipindahkan ke panel sehingga tidak ikut terbuang bersama
+       viewRoot (terukur: 18 simpul rumus yatim). Keypad juga ditutup karena
+       kotak isian acuannya lenyap bersama halaman lama. */
+    if (window.Overlay && Overlay.close) {
+      // close() hanya melepas SATU lapis; pop-up dapat bertumpuk (kartu → daftar isi)
+      var jaga = 0;
+      while (Overlay.isOpen && Overlay.isOpen() && jaga++ < 6) Overlay.close();
+    }
+    if (window.Keypad && Keypad.isOpen && Keypad.isOpen()) Keypad.close();
+
     var r = parseHash();
     state.view = r.view; state.slug = r.slug; state.id = r.id;
     state.key = r.view === "bab" ? "bab:" + r.slug : (r.view === "ref" ? "ref:" + r.id : r.view);
@@ -650,7 +662,12 @@
     else if (r.view === "ref") showRef(r.id);
 
     updateNav(); markDrawerCurrent(); closeDrawer();
-    Store.route(location.hash || "#/");
+    /* Simpan HANYA rute bab. Karena boot kini selalu mendarat di beranda,
+       menyimpan setiap rute akan langsung menimpa nilainya dengan "#/" pada
+       muatan pertama — dan tombol "Lanjutkan" di beranda (renderBeranda, yang
+       memang hanya menerima rute "#/bab/…") tidak akan pernah muncul lagi.
+       Dengan pembatasan ini bab terakhir tetap terkenang antar-kunjungan. */
+    if (r.view === "bab") Store.route(location.hash);
   }
   window.addEventListener("hashchange", render);
 
@@ -672,9 +689,22 @@
       refreshXPChip();
     }
     buildDrawer();
-    if (!location.hash || location.hash === "#") {
-      var saved = Store.route();
-      if (saved && saved !== "#/") { location.hash = saved; return; }  // hashchange → render
+    /* SELALU MULAI DARI BERANDA (keputusan pemilik). Berlaku untuk ketiganya:
+       membuka tautan biasa, memuat ulang di tengah bab, dan tautan langsung
+       ber-hash. Dahulu rute terakhir dipulihkan otomatis dan hash yang ada di
+       URL tetap dihormati, sehingga siswa yang me-refresh mendarat di tengah
+       materi. `replaceState` dipakai supaya tidak memicu `hashchange` (yang
+       akan menyebabkan render ganda) dan tidak menambah riwayat.
+       Rute bab terakhir TETAP disimpan (lihat akhir render()), sehingga beranda
+       dapat menawarkan tombol "Lanjutkan" — siswa mendarat di beranda tetapi
+       tidak kehilangan jalan pintas ke bab yang sedang dikerjakan. */
+    if (location.hash && location.hash !== "#/") {
+      try {
+        history.replaceState(null, "", location.pathname + location.search + "#/");
+      } catch (e) {
+        location.hash = "#/";
+        return;                                  // hashchange → render
+      }
     }
     render();
   }).catch(function (err) {

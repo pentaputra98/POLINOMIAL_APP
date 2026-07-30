@@ -989,9 +989,15 @@ h1,h2,h3,h4{font-family:var(--font-display);line-height:1.18;}
 .act-prompt{font-weight:700;line-height:1.55;margin:.2rem 0 .7rem;font-size:.94rem;}
 .act-actions{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.75rem;}
 .act-actions .btn{padding:.5rem .85rem;font-size:.82rem;min-height:42px;}
-.act-tip{display:flex;gap:.4rem;margin-top:.6rem;font-size:.78rem;font-weight:600;
+/* ALIRAN BLOK, bukan flex. Dengan `display:flex` (bawaan `flex-wrap:nowrap`),
+   tiap penggalan teks di antara <b> menjadi item flex tersendiri pada SATU
+   baris yang tak pernah membungkus — kalimat panjang menjulur keluar kartu dan
+   hilang terpotong. Terukur pada widget skema Horner @320 px: meluap 122 px.
+   Ikonnya cukup disejajarkan sebagai elemen sebaris. */
+.act-tip{display:block;margin-top:.6rem;font-size:.78rem;font-weight:600;
   color:var(--ink-soft);line-height:1.45;}
-.act-tip .lu{width:1em;height:1em;flex:0 0 auto;margin-top:.15em;}
+.act-tip .lu{width:1em;height:1em;display:inline-block;vertical-align:-.12em;
+  margin-right:.35rem;}
 .act-feedback{margin-top:.7rem;padding:.6rem .7rem;border-radius:10px;
   border:var(--bd-thin) solid var(--line);font-size:.86rem;line-height:1.55;
   animation:slide-down .18s var(--ease);}
@@ -1101,6 +1107,16 @@ h1,h2,h3,h4{font-family:var(--font-display);line-height:1.18;}
 .hs-sisa{border-left:4px solid var(--coral) !important;}
 .hs-in{width:3.4em;padding:.3rem .15rem !important;min-height:36px !important;
   text-align:center;font-size:.85rem !important;}
+/* Skema Horner dibaca MENYILANG antar-kolom, jadi menggesernya jauh lebih
+   mengganggu daripada pada tabel biasa. Pada 320 px tabelnya hanya berlebih
+   17 px; kolom dan label dirampingkan sedikit agar seluruh skema tampak
+   sekaligus. Target sentuh kotak isian tetap 36 px. */
+@media (max-width:380px){
+  .hs-tbl th{font-size:.72rem;padding:.28rem .3rem;}
+  .hs-tbl th,.hs-tbl td{padding:.2rem;}
+  .hs-koef{min-width:2.6em;font-size:.84rem;}
+  .hs-in{width:2.9em;font-size:.8rem !important;}
+}
 
 /* slider */
 .sl-wrap{display:grid;gap:.55rem;}
@@ -1288,6 +1304,22 @@ body.keypad-open{overflow:hidden;}
 @media (min-width:620px){
   .keypad{max-width:520px;margin-inline:auto;border-radius:18px 18px 0 0;}
 }
+/* LANSKAP PENDEK. Pada tinggi layar 360 px, keypad setinggi 312 px hanya
+   menyisakan 48 px: aturan `:root.kp-up .ov-panel` menyusutkan panel pop-up
+   sampai 32 px dan kotak isian justru tertutup papan tombol — soal menjadi
+   mustahil dijawab, persis cacat z-index yang pernah diperbaiki di Fase 3.
+   Tombol dipendekkan dan jarak dirapatkan sehingga keypad muat di bawah
+   separuh layar; target sentuh tetap >=34 px. */
+@media (max-height:480px){
+  .kp-bar{padding:.3rem .6rem .2rem;}
+  .kp-preview{min-height:30px;padding:.25rem .5rem;font-size:.92rem;}
+  .kp-close{width:34px;height:34px;}
+  .kp-tabs{padding:0 .6rem .25rem;}
+  .kp-tab{min-height:30px;padding:.2rem .6rem;}
+  .kp-fn{width:34px;height:30px;}
+  .kp-grid{gap:.28rem;padding:0 .6rem .45rem;}
+  .kp-key{min-height:34px;font-size:.95rem;}
+}
 
 /* Penampil bagan layar-penuh (zoom + geser) */
 body.dgview-open{overflow:hidden;}
@@ -1327,7 +1359,12 @@ body.dgview-open{overflow:hidden;}
    KaTeX — rumus panjang otomatis dimuatkan, bukan dipotong
    ========================================================================= */
 .doc .katex{font-size:1.04em;}
-.m-block,.katex-display{display:block;margin:.9rem 0;overflow-x:auto;overflow-y:hidden;
+/* `overflow-y` WAJIB hidden, bukan visible: bila satu sumbu `auto` dan sumbu
+   lain `visible`, CSS memaksa yang `visible` menjadi `auto` sehingga muncul
+   scrollbar vertikal (jebakan #10). Konsekuensinya rumus bertinggi lebih —
+   pecahan bertingkat, limit — terpotong beberapa piksel; padding tegak kecil
+   ini memberi ruangnya tanpa memunculkan scrollbar. */
+.m-block,.katex-display{display:block;margin:.9rem 0;padding:3px 0;overflow-x:auto;overflow-y:hidden;
   padding-bottom:.2rem;scrollbar-width:thin;}
 .katex-display>.katex{white-space:normal;}
 /* diperkecil agar muat penuh */
@@ -1553,9 +1590,26 @@ body.dgview-open{overflow:hidden;}
 .sm-chip:hover{color:var(--ink);}
 .sm-chip.is-on{background:var(--sky);color:var(--ink);box-shadow:var(--shadow-sm);}
 .sm-toc{flex:0 0 auto;}
-/* pada layar sempit, pintasan angka disembunyikan agar judul tetap terbaca */
-@media (max-width:400px){
+/* Pada layar sempit, pintasan angka disembunyikan agar judul tetap terbaca.
+   Ambang 400 px terlalu rendah: judul terpanjang ("Penjumlahan & Pengurangan")
+   selebar 196 px, sedangkan bilah bersama chip hanya menyisakan 116 px @412 px
+   dan 164 px @460 px — terpotong 80 px dan 32 px. Ruangnya baru cukup mulai
+   ±500 px, jadi ambangnya dinaikkan ke 520 px. */
+@media (max-width:520px){
   .sm-chips{display:none;}
+}
+/* Judul terpanjang ("Penjumlahan & Pengurangan") masih terpotong elipsis pada
+   layar 320 px. Di bawah 360 px judul boleh memakai DUA baris dengan huruf
+   sedikit lebih kecil — bilah tumbuh seperlunya dan tidak ada teks yang hilang. */
+@media (max-width:360px){
+  .sm-bar{align-items:flex-start;}
+  .sm-badge{margin-top:.05rem;}
+  .sm-title{
+    white-space:normal;overflow:visible;text-overflow:clip;
+    font-size:.86rem;line-height:1.2;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  }
+  .sm-toc{margin-top:.05rem;}
 }
 
 /* ---------- POP-UP / MODAL ---------- */
@@ -1755,9 +1809,14 @@ body.dgview-open{overflow:hidden;}
 
 /* Saat keypad terbuka, panel pop-up MENYUSUT supaya kotak isian tidak
    tertutup papan tombol. --kp-h diisi js/keypad.js dari tinggi nyata keypad. */
-:root.kp-up .ov-scrim{align-items:flex-start;}
+/* Jarak yang dikurangkan HARUS mencakup offset atas panel itu sendiri, bukan
+   sekadar 1rem. Scrim membawa padding-atas 22 px, sehingga panel berakhir 9 px
+   DI BAWAH tepi keypad dan kotak isian terakhir tetap tertutup — kentara pada
+   lanskap pendek yang tinggi panelnya memang mepet. Padding scrim dikecilkan
+   saat keypad naik, lalu keseluruhannya dikurangkan secara eksplisit. */
+:root.kp-up .ov-scrim{align-items:flex-start;padding-top:.35rem;}
 :root.kp-up .ov-panel{
-  max-height:calc(100dvh - var(--kp-h, 300px) - 1rem);
+  max-height:calc(100dvh - var(--kp-h, 300px) - 1.1rem);
   margin-top:.25rem;
 }
 
@@ -1795,6 +1854,14 @@ body.dgview-open{overflow:hidden;}
   .infocard-more{display:none;}
   .infocard-ico .lu{width:1.4em;height:1.4em;}
 
+}
+
+/* Kartu Latihan Bertingkat beralih menumpuk pada AMBANG LEBIH LEBAR daripada
+   Info Cards, karena kartu D & E membawa lencana "OPSIONAL" selebar ±70 px yang
+   tidak dapat menyusut maupun dipenggal. Terukur pada susunan tiga kolom:
+   lebar layar 640 px → kolom 194 px → isi kartu meluap 23 px dan lencananya
+   terpotong; 700 px → 3 px; 760 px → 0. Ambang 720 px memberi sedikit kelonggaran. */
+@media (max-width:720px){
   .qc-card{
     flex-direction:column;text-align:center;
     gap:.3rem;padding:.55rem .3rem;
